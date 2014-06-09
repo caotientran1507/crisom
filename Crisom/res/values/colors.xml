@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="pinkStart">#C8006E</color>
+    <color name="pinkEnd">#1A1A1A</color>
+    <color name="gray_background">#1A1A1A</color>
+    <color name="gray_background_search">#1E1E1E</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="gray">#262626</color>
+    <color name="blue">#00627e</color>
+    <color name="cyan">#33b5e5</color>
+    <color name="red">#c8251d</color>
+    <color name="pink">#ff0068</color>
+    <color name="orange">#f15a24</color>
+    <color name="gray_active">#515151</color>
+    <color name="text_artist">#808080</color>
+    <color name="text_percent">#ED008C</color>
+	<color name="gray_menu">#333333</color>
+	<color name="greenStart">#ff33dd44</color>
+	<color name="greenMid">#ff0A8815</color>
+	<color name="greenEnd">#ff1da130</color>
+	<color name="transparent">#00000000</color>
+	<color name="mau_gach_ngang">#B3B3B3</color>
+	
+    
+</resources>
