@@ -1,170 +1,188 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:orientation="vertical"
-    android:weightSum="100"
-    android:background="@color/white" >
-     
-    <!-- Title Activity -->
-	<LinearLayout 
-	    android:layout_width="match_parent" 
-	    android:layout_weight="8"
-	    android:layout_height="0dp"
-	   android:gravity="center_vertical"
-	   android:background="@color/gray"  
-	    >
-	    <TextView 
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:text="HOME"
-	        android:textSize="23sp"
-	        android:textStyle="bold"
-	        android:textColor="@color/red"
-	        android:gravity="center_horizontal" />
-	</LinearLayout>
-     
-	
-	<!-- Content -->
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_weight="83"
-	    android:layout_height="0dp"
-	    > 
-	    
-	</LinearLayout>
-	
-	
-	 <!-- Button bot -->
-	<LinearLayout 
-	    android:layout_width="match_parent"
-	    android:layout_weight="9"
-	    android:layout_height="0dp"
-	    android:orientation="horizontal"
-	    android:weightSum="5"
-	    android:background="@color/gray"
-	    >
-	    
-	    <!-- Home Button -->
-	    <LinearLayout 
-	        android:layout_weight="1"
-	        android:layout_height="match_parent"
-	        android:layout_width="0dp"
-	        android:gravity="center_vertical"
-	        android:orientation="vertical"
-	        >
-	        <ImageView
-			        android:layout_width="wrap_content"
-			        android:layout_height="30dp"
-			        android:src="@drawable/ico_home"
-			        android:layout_marginTop="3dp"/>
-	        <TextView 
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center_horizontal"
-	            android:text="Home"
-		        android:textSize="15sp"
-		        android:textStyle="bold"
-		        android:textColor="@color/red"
-	            />
-	    </LinearLayout>
-	    
-	    <!-- Search button -->
-	    <LinearLayout 
-	        android:layout_weight="1"
-	        android:layout_height="match_parent"
-	        android:layout_width="0dp"
-	        android:gravity="center_vertical"
-	        android:orientation="vertical"
-	        >
-	        <ImageView
-			        android:layout_width="wrap_content"
-			        android:layout_height="30dp"
-			        android:src="@drawable/ico_search"
-			        android:layout_marginTop="3dp" />
-	        <TextView 
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center_horizontal"
-	            android:text="Search"
-		        android:textSize="15sp"
-		        android:textStyle="bold"
-		        android:textColor="@color/red"
-	            />
-	    </LinearLayout>
-	    
-	    <!-- Cart button -->
-	    <LinearLayout 
-	        android:layout_weight="1"
-	        android:layout_height="match_parent"
-	        android:layout_width="0dp"
-	        android:gravity="center_vertical"
-	        android:orientation="vertical"
-	        >
-	        <ImageView
-			        android:layout_width="wrap_content"
-			        android:layout_height="30dp"
-			        android:src="@drawable/ico_cart"
-			        android:layout_marginTop="3dp" />
-	        <TextView 
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center_horizontal"
-	            android:text="Cart"
-		        android:textSize="15sp"
-		        android:textStyle="bold"
-		        android:textColor="@color/red"
-	            />
-	    </LinearLayout>
-	    
-	    <!-- Account button -->
-	    <LinearLayout 
-	        android:layout_weight="1"
-	        android:layout_height="match_parent"
-	        android:layout_width="0dp"
-	        android:gravity="center_vertical"
-	        android:orientation="vertical"
-	        >
-	        <ImageView
-			        android:layout_width="wrap_content"
-			        android:layout_height="30dp"
-			        android:src="@drawable/ico_account"
-			        android:layout_marginTop="3dp" />
-	        <TextView 
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center_horizontal"
-	            android:text="Account"
-		        android:textSize="15sp"
-		        android:textStyle="bold"
-		        android:textColor="@color/red"
-	            />
-	    </LinearLayout>
-	    
-	    <!-- More button -->
-	    <LinearLayout 
-	        android:layout_weight="1"
-	        android:layout_height="match_parent"
-	        android:layout_width="0dp"
-	        android:gravity="center_vertical"
-	        android:orientation="vertical"
-	        >
-	         <ImageView
-			        android:layout_width="wrap_content"
-			        android:layout_height="30dp"
-			        android:src="@drawable/ico_more"
-			        android:layout_marginTop="3dp" />
-	        <TextView 
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:gravity="center_horizontal"
-	            android:text="More"
-		        android:textSize="15sp"
-		        android:textStyle="bold"
-		        android:textColor="@color/red"
-	            />
-	    </LinearLayout>
-	    
-	</LinearLayout>
+    android:weightSum="100" >
 
-	
+    <!-- Title Activity -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:background="@color/crisom_graybot"
+        android:gravity="center" >
+
+        <TextView
+            android:id="@+id/home_tvtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HOME"
+            android:textColor="@color/crisom_red"
+            android:textSize="25dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Content -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="82" >
+    </LinearLayout>
+
+    <!-- Button bot -->
+    <TextView 
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8.5"
+        android:background="@color/crisom_graybot"
+        android:orientation="horizontal"
+        android:weightSum="5" >
+
+        <!-- Home Button -->
+
+        <LinearLayout
+            android:id="@+id/home_lnhome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/home_ivhome"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ico_home" />
+
+            <TextView
+                android:id="@+id/home_tvhome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Home"
+                android:textColor="@color/crisom_red"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Search button -->
+
+        <LinearLayout
+            android:id="@+id/home_lnsearch"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/home_ivsearch"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ico_search" />
+
+            <TextView
+                android:id="@+id/home_tvsearch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Search"
+                android:textColor="@color/crisom_red"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Cart button -->
+
+        <LinearLayout
+            android:id="@+id/home_lncart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/home_ivcart"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ico_cart" />
+
+            <TextView
+                android:id="@+id/home_tvcart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Cart"
+                android:textColor="@color/crisom_red"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Account button -->
+
+        <LinearLayout
+            android:id="@+id/home_lnaccount"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/home_ivaccount"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginTop="3dp"
+                android:src="@drawable/ico_account" />
+
+            <TextView
+                android:id="@+id/home_tvaccount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="Account"
+                android:textColor="@color/crisom_red"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- More button -->
+
+        <LinearLayout
+            android:id="@+id/home_lnmore"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:orientation="vertical" >
+
+            <ImageView
+                android:id="@+id/home_ivmore"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ico_more" />
+
+            <TextView
+                android:id="@+id/home_tvmore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="More"
+                android:textColor="@color/crisom_red"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>
