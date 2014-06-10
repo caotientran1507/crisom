@@ -48,6 +48,12 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		tvMore = (TextView)findViewById(R.id.home_tvmore);
 		tvTitle = (TextView)findViewById(R.id.home_tvtitle);
 		
+		lnHome.setOnClickListener(this);
+		lnSearch.setOnClickListener(this);
+		lnCart.setOnClickListener(this);
+		lnAccount.setOnClickListener(this);
+		lnMore.setOnClickListener(this);
+		
 	}
 
 	@Override
