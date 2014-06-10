@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    
+    <color name="crisom_red">#a00210</color>
+    <color name="crisom_graybot">#e7e7e7</color>
+    <color name="crisom_grayitem">#4e4e50</color>
+    
     <color name="pinkStart">#C8006E</color>
     <color name="pinkEnd">#1A1A1A</color>
     <color name="gray_background">#1A1A1A</color>
