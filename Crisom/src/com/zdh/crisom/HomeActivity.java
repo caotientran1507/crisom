@@ -1,5 +1,8 @@
 package com.zdh.crisom;
 
+import com.zdh.crisom.utility.Constants;
+import com.zdh.crisom.utility.FileUtil;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -53,23 +56,33 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		switch (v.getId()) {
 		//----------Home is clicked----------
 		case R.id.home_lnhome:
+			if (FileUtil.currentButton != Constants.BUTTON_HOME) {
+				tvHome.setTextColor(getResources().getColor(R.color.crisom_red));
+				ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ico_home_active));
+			}
+			
+			FileUtil.currentButton = Constants.BUTTON_HOME;
 			break;
 		
 		//----------Search is clicked----------
 		case R.id.home_lnsearch:
 			
+			FileUtil.currentButton = Constants.BUTTON_SEARCH;
 			break;
 		//----------Cart is clicked----------
 		case R.id.home_lncart:
 			
+			FileUtil.currentButton = Constants.BUTTON_CART;
 			break;
 		//----------Account is clicked----------
 		case R.id.home_lnaccount:
 			
+			FileUtil.currentButton = Constants.BUTTON_ACCOUNT;
 			break;
 		//----------More is clicked----------
 		case R.id.home_lnmore:
 			
+			FileUtil.currentButton = Constants.BUTTON_MORE;
 			break;	
 
 		default:
