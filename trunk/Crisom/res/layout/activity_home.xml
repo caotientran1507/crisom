@@ -10,15 +10,17 @@
 	    android:layout_width="match_parent" 
 	    android:layout_weight="8"
 	    android:layout_height="0dp"
-	   android:gravity="center_horizontal"  
+	   android:gravity="center_vertical"
+	   android:background="@color/gray"  
 	    >
 	    <TextView 
-	        android:layout_width="wrap_content"
+	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content" 
-	        android:text="Home"
+	        android:text="HOME"
 	        android:textSize="23sp"
 	        android:textStyle="bold"
-	        android:textColor="@color/red" />
+	        android:textColor="@color/red"
+	        android:gravity="center_horizontal" />
 	</LinearLayout>
      
 	
@@ -27,10 +29,7 @@
 	    android:layout_width="match_parent"
 	    android:layout_weight="83"
 	    android:layout_height="0dp"
-	    >
-	    <fragment 
-	        
-	        />
+	    > 
 	    
 	</LinearLayout>
 	
@@ -42,6 +41,7 @@
 	    android:layout_height="0dp"
 	    android:orientation="horizontal"
 	    android:weightSum="5"
+	    android:background="@color/gray"
 	    >
 	    
 	    <!-- Home Button -->
@@ -50,13 +50,19 @@
 	        android:layout_height="match_parent"
 	        android:layout_width="0dp"
 	        android:gravity="center_vertical"
+	        android:orientation="vertical"
 	        >
+	        <ImageView
+			        android:layout_width="wrap_content"
+			        android:layout_height="30dp"
+			        android:src="@drawable/ico_home"
+			        android:layout_marginTop="3dp"/>
 	        <TextView 
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:gravity="center_horizontal"
 	            android:text="Home"
-		        android:textSize="19sp"
+		        android:textSize="15sp"
 		        android:textStyle="bold"
 		        android:textColor="@color/red"
 	            />
@@ -68,13 +74,19 @@
 	        android:layout_height="match_parent"
 	        android:layout_width="0dp"
 	        android:gravity="center_vertical"
+	        android:orientation="vertical"
 	        >
+	        <ImageView
+			        android:layout_width="wrap_content"
+			        android:layout_height="30dp"
+			        android:src="@drawable/ico_search"
+			        android:layout_marginTop="3dp" />
 	        <TextView 
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:gravity="center_horizontal"
 	            android:text="Search"
-		        android:textSize="19sp"
+		        android:textSize="15sp"
 		        android:textStyle="bold"
 		        android:textColor="@color/red"
 	            />
@@ -88,13 +100,17 @@
 	        android:gravity="center_vertical"
 	        android:orientation="vertical"
 	        >
-	        <ImageView />
+	        <ImageView
+			        android:layout_width="wrap_content"
+			        android:layout_height="30dp"
+			        android:src="@drawable/ico_cart"
+			        android:layout_marginTop="3dp" />
 	        <TextView 
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:gravity="center_horizontal"
 	            android:text="Cart"
-		        android:textSize="19sp"
+		        android:textSize="15sp"
 		        android:textStyle="bold"
 		        android:textColor="@color/red"
 	            />
@@ -106,13 +122,19 @@
 	        android:layout_height="match_parent"
 	        android:layout_width="0dp"
 	        android:gravity="center_vertical"
+	        android:orientation="vertical"
 	        >
+	        <ImageView
+			        android:layout_width="wrap_content"
+			        android:layout_height="30dp"
+			        android:src="@drawable/ico_account"
+			        android:layout_marginTop="3dp" />
 	        <TextView 
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:gravity="center_horizontal"
 	            android:text="Account"
-		        android:textSize="19sp"
+		        android:textSize="15sp"
 		        android:textStyle="bold"
 		        android:textColor="@color/red"
 	            />
@@ -124,13 +146,19 @@
 	        android:layout_height="match_parent"
 	        android:layout_width="0dp"
 	        android:gravity="center_vertical"
+	        android:orientation="vertical"
 	        >
+	         <ImageView
+			        android:layout_width="wrap_content"
+			        android:layout_height="30dp"
+			        android:src="@drawable/ico_more"
+			        android:layout_marginTop="3dp" />
 	        <TextView 
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:gravity="center_horizontal"
 	            android:text="More"
-		        android:textSize="19sp"
+		        android:textSize="15sp"
 		        android:textStyle="bold"
 		        android:textColor="@color/red"
 	            />
