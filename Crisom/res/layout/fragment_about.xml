@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="130dp"
+        android:src="@drawable/about" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.zdh.crisom.utility.TextViewEx
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvAbout"
+            android:text="Crimson AV is an industry leader in providing complete mounting solutions for your audio visual needs. With over 15 years of experience in the design, manufacture and sales of professional mounting equipment, Crimson has developed a proprietary business model which allows us to maximize value while minimizing costs. Not only do we provide our clients with the best values, they also benefit from our unparalleled customer service, easy to use website and comprehensive dealer portal."
+            android:textColor="@color/crisom_text"
+            android:textSize="14sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mission"
+            android:textColor="@color/crisom_red"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The Crimson AV mission has remained constant over the years: To provide the best selection of professional audio visual mounting solutions at the best values. Our staff of knowledgeable, friendly employees strive to make your buying experience easy."
+            android:textColor="@color/crisom_text"
+            android:textSize="14sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clients"
+            android:textColor="@color/crisom_red"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Crimson AV carries products to serve every type of client, from the do-it-yourself homeowner to established AV distributors. Our primary client base consists of professional dealers with experienced installers and reliable business partners.
+ 
+With a complete catalog of audio visual mounting solutions and accessories in stock and ready to ship to any destination in North America, we can help ensure your project is completed on time. Each of our clients receive the highest level of personalized customer care because we believe every client deserves the best purchasing experience.
+ 
+Even if you have never purchased mounting solutions before, we know how to make the process painless. Simply visit our easy to use website or speak with one of our qualified sales representatives to verify product compatibility, learn about installation or finalize your purchase."
+            android:textColor="@color/crisom_text"
+            android:textSize="14sp" />
+        
+         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Products"
+            android:textColor="@color/crisom_red"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="All Crimson AV products are designed to be functional, durable and easily installed. Only the highest quality steel and aluminum materials are used in our manufacturing process and all of our products undergo rigorous testing. We specialize in professional grade mounting solutions that are designed to withstand the UL safety factor of at least four times the load rating.
+ 
+Contact one of our professional designers today for your customized solution."
+            android:textColor="@color/crisom_text"
+            android:textSize="14sp" />
+        
+        
+    </LinearLayout>
+
+</LinearLayout>
