@@ -9,13 +9,16 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 public class HomeActivity extends Activity  implements View.OnClickListener{
 
 	//--------define variables---------
-	LinearLayout lnHome,lnSearch,lnCart,lnAccount,lnMore;
+	LinearLayout lnHome,lnSearch,lnCategory,lnAccount,lnMore;
 	TextView tvHome,tvSearch,tvCart,tvAccount,tvMore,tvTitle;
 	ImageView ivHome,ivSearch,ivCart,ivAccount,ivMore;
+	
+	ViewFlipper viewFlipper;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +29,13 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	
 	private void init(){
 		initView();
+		initDataWebservice();
 	}
 	
 	private void initView(){
 		lnHome = (LinearLayout)findViewById(R.id.home_lnhome);
 		lnSearch = (LinearLayout)findViewById(R.id.home_lnsearch);
-		lnCart = (LinearLayout)findViewById(R.id.home_lncart);
+		lnCategory = (LinearLayout)findViewById(R.id.home_lncategory);
 		lnAccount = (LinearLayout)findViewById(R.id.home_lnaccount);
 		lnMore = (LinearLayout)findViewById(R.id.home_lnmore);
 		
@@ -43,17 +47,24 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		
 		tvHome = (TextView)findViewById(R.id.home_tvhome);
 		tvSearch = (TextView)findViewById(R.id.home_tvsearch);
-		tvCart = (TextView)findViewById(R.id.home_tvcart);
+		tvCart = (TextView)findViewById(R.id.home_tvcategory);
 		tvAccount = (TextView)findViewById(R.id.home_tvaccount);
 		tvMore = (TextView)findViewById(R.id.home_tvmore);
 		tvTitle = (TextView)findViewById(R.id.home_tvtitle);
 		
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
-		lnCart.setOnClickListener(this);
+		lnCategory.setOnClickListener(this);
 		lnAccount.setOnClickListener(this);
 		lnMore.setOnClickListener(this);
 		
+	}
+	
+	private void initDataWebservice(){
+		FileUtil.listImageSlide.add(FileUtil.imageSlide1);
+		FileUtil.listImageSlide.add(FileUtil.imageSlide2);
+		FileUtil.listImageSlide.add(FileUtil.imageSlide3);
+		FileUtil.listImageSlide.add(FileUtil.imageSlide4);
 	}
 
 	@Override
@@ -81,7 +92,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search));
 				
 				break;
-			case Constants.BUTTON_CART:
+			case Constants.BUTTON_CATEGORY:
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
 				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart));
 				
@@ -123,7 +134,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 			case Constants.BUTTON_SEARCH:
 				
 				break;
-			case Constants.BUTTON_CART:
+			case Constants.BUTTON_CATEGORY:
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
 				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart));
 				
@@ -147,12 +158,12 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 			FileUtil.currentButton = Constants.BUTTON_SEARCH;
 			break;
 			
-		//----------Cart is clicked----------
-		case R.id.home_lncart:
-			if(FileUtil.currentButton != Constants.BUTTON_CART){
+		//----------Category is clicked----------
+		case R.id.home_lncategory:
+			if(FileUtil.currentButton != Constants.BUTTON_CATEGORY){
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_red));
 				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart_active));
-				tvTitle.setText("CART");
+				tvTitle.setText("CATEGORY");
 			}
 			
 			switch (FileUtil.currentButton) {
@@ -167,7 +178,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search));
 				
 				break;
-			case Constants.BUTTON_CART:
+			case Constants.BUTTON_CATEGORY:
 				
 				
 				break;
@@ -186,7 +197,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 			default:
 				break;
 			}
-			FileUtil.currentButton = Constants.BUTTON_CART;
+			FileUtil.currentButton = Constants.BUTTON_CATEGORY;
 			break;
 			
 		//----------Account is clicked----------
@@ -209,7 +220,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search));
 				
 				break;
-			case Constants.BUTTON_CART:
+			case Constants.BUTTON_CATEGORY:
 				
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
 				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart));
@@ -253,7 +264,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search));
 				
 				break;
-			case Constants.BUTTON_CART:
+			case Constants.BUTTON_CATEGORY:
 				
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
 				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart));
@@ -284,4 +295,10 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	
+	
+	private void setFlipperImage(int res) {	   
+	    ImageView image = new ImageView(getApplicationContext());
+	    image.setBackgroundResource(res);
+	    viewFlipper.addView(image);
+	}
 }
