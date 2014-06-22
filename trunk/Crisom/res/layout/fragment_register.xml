@@ -22,7 +22,7 @@
                 android:paddingTop="5dp" >
 
                 <LinearLayout
-                    android:id="@+id/register_billing_ln_title"
+                    android:id="@+id/register_personal_ln_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:weightSum="100" >
@@ -42,7 +42,7 @@
                         android:gravity="center" >
 
                         <ImageView
-                            android:id="@+id/register_billing_img"
+                            android:id="@+id/register_personal_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ico_down" />
