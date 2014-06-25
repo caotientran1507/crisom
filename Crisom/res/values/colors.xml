@@ -3,7 +3,9 @@
     
     
     <color name="crisom_red">#951B1F</color>
-    <color name="crisom_graybot">#e7e7e7</color>
+    <color name="crisom_graybackground">#bfbfbf</color>
+    <color name="crisom_graybackgroundvertical">#d0d0d0</color>
+    <color name="crisom_graybot">#bfbfbf</color>
     <color name="crisom_grayitem">#4e4e50</color>
     <color name="crisom_text">#333</color>
     <color name="crisom_white">#FFFFFF</color>
