@@ -78,9 +78,11 @@
                 android:layout_weight="1" />
 
             <EditText
+                android:id="@+id/login_edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="6"
+                android:inputType="textEmailAddress"
                 android:background="@drawable/edittext_background" />
             <!-- Email -->
 
@@ -113,9 +115,11 @@
                 android:layout_weight="1" />
 
             <EditText
+                android:id="@+id/login_edt_pass"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="6"
+                android:inputType="textPassword"
                 android:background="@drawable/edittext_background" />
             <!-- Password -->
 
@@ -133,6 +137,7 @@
                 android:weightSum="100" >
 
                 <Button
+                    android:id="@+id/login_btn_login"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="30"

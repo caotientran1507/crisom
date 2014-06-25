@@ -54,378 +54,385 @@
                     android:layout_height="1dp"
                     android:background="@color/crisom_red" />
 
-                <!-- FirstName -->
-
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="First Name"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@color/crisom_red" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/register_edt_firstname"
+                    android:id="@+id/register_personal_ln_content"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
-                <!-- FirstName -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Last Name"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@color/crisom_red" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/register_edt_lastname"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
-                <!-- LastName -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Company"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@color/crisom_red" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/register_edt_company"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
-                <!-- Company -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Title"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/register_edt_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
-
-                <!-- Title -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email Address"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@color/crisom_red" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/register_edt_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
-
-                <!-- Email Address -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Fax"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/register_edt_fax"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
-
-                <!-- Fax -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="What market do you serve?"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@color/crisom_red" />
-                </LinearLayout>
-
-                <RadioGroup
-                    android:id="@+id/register_rdg_service"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
 
+                    <!-- FirstName -->
+
                     <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="First Name"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textColor="@color/crisom_red" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/register_edt_firstname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
+                    <!-- FirstName -->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Last Name"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textColor="@color/crisom_red" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/register_edt_lastname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
+                    <!-- LastName -->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Company"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textColor="@color/crisom_red" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/register_edt_company"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
+                    <!-- Company -->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Title"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/register_edt_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
+
+                    <!-- Title -->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Email Address"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textColor="@color/crisom_red" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/register_edt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
+
+                    <!-- Email Address -->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Fax"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/register_edt_fax"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
+
+                    <!-- Fax -->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="What market do you serve?"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textColor="@color/crisom_red" />
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/register_rdg_service"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <RadioButton
+                                android:id="@+id/register_rdb_service_commercial"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checked="true"
+                                android:text="Commercial"
+                                android:textSize="12sp" />
+
+                            <RadioButton
+                                android:id="@+id/register_rdb_service_residential"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="Residential"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <RadioButton
+                                android:id="@+id/register_rdb_service_education"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Education"
+                                android:textSize="12sp" />
+
+                            <RadioButton
+                                android:id="@+id/register_rdb_service_other"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:text="Other"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+                    </RadioGroup>
+
+                    <!-- MarketService -->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Are you an E-tailer planning to resell Crimson products on line?"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textColor="@color/crisom_red" />
+                    </LinearLayout>
+
+                    <RadioGroup
+                        android:id="@+id/register_rdg_etailer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" >
 
                         <RadioButton
-                            android:id="@+id/register_rdb_service_commercial"
+                            android:id="@+id/register_rdb_etailer_yes"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:checked="true"
-                            android:text="Commercial"
+                            android:text="Yes"
                             android:textSize="12sp" />
 
                         <RadioButton
-                            android:id="@+id/register_rdb_service_residential"
+                            android:id="@+id/register_rdb_etailer_no"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
-                            android:text="Residential"
+                            android:text="No"
                             android:textSize="12sp" />
+                    </RadioGroup>
+
+                    <!-- E-tailer -->
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="How many employees do you have?"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
                     </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/register_edt_employee"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
+
+                    <!-- Employees -->
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal" >
 
-                        <RadioButton
-                            android:id="@+id/register_rdb_service_education"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Education"
-                            android:textSize="12sp" />
-
-                        <RadioButton
-                            android:id="@+id/register_rdb_service_other"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="Other"
-                            android:textSize="12sp" />
+                            android:paddingBottom="5dp"
+                            android:paddingTop="10dp"
+                            android:text="Do you have a website?"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
                     </LinearLayout>
-                </RadioGroup>
 
-                <!-- MarketService -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <EditText
+                        android:id="@+id/register_edt_website"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Are you an E-tailer planning to resell Crimson products on line?"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@color/crisom_red" />
-                </LinearLayout>
-
-                <RadioGroup
-                    android:id="@+id/register_rdg_etailer"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <RadioButton
-                        android:id="@+id/register_rdb_etailer_yes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="Yes"
-                        android:textSize="12sp" />
-
-                    <RadioButton
-                        android:id="@+id/register_rdb_etailer_no"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="No"
-                        android:textSize="12sp" />
-                </RadioGroup>
-
-                <!-- E-tailer -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="How many employees do you have?"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/register_edt_employee"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
-
-                <!-- Employees -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
                         android:paddingBottom="5dp"
-                        android:paddingTop="10dp"
-                        android:text="Do you have a website?"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:paddingTop="5dp" />
 
-                <EditText
-                    android:id="@+id/register_edt_website"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
+                    <!-- Website -->
 
-                <!-- Website -->
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="10dp" >
-
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="How did you hear about Crimson?"
-                        android:textColor="@color/crisom_text"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="10dp" >
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="How did you hear about Crimson?"
+                            android:textColor="@color/crisom_text"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" *"
+                            android:textColor="@color/crisom_red" />
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/register_edt_crisom"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text=" *"
-                        android:textColor="@color/crisom_red" />
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
+                    <!-- Crisom -->
+
                 </LinearLayout>
-
-                <EditText
-                    android:id="@+id/register_edt_crisom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edittext_background"
-                    android:paddingBottom="5dp"
-                    android:paddingTop="5dp" />
-                <!-- Crisom -->
-
             </LinearLayout>
 
             <!-- Personal Information -->
@@ -656,11 +663,13 @@
                             android:textColor="@color/crisom_red" />
                     </LinearLayout>
 
-                    <Spinner
-                        android:id="@+id/register_billing_spn_state"
+                    <EditText
+                        android:id="@+id/register_billing_edt_state"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"                        
-                        android:spinnerMode="dropdown" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
 
                     <!-- Country -->
 
@@ -938,11 +947,13 @@
                             android:textColor="@color/crisom_red" />
                     </LinearLayout>
 
-                    <Spinner
-                        android:id="@+id/register_shipping_spn_state"
+                    <EditText
+                        android:id="@+id/register_shipping_edt_state"
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:spinnerMode="dropdown" />
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/edittext_background"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp" />
 
                     <!-- Country -->
 

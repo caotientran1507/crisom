@@ -1,8 +1,12 @@
 package com.zdh.crisom;
 
+import com.zdh.crisom.utility.FileUtil;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -10,23 +14,23 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.zdh.crisom.utility.TextViewEx;
 
 public class RegisterActivity extends Activity implements View.OnClickListener{
 
 	//--------define variables---------
-	LinearLayout  lnPersonalTitle, lnBillingTitle, lnBillingContent, lnShippingTitle, lnShippingContent ;
+	LinearLayout  lnPersonalTitle, lnPersonalContent, lnBillingTitle, lnBillingContent, lnShippingTitle, lnShippingContent ;
 	EditText edtFirstname, edtLastname, edtCompany, edtTitle, edtEmail, edtFax, edtEmployee, edtWebsite, edtCrisom, 
 			edtBillingCompany, edtBillingTelephone, edtBillingStreet1, edtBillingStreet2, edtBillingCity, edtBillingPostalcode,
-			edtShippingCompany, edtShippingTelephone, edtShippingStreet1, edtShippingStreet2, edtShippingCity, edtShippingPostalcode ;
+			edtShippingCompany, edtShippingTelephone, edtShippingStreet1, edtShippingStreet2, edtShippingCity, edtShippingPostalcode,
+			edtShippingState,edtBillingState;
 	ImageView ivPersonal, ivBilling, ivShipping;
 	RadioGroup rdgService, rdgEtailer;
 	RadioButton rdbServiceCommercial, rdbServiceResidential, rdbServiceEducation, rdbServiceOther, rdbEtailerYe, rdbEtailerNo ;
-	Spinner spnBillingState, spnBillingCountry, spnShippingState, spnShippingCountry;
+	Spinner spnBillingCountry, spnShippingCountry;
 	CheckBox cbxUseBilling ;
+	Button btnSubmit;
 	
+	ArrayAdapter<String> dataAdapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -37,7 +41,15 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
 
 	private void init() {
 		initView();
+		initData();
 		
+	}
+
+	private void initData() {
+		dataAdapter = new ArrayAdapter<String>(this,
+	                android.R.layout.simple_spinner_item, FileUtil.countries);
+		spnBillingCountry.setAdapter(dataAdapter);
+		spnShippingCountry.setAdapter(dataAdapter);
 	}
 
 	private void initView() {
@@ -46,6 +58,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
 		
 		
 		lnPersonalTitle = (LinearLayout)findViewById(R.id.register_personal_ln_title);
+		lnPersonalContent = (LinearLayout)findViewById(R.id.register_personal_ln_content);
 		lnBillingTitle = (LinearLayout)findViewById(R.id.register_billing_ln_title);
 		lnBillingContent = (LinearLayout)findViewById(R.id.register_billing_ln_content);
 		lnShippingTitle = (LinearLayout)findViewById(R.id.register_shipping_ln_title);
@@ -69,10 +82,12 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
 		rdbEtailerNo  = (RadioButton)findViewById(R.id.register_rdb_etailer_no);
 		
 		
-		spnBillingState = (Spinner)findViewById(R.id.register_billing_spn_state);
+		
 		spnBillingCountry = (Spinner)findViewById(R.id.register_billing_spn_country);
-		spnShippingState = (Spinner)findViewById(R.id.register_shipping_spn_state);
 		spnShippingCountry = (Spinner)findViewById(R.id.register_shipping_spn_country);
+		edtBillingState = (EditText)findViewById(R.id.register_billing_edt_state);
+		edtShippingState = (EditText)findViewById(R.id.register_shipping_edt_state);
+		
 		
 		
 		edtFirstname = (EditText)findViewById(R.id.register_edt_firstname);
@@ -99,12 +114,45 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
 		edtShippingCity = (EditText)findViewById(R.id.register_shipping_edt_city);
 		edtShippingPostalcode = (EditText)findViewById(R.id.register_shipping_edt_postalcode);
 		
-		
+		lnPersonalTitle.setOnClickListener(this);
+		lnBillingTitle.setOnClickListener(this);
+		lnShippingTitle.setOnClickListener(this);
+		btnSubmit.setOnClickListener(this);
 	}
 
 	@Override
 	public void onClick(View v) {
-		
+		switch (v.getId()) {
+		case R.id.register_personal_ln_title:
+			if (lnPersonalContent.getVisibility() == View.VISIBLE) {
+				lnPersonalContent.setVisibility(View.GONE);
+			} else {
+				lnPersonalContent.setVisibility(View.VISIBLE);
+			}	
+			break;
+		case R.id.register_billing_ln_title:
+			if (lnBillingContent.getVisibility() == View.VISIBLE) {
+				lnBillingContent.setVisibility(View.GONE);
+			} else {
+				lnBillingContent.setVisibility(View.VISIBLE);
+			}		
+			break;
+					
+		case R.id.register_shipping_ln_title:
+			if (lnShippingContent.getVisibility() == View.VISIBLE) {
+				lnShippingContent.setVisibility(View.GONE);
+			} else {
+				lnShippingContent.setVisibility(View.VISIBLE);
+			}
+			break;
+			
+//		case R.id.register_billing_ln_title:
+//			
+//			break;
+
+		default:
+			break;
+		}
 		
 	}
 }

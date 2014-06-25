@@ -1,15 +1,21 @@
 package com.zdh.crisom;
 
-import com.zdh.crisom.utility.Constants;
-import com.zdh.crisom.utility.FileUtil;
+import java.util.Collections;
+import java.util.Locale;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ViewFlipper;
+
+import com.zdh.crisom.utility.Constants;
+import com.zdh.crisom.utility.FileUtil;
+import com.zdh.crisom.views.HomeFragment;
+import com.zdh.crisom.views.MoreFragment;
 
 public class HomeActivity extends Activity  implements View.OnClickListener{
 
@@ -18,7 +24,8 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	TextView tvHome,tvSearch,tvCart,tvAccount,tvMore,tvTitle;
 	ImageView ivHome,ivSearch,ivCart,ivAccount,ivMore;
 	
-	ViewFlipper viewFlipper;
+	FragmentManager fragmentManager;
+	FragmentTransaction fragmentTransaction;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +36,22 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	
 	private void init(){
 		initView();
+		initData();
 		initDataWebservice();
 	}
 	
+	private void initData() {
+		//--------load countries data---------
+		Locale[] locales = Locale.getAvailableLocales();	        
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length() > 0 && !FileUtil.countries.contains(country)) {
+            	FileUtil.countries.add(country);
+            }
+        }
+        Collections.sort(FileUtil.countries);        
+	}
+
 	private void initView(){
 		lnHome = (LinearLayout)findViewById(R.id.home_lnhome);
 		lnSearch = (LinearLayout)findViewById(R.id.home_lnsearch);
@@ -58,6 +78,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		lnAccount.setOnClickListener(this);
 		lnMore.setOnClickListener(this);
 		
+		callHomeFragment();
 	}
 	
 	private void initDataWebservice(){
@@ -79,9 +100,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 				tvTitle.setText("HOME");
 			}
 			
-			
-			
-			
 			switch (FileUtil.currentButton) {
 			case Constants.BUTTON_HOME:
 				 
@@ -94,7 +112,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 				break;
 			case Constants.BUTTON_CATEGORY:
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart));
+				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_category));
 				
 				break;
 				
@@ -136,7 +154,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 				break;
 			case Constants.BUTTON_CATEGORY:
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart));
+				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_category));
 				
 				break;
 				
@@ -162,7 +180,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		case R.id.home_lncategory:
 			if(FileUtil.currentButton != Constants.BUTTON_CATEGORY){
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_red));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart_active));
+				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_category_active));
 				tvTitle.setText("CATEGORY");
 			}
 			
@@ -223,7 +241,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 			case Constants.BUTTON_CATEGORY:
 				
 				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart));
+				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_category));
 				
 				break;
 				
@@ -245,6 +263,8 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 			
 		//----------More is clicked----------
 		case R.id.home_lnmore:
+			
+			callMoreFragment();
 			
 			if(FileUtil.currentButton != Constants.BUTTON_MORE){
 				tvMore.setTextColor(getResources().getColor(R.color.crisom_red));
@@ -294,11 +314,27 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		
 	}
 	
-	
-	
-	private void setFlipperImage(int res) {	   
-	    ImageView image = new ImageView(getApplicationContext());
-	    image.setBackgroundResource(res);
-	    viewFlipper.addView(image);
+	private void callHomeFragment(){
+		fragmentManager = getFragmentManager();
+		fragmentTransaction = fragmentManager.beginTransaction();
+	    HomeFragment homeFragment = new HomeFragment();
+//	    fragmentTransaction.replace(R.id.home_fragment, homeFragment);	 
+	    fragmentTransaction.addToBackStack(null);
+	    fragmentTransaction.commit();
 	}
+	
+	private void callMoreFragment(){
+		fragmentManager = getFragmentManager();
+		fragmentTransaction = fragmentManager.beginTransaction();
+		MoreFragment moreFragment = new MoreFragment();
+	    fragmentTransaction.replace(R.id.home_fragment, moreFragment);
+	    fragmentTransaction.addToBackStack(null);
+	    fragmentTransaction.commit();
+	}
+	
+	
+	
+	
+	
+	
 }

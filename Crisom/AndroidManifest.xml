@@ -16,16 +16,19 @@
         <activity android:name="com.zdh.crisom.SplashActivity" > 
             
         </activity>
-        <activity android:name="com.zdh.crisom.HomeActivity" >
-             
-        </activity>
-        
-         <activity android:name="com.zdh.crisom.LoginActivity" >
-              <intent-filter>
+        <activity android:name="com.zdh.crisom.views.HomeFragment" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter> 
+        </activity>
+        
+        <activity android:name="com.zdh.crisom.RegisterActivity" >            
+        </activity>
+        
+         <activity android:name="com.zdh.crisom.LoginActivity" >
+              
         </activity>
     </application>
 

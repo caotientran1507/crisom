@@ -5,13 +5,15 @@
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/more_ln_about"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:weightSum="100" >
+        android:weightSum="100" 
+        android:background="@drawable/listview_item_background">
 
         <TextView
             android:layout_width="0dp"
@@ -44,13 +46,15 @@
         android:background="@color/crisom_graybot"/>
     
     <LinearLayout
+        android:id="@+id/more_ln_support"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:weightSum="100" >
+        android:weightSum="100" 
+        android:background="@drawable/listview_item_background">
 
         <TextView
             android:layout_width="0dp"

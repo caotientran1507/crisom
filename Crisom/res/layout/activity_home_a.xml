@@ -29,13 +29,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="83" >
-
+        android:layout_weight="83"
+        android:orientation="vertical" >
+        
         <fragment
             android:id="@+id/home_fragment"
             android:name="com.zdh.crisom.views.HomeFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <!-- <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" /> -->
+
+         <!-- <com.viewpagerindicator.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFCCCCCC"
+            android:padding="10dip"
+            app:fillColor="#FF888888"
+            app:pageColor="#88FF0000"
+            app:radius="10dp"
+            app:strokeColor="#FF000000"
+            app:strokeWidth="2dp" />  -->
     </LinearLayout>
 
     <!-- Button bot -->
