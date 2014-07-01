@@ -1,31 +1,37 @@
 package com.zdh.crisom;
 
-import java.util.Collections;
-import java.util.Locale;
+import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
+import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.zdh.crisom.utility.Constants;
 import com.zdh.crisom.utility.FileUtil;
-import com.zdh.crisom.views.HomeFragment;
-import com.zdh.crisom.views.MoreFragment;
 
 public class HomeActivity extends Activity  implements View.OnClickListener{
 
 	//--------define variables---------
-	LinearLayout lnHome,lnSearch,lnCategory,lnAccount,lnMore;
-	TextView tvHome,tvSearch,tvCart,tvAccount,tvMore,tvTitle;
-	ImageView ivHome,ivSearch,ivCart,ivAccount,ivMore;
+	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact;
+	private ImageView ivHome;	
+	private Button btnLogin;
+	private TextView tvTitle, tvMainSite;
 	
-	FragmentManager fragmentManager;
-	FragmentTransaction fragmentTransaction;
+	private Uri uriUrl = Uri.parse(Constants.URL);
+	private Animation slideLeftIn, slideLeftOut;
+	private ViewFlipper mViewFlipper;	
+	private ArrayList<ImageView> listImage = new ArrayList<ImageView>();
+	private ImageView img1, img2, img3, img4;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,44 +47,90 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	private void initData() {
-		//--------load countries data---------
-		Locale[] locales = Locale.getAvailableLocales();	        
-        for (Locale locale : locales) {
-            String country = locale.getDisplayCountry();
-            if (country.trim().length() > 0 && !FileUtil.countries.contains(country)) {
-            	FileUtil.countries.add(country);
-            }
-        }
-        Collections.sort(FileUtil.countries);        
+		//------------------------------------------------
+		if (FileUtil.flagLogin) {
+			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
+		} else {
+			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
+		}
+		//-------------------------set Animation--------------------------------
+		slideLeftIn = AnimationUtils.loadAnimation(this, R.anim.left_in);
+		slideLeftOut = AnimationUtils.loadAnimation(this, R.anim.left_out);
+		mViewFlipper.setInAnimation(slideLeftIn);
+		mViewFlipper.setOutAnimation(slideLeftOut);
+		mViewFlipper.setFlipInterval(3000);
+		mViewFlipper.startFlipping();
+		
+		slideLeftOut.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				int currentViewIndex = mViewFlipper.getDisplayedChild();
+				for (int j = 0; j < listImage.size(); j++) {
+					if (j != currentViewIndex) {
+						listImage.get(j).setImageResource(R.drawable.viewpager_nomal);
+					}
+				}
+				listImage.get(currentViewIndex).setImageResource(R.drawable.viewpager_active);
+								
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+				
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+				
+			}
+			
+		});
+		//--------------------------------------------------------------------
 	}
 
 	private void initView(){
-		lnHome = (LinearLayout)findViewById(R.id.home_lnhome);
-		lnSearch = (LinearLayout)findViewById(R.id.home_lnsearch);
-		lnCategory = (LinearLayout)findViewById(R.id.home_lncategory);
-		lnAccount = (LinearLayout)findViewById(R.id.home_lnaccount);
-		lnMore = (LinearLayout)findViewById(R.id.home_lnmore);
+		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnhome);
+		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnsearch);
+		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lncategory);
+		lnCart = (LinearLayout)findViewById(R.id.include_footer_lncart);
+		lnContact = (LinearLayout)findViewById(R.id.include_footer_lncontact);		
 		
-		ivHome = (ImageView)findViewById(R.id.home_ivhome);
-		ivSearch = (ImageView)findViewById(R.id.home_ivsearch);
-		ivCart = (ImageView)findViewById(R.id.home_ivcart);
-		ivAccount = (ImageView)findViewById(R.id.home_ivaccount);
-		ivMore = (ImageView)findViewById(R.id.home_ivmore);
+		ivHome = (ImageView)findViewById(R.id.include_footer_ivhome);	
 		
-		tvHome = (TextView)findViewById(R.id.home_tvhome);
-		tvSearch = (TextView)findViewById(R.id.home_tvsearch);
-		tvCart = (TextView)findViewById(R.id.home_tvcategory);
-		tvAccount = (TextView)findViewById(R.id.home_tvaccount);
-		tvMore = (TextView)findViewById(R.id.home_tvmore);
-		tvTitle = (TextView)findViewById(R.id.home_tvtitle);
+		tvTitle = (TextView)findViewById(R.id.include_header_tvtitle);
+		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
 		
+		tvMainSite = (TextView)findViewById(R.id.home_tv_mainsite);
+		
+		mViewFlipper = (ViewFlipper)findViewById(R.id.home_vf);		
+		
+		ivHome.setImageResource(R.drawable.ico_home_active);
+		tvTitle.setText("HOME");
+				
+		img1 = (ImageView) findViewById(R.id.home_mark1);
+		img2 = (ImageView) findViewById(R.id.home_mark2);
+		img3 = (ImageView) findViewById(R.id.home_mark3);
+		img4 = (ImageView) findViewById(R.id.home_mark4);
+		
+		listImage.add(img1);
+		listImage.add(img2);
+		listImage.add(img3);
+		listImage.add(img4);
+		
+		tvMainSite.setOnClickListener(this);
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
-		lnAccount.setOnClickListener(this);
-		lnMore.setOnClickListener(this);
-		
-		callHomeFragment();
+		lnCart.setOnClickListener(this);
+		lnContact.setOnClickListener(this);
+		img1.setOnClickListener(this);
+		img2.setOnClickListener(this);
+		img3.setOnClickListener(this);
+		img4.setOnClickListener(this);
+		tvTitle.setOnClickListener(this);
+		btnLogin.setOnClickListener(this);
+				
 	}
 	
 	private void initDataWebservice(){
@@ -92,221 +144,90 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	public void onClick(View v) {
 		
 		switch (v.getId()) {
+		//----------------Click tab bottom--------------------
 		//----------Home is clicked----------
-		case R.id.home_lnhome:
-			if(FileUtil.currentButton != Constants.BUTTON_HOME){
-				tvHome.setTextColor(getResources().getColor(R.color.crisom_red));
-				ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ico_home_active));
-				tvTitle.setText("HOME");
-			}
+		case R.id.include_footer_lnhome:
 			
-			switch (FileUtil.currentButton) {
-			case Constants.BUTTON_HOME:
-				 
-				break;
-			case Constants.BUTTON_SEARCH:
-
-				tvSearch.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search));
-				
-				break;
-			case Constants.BUTTON_CATEGORY:
-				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_category));
-				
-				break;
-				
-			case Constants.BUTTON_ACCOUNT:
-				tvAccount.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivAccount.setImageDrawable(getResources().getDrawable(R.drawable.ico_account));
-				
-				break;
-			case Constants.BUTTON_MORE:
-				tvMore.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivMore.setImageDrawable(getResources().getDrawable(R.drawable.ico_more));
-				
-				break;
-				
-			default:
-				break;
-			}
-			
-			FileUtil.currentButton = Constants.BUTTON_HOME;
-			break;
-		
+			break;		
 		//----------Search is clicked----------
-		case R.id.home_lnsearch:
-			if(FileUtil.currentButton != Constants.BUTTON_SEARCH){
-				tvSearch.setTextColor(getResources().getColor(R.color.crisom_red));
-				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search_active));
-				tvTitle.setText("SEARCH");
-			}
-			
-			
-			switch (FileUtil.currentButton) {
-			case Constants.BUTTON_HOME:
-				
-				tvHome.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ico_home));
-				break;
-			case Constants.BUTTON_SEARCH:
-				
-				break;
-			case Constants.BUTTON_CATEGORY:
-				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_category));
-				
-				break;
-				
-			case Constants.BUTTON_ACCOUNT:
-				tvAccount.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivAccount.setImageDrawable(getResources().getDrawable(R.drawable.ico_account));
-				
-				break;
-			case Constants.BUTTON_MORE:
-				tvMore.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivMore.setImageDrawable(getResources().getDrawable(R.drawable.ico_more));
-				
-				break;
-				
-			default:
-				break;
-			}
-			
-			FileUtil.currentButton = Constants.BUTTON_SEARCH;
+		case R.id.include_footer_lnsearch:
+//			Intent intent = new Intent(HomeActivity.this, );
+//			startActivity(intent);
 			break;
 			
 		//----------Category is clicked----------
-		case R.id.home_lncategory:
-			if(FileUtil.currentButton != Constants.BUTTON_CATEGORY){
-				tvCart.setTextColor(getResources().getColor(R.color.crisom_red));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_category_active));
-				tvTitle.setText("CATEGORY");
-			}
-			
-			switch (FileUtil.currentButton) {
-			case Constants.BUTTON_HOME:
-				
-				tvHome.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ico_home));
-				break;
-			case Constants.BUTTON_SEARCH:
-				
-				tvSearch.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search));
-				
-				break;
-			case Constants.BUTTON_CATEGORY:
-				
-				
-				break;
-				
-			case Constants.BUTTON_ACCOUNT:
-				tvAccount.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivAccount.setImageDrawable(getResources().getDrawable(R.drawable.ico_account));
-				
-				break;
-			case Constants.BUTTON_MORE:
-				tvMore.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivMore.setImageDrawable(getResources().getDrawable(R.drawable.ico_more));
-				
-				break;
-				
-			default:
-				break;
-			}
-			FileUtil.currentButton = Constants.BUTTON_CATEGORY;
+		case R.id.include_footer_lncategory:
+			Intent category = new Intent(HomeActivity.this, LoginActivity.class);
+			startActivity(category);
 			break;
 			
-		//----------Account is clicked----------
-		case R.id.home_lnaccount:
-			if(FileUtil.currentButton != Constants.BUTTON_ACCOUNT){
-				tvAccount.setTextColor(getResources().getColor(R.color.crisom_red));
-				ivAccount.setImageDrawable(getResources().getDrawable(R.drawable.ico_account_active));
-				tvTitle.setText("ACCOUNT");
-			}
-			
-			switch (FileUtil.currentButton) {
-			case Constants.BUTTON_HOME:
-				
-				tvHome.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ico_home));
-				break;
-			case Constants.BUTTON_SEARCH:
-				
-				tvSearch.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search));
-				
-				break;
-			case Constants.BUTTON_CATEGORY:
-				
-				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_category));
-				
-				break;
-				
-			case Constants.BUTTON_ACCOUNT:
-				
-				
-				break;
-			case Constants.BUTTON_MORE:
-				tvMore.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivMore.setImageDrawable(getResources().getDrawable(R.drawable.ico_more));
-				
-				break;
-				
-			default:
-				break;
-			}
-			FileUtil.currentButton = Constants.BUTTON_ACCOUNT;
+		//----------Cart is clicked----------
+		case R.id.include_footer_lncart:
+			Intent cart = new Intent(HomeActivity.this, LoginActivity.class);
+			startActivity(cart);
 			break;
 			
-		//----------More is clicked----------
-		case R.id.home_lnmore:
-			
-			callMoreFragment();
-			
-			if(FileUtil.currentButton != Constants.BUTTON_MORE){
-				tvMore.setTextColor(getResources().getColor(R.color.crisom_red));
-				ivMore.setImageDrawable(getResources().getDrawable(R.drawable.ico_more_active));
-				tvTitle.setText("MORE");
-			}
-			
-			switch (FileUtil.currentButton) {
-			case Constants.BUTTON_HOME:
-				
-				tvHome.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivHome.setImageDrawable(getResources().getDrawable(R.drawable.ico_home));
-				break;
-			case Constants.BUTTON_SEARCH:
-				
-				tvSearch.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ico_search));
-				
-				break;
-			case Constants.BUTTON_CATEGORY:
-				
-				tvCart.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivCart.setImageDrawable(getResources().getDrawable(R.drawable.ico_cart));
-				
-				break;
-				
-			case Constants.BUTTON_ACCOUNT:
-				
-				tvAccount.setTextColor(getResources().getColor(R.color.crisom_grayitem));
-				ivAccount.setImageDrawable(getResources().getDrawable(R.drawable.ico_account));
-				
-				break;
-			case Constants.BUTTON_MORE:
-				
-				break;
-				
-			default:
-				break;
-			}
-			
-			FileUtil.currentButton = Constants.BUTTON_MORE;
+		//----------Contact is clicked----------
+		case R.id.include_footer_lncontact:
+			Intent contact = new Intent(HomeActivity.this, LoginActivity.class);
+			startActivity(contact);
 			break;	
+		
+		//----------------Click other--------------------
+		case R.id.home_tv_mainsite:
+			Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+			startActivity(launchBrowser);
+			break;	
+			
+		case R.id.include_header_btnLogin:
+			Intent login = new Intent(HomeActivity.this, LoginActivity.class);
+			startActivity(login);
+			break;	
+			
+		//-----------------------------------------------------
+		//---------click marker slide image------------
+		case R.id.home_mark1:
+			for (int j = 0; j < listImage.size(); j++) {
+				if (j != 0) {
+					listImage.get(j).setImageResource(R.drawable.viewpager_nomal);
+				}
+			}
+			listImage.get(0).setImageResource(R.drawable.viewpager_active);
+			mViewFlipper.setDisplayedChild(0);
+			break;	
+			
+		case R.id.home_mark2:
+			for (int j = 1; j < listImage.size(); j++) {
+				if (j != 1) {
+					listImage.get(j).setImageResource(R.drawable.viewpager_nomal);
+				}
+			}
+			listImage.get(1).setImageResource(R.drawable.viewpager_active);
+			mViewFlipper.setDisplayedChild(1);		
+			break;
+			
+		case R.id.home_mark3:
+			for (int j = 2; j < listImage.size(); j++) {
+				if (j != 2) {
+					listImage.get(j).setImageResource(R.drawable.viewpager_nomal);
+				}
+			}
+			listImage.get(2).setImageResource(R.drawable.viewpager_active);
+			mViewFlipper.setDisplayedChild(2);
+			break;
+			
+		case R.id.home_mark4:
+			for (int j = 3; j < listImage.size(); j++) {
+				if (j != 3) {
+					listImage.get(j).setImageResource(R.drawable.viewpager_nomal);
+				}
+			}
+			listImage.get(3).setImageResource(R.drawable.viewpager_active);
+			mViewFlipper.setDisplayedChild(3);
+			break;
+			
+			
+			
 
 		default:
 			break;
@@ -314,23 +235,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		
 	}
 	
-	private void callHomeFragment(){
-		fragmentManager = getFragmentManager();
-		fragmentTransaction = fragmentManager.beginTransaction();
-	    HomeFragment homeFragment = new HomeFragment();
-//	    fragmentTransaction.replace(R.id.home_fragment, homeFragment);	 
-	    fragmentTransaction.addToBackStack(null);
-	    fragmentTransaction.commit();
-	}
-	
-	private void callMoreFragment(){
-		fragmentManager = getFragmentManager();
-		fragmentTransaction = fragmentManager.beginTransaction();
-		MoreFragment moreFragment = new MoreFragment();
-	    fragmentTransaction.replace(R.id.home_fragment, moreFragment);
-	    fragmentTransaction.addToBackStack(null);
-	    fragmentTransaction.commit();
-	}
 	
 	
 	

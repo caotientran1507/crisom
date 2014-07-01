@@ -1,0 +1,212 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/crisom_white"
+    android:orientation="vertical"
+    android:weightSum="100" >
+
+    <!-- Title Activity -->
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        layout="@layout/include_header" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        layout="@layout/include_logo" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="74" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="100" >
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="90"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" >
+
+                    <LinearLayout
+                        android:layout_width="250dp"
+                        android:layout_height="200dp"
+                        android:background="@drawable/image_background" >
+
+                        <ViewFlipper
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:flipInterval="5000"
+                            android:inAnimation="@anim/silde_in_left"
+                            android:outAnimation="@anim/silde_in_right"
+                            android:scaleType="centerCrop" >
+                        </ViewFlipper>
+                    </LinearLayout>
+                </LinearLayout>
+                <!-- END SLIDE IMAGE -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_horizontal" >
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_red_background"
+                        android:paddingBottom="5dp"
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp"
+                        android:paddingTop="5dp"
+                        android:text="Verify Compatibility"
+                        android:textColor="@color/crisom_white"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/crisom_red" />
+                <!-- END BUTTON VERIFY -->
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="VW4600"
+                    android:textColor="@color/crisom_red"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:text="Video Wall Mount"
+                    android:textColor="@color/crisom_red" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:text="Crimson’s best value in class VW4600 Video Wall Mount System features lateral, vertical, horizontal, and plumb adjustments. Includes an integrated lock and key system with a quick-release mechanism enabling 10.75&quot; pull out extension for wiring and monitor servicing, and a lightweight wall plate design that enables a single installer to lay out the wall grid." />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:text="Expandable, full-featured video wall solution 
+10.75&quot; pull out extension from wall for easy wiring
+Quick release latch and &apos;click to closed position&apos; feature
+Lateral Shift
+Vertical adjustment and Horizontal Leveling
+Plumb Adjustment
+Integrated dual-key lock system" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="5dp"
+                    android:text="Please use E-Z mount finder to verify compatibility of your flat panel screen and this mount." />
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/crisom_red" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/crisom_button_detail"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="SPECIFICATIONS"
+                    android:textColor="@color/crisom_red"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="FEATURES"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="ACCESSORIES"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="DOWNLOADS"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
+                    android:text="VIDEO"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="#e5e5e5"
+                    android:padding="20dp"
+                    android:text="ull Featured video wall solution and pull out mount
+10.75&quot; pull out extension from wall for easy wiring
+Quick release latch and click to closed position feature
+Lateral Shift
+Vertical adjustment and Horizontal Leveling
+Plumb Adjustment
+Integrated dual keyed lock system"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Button bot -->
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        layout="@layout/include_footer" />
+
+</LinearLayout>

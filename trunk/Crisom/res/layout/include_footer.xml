@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/crisom_graybot"
+    android:background="@drawable/color_linear_tab_bottom"
     android:orientation="horizontal"
     android:weightSum="5" >
 
     <!-- Home Button -->
 
     <LinearLayout
-        android:id="@+id/home_lnhome"
+        android:id="@+id/include_footer_lnhome"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -17,22 +17,27 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/home_ivhome"
+            android:id="@+id/include_footer_ivhome"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ico_home_active" />
+            android:src="@drawable/ico_home" />
     </LinearLayout>
 
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.03"
-        android:background="@color/crisom_graybackgroundvertical" />
+        android:layout_weight="0.015"
+        android:background="@drawable/color_tab_bottom_light" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.015"
+        android:background="@drawable/color_tab_bottom_dark" />
 
     <!-- Cart button -->
 
     <LinearLayout
-        android:id="@+id/home_lncategory"
+        android:id="@+id/include_footer_lncategory"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -40,7 +45,7 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/home_ivcart"
+            android:id="@+id/include_footer_ivcategory"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ico_category" />
@@ -51,11 +56,16 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.03"
-        android:background="@color/crisom_graybackgroundvertical" />
+        android:layout_weight="0.015"
+        android:background="@drawable/color_tab_bottom_light" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.015"
+        android:background="@drawable/color_tab_bottom_dark" />
 
     <LinearLayout
-        android:id="@+id/home_lnsearch"
+        android:id="@+id/include_footer_lnsearch"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -63,7 +73,7 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/home_ivsearch"
+            android:id="@+id/include_footer_ivsearch"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ico_search" />
@@ -74,11 +84,16 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.03"
-        android:background="@color/crisom_graybackgroundvertical" />
+        android:layout_weight="0.015"
+        android:background="@drawable/color_tab_bottom_light" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.015"
+        android:background="@drawable/color_tab_bottom_dark" />
 
     <LinearLayout
-        android:id="@+id/home_lnaccount"
+        android:id="@+id/include_footer_lncart"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -86,7 +101,7 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/home_ivaccount"
+            android:id="@+id/include_footer_ivcart"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ico_account" />
@@ -97,11 +112,16 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="0.03"
-        android:background="@color/crisom_graybackgroundvertical" />
+        android:layout_weight="0.015"
+        android:background="@drawable/color_tab_bottom_light" />
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.015"
+        android:background="@drawable/color_tab_bottom_dark" />
 
     <LinearLayout
-        android:id="@+id/home_lnmore"
+        android:id="@+id/include_footer_lncontact"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -109,7 +129,7 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/home_ivmore"
+            android:id="@+id/include_footer_ivcontact"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:src="@drawable/ico_more" />

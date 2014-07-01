@@ -35,7 +35,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ico_next" />
+                android:src="@drawable/ico_next_red" />
         </LinearLayout>
     </LinearLayout>
 
@@ -75,7 +75,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ico_next" />
+                android:src="@drawable/ico_next_red" />
         </LinearLayout>
     </LinearLayout>
 
@@ -115,7 +115,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ico_next" />
+                android:src="@drawable/ico_next_red" />
         </LinearLayout>
     </LinearLayout>
 
@@ -155,7 +155,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ico_next" />
+                android:src="@drawable/ico_next_red" />
         </LinearLayout>
     </LinearLayout>
 
@@ -195,7 +195,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ico_next" />
+                android:src="@drawable/ico_next_red" />
         </LinearLayout>
     </LinearLayout>
     
@@ -235,7 +235,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ico_next" />
+                android:src="@drawable/ico_next_red" />
         </LinearLayout>
     </LinearLayout>
     
@@ -275,7 +275,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ico_next" />
+                android:src="@drawable/ico_next_red" />
         </LinearLayout>
     </LinearLayout>
     
@@ -315,7 +315,7 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ico_next" />
+                android:src="@drawable/ico_next_red" />
         </LinearLayout>
     </LinearLayout>
 

@@ -9,7 +9,7 @@ import android.widget.EditText;
 public class LoginActivity extends Activity implements View.OnClickListener{
 
 	EditText edtEmail,edtPass;
-	Button btnLogin;
+	Button btnLogin,btnCancel;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,8 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		edtEmail = (EditText)findViewById(R.id.login_edt_email);
 		edtPass = (EditText)findViewById(R.id.login_edt_pass);
 		btnLogin = (Button)findViewById(R.id.login_btn_login);
+		btnCancel = (Button)findViewById(R.id.login_btn_cancel);
+		btnLogin.setVisibility(View.INVISIBLE);
 	}
 
 	private void initData(){
@@ -40,6 +42,10 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		switch (v.getId()) {
 		case R.id.login_btn_login:
 			
+			break;
+			
+		case R.id.login_btn_cancel:
+			finish();
 			break;
 
 		default:

@@ -45,7 +45,7 @@
                             android:id="@+id/register_personal_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ico_down" />
+                            android:src="@drawable/ico_down_red" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -467,7 +467,7 @@
                             android:id="@+id/register_billing_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ico_down" />
+                            android:src="@drawable/ico_down_red" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -734,7 +734,7 @@
                             android:id="@+id/register_shipping_img"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/ico_down" />
+                            android:src="@drawable/ico_down_red" />
                     </LinearLayout>
                 </LinearLayout>
 

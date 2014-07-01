@@ -1,5 +1,8 @@
 package com.zdh.crisom;
 
+import java.util.Collections;
+import java.util.Locale;
+
 import com.zdh.crisom.utility.FileUtil;
 
 import android.app.Activity;
@@ -34,7 +37,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_register);
+		setContentView(R.layout.activity_register);
 		init();
 
 	}
@@ -46,6 +49,15 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
 	}
 
 	private void initData() {
+		//--------load countries data---------
+		Locale[] locales = Locale.getAvailableLocales();	        
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length() > 0 && !FileUtil.countries.contains(country)) {
+            	FileUtil.countries.add(country);
+            }
+        }
+        Collections.sort(FileUtil.countries);  
 		dataAdapter = new ArrayAdapter<String>(this,
 	                android.R.layout.simple_spinner_item, FileUtil.countries);
 		spnBillingCountry.setAdapter(dataAdapter);
@@ -117,7 +129,7 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
 		lnPersonalTitle.setOnClickListener(this);
 		lnBillingTitle.setOnClickListener(this);
 		lnShippingTitle.setOnClickListener(this);
-		btnSubmit.setOnClickListener(this);
+//		btnSubmit.setOnClickListener(this);
 	}
 
 	@Override
@@ -126,29 +138,31 @@ public class RegisterActivity extends Activity implements View.OnClickListener{
 		case R.id.register_personal_ln_title:
 			if (lnPersonalContent.getVisibility() == View.VISIBLE) {
 				lnPersonalContent.setVisibility(View.GONE);
+				ivPersonal.setImageResource(R.drawable.ico_next_white);
 			} else {
 				lnPersonalContent.setVisibility(View.VISIBLE);
+				ivPersonal.setImageResource(R.drawable.ico_down_white);
 			}	
 			break;
 		case R.id.register_billing_ln_title:
 			if (lnBillingContent.getVisibility() == View.VISIBLE) {
 				lnBillingContent.setVisibility(View.GONE);
+				ivBilling.setImageResource(R.drawable.ico_next_white);
 			} else {
 				lnBillingContent.setVisibility(View.VISIBLE);
+				ivBilling.setImageResource(R.drawable.ico_down_white);
 			}		
 			break;
 					
 		case R.id.register_shipping_ln_title:
 			if (lnShippingContent.getVisibility() == View.VISIBLE) {
 				lnShippingContent.setVisibility(View.GONE);
+				ivShipping.setImageResource(R.drawable.ico_next_white);
 			} else {
 				lnShippingContent.setVisibility(View.VISIBLE);
+				ivShipping.setImageResource(R.drawable.ico_down_white);
 			}
 			break;
-			
-//		case R.id.register_billing_ln_title:
-//			
-//			break;
 
 		default:
 			break;

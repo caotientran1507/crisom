@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.widget.TextView;
 
 
+@SuppressLint("DrawAllocation")
 public class TextViewEx extends TextView 
 {       
     private Paint paint = new Paint();
@@ -44,20 +45,20 @@ public class TextViewEx extends TextView
     public TextViewEx(Context context, AttributeSet attrs) 
     {
         super(context, attrs);
-        this.setPadding(10, 0, 10, 0);
+        this.setPadding(0, 0, 0, 0);
     }
 
     public TextViewEx(Context context) 
     {
         super(context);
-        this.setPadding(10, 0, 10, 0);
+        this.setPadding(0, 0, 0, 0);
     }
     
     @Override
 	public void setPadding(int left, int top, int right, int bottom) {
 		// TODO Auto-generated method stub
     	
-		super.setPadding(left+10, top, right+10, bottom);
+		super.setPadding(left, top, right, bottom);
 	}
 
 	@Override
