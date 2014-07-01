@@ -6,29 +6,197 @@
     android:weightSum="100" >
 
     <!-- Title Activity -->
-    
-    <include 
+
+    <include
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7"
-        layout="@layout/include_header"/>
-    
-    
+        layout="@layout/include_header" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        layout="@layout/include_search" />
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        layout="@layout/include_logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="86" >
+        android:layout_weight="66"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:weightSum="100" >
 
-       
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="90"
+            android:orientation="vertical"
+            android:weightSum="66" >
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="22" >
+
+                <ViewFlipper
+                    android:id="@+id/home_vf"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/linear_background"
+                    android:flipInterval="3000"
+                    android:padding="5dp" >
+
+                    <ImageView
+                        android:id="@+id/home_vf_img1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/imageslidea" />
+
+                    <ImageView
+                        android:id="@+id/home_vf_img2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/imageslideb" />
+
+                    <ImageView
+                        android:id="@+id/home_vf_img3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/imageslidec" />
+
+                    <ImageView
+                        android:id="@+id/home_vf_img4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:adjustViewBounds="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/imageslided" />
+                </ViewFlipper>
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/lnBottom"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:gravity="center" >
+
+                <ImageView
+                    android:id="@+id/home_mark1"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/viewpager_active" />
+
+                <ImageView
+                    android:id="@+id/home_mark2"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/viewpager_nomal" />
+
+                <ImageView
+                    android:id="@+id/home_mark3"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@drawable/viewpager_nomal" />
+
+                <ImageView
+                    android:id="@+id/home_mark4"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    android:src="@drawable/viewpager_nomal" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+            <LinearLayout
+                android:id="@+id/home_ln_browsercategories"   
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="7"
+                android:background="#b7151a"
+                android:orientation="horizontal"
+                android:weightSum="100" >
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="30"
+                    android:gravity="center" >
+
+                    <ImageView
+                        android:layout_width="40dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ico_browser_categories" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#f32630" />
+
+                <TextView
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="#7b0404" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="70"
+                    android:gravity="center" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="BROWSE CATEGORIES"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
+                        android:textColor="@color/crisom_white" />
+                </LinearLayout>
+            </LinearLayout>
+            
+            <TextView                 
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"/>
+            
+            <TextView    
+                android:id="@+id/home_tv_mainsite"             
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="5"
+                android:textSize="17sp"
+                android:textColor="@color/crisom_blue"
+                android:text="Go to Main Site"/>
+            
+        </LinearLayout>
     </LinearLayout>
 
     <!-- Button bot -->
-    
-    <include 
+
+    <include
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7"
-        layout="@layout/include_footer"/>
+        layout="@layout/include_footer" />
 
 </LinearLayout>

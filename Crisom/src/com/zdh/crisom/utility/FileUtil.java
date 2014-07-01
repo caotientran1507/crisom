@@ -3,6 +3,7 @@ package com.zdh.crisom.utility;
 import java.util.ArrayList;
 
 public class FileUtil {
+	public static boolean flagLogin = false;
 	public static int currentButton = Constants.BUTTON_HOME;
 	public static ArrayList<String> countries = new ArrayList<String>();
 	public static ArrayList<String> listImageSlide = new ArrayList<String>();
