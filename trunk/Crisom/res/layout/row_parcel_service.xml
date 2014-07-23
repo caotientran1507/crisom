@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    android:orientation="horizontal" >
+
+    <RadioButton
+        android:id="@+id/row_parcel_service_rbn"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/radio_selector"
+        android:button="@null" />
+
+    <TextView
+        android:id="@+id/row_parcel_service_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:text="UPS Ground" />
+
+</LinearLayout>

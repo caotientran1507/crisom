@@ -79,7 +79,7 @@
                                 android:id="@+id/register_personal_img"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:src="@drawable/ico_next_red" />
+                                android:src="@drawable/ico_next_white" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -519,7 +519,7 @@
                                 android:id="@+id/register_billing_img"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
-                                android:src="@drawable/ico_down_red" />
+                                android:src="@drawable/ico_down_white" />
                         </LinearLayout>
                     </LinearLayout>
 

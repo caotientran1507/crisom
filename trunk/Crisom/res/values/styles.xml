@@ -1,3 +1,17 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <style name="Theme.Light.NoTitleBar.Fullscreen.WithColoredSpinners" parent="@android:style/Theme.Light.NoTitleBar.Fullscreen">
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerItem.DropDownItem</item>
+    </style>
+
+    <style name="SpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textColor">@color/crisom_blue</item>
+        
+    </style>
+
+    <style name="SpinnerItem.DropDownItem" parent="@android:style/Widget.DropDownItem.Spinner">
+        <item name="android:textColor">@color/crisom_blue</item>        
+    </style>
 
 </resources>

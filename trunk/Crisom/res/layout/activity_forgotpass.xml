@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="9"
-        android:background="@color/crisom_graybot"
+        android:background="@color/crisom_gray_divider"
         android:gravity="center" >
 
         <TextView
@@ -82,6 +82,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="6"
+                android:padding="5dp"
                 android:inputType="textEmailAddress"
                 android:background="@drawable/edittext_background" />
             <!-- Email -->
