@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,23 +13,34 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zdh.crisom.utility.Constants;
-import com.zdh.crisom.utility.FileUtil;
+import com.zdh.crisom.utility.SharedPreferencesUtil;
 
 public class CategoryListActivity extends Activity  implements View.OnClickListener{
 
 	//--------define variables---------
 	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact;
-	private ListView listCategory;
+	private ListView lvCategory;
 	private ImageView ivCategory;	
-	private Button btnLogin;
+	private Button btnLogin,btnBack;
 	private TextView tvTitle;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_category_list);
+		setContentView(R.layout.activity_product_list);
 		init();
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (SharedPreferencesUtil.getFlagLogin(CategoryListActivity.this)) {
+			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
+		} else {
+			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
+		}
+		
 	}
 	
 	private void init(){
@@ -37,18 +50,19 @@ public class CategoryListActivity extends Activity  implements View.OnClickListe
 	}
 	
 	private void initView(){
-		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnhome);
-		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnsearch);
-		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lncategory);
-		lnCart = (LinearLayout)findViewById(R.id.include_footer_lncart);
-		lnContact = (LinearLayout)findViewById(R.id.include_footer_lncontact);	
+		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
+		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
+		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
+		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
+		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);	
 		
-		listCategory = (ListView)findViewById(R.id.categoty_list_lv);	
+		lvCategory = (ListView)findViewById(R.id.productlist_lv);	
 		
 		ivCategory = (ImageView)findViewById(R.id.include_footer_ivcategory);	
 		
-		tvTitle = (TextView)findViewById(R.id.include_header_tvtitle);
+		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
 		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
+		btnBack = (Button)findViewById(R.id.include_header_btnBack);
 	
 		ivCategory.setImageResource(R.drawable.ico_category_active);
 		tvTitle.setText("CATEGORIES");
@@ -59,15 +73,19 @@ public class CategoryListActivity extends Activity  implements View.OnClickListe
 		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
+		btnBack.setOnClickListener(this);
+		
+		lvCategory.setOnItemClickListener(new OnItemClickListener() {
+		   @Override
+		   public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {		
+			   
+		   } 
+		});
 				
 	}
 	
 	private void initData() {
-		if (FileUtil.flagLogin) {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
-		} else {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
-		}
+		
 	}
 	
 	private void initDataWebservice(){
@@ -80,29 +98,29 @@ public class CategoryListActivity extends Activity  implements View.OnClickListe
 		switch (v.getId()) {
 		//----------------Click tab bottom--------------------
 		//----------Home is clicked----------
-		case R.id.include_footer_lnhome:
+		case R.id.include_footer_lnHome:
 			Intent home = new Intent(CategoryListActivity.this, HomeActivity.class);
 			startActivity(home);
 			break;		
 		//----------Search is clicked----------
-		case R.id.include_footer_lnsearch:
-//			Intent intent = new Intent(HomeActivity.this, );
-//			startActivity(intent);
+		case R.id.include_footer_lnSearch:
+			Intent intent = new Intent(CategoryListActivity.this, SearchActivity.class);
+			startActivity(intent);
 			break;
 			
 		//----------Category is clicked----------
-		case R.id.include_footer_lncategory:
+		case R.id.include_footer_lnCategory:
 			
 			break;
 			
 		//----------Cart is clicked----------
-		case R.id.include_footer_lncart:
-			Intent cart = new Intent(CategoryListActivity.this, LoginActivity.class);
+		case R.id.include_footer_lnCart:
+			Intent cart = new Intent(CategoryListActivity.this, CartActivity.class);
 			startActivity(cart);
 			break;
 			
 		//----------Contact is clicked----------
-		case R.id.include_footer_lncontact:
+		case R.id.include_footer_lnContact:
 			Intent contact = new Intent(CategoryListActivity.this, ContactActivity.class);
 			startActivity(contact);
 			break;	
@@ -112,6 +130,11 @@ public class CategoryListActivity extends Activity  implements View.OnClickListe
 			Intent login = new Intent(CategoryListActivity.this, LoginActivity.class);
 			startActivity(login);
 			break;	
+			
+		case R.id.include_header_btnBack:
+			
+			break;		
+			
 		
 		default:
 			break;

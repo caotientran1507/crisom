@@ -29,24 +29,29 @@
                 android:layout_weight="3" />
 
             <LinearLayout
+                android:id="@+id/include_search_lnImage"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="10"
                 android:gravity="center" >
 
                 <ImageView
-                    android:layout_height="15dp" 
                     android:layout_width="15dp"
+                    android:layout_height="15dp"
                     android:src="@drawable/ico_search_red" />
             </LinearLayout>
-            <EditText 
+
+            <EditText
                 android:id="@+id/include_search_edt"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="82" 
+                android:layout_weight="82"
                 android:background="@color/transparent"
-                android:textSize="15sp"
-                android:hint="Search"/>
+                android:hint="Search"
+                android:imeOptions="actionSearch"
+                android:lines="1"
+                android:maxLines="1"
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 

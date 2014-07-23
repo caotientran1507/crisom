@@ -9,7 +9,7 @@
     <!-- Home Button -->
 
     <LinearLayout
-        android:id="@+id/include_footer_lnhome"
+        android:id="@+id/include_footer_lnHome"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -37,7 +37,7 @@
     <!-- Cart button -->
 
     <LinearLayout
-        android:id="@+id/include_footer_lncategory"
+        android:id="@+id/include_footer_lnCategory"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -65,7 +65,7 @@
         android:background="@drawable/color_tab_bottom_dark" />
 
     <LinearLayout
-        android:id="@+id/include_footer_lnsearch"
+        android:id="@+id/include_footer_lnSearch"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -93,7 +93,7 @@
         android:background="@drawable/color_tab_bottom_dark" />
 
     <LinearLayout
-        android:id="@+id/include_footer_lncart"
+        android:id="@+id/include_footer_lnCart"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -101,10 +101,10 @@
         android:orientation="vertical" >
 
         <ImageView
-            android:id="@+id/include_footer_ivcart"
+            android:id="@+id/include_footer_ivCart"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ico_account" />
+            android:src="@drawable/ico_cart" />
     </LinearLayout>
 
     <!-- More button -->
@@ -121,7 +121,7 @@
         android:background="@drawable/color_tab_bottom_dark" />
 
     <LinearLayout
-        android:id="@+id/include_footer_lncontact"
+        android:id="@+id/include_footer_lnContact"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.97"
@@ -132,7 +132,7 @@
             android:id="@+id/include_footer_ivcontact"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:src="@drawable/ico_more" />
+            android:src="@drawable/ico_contact" />
     </LinearLayout>
 
 </LinearLayout>

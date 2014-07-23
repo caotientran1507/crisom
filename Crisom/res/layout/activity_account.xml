@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/crisom_graybot" />
+                    android:background="@color/crisom_gray_divider" />
 
                 <LinearLayout
                     android:id="@+id/account_ln_billing"
@@ -126,7 +126,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/crisom_graybot" />
+                    android:background="@color/crisom_gray_divider" />
 
                 <LinearLayout
                     android:id="@+id/account_ln_newsletter"
@@ -166,7 +166,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/crisom_graybot" />
+                    android:background="@color/crisom_gray_divider" />
 
                 <LinearLayout
                     android:id="@+id/account_ln_cart"
@@ -206,7 +206,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/crisom_graybot" />
+                    android:background="@color/crisom_gray_divider" />
 
                 <LinearLayout
                     android:id="@+id/account_ln_order"
@@ -246,7 +246,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/crisom_graybot" />
+                    android:background="@color/crisom_gray_divider" />
 
                 <LinearLayout
                     android:id="@+id/account_ln_register"
@@ -286,7 +286,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/crisom_graybot" />
+                    android:background="@color/crisom_gray_divider" />
 
                 <LinearLayout
                     android:id="@+id/account_ln_login"
@@ -326,7 +326,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="@color/crisom_graybot" />
+                    android:background="@color/crisom_gray_divider" />
 
                 <LinearLayout
                     android:id="@+id/account_ln_logout"

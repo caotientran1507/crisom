@@ -1,9 +1,9 @@
 package com.zdh.crisom;
 
-import com.zdh.crisom.utility.Constants;
-import com.zdh.crisom.utility.FileUtil;
-
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,12 +12,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zdh.crisom.utility.Constants;
+import com.zdh.crisom.utility.SharedPreferencesUtil;
+
 public class ContactActivity extends Activity  implements View.OnClickListener{
 
 	//--------define variables---------
 	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact;
 	private ImageView ivContact;	
-	private Button btnLogin;
+	private Button btnLogin,btnBack;
 	private TextView tvTitle;
 	
 	
@@ -28,6 +31,15 @@ public class ContactActivity extends Activity  implements View.OnClickListener{
 		init();
 	}
 	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		ChangeTextButtonLogin();
+		
+	}
+	
+	
+	
 	private void init(){
 		initView();
 		initData();
@@ -35,20 +47,23 @@ public class ContactActivity extends Activity  implements View.OnClickListener{
 	}	
 
 	private void initView(){
-		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnhome);
-		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnsearch);
-		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lncategory);
-		lnCart = (LinearLayout)findViewById(R.id.include_footer_lncart);
-		lnContact = (LinearLayout)findViewById(R.id.include_footer_lncontact);		
+		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
+		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
+		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
+		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
+		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);		
 		
-		ivContact = (ImageView)findViewById(R.id.include_footer_ivcategory);	
+		ivContact = (ImageView)findViewById(R.id.include_footer_ivcontact);	
 		
-		tvTitle = (TextView)findViewById(R.id.include_header_tvtitle);
+		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
 		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
-	
+		btnBack = (Button)findViewById(R.id.include_header_btnBack);
 		ivContact.setImageResource(R.drawable.ico_category_active);
+		
 		tvTitle.setText("CONTACT");
-				
+		btnBack.setVisibility(View.INVISIBLE);
+		ivContact.setImageResource(R.drawable.ico_contact_active);
+		
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
@@ -59,11 +74,7 @@ public class ContactActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	private void initData() {
-		if (FileUtil.flagLogin) {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
-		} else {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
-		}
+		
 	}
 	
 	private void initDataWebservice(){
@@ -76,36 +87,44 @@ public class ContactActivity extends Activity  implements View.OnClickListener{
 		switch (v.getId()) {
 		//----------------Click tab bottom--------------------
 		//----------Home is clicked----------
-		case R.id.include_footer_lnhome:
+		case R.id.include_footer_lnHome:
 			Intent home = new Intent(ContactActivity.this, HomeActivity.class);
 			startActivity(home);
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;		
 		//----------Search is clicked----------
-		case R.id.include_footer_lnsearch:
-//			Intent intent = new Intent(HomeActivity.this, );
-//			startActivity(intent);
+		case R.id.include_footer_lnSearch:
+			Intent intent = new Intent(ContactActivity.this, SearchActivity.class);
+			startActivity(intent);
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;
 			
 		//----------Category is clicked----------
-		case R.id.include_footer_lncategory:
+		case R.id.include_footer_lnCategory:
 			Intent category = new Intent(ContactActivity.this, CategoryActivity.class);
 			startActivity(category);
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;
 			
 		//----------Cart is clicked----------
-		case R.id.include_footer_lncart:
-			Intent cart = new Intent(ContactActivity.this, LoginActivity.class);
+		case R.id.include_footer_lnCart:
+			Intent cart = new Intent(ContactActivity.this, CartActivity.class);
 			startActivity(cart);
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;
 			
 		//----------Contact is clicked----------
-		case R.id.include_footer_lncontact:
+		case R.id.include_footer_lnContact:
 			break;	
 		
 			
 		case R.id.include_header_btnLogin:
-			Intent login = new Intent(ContactActivity.this, LoginActivity.class);
-			startActivity(login);
+			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
+				Intent login = new Intent(ContactActivity.this, LoginActivity.class);
+				startActivity(login);
+			}else{
+				showDialog(ContactActivity.this);				
+			}
 			break;	
 			
 		
@@ -116,9 +135,47 @@ public class ContactActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	
+	public void showDialog(final Context mContext){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+		// Setting Dialog Title
+		alertDialog.setTitle("Confirm Log out...");
+
+		// Setting Dialog Message
+		alertDialog.setMessage("Are you sure you want log out now?");
+
+		// Setting Icon to Dialog
+		alertDialog.setIcon(R.drawable.delete);
+
+		// Setting Positive "Yes" Button
+		alertDialog.setPositiveButton("YES",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int which) {
+						SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
+						ChangeTextButtonLogin();
+						dialog.dismiss();
+					}
+				});
+		// Setting Negative "NO" Button
+		alertDialog.setNegativeButton("NO",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,	int which) {
+						
+						dialog.dismiss();
+						
+					}
+				});
+
+		// Showing Alert Message
+		alertDialog.show();
+	}
 	
-	
-	
-	
-	
+	public void ChangeTextButtonLogin(){
+		if (SharedPreferencesUtil.getFlagLogin(ContactActivity.this)) {
+			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
+		} else {
+			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
+		}
+	}
+
 }

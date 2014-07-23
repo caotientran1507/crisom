@@ -4,6 +4,8 @@
     android:layout_height="40dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
+    android:paddingTop="10dp"
+    android:paddingBottom="5dp"
     android:weightSum="100" >
 
     <TextView
@@ -20,7 +22,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="15"
-        android:gravity="center" >
+        android:gravity="right" >
 
         <ImageView
             android:id="@+id/row_category_img"
