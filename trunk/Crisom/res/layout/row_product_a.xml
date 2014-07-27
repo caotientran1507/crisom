@@ -8,10 +8,10 @@
     android:weightSum="100" >
 
     <ImageView
-        android:layout_margin="5dp"
         android:id="@+id/row_product_ivAvatar"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="110dp"
+        android:layout_margin="5dp"
         android:layout_weight="30"
         android:padding="10dp"
         android:scaleType="fitXY"
@@ -57,9 +57,11 @@
             android:id="@+id/row_product_tvDes2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:maxLength="110"
+            android:ellipsize="end"
+            android:maxLines="4"
             android:paddingBottom="5dp"
-            android:text="Crimson’s best value in class VW4600 Video Wall Mount System features lateral, vertical, horizontal, and plumb adjustments. Includes an... "
+            android:singleLine="false"
+            android:text="Crimson’s best value in class VW4600 Video Wall Mount System feataures lateral, vertical, horizontal, and plumb adjustments. Includes an "
             android:textSize="12sp" />
 
         <TextView
@@ -105,7 +107,6 @@
                         android:layout_weight="5" />
 
                     <LinearLayout
-                        
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="70"
@@ -180,8 +181,8 @@
                             android:id="@+id/row_product_tvQuantityIncart"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="10sp"
-                            android:text="0"/>
+                            android:text="0"
+                            android:textSize="10sp" />
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
