@@ -109,6 +109,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
+		btnBack.setOnClickListener(this);
 		ln1BillingInfomation.setOnClickListener(this);
 		ln2ShippingInfomation.setOnClickListener(this);
 		ln3ShippingMethod.setOnClickListener(this);
@@ -147,17 +148,20 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		case R.id.include_footer_lnHome:
 			Intent home = new Intent(CheckoutDetailActivity.this, HomeActivity.class);
 			startActivity(home);
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;		
 		//----------Search is clicked----------
 		case R.id.include_footer_lnSearch:
 			Intent search = new Intent(CheckoutDetailActivity.this, SearchActivity.class);
 			startActivity(search);
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;
 			
 		//----------Category is clicked----------
 		case R.id.include_footer_lnCategory:
 			Intent category = new Intent(CheckoutDetailActivity.this, CategoryActivity.class);
 			startActivity(category);
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;
 			
 		//----------Cart is clicked----------
@@ -169,6 +173,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		case R.id.include_footer_lnContact:
 			Intent contact = new Intent(CheckoutDetailActivity.this, ContactActivity.class);
 			startActivity(contact);
+			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;	
 		
 			
@@ -179,6 +184,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			
 		case R.id.include_header_btnBack:
 			finish();
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;		
 			
 			

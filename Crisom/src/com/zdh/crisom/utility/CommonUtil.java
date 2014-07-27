@@ -13,6 +13,28 @@ public class CommonUtil {
 		return fmt.format(money);
 	}
 	
+	public static String getExtensionFile(String url){
+		return url.substring(url.length() - 4);
+	}
+	
+	public static String getNameFile(String url){
+		String[] arr = url.split("=");
+		if (arr.length > 1) {
+			return arr[arr.length - 1];
+		}
+		return "";
+	}
+	
+	public static double getTotal(){
+		double total = 0;
+		for (int i = 0; i < FileUtil.listRecent.size(); i++) {
+			total += (FileUtil.listRecent.get(i).getPrice() * FileUtil.listRecent.get(i).getQuantity());
+		}
+		return total;
+	}
+	
+	
+	
 	@SuppressWarnings("deprecation")
 	public void showDialogLogin(final Context mContext){
 		AlertDialog alertDialog = new AlertDialog.Builder(mContext).create();

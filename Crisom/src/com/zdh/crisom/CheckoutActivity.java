@@ -3,7 +3,6 @@ package com.zdh.crisom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -30,6 +29,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zdh.crisom.adapter.CheckoutAdapter;
+import com.zdh.crisom.model.CountryObject;
+import com.zdh.crisom.model.StateObject;
+import com.zdh.crisom.utility.CommonUtil;
 import com.zdh.crisom.utility.Constants;
 import com.zdh.crisom.utility.FileUtil;
 import com.zdh.crisom.utility.JsonParser;
@@ -109,6 +111,7 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
+		btnBack.setOnClickListener(this);
 		btnProceedCheckout.setOnClickListener(this);
 		btnContinueShopping.setOnClickListener(this);
 		btnClearShopping.setOnClickListener(this);
@@ -116,36 +119,30 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		btnProceedMutilAddress.setOnClickListener(this);
 		btnApplyCoupon.setOnClickListener(this);
 		btnQuote.setOnClickListener(this);
-		
-		
 				
 	}
 	
-	private void initData() {
-		//--------load countries data---------
-		Locale[] locales = Locale.getAvailableLocales();	        
-        for (Locale locale : locales) {
-            String country = locale.getDisplayCountry();
-            if (country.trim().length() > 0 && !FileUtil.countries.contains(country)) {
-            	FileUtil.countries.add(country);
-            }
-        }
+	private void initData() {		
         Collections.sort(FileUtil.countries);  
 		countriesAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, FileUtil.countries);
 		spnCountry.setAdapter(countriesAdapter);
 		
 		adapter = new CheckoutAdapter(CheckoutActivity.this, FileUtil.listRecent);
 		listview.setAdapter(adapter);
+		
+		tvSubTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
 	}
 	
 	private void initDataWebservice(){
-	
+		if (FileUtil.listCountry.size() <= 0 ) {
+			new GetCountryAsyncTask().execute();
+		}
 	}
 	
 	private void handleOtherAction(){
 		spnCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-		    	
+		    	new GetStateAsyncTask(FileUtil.listCountry.get(i).getCode()).execute();
 		    } 
 
 		    public void onNothingSelected(AdapterView<?> adapterView) {
@@ -302,6 +299,107 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 	    }
 	}
 	
+	//--------------------GetState----------------------------------------
+	public class GetStateAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		String idCountry;
+		public GetStateAsyncTask(String idCountry){
+			this.idCountry = idCountry;
+		}
+	   	    
+
+		@Override
+	    protected void onPreExecute() {
+	        super.onPreExecute();
+	        pDialog = new ProgressDialog(CheckoutActivity.this);
+	        pDialog.setMessage("Loading...");
+	        pDialog.setIndeterminate(false);
+	        pDialog.setCancelable(true);
+	        pDialog.show();
+	    }
+
+	    protected String doInBackground(String... params) {
+	    	
+	    	try {
+                // Building Parameters
+                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+                paramsUrl.add(new BasicNameValuePair("country_id", String.valueOf(idCountry)));
+                json = JsonParser.makeHttpRequest(
+                		Constants.URL_GETSTATE, "GET", paramsUrl);
+                if ((json != null) || (!json.equals(""))) {               
+                	JSONArray array = new JSONArray(json);
+                	FileUtil.listState.clear();
+        			for (int j = 0; j < array.length(); j++) {
+        				StateObject temp = new StateObject();
+        				temp.setName(array.getJSONObject(j).getString("name"));  
+        				temp.setCode(array.getJSONObject(j).getString("code"));   
+        				FileUtil.listState.add(temp);
+        			}
+        			
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+	        return null;
+	    }
+
+	    protected void onPostExecute(String file_url) {	      
+	    	pDialog.dismiss();	
+	    }
+	}
+	
+	//--------------------GetCountry----------------------------------------
+	public class GetCountryAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		public GetCountryAsyncTask(){
+		}
+	   	    
+
+		@Override
+	    protected void onPreExecute() {
+	        super.onPreExecute();
+	        pDialog = new ProgressDialog(CheckoutActivity.this);
+	        pDialog.setMessage("Loading...");
+	        pDialog.setIndeterminate(false);
+	        pDialog.setCancelable(true);
+	        pDialog.show();
+	    }
+
+	    protected String doInBackground(String... params) {
+	    	
+	    	try {
+                // Building Parameters
+                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+                json = JsonParser.makeHttpRequest(
+                		Constants.URL_GETSTATE, "GET", paramsUrl);
+                if ((json != null) || (!json.equals(""))) {               
+                	JSONArray array = new JSONArray(json);
+                	FileUtil.listState.clear();
+        			for (int j = 0; j < array.length(); j++) {
+        				CountryObject temp = new CountryObject();
+        				temp.setName(array.getJSONObject(j).getString("name"));  
+        				temp.setCode(array.getJSONObject(j).getString("country_id"));   
+        				FileUtil.listCountry.add(temp);
+        			}
+        			
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+	        return null;
+	    }
+
+	    protected void onPostExecute(String file_url) {	 
+	    	updateListCountry();
+	    	countriesAdapter.notifyDataSetChanged();
+	    	pDialog.dismiss();	
+	    }
+	}
+	
 	//--------------------UpdateShoppingCart----------------------------------------
 	public class UpdateShoppingCartAsyncTask extends AsyncTask<String, String, String> {
 
@@ -379,7 +477,6 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
                 paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
                 json = JsonParser.makeHttpRequest(
                 		Constants.URL_GETMODEL, "GET", paramsUrl);
-                Log.d("json", json);
                 if ((json != null) || (!json.equals(""))) {               
                 	JSONArray array = new JSONArray(json);
         			for (int j = 0; j < array.length(); j++) {
@@ -458,7 +555,12 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 	    }
 	}
 	
-	
+	private void updateListCountry(){
+		FileUtil.countries.clear();
+		for (int i = 0; i < FileUtil.listCountry.size(); i++) {
+			FileUtil.countries.add(FileUtil.listCountry.get(i).getName());
+		}
+	}
 	
 	
 }
