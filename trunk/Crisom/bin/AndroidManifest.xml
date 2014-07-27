@@ -5,23 +5,53 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
-        android:targetSdkVersion="16" />
+        android:minSdkVersion="11"
+        android:targetSdkVersion="19" />
+    
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Permission: Allow Connect to Internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Permission: Writing to SDCard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
-        <activity android:name="com.zdh.crisom.SplashActivity" >
-           <intent-filter>
+        android:theme="@style/Theme.Light.NoTitleBar.Fullscreen.WithColoredSpinners" >
+        <activity android:name="com.zdh.crisom.HomeActivity" 
+            android:configChanges="orientation|keyboardHidden"
+			android:screenOrientation="portrait"
+			android:windowSoftInputMode="stateHidden">
+			<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            
         </activity>
-        <activity android:name="com.zdh.crisom.HomeActivity" >
-             
+        <activity android:name="com.zdh.crisom.CartActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.ContactActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.RegisterActivity" >
+            
+        </activity>
+        <activity android:name="com.zdh.crisom.CategoryActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.CategoryListActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.LoginActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.ProductDetailActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.ProductListActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.CheckoutActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.CheckoutDetailActivity" >
+        </activity>
+        <activity android:name="com.zdh.crisom.SearchActivity" >
         </activity>
     </application>
 

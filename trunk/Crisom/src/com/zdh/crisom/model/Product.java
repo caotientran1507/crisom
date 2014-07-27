@@ -8,6 +8,8 @@ public class Product {
 	private String image;
 	private String shortDes;
 	private String des;
+	private String url;
+	private String faq; 
 	private ArrayList<OptionObject> listOption;
 	private ArrayList<DocumentObject> listDocument;
 	
@@ -62,6 +64,18 @@ public class Product {
 	}
 	public void setListDocument(ArrayList<DocumentObject> listDocument) {
 		this.listDocument = listDocument;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getFaq() {
+		return faq;
+	}
+	public void setFaq(String faq) {
+		this.faq = faq;
 	}
 	
 	

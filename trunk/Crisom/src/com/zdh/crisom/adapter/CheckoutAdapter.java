@@ -22,6 +22,7 @@ import com.zdh.crisom.R;
 import com.zdh.crisom.R.color;
 import com.zdh.crisom.lazylist.ImageLoader;
 import com.zdh.crisom.model.RecentObject;
+import com.zdh.crisom.utility.CommonUtil;
 import com.zdh.crisom.utility.FileUtil;
 
 public class CheckoutAdapter extends BaseAdapter {
@@ -100,7 +101,6 @@ public class CheckoutAdapter extends BaseAdapter {
 		
 		edtQuantity.addTextChangedListener(new TextWatcher(){
 	        public void afterTextChanged(Editable s) {
-	        	Log.d("edtQuantity", ""+s.toString());
 	        	if (FileUtil.listCartChange.containsKey(listRecent.get(currentPosition).getIdItem())) {
 	        		FileUtil.listCartChange.replace(listRecent.get(currentPosition).getIdItem(), edtQuantity.getText().toString());
 				} else {
@@ -120,13 +120,13 @@ public class CheckoutAdapter extends BaseAdapter {
 		
 		String des = "Desciption: "+ listRecent.get(currentPosition).getDesc();
 		Spannable desSpannable=new SpannableStringBuilder(des);
-		desSpannable.setSpan(new ForegroundColorSpan(color.crisom_blue), 0, 10, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+		desSpannable.setSpan(new ForegroundColorSpan(color.crisom_blue), 0, 10, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
 		tvDes.setText(desSpannable);
 		
 		tvColor.setText(listRecent.get(currentPosition).getColor());
-		edtQuantity.setText(String.valueOf(listRecent.get(currentPosition).getQuantity()));
-		tvPrice.setText(String.valueOf(listRecent.get(currentPosition).getPrice()));
-		tvSubtotal.setText(String.valueOf(listRecent.get(currentPosition).getPrice()*listRecent.get(currentPosition).getQuantity()));
+		edtQuantity.setText(String.valueOf(listRecent.get(currentPosition).getQuantity()));		
+		tvPrice.setText(CommonUtil.formatMoney(listRecent.get(currentPosition).getPrice()));
+		tvSubtotal.setText(CommonUtil.formatMoney(listRecent.get(currentPosition).getPrice()*listRecent.get(currentPosition).getQuantity()));
 		imageLoader.DisplayImage(listRecent.get(currentPosition).getImage(), ivAvatar);
 		return view;
 	}

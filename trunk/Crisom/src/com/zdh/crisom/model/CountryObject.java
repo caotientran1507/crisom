@@ -1,15 +1,9 @@
 package com.zdh.crisom.model;
 
 public class CountryObject {
-	int id;
 	String name;
 	String code;
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+	
 	public String getName() {
 		return name;
 	}

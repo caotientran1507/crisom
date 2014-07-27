@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="7"
-        layout="@layout/include_header" />
+        layout="@layout/include_header_with_btn_back" />
 
     <include
         android:layout_width="match_parent"
@@ -46,8 +46,8 @@
                     android:id="@+id/product_ivAvatar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="40"
                     android:layout_margin="10dp"
+                    android:layout_weight="30"
                     android:scaleType="fitXY"
                     android:src="@drawable/row_product_avatar" />
 
@@ -59,7 +59,7 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="60"
+                    android:layout_weight="70"
                     android:background="#eaeaea"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
@@ -71,22 +71,22 @@
                         android:layout_weight="90"
                         android:orientation="vertical"
                         android:weightSum="100" >
-                        
-                        <TextView 
+
+                        <TextView
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:layout_weight="3"/>
+                            android:layout_weight="3" />
 
                         <TextView
                             android:id="@+id/product_tvTitle1"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="20"
+                            android:gravity="center_vertical"
                             android:text="VW4600"
                             android:textColor="@color/crisom_red"
-                            android:gravity="center_vertical"
                             android:textStyle="bold" />
-                        
+
                         <TextView
                             android:id="@+id/product_tvTitle2"
                             android:layout_width="match_parent"
@@ -95,22 +95,23 @@
                             android:text="Video Wall Mount"
                             android:textColor="@color/crisom_red"
                             android:textStyle="bold" />
-                        
+
                         <TextView
                             android:id="@+id/product_tvDescription"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="44"
-                            android:text="Crimson’s best value in class VW4600 Video Wall Mount System features lateral, vertical, horizontal, and plumb adjustments. Includes an integrated"                            
+                            android:maxLines="3"
+                            android:text="Crimson’s best value in class VW4600 Video Wall Mount System features lateral, vertical, horizontal, and plumb adjustments. Includes an integrated"
                             android:textStyle="italic" />
-                        
+
                         <TextView
                             android:id="@+id/product_tvMainSite"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="15"
-                            android:text="Go to Main Site"
                             android:gravity="right"
+                            android:text="Go to Main Site"
                             android:textColor="@color/crisom_blue"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -146,12 +147,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="4" />
+                android:layout_weight="2" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="25"
+                android:layout_weight="42"
                 android:background="@drawable/linear_background_radius"
                 android:orientation="vertical"
                 android:weightSum="25" >
@@ -210,112 +211,77 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="2" />
+                    android:layout_weight="1" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="15"
+                    android:layout_weight="18"
+                    android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:weightSum="100" >
 
-                    <TextView
+                    <FrameLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="5" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="55"
-                        android:orientation="vertical"
-                        android:weightSum="100" >
-
-                        <TextView
-                            android:id="@+id/product_tvCost"
-                            android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="45"
-                            android:background="#e9e9e9"
-                            android:gravity="center"
-                            android:text="$356.00"
-                            android:textSize="20sp"
-                            android:textStyle="bold|italic" />
+                        android:layout_weight="95" >
 
                         <LinearLayout
+                            android:id="@+id/product_lnPrice"
                             android:layout_width="match_parent"
-                            android:layout_height="0dp"
-                            android:layout_weight="55"
-                            android:gravity="bottom|center_horizontal"
-                            android:orientation="horizontal" >
+                            android:layout_height="match_parent" >
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="MSRP: "
-                                android:textSize="18sp"
-                                android:textStyle="italic" />
-
-                            <TextView
-                                android:id="@+id/product_tvCostSmall"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="$356.00"
-                                android:textSize="18sp"
-                                android:textStyle="italic" />
+                            <ListView
+                                android:id="@+id/product_lvPrice"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" >
+                            </ListView>
                         </LinearLayout>
-                    </LinearLayout>
 
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="5" />
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="30"
-                        android:background="@drawable/linear_blue_background"
-                        android:gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:weightSum="100" >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="25"
-                            android:gravity="center"
-                            android:text="Your Profit"
-                            android:textColor="@color/crisom_white"
-                            android:textStyle="bold" />
-
-                        <TextView
+                        <LinearLayout
+                            android:id="@+id/product_lnDownload"
                             android:layout_width="match_parent"
-                            android:layout_height="1dp"
-                            android:background="@color/crisom_white" />
+                            android:layout_height="match_parent"
+                            android:visibility="gone" >
 
-                        <TextView
-                            android:id="@+id/product_profit_tvPercent"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="40"
-                            android:gravity="center"
-                            android:text="50%"
-                            android:textColor="@color/crisom_white"
-                            android:textSize="22sp"
-                            android:textStyle="bold" />
+                            <ListView
+                                android:id="@+id/product_lvDownload"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" >
+                            </ListView>
+                        </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/product_profit_tvCost"
-                            android:layout_width="wrap_content"
-                            android:layout_height="0dp"
-                            android:layout_weight="30"
-                            android:gravity="center"
-                            android:text="$254.02"
-                            android:textColor="@color/crisom_white"
-                            android:textSize="18sp" />
-                    </LinearLayout>
+                        <LinearLayout
+                            android:id="@+id/product_lnFaq"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" 
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/product_tvFaqContent"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/product_lnVideo"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" 
+                            android:visibility="gone">
+
+                            <ListView
+                                android:id="@+id/product_lvVideo"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" >
+                            </ListView>
+                        </LinearLayout>
+                    </FrameLayout>
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
             </LinearLayout>
             <!-- end cost table -->
 
@@ -323,52 +289,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="5"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:weightSum="100" >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="10"
-                    android:text="Qty" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2" />
-
-                <EditText
-                    android:id="@+id/product_edtQuatity"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="45"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:lines="1"
-                    android:maxLines="1"
-                    android:background="@drawable/edittext_background_radius" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="3" />
-
-                <Button
-                    android:id="@+id/product_btnAddToCart"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="40"
-                    android:background="@drawable/button_red_background"
-                    android:text="Add to Cart"
-                    android:textColor="@color/crisom_white"
-                    android:textStyle="bold" />
-            </LinearLayout>
 
             <!-- end linear add to cart -->
 

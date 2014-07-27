@@ -37,7 +37,7 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact;
 	private ImageView ivCart;	
 	private Button btnLogin,btnBack,btnCheckOut;
-	private TextView tvTitle,tvCountItem,tvTotal,tvThereis;
+	private TextView tvTitle,tvCountItem,tvTotal,tvThereis,tvItem;
 	private ListView listview;
 	private ProgressDialog pDialog;
 	
@@ -83,11 +83,12 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 		btnBack = (Button)findViewById(R.id.include_header_btnBack);
 		btnCheckOut = (Button)findViewById(R.id.cart_btnCheckout);
 		
-		tvCountItem = (TextView)findViewById(R.id.cart_tv_countItem);
-		tvThereis = (TextView)findViewById(R.id.cart_tv_thereIs);
-		tvTotal = (TextView)findViewById(R.id.cart_tv_total);
+		tvCountItem = (TextView)findViewById(R.id.cart_tvCountItem);
+		tvThereis = (TextView)findViewById(R.id.cart_tvThereIs);
+		tvItem = (TextView)findViewById(R.id.cart_tvItem);
+		tvTotal = (TextView)findViewById(R.id.cart_tvTotal);
 		
-		listview = (ListView)findViewById(R.id.cart_lv_item);
+		listview = (ListView)findViewById(R.id.cart_lvItem);
 		
 		ivCart.setImageResource(R.drawable.ico_cart_active);
 		
@@ -109,7 +110,8 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 			   
 			   Intent intent = new Intent(CartActivity.this,ProductDetailActivity.class);
 			   intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listRecent.get(position).getIdEntity());
-			   startActivity(intent);				
+			   startActivity(intent);	
+			   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 		   } 
 		});
 				
@@ -241,7 +243,7 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 
 	    protected void onPostExecute(String file_url) {	   
 	    	tvCountItem.setText(String.valueOf(FileUtil.listRecent.size()));
-	    	tvTotal.setText(CommonUtil.formatMoney(getTotal()));
+	    	tvTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
 	    	changeTextThereIs();
 	    	adapter.notifyDataSetChanged();
 	    	pDialog.dismiss();	
@@ -249,19 +251,15 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	
-	private double getTotal(){
-		double total = 0;
-		for (int i = 0; i < FileUtil.listRecent.size(); i++) {
-			total += (FileUtil.listRecent.get(i).getPrice() * FileUtil.listRecent.get(i).getQuantity());
-		}
-		return total;
-	}
+	
 	
 	private void changeTextThereIs(){
 		if (FileUtil.listRecent.size() <= 1) {
 			tvThereis.setText(Constants.TEXT_THEREIS);
+			tvItem.setText(Constants.TEXT_ITEM);
 		}else{
 			tvThereis.setText(Constants.TEXT_THEREARE);
+			tvItem.setText(Constants.TEXT_ITEMS);
 		}
 	}
 	

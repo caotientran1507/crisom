@@ -108,9 +108,14 @@ public class ContactActivity extends Activity  implements View.OnClickListener{
 			
 		//----------Cart is clicked----------
 		case R.id.include_footer_lnCart:
-			Intent cart = new Intent(ContactActivity.this, CartActivity.class);
-			startActivity(cart);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+			if (!SharedPreferencesUtil.getFlagLogin(ContactActivity.this)) {
+				showDialog(ContactActivity.this,Constants.WARNING_LOGIN_TITLE, Constants.WARNING_LOGIN_MESSAGE);
+			}else{
+				Intent cart = new Intent(ContactActivity.this, CartActivity.class);
+				startActivity(cart);
+				overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+			}
+			
 			break;
 			
 		//----------Contact is clicked----------
@@ -123,7 +128,7 @@ public class ContactActivity extends Activity  implements View.OnClickListener{
 				Intent login = new Intent(ContactActivity.this, LoginActivity.class);
 				startActivity(login);
 			}else{
-				showDialog(ContactActivity.this);				
+				showDialog(ContactActivity.this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);				
 			}
 			break;	
 			
@@ -135,14 +140,14 @@ public class ContactActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	
-	public void showDialog(final Context mContext){
+	public void showDialog(final Context mContext, String title, String msg){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
 		// Setting Dialog Title
-		alertDialog.setTitle("Confirm Log out...");
+		alertDialog.setTitle(title);
 
 		// Setting Dialog Message
-		alertDialog.setMessage("Are you sure you want log out now?");
+		alertDialog.setMessage(msg);
 
 		// Setting Icon to Dialog
 		alertDialog.setIcon(R.drawable.delete);

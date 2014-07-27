@@ -20,9 +20,9 @@
         layout="@layout/include_logo" />
 
     <ScrollView
-        android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_weight="74" >
 
         <LinearLayout
@@ -58,20 +58,34 @@
                 </LinearLayout>
                 <!-- end linear button Proceed to Checkout -->
 
-                <ListView            
-                    android:id="@+id/checkout_lv"
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:background="#f1f1f1"
-                    android:padding="5dp" >
-                </ListView>
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:weightSum="100" >
+
+                    <ListView
+                        android:id="@+id/checkout_lv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="90" >
+                    </ListView>
+                </LinearLayout>
+                
+                <!-- end linear listview -->
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:background="#e3e3e3"
                     android:gravity="center_horizontal"
-                    android:orientation="horizontal"                    
+                    android:orientation="horizontal"
                     android:weightSum="100" >
 
                     <LinearLayout
@@ -119,14 +133,18 @@
                 <!-- end Linear 3 buttons -->
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
+                    android:background="#e3e3e3"
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
                     android:weightSum="100" >
 
-                    <LinearLayout
+                    <LinearLayout                        
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="90"
@@ -140,7 +158,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Subtotal: $" />
+                                android:text="Subtotal: " />
 
                             <TextView
                                 android:id="@+id/checkout_tvSubTotal"
@@ -223,6 +241,7 @@
                 <!-- end Linear Total -->
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -257,7 +276,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/edittext_background_radius"
-                            android:padding="5dp"/>
+                            android:padding="5dp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -283,6 +302,7 @@
                 <!-- end Linear Coupon -->
 
                 <LinearLayout
+                    
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
@@ -291,6 +311,7 @@
                     android:orientation="horizontal"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:weightSum="100" >
 
                     <LinearLayout
@@ -324,7 +345,6 @@
                             android:layout_height="30dp"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/spinner_background" />
-                        
 
                         <TextView
                             android:layout_width="match_parent"
@@ -332,7 +352,7 @@
                             android:layout_marginTop="10dp"
                             android:text="State/Province"
                             android:textStyle="bold" />
-                        
+
                         <Spinner
                             android:id="@+id/checkout_spnState"
                             android:layout_width="match_parent"
@@ -348,7 +368,7 @@
                             android:textStyle="bold" />
 
                         <EditText
-                             android:id="@+id/checkout_edtZipCode"
+                            android:id="@+id/checkout_edtZipCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
@@ -363,7 +383,7 @@
                             android:weightSum="100" >
 
                             <Button
-                                 android:id="@+id/checkout_btnQuote"
+                                android:id="@+id/checkout_btnQuote"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"

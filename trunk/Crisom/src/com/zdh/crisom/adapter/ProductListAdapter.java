@@ -2,6 +2,7 @@ package com.zdh.crisom.adapter;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -20,7 +21,6 @@ import com.zdh.crisom.R;
 import com.zdh.crisom.lazylist.ImageLoader;
 import com.zdh.crisom.model.Product;
 import com.zdh.crisom.utility.Constants;
-import com.zdh.crisom.utility.FileUtil;
 import com.zdh.crisom.utility.SharedPreferencesUtil;
 
 public class ProductListAdapter extends BaseAdapter {
@@ -53,6 +53,7 @@ public class ProductListAdapter extends BaseAdapter {
 		return position;
 	}
 
+	@SuppressLint("InflateParams")
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		TextView tvTitle;	
@@ -110,7 +111,7 @@ public class ProductListAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context,ProductDetailActivity.class);
-				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listSearch.get(currentPosition).getId());
+				intent.putExtra(Constants.KEY_PRODUCTID, listProduct.get(currentPosition).getId());
 				context.startActivity(intent);
 			}
 		});
