@@ -26,8 +26,8 @@ import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 public class SearchAdapter extends BaseAdapter {
 
-	int currentPosition;	
-	CategoryHolder holder = null;
+//	int currentPosition;	
+//	CategoryHolder holder = null;
 	private Context context;
 	private LayoutInflater inflater = null;
 	private ArrayList<Product> listProduct = new ArrayList<Product>();	
@@ -54,77 +54,46 @@ public class SearchAdapter extends BaseAdapter {
 	}
 
 	@SuppressLint("InflateParams")
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 
-		TextView tvTitle;	
-		TextView tvDes1;
-		TextView tvDes2;
-		TextView tvDivider;
-		LinearLayout lnAddtoCart;
-		final EditText edtQuantity;
-		LinearLayout btnAddtoCart = null;
-		final TextView tvQuantity;
-		ImageView ivAvatar;
 		View view = convertView;
-		currentPosition = position;
+		final CategoryHolder holder;
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.row_recent_a, null);
 			holder = new CategoryHolder();
-			
-			tvTitle = (TextView) view.findViewById(R.id.row_product_tvTitle);
-			tvDes1 = (TextView) view.findViewById(R.id.row_product_tvDes1);
-			tvDes2 = (TextView) view.findViewById(R.id.row_product_tvDes2);
-			tvQuantity = (TextView) view.findViewById(R.id.row_product_tvQuantityIncart);
-			edtQuantity = (EditText) view.findViewById(R.id.row_product_edtQuantityAddtocart);
-			btnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_btnAddtocart);
-			ivAvatar = (ImageView) view.findViewById(R.id.row_product_ivAvatar);
-			tvDivider = (TextView) view.findViewById(R.id.row_product_tvDivider);
-			lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);
-			
-			holder.ivAvatar = ivAvatar;
-			holder.tvTitle = tvTitle;
-			holder.tvDes1 = tvDes1;
-			holder.tvDes2 = tvDes2;
-			holder.edtQuantity = edtQuantity;
-			holder.lnAddtoCart = lnAddtoCart;
-			holder.tvQuantity = tvQuantity;			
-			holder.tvDivider = tvDivider;
-			holder.btnAddtoCart = btnAddtoCart;
-
+			holder.ivAvatar =  (ImageView) view.findViewById(R.id.row_product_ivAvatar);
+			holder.tvTitle = (TextView) view.findViewById(R.id.row_product_tvTitle);
+			holder.tvDes1 = (TextView) view.findViewById(R.id.row_product_tvDes1);
+			holder.tvDes2 =  (TextView) view.findViewById(R.id.row_product_tvDes2);
+			holder.edtQuantity =  (EditText) view.findViewById(R.id.row_product_edtQuantityAddtocart);
+			holder.lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);
+			holder.tvQuantity =  (TextView) view.findViewById(R.id.row_product_tvQuantityIncart);			
+			holder.tvDivider =  (TextView) view.findViewById(R.id.row_product_tvDivider);;
+			holder.btnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_btnAddtocart);
 			view.setTag(holder);
 		} else {
 			holder = (CategoryHolder) view.getTag();			
-			ivAvatar = holder.ivAvatar;
-			tvTitle = holder.tvTitle;
-			tvDes1 = holder.tvDes1;
-			tvDes2 = holder.tvDes2;
-			edtQuantity = holder.edtQuantity;
-			btnAddtoCart = holder.btnAddtoCart;
-			tvQuantity = holder.tvQuantity;
-			tvDivider = holder.tvDivider;
-			lnAddtoCart = holder.lnAddtoCart;
-			
 		}
 		
-		ivAvatar.setOnClickListener(new OnClickListener() {
+		holder.ivAvatar.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context,ProductDetailActivity.class);
-				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listSearch.get(currentPosition).getId());
+				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listSearch.get(position).getId());
 				context.startActivity(intent);
 			}
 		});
 		
-		btnAddtoCart.setOnClickListener(new OnClickListener() {
+		holder.btnAddtoCart.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				if (!edtQuantity.getText().toString().trim().equals("")) {
+				if (!holder.edtQuantity.getText().toString().trim().equals("")) {
 					try {
-						int number = Integer.parseInt(edtQuantity.getText().toString().trim());
-						int quantityCurrent = Integer.parseInt(tvQuantity.getText().toString());
-						tvQuantity.setText(String.valueOf(number+quantityCurrent));
+						int number = Integer.parseInt(holder.edtQuantity.getText().toString().trim());
+						int quantityCurrent = Integer.parseInt(holder.edtQuantity.getText().toString());
+						holder.edtQuantity.setText(String.valueOf(number+quantityCurrent));
 					} catch (Exception e) {
 						Toast.makeText(context, "Please input number!", Toast.LENGTH_SHORT).show();
 					}
@@ -133,19 +102,19 @@ public class SearchAdapter extends BaseAdapter {
 		});
 		
 		if (SharedPreferencesUtil.getFlagLogin(context)) {
-			tvDivider.setVisibility(View.VISIBLE);
-			lnAddtoCart.setVisibility(View.VISIBLE);
+		    holder.tvDivider.setVisibility(View.VISIBLE);
+		    holder.lnAddtoCart.setVisibility(View.VISIBLE);
 		} else {
-			tvDivider.setVisibility(View.INVISIBLE);
-			lnAddtoCart.setVisibility(View.INVISIBLE);
+		    holder.tvDivider.setVisibility(View.INVISIBLE);
+		    holder.lnAddtoCart.setVisibility(View.INVISIBLE);
 		}
 		
 		// ------load data--------
 
-		tvTitle.setText(listProduct.get(currentPosition).getName());
-		tvDes1.setText(listProduct.get(currentPosition).getShortDes());
-		tvDes2.setText(listProduct.get(currentPosition).getDes());
-		imageLoader.DisplayImage(listProduct.get(currentPosition).getImage(), ivAvatar);
+		holder.tvTitle.setText(listProduct.get(position).getName());
+		holder.tvDes1.setText(listProduct.get(position).getShortDes());
+		holder.tvDes2.setText(listProduct.get(position).getDes());
+		imageLoader.DisplayImage(listProduct.get(position).getImage(), holder.ivAvatar);
 		return view;
 	}
 
