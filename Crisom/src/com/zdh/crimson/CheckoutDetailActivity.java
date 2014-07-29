@@ -261,7 +261,15 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			
 			break;
 		case R.id.checkoutdetail_Billing_btnContinue:
-					
+			if (rbnShipThisAddress.isChecked()) {
+				ln1BillingInfomationContent.setVisibility(View.GONE);
+				ln2ShippingInfomationContent.setVisibility(View.GONE);
+				ln3ShippingMethodContent.setVisibility(View.VISIBLE);
+				ln4PaymentInfomationContent.setVisibility(View.GONE);
+				ln5OrderReviewContent.setVisibility(View.GONE);
+			} else {
+
+			}		
 			break;
 		case R.id.checkoutdetail_Shipping_btnContinue:
 			
@@ -281,11 +289,5 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		}
 		
 	}
-	
-	
-	
-	
-	
-	
-	
+
 }
