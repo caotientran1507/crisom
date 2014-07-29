@@ -54,7 +54,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
 
-                    <com.zdh.crisom.utility.TextViewEx
+                    <com.zdh.crimson.utility.TextViewEx
                         android:layout_marginTop="15dp"
                         android:id="@+id/about_tv_about"
                         android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <com.zdh.crisom.utility.TextViewEx
+                    <com.zdh.crimson.utility.TextViewEx
                         android:id="@+id/about_tv_mission"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <com.zdh.crisom.utility.TextViewEx
+                    <com.zdh.crimson.utility.TextViewEx
                         android:id="@+id/about_tv_client"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -110,7 +110,7 @@ Even if you have never purchased mounting solutions before, we know how to make 
                         android:textSize="18sp"
                         android:textStyle="bold" />
 
-                    <com.zdh.crisom.utility.TextViewEx
+                    <com.zdh.crimson.utility.TextViewEx
                         android:id="@+id/about_tv_product"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

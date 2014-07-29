@@ -35,6 +35,7 @@
 	<color name="greenMid">#ff0A8815</color>
 	<color name="greenEnd">#ff1da130</color>
 	<color name="transparent">#00000000</color>
+	<color name="background_dialog">#55000000</color>
 	<color name="mau_gach_ngang">#B3B3B3</color>
 	
     
