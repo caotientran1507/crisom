@@ -206,7 +206,7 @@
                             android:orientation="horizontal"
                             android:weightSum="100" >
 
-                            <LinearLayout
+                           <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
@@ -221,16 +221,9 @@
                                     android:background="@drawable/button_red_background"
                                     android:paddingBottom="5dp"
                                     android:paddingTop="5dp"
-                                    android:text="Proceed to Cart"
+                                    android:text="Proceed to Checkout"
                                     android:textColor="@color/crisom_white" />
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Checkout with multiple Addresses"
-                                    android:textColor="@color/crisom_red"
-                                    android:textSize="11sp" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -286,17 +279,17 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:layout_weight="35"
+                                android:layout_weight="37"
                                 android:background="@drawable/button_red_background"
                                 android:paddingBottom="5dp"
                                 android:paddingTop="5dp"
                                 android:text="Apply Coupon"
-                                android:visibility="gone"
                                 android:textColor="@color/crisom_white" />
                             
                             <TextView 
                                 android:id="@+id/checkout_tvCoupon"
                                 android:layout_width="0dp"
+                                android:visibility="gone"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="10"/>
                             
@@ -305,7 +298,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
-                                android:layout_weight="35"
+                                android:layout_weight="37"
                                 android:background="@drawable/button_red_background"
                                 android:paddingBottom="5dp"
                                 android:paddingTop="5dp"
@@ -318,6 +311,7 @@
                 <!-- end Linear Coupon -->
 
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"

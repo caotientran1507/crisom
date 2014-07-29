@@ -253,7 +253,9 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 			new UpdateShoppingCartAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 			break;	
 		case R.id.checkout_btnProceedMutilAddress:
-			
+			Intent checkoutdetail2 = new Intent(CheckoutActivity.this, CheckoutDetailActivity.class);
+			startActivity(checkoutdetail2);
+			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;	
 		case R.id.checkout_btnApplyCoupon:
 			String coupon = edtCoupon.getText().toString().trim();
@@ -270,14 +272,14 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 			
 			break;
 		case R.id.checkout_btnQuote:
-			if (CommonUtil.checkNumbericAndGreaterZero(CheckoutActivity.this,edtZipCode.getText().toString().trim(), "Postal Code")) {
-				if (FileUtil.listState.size() <= 0) {
-					new GetAQuoteAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this), FileUtil.listCountry.get(positionCountry).getCode(), edtState.getText().toString().trim(), edtZipCode.getText().toString().trim()).execute();
-				}else
-				{
-					new GetAQuoteAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this), FileUtil.listCountry.get(positionCountry).getCode(), FileUtil.listState.get(positionState).getCode(), edtZipCode.getText().toString().trim()).execute();
-				}				
-			} 
+//			if (CommonUtil.checkNumbericAndGreaterZero(CheckoutActivity.this,edtZipCode.getText().toString().trim(), "Postal Code")) {
+//				if (FileUtil.listState.size() <= 0) {
+//					new GetAQuoteAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this), FileUtil.listCountry.get(positionCountry).getCode(), edtState.getText().toString().trim(), edtZipCode.getText().toString().trim()).execute();
+//				}else
+//				{
+//					new GetAQuoteAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this), FileUtil.listCountry.get(positionCountry).getCode(), FileUtil.listState.get(positionState).getCode(), edtZipCode.getText().toString().trim()).execute();
+//				}				
+//			} 
 
 			break;	
 		
