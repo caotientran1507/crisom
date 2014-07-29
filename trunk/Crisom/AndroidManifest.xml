@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.zdh.crisom"
+    package="com.zdh.crimson"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -18,40 +18,45 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:theme="@style/Theme.Light.NoTitleBar.Fullscreen.WithColoredSpinners" >
-        <activity android:name="com.zdh.crisom.HomeActivity" 
+        <activity android:name="com.zdh.crimson.HomeActivity" 
             android:configChanges="orientation|keyboardHidden"
-			android:screenOrientation="portrait"
 			android:windowSoftInputMode="stateHidden">
 			<intent-filter>
+			    <action android:name="android.intent.action.SEARCH" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             
         </activity>
-        <activity android:name="com.zdh.crisom.CartActivity" >
+        <activity android:name="com.zdh.crimson.CartActivity" >
         </activity>
-        <activity android:name="com.zdh.crisom.ContactActivity" >
+        <activity android:name="com.zdh.crimson.ContactActivity" >
         </activity>
-        <activity android:name="com.zdh.crisom.RegisterActivity" >
+        <activity android:name="com.zdh.crimson.RegisterActivity" >
             
         </activity>
-        <activity android:name="com.zdh.crisom.CategoryActivity" >
+        <activity android:name="com.zdh.crimson.CategoryActivity" >
         </activity>
-        <activity android:name="com.zdh.crisom.CategoryListActivity" >
+        <activity android:name="com.zdh.crimson.CategoryListActivity" >
         </activity>
-        <activity android:name="com.zdh.crisom.LoginActivity" >
+        <activity android:name="com.zdh.crimson.LoginActivity" >
         </activity>
-        <activity android:name="com.zdh.crisom.ProductDetailActivity" >
+        <activity android:name="com.zdh.crimson.ProductDetailActivity" 
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name="com.zdh.crisom.ProductListActivity" >
+        <activity android:name="com.zdh.crimson.ProductListActivity" >
         </activity>
-        <activity android:name="com.zdh.crisom.CheckoutActivity" >
+        <activity android:name="com.zdh.crimson.CheckoutActivity" >
         </activity>
-        <activity android:name="com.zdh.crisom.CheckoutDetailActivity" >
+        <activity android:name="com.zdh.crimson.CheckoutDetailActivity" >
         </activity>
-        <activity android:name="com.zdh.crisom.SearchActivity" >
+        <activity android:name="com.zdh.crimson.SearchActivity" >
+           <intent-filter>
+			    <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
         </activity>
     </application>
 
