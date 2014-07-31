@@ -10,6 +10,7 @@ public class OptionObject {
 	int msrp;
 	int oid;
 	int value;
+	int inCart;
 	public String getSku() {
 		return sku;
 	}
@@ -64,6 +65,12 @@ public class OptionObject {
 	}
 	public void setOtherFieldValue(String otherFieldValue) {
 		this.otherFieldValue = otherFieldValue;
+	}
+	public int getInCart() {
+		return inCart;
+	}
+	public void setInCart(int inCart) {
+		this.inCart = inCart;
 	}
 	
 	

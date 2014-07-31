@@ -2,6 +2,7 @@ package com.zdh.crimson.adapter;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.zdh.crimson.R;
 import com.zdh.crimson.model.Category;
 
+@SuppressLint("InflateParams")
 public class CategoryAdapter extends BaseAdapter {
 
 	private Activity activity;

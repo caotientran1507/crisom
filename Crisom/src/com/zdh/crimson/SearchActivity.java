@@ -32,6 +32,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.zdh.crimson.adapter.ChildAdapter;
 import com.zdh.crimson.adapter.SearchAdapter;
 import com.zdh.crimson.model.Product;
 import com.zdh.crimson.utility.Constants;
@@ -51,9 +52,7 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 	SearchAdapter adapter;
 	private ProgressDialog pDialog;
 	
-	Dialog dialogChildrenProduct;
-	ListView lvDialog;
-	TextView tvDialog;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -303,24 +302,7 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 		}
 	}
 	
-	private void showDialogChildrenProduct()
-	{		
-
-			dialogChildrenProduct = new Dialog(SearchActivity.this, R.style.FullHeightDialog);
-			dialogChildrenProduct.setContentView(R.layout.dialog_child);
-			lvDialog = (ListView) dialogChildrenProduct.findViewById(R.id.dialog_child_lv);
-			tvDialog = (TextView) dialogChildrenProduct.findViewById(R.id.include_header_tvTitle);
-
-			dialogChildrenProduct.setOnCancelListener(new OnCancelListener() {
-				
-				@Override
-				public void onCancel(DialogInterface dialog) {
-					dialogChildrenProduct.dismiss();
-					
-				}
-			});
 	
-	}
 	
 	
 }

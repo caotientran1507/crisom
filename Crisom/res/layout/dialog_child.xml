@@ -13,6 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="70"
         android:gravity="center"
+        android:background="@color/background_dialog"
         android:orientation="horizontal"
         android:weightSum="100" >
 

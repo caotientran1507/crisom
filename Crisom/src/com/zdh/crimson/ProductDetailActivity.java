@@ -341,6 +341,7 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 							optionObject.setValue(jsonArrayOptions.getJSONObject(i).getInt("value"));
 							optionObject.setOtherFieldTitle(jsonArrayOptions.getJSONObject(i).getString("other_field_title"));
 							optionObject.setOtherFieldValue(jsonArrayOptions.getJSONObject(i).getString("other_field_value"));
+							optionObject.setInCart(jsonArrayOptions.getJSONObject(i).getInt("incart"));
 							product.getListOption().add(optionObject);
 						}
                 	}
