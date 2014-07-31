@@ -1,13 +1,29 @@
 package com.zdh.crimson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -15,25 +31,44 @@ import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.zdh.crimson.adapter.ReviewCheckoutDetailAdapter;
+import com.zdh.crimson.model.Address;
+import com.zdh.crimson.model.Product;
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.FileUtil;
+import com.zdh.crimson.utility.JsonParser;
+import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 public class CheckoutDetailActivity extends Activity  implements View.OnClickListener{
 
 	//--------define variables---------
 	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact,lnPaypal
 	,ln1BillingInfomation,ln2ShippingInfomation,ln3ShippingMethod,ln4PaymentInfomation,ln5OrderReview
-	,ln1BillingInfomationContent,ln2ShippingInfomationContent,ln3ShippingMethodContent,ln4PaymentInfomationContent,ln5OrderReviewContent;
+	,ln1BillingInfomationContent,ln2ShippingInfomationContent,ln3ShippingMethodContent,ln4PaymentInfomationContent,ln5OrderReviewContent
+	,lnCreditCardOnFileContent, lnCreditCardContent;
 	private ImageView ivCart;	
 	private Button btnLogin,btnBack,btnBillingContinue,btnShippingContinue,btnShippingMethodContinue,btnPaymentContinue,btnPlaceOrder;
-	private TextView tvTitle,tvPartNumber,tvColor,tvDesciption,tvPrice,tvQuantity,tvSubtotal,tvSubtotal2,
-	tvShippingHandling,tvTax,tvGrandTotal,tvEditYourCard;
+	private TextView tvTitle,tvSubtotal,tvShippingHandling,tvTax,tvGrandTotal,tvEditYourCard,tvRedirectedPaypal
+	,tvWhatIsThis,tvWhatIsPaypal;
 	
-	Spinner spnBillingAddress,spnShippingAddress;
-	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnFree,rbnCreditCard,rbnPaypal,rbnCreditTerms;
-	CheckBox cbxUseBillingAddress;
-	ListView lvParcelService;
+	Spinner spnBillingAddress,spnShippingAddress,spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear;
+	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnCreditCardOnFile,rbnPaypal,rbnCreditTerms;
+	CheckBox cbxUseBillingAddress,cbxSaveCreditCard;
+	ListView lvParcelService,lvReview;
+	EditText edtCreditCardNumber,edtCardVerification;
 	
 	ArrayList<Boolean> listRadioButton = new ArrayList<Boolean>();
+	ArrayList<Address> listAddress = new ArrayList<Address>();
+	ArrayList<String> addresses = new ArrayList<String>();
+	
+	ArrayAdapter<String> addressesAdapter;
+	
+	ReviewCheckoutDetailAdapter reviewCheckoutDetailAdapter;
+	
+	private ProgressDialog pDialog;
+	
+	Dialog dialogVerifyNumber;
+	ImageView ivCloseDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +77,17 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		init();
 	}
 	
+	
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		reviewCheckoutDetailAdapter.notifyDataSetChanged();
+	}
+
+
+
 	private void init(){
 		initView();
 		initData();
@@ -79,25 +125,38 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		btnShippingMethodContinue = (Button)findViewById(R.id.checkoutdetail_ShippingMethod_btnContinue);
 		btnPaymentContinue = (Button)findViewById(R.id.checkoutdetail_Payment_btnContinue);
 		btnPlaceOrder = (Button)findViewById(R.id.checkoutdetail_btnPlaceOrder);
-
-		tvPartNumber = (TextView)findViewById(R.id.checkoutdetail_tvPartNumber);
-		tvColor = (TextView)findViewById(R.id.checkoutdetail_tvColor);
-		tvDesciption = (TextView)findViewById(R.id.checkoutdetail_tvDescription);
-		tvPrice = (TextView)findViewById(R.id.checkoutdetail_tvPrice);
-		tvQuantity = (TextView)findViewById(R.id.checkoutdetail_tvQuantity);
+		
 		tvSubtotal = (TextView)findViewById(R.id.checkoutdetail_tvSubtotal);
-		tvSubtotal2 = (TextView)findViewById(R.id.checkoutdetail_tvSubtotal2);
 		tvShippingHandling = (TextView)findViewById(R.id.checkoutdetail_tvShippingHandling);
 		tvTax = (TextView)findViewById(R.id.checkoutdetail_tvTax);
 		tvGrandTotal = (TextView)findViewById(R.id.checkoutdetail_tvGrandTotal);
 		tvEditYourCard = (TextView)findViewById(R.id.checkoutdetail_tvEditYourCart);
 		
+		spnBillingAddress = (Spinner)findViewById(R.id.checkoutdetail_spnBillingAddress);
+		spnShippingAddress = (Spinner)findViewById(R.id.checkoutdetail_spnShippingAddress);
+		
 		rbnShipThisAddress = (RadioButton)findViewById(R.id.checkoutdetail_rbnShipThisAddress);
-		rbnShipDifferentAddress = (RadioButton)findViewById(R.id.checkoutdetail_rbnShipDifferentAddress);
-		rbnFree = (RadioButton)findViewById(R.id.checkoutdetail_rbnFree);
-		rbnCreditCard = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCard);
+		rbnShipDifferentAddress = (RadioButton)findViewById(R.id.checkoutdetail_rbnShipDifferentAddress);		
+		rbnCreditCardOnFile = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCardOnFile);
 		rbnPaypal = (RadioButton)findViewById(R.id.checkoutdetail_rbnPaypal);
-		rbnCreditTerms = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditTerms);
+		rbnCreditTerms = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCard);
+		
+		lvParcelService = (ListView)findViewById(R.id.checkoutdetail_lvParcelService);
+		lvReview = (ListView)findViewById(R.id.checkoutdetail_lvReview);
+		
+		lnCreditCardOnFileContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardOnFileContent);
+		lnCreditCardContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardContent);
+		tvRedirectedPaypal = (TextView)findViewById(R.id.checkoutdetail_tvRedirectedPaypal);
+		
+		spnCreditCardOnFile = (Spinner)findViewById(R.id.checkoutdetail_spnCreditCardOnFile);
+		spnCreditCardType = (Spinner)findViewById(R.id.checkoutdetail_spnCreditCardType);
+		spnExpirationMonth = (Spinner)findViewById(R.id.checkoutdetail_spnExpirationMonth);
+		spnExpirationYear = (Spinner)findViewById(R.id.checkoutdetail_spnExpirationYear);
+		edtCardVerification = (EditText)findViewById(R.id.checkoutdetail_edtCardVerification);
+		tvWhatIsThis = (TextView)findViewById(R.id.checkoutdetail_tvWhatIsThis);
+		edtCreditCardNumber = (EditText)findViewById(R.id.checkoutdetail_edtCreditCardNumber);		
+		cbxSaveCreditCard = (CheckBox)findViewById(R.id.checkoutdetail_cbxSaveCreditCard);
+		tvWhatIsPaypal = (TextView)findViewById(R.id.checkoutdetail_tvWhatIsPaypal);
 		
 		ivCart.setImageResource(R.drawable.ico_cart_active);
 		
@@ -126,19 +185,26 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		
 		rbnShipThisAddress.setOnClickListener(this);
 		rbnShipDifferentAddress.setOnClickListener(this);
-		rbnFree.setOnClickListener(this);
-		rbnCreditCard.setOnClickListener(this);
+		rbnCreditCardOnFile.setOnClickListener(this);
 		rbnPaypal.setOnClickListener(this);
 		rbnCreditTerms.setOnClickListener(this);
-				
+		tvEditYourCard.setOnClickListener(this);
+		tvWhatIsThis.setOnClickListener(this);
+		tvWhatIsPaypal.setOnClickListener(this);
 	}
 	
 	private void initData() {
+		Collections.sort(addresses);         
+		addressesAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, addresses);
+		spnBillingAddress.setAdapter(addressesAdapter);
+		spnShippingAddress.setAdapter(addressesAdapter);
 		
+		reviewCheckoutDetailAdapter = new ReviewCheckoutDetailAdapter(CheckoutDetailActivity.this, FileUtil.listRecent);
+		lvReview.setAdapter(reviewCheckoutDetailAdapter);
 	}
 	
 	private void initDataWebservice(){
-	
+		new GetAllAddressAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 	}
 
 	@Override
@@ -239,21 +305,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			rbnShipDifferentAddress.setChecked(true);			
 			break;	
 			
-		case R.id.checkoutdetail_rbnCreditCard:
-			rbnCreditCard.setChecked(true);
-			rbnPaypal.setChecked(false);	
-			rbnCreditTerms.setChecked(false);	
-			break;	
-		case R.id.checkoutdetail_rbnPaypal:
-			rbnCreditCard.setChecked(false);
-			rbnPaypal.setChecked(true);	
-			rbnCreditTerms.setChecked(false);	
-			break;	
-		case R.id.checkoutdetail_rbnCreditTerms:
-			rbnCreditCard.setChecked(false);
-			rbnPaypal.setChecked(false);	
-			rbnCreditTerms.setChecked(true);	
-			break;	
+			
 			
 		//-----------------Click button continue---------------------------------	
 			
@@ -268,26 +320,166 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 				ln4PaymentInfomationContent.setVisibility(View.GONE);
 				ln5OrderReviewContent.setVisibility(View.GONE);
 			} else {
-
+				ln1BillingInfomationContent.setVisibility(View.GONE);
+				ln2ShippingInfomationContent.setVisibility(View.VISIBLE);
+				ln3ShippingMethodContent.setVisibility(View.GONE);
+				ln4PaymentInfomationContent.setVisibility(View.GONE);
+				ln5OrderReviewContent.setVisibility(View.GONE);
 			}		
 			break;
 		case R.id.checkoutdetail_Shipping_btnContinue:
-			
+			ln1BillingInfomationContent.setVisibility(View.GONE);
+			ln2ShippingInfomationContent.setVisibility(View.GONE);
+			ln3ShippingMethodContent.setVisibility(View.VISIBLE);
+			ln4PaymentInfomationContent.setVisibility(View.GONE);
+			ln5OrderReviewContent.setVisibility(View.GONE);
 			break;
 		case R.id.checkoutdetail_ShippingMethod_btnContinue:
-			
+			ln1BillingInfomationContent.setVisibility(View.GONE);
+			ln2ShippingInfomationContent.setVisibility(View.GONE);
+			ln3ShippingMethodContent.setVisibility(View.GONE);
+			ln4PaymentInfomationContent.setVisibility(View.VISIBLE);
+			ln5OrderReviewContent.setVisibility(View.GONE);
 			break;
 		case R.id.checkoutdetail_Payment_btnContinue:
-			
+			ln1BillingInfomationContent.setVisibility(View.GONE);
+			ln2ShippingInfomationContent.setVisibility(View.GONE);
+			ln3ShippingMethodContent.setVisibility(View.GONE);
+			ln4PaymentInfomationContent.setVisibility(View.GONE);
+			ln5OrderReviewContent.setVisibility(View.VISIBLE);
 			break;
 		case R.id.checkoutdetail_btnPlaceOrder:
 			
 			break;
+		
 			
+		case R.id.checkoutdetail_tvEditYourCart:
+			finish();
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+			break;
+			
+		case R.id.checkoutdetail_rbnCreditCardOnFile:
+			rbnCreditCardOnFile.setChecked(true);
+			rbnPaypal.setChecked(false);	
+			rbnCreditTerms.setChecked(false);
+			tvRedirectedPaypal.setVisibility(View.GONE);
+			lnCreditCardContent.setVisibility(View.GONE);
+			lnCreditCardOnFileContent.setVisibility(View.VISIBLE);
+			break;	
+			
+		case R.id.checkoutdetail_rbnCreditCard:
+			rbnCreditCardOnFile.setChecked(false);
+			rbnPaypal.setChecked(false);	
+			rbnCreditTerms.setChecked(true);
+			tvRedirectedPaypal.setVisibility(View.GONE);	
+			lnCreditCardOnFileContent.setVisibility(View.GONE);
+			lnCreditCardContent.setVisibility(View.VISIBLE);
+			break;	
+			
+		case R.id.checkoutdetail_rbnPaypal:
+			rbnCreditCardOnFile.setChecked(false);
+			rbnPaypal.setChecked(true);	
+			rbnCreditTerms.setChecked(false);
+			tvRedirectedPaypal.setVisibility(View.VISIBLE);	
+			lnCreditCardOnFileContent.setVisibility(View.GONE);
+			lnCreditCardContent.setVisibility(View.GONE);
+			break;
+			
+		case R.id.checkoutdetail_tvWhatIsThis:
+			showDialogVerifyCardNumber();
+			break;
+			
+		case R.id.checkoutdetail_tvWhatIsPaypal:
+			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URL_PAYPAL));
+			startActivity(browserIntent);
+			break;
+			
+			
+
 		default:
 			break;
 		}
 		
+	}
+	
+	//--------------------GetAll----------------------------------------
+	public class GetAllAddressAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		int idCustomer;
+		public GetAllAddressAsyncTask(int idCustomer){
+			this.idCustomer = idCustomer;
+		}
+	   	    
+
+		@Override
+	    protected void onPreExecute() {
+	        super.onPreExecute();
+	        pDialog = new ProgressDialog(CheckoutDetailActivity.this);
+	        pDialog.setMessage("Loading...");
+	        pDialog.setIndeterminate(false);
+	        pDialog.setCancelable(true);
+	        pDialog.show();
+	    }
+
+	    protected String doInBackground(String... params) {
+	    	
+	    	try {
+                // Building Parameters
+                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+                paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
+                json = JsonParser.makeHttpRequest(Constants.URL_GETALLADDRESS, "GET", paramsUrl);
+                if ((json != null) || (!json.equals(""))) {  
+                	listAddress.clear();
+                	addresses.clear();
+                	JSONArray array = new JSONArray(json);
+        			for (int j = 0; j < array.length(); j++) {
+        				Address temp = new Address();
+        				temp.setKey(array.getJSONObject(j).getString("key"));   
+        				temp.setValue(array.getJSONObject(j).getString("value"));  
+        				addresses.add(temp.getValue());
+        				listAddress.add(temp);
+        			}        			
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+	        return null;
+	    }
+
+	    protected void onPostExecute(String file_url) {	 
+	    	addressesAdapter.notifyDataSetChanged();
+	    	pDialog.dismiss();	
+	    }
+	}
+	
+	private void showDialogVerifyCardNumber()
+	{		
+		dialogVerifyNumber = new Dialog(CheckoutDetailActivity.this, R.style.FullHeightDialog);
+		dialogVerifyNumber.setContentView(R.layout.dialog_verifycardnumber);
+		ivCloseDialog = (ImageView) dialogVerifyNumber.findViewById(R.id.dialog_verifycardnumber_imgClose);
+		
+		
+		dialogVerifyNumber.setOnCancelListener(new OnCancelListener() {
+			
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				dialogVerifyNumber.dismiss();
+				
+			}
+		});
+		ivCloseDialog.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				dialogVerifyNumber.dismiss();
+				
+			}
+		});
+		
+		dialogVerifyNumber.show();
+	
 	}
 
 }

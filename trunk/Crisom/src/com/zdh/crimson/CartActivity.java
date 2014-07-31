@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zdh.crimson.adapter.RecentAdapter;
 import com.zdh.crimson.model.RecentObject;
@@ -55,6 +56,7 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
+		updateText();
 		adapter.notifyDataSetChanged();
 		if (SharedPreferencesUtil.getFlagLogin(CartActivity.this)) {
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
@@ -178,9 +180,14 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 			break;	
 			
 		case R.id.cart_btnCheckout:
-			Intent checkout = new Intent(CartActivity.this, CheckoutActivity.class);
-			startActivity(checkout);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+			if (FileUtil.listRecent.size() > 0) {
+				Intent checkout = new Intent(CartActivity.this, CheckoutActivity.class);
+				startActivity(checkout);
+				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+			}
+			else{
+				Toast.makeText(CartActivity.this, "No item in your cart!", Toast.LENGTH_SHORT).show();
+			}
 			break;	
 			
 		
@@ -242,16 +249,19 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 	        return null;
 	    }
 
-	    protected void onPostExecute(String file_url) {	   
-	    	tvCountItem.setText(String.valueOf(FileUtil.listRecent.size()));
-	    	tvTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
-	    	changeTextThereIs();
+	    protected void onPostExecute(String file_url) {
+	    	updateText();
 	    	adapter.notifyDataSetChanged();
 	    	pDialog.dismiss();	
 	    }
 	}
 	
 	
+	private void updateText(){
+		tvCountItem.setText(String.valueOf(FileUtil.listRecent.size()));
+    	tvTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
+    	changeTextThereIs();
+	}
 	
 	
 	private void changeTextThereIs(){

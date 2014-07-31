@@ -2,6 +2,7 @@ package com.zdh.crimson.adapter;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.RecentObject;
 import com.zdh.crimson.utility.CommonUtil;
 
+@SuppressLint("InflateParams")
 public class RecentAdapter extends BaseAdapter {
 
 	private Activity activity;

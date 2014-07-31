@@ -62,17 +62,6 @@ public class ChildAdapter extends BaseAdapter {
     @SuppressLint("InflateParams")
     public View getView(int position, View convertView, ViewGroup parent) {
 
-	TextView tvModel;	
-	TextView tvColor;
-	TextView tvWeight;
-	TextView tvOtherFieldTitle;
-	TextView tvOtherFieldValue;
-	TextView tvPrice;
-	TextView tvMSRP;
-	TextView tvIncart;
-	final EditText edtQuantity;
-	LinearLayout btnAddtoCart;
-	LinearLayout lnAddtoCart;
 	View view = convertView;
 	currentPosition = position;
 	final ChildHolder holder ;
@@ -102,22 +91,22 @@ public class ChildAdapter extends BaseAdapter {
 
 	    @Override
 	    public void onClick(View v) {
-		String quantity =  holder.edtQuantity.getText().toString().trim();
-		if (quantity.equals("")) {
-		    Toast.makeText(context, "Please input quantity!", Toast.LENGTH_SHORT).show();
-		}
-		int quantityNumber = 0;
-		try {
-		    quantityNumber = Integer.parseInt(quantity);
-		} catch (Exception e) {
-		    Toast.makeText(context, "Invalid quantity!", Toast.LENGTH_SHORT).show();
-		}
-		if (quantityNumber < 1) {
-		    Toast.makeText(context, "Quantity must be greater 0!", Toast.LENGTH_SHORT).show();
-		}else{
-		    new AddtoCartAsyncTask(context,idProduct,listOption.get(currentPosition).getOid(),listOption.get(currentPosition).getValue(),quantityNumber,SharedPreferencesUtil.getIdCustomerLogin(context), holder.tvIncart).execute();
-
-		}
+			String quantity =  holder.edtQuantity.getText().toString().trim();
+			if (quantity.equals("")) {
+			    Toast.makeText(context, "Please input quantity!", Toast.LENGTH_SHORT).show();
+			}
+			int quantityNumber = 0;
+			try {
+			    quantityNumber = Integer.parseInt(quantity);
+			} catch (Exception e) {
+			    Toast.makeText(context, "Invalid quantity!", Toast.LENGTH_SHORT).show();
+			}
+			if (quantityNumber < 1) {
+			    Toast.makeText(context, "Quantity must be greater 0!", Toast.LENGTH_SHORT).show();
+			}else{
+			    new AddtoCartAsyncTask(context,idProduct,listOption.get(currentPosition).getOid(),listOption.get(currentPosition).getValue(),quantityNumber,SharedPreferencesUtil.getIdCustomerLogin(context), holder.tvIncart).execute();
+		
+			}
 	    }
 	});
 
@@ -132,25 +121,34 @@ public class ChildAdapter extends BaseAdapter {
 	 holder.tvColor.setText(listOption.get(currentPosition).getColor());
 	 holder.tvWeight.setText(String.valueOf(listOption.get(currentPosition).getWeight()));
 	 holder.tvMSRP.setText(String.valueOf(listOption.get(currentPosition).getMsrp()));
-	 holder.tvIncart.setText("");
+	 holder.tvIncart.setText(String.valueOf(listOption.get(currentPosition).getInCart()));
 	 holder.tvPrice.setText(String.valueOf(listOption.get(currentPosition).getPrice()));
-	 holder.tvOtherFieldTitle.setText(listOption.get(currentPosition).getOtherFieldTitle());
-	 holder.tvOtherFieldValue.setText(listOption.get(currentPosition).getOtherFieldValue());
+	 
+	 if (listOption.get(currentPosition).getOtherFieldTitle().equals("")) {
+		 holder.tvOtherFieldTitle.setVisibility(View.GONE);
+		 holder.tvOtherFieldValue.setVisibility(View.GONE);
+	 }else{
+		 holder.tvOtherFieldTitle.setVisibility(View.VISIBLE);
+		 holder.tvOtherFieldValue.setVisibility(View.VISIBLE);
+		 holder.tvOtherFieldTitle.setText(listOption.get(currentPosition).getOtherFieldTitle());
+		 holder.tvOtherFieldValue.setText(listOption.get(currentPosition).getOtherFieldValue());
+	 }
+	 
 	return view;
     }
 
     private class ChildHolder {
-	TextView tvModel;	
-	TextView tvColor;
-	TextView tvWeight;
-	TextView tvOtherFieldTitle;
-	TextView tvOtherFieldValue;
-	TextView tvPrice;
-	TextView tvMSRP;
-	TextView tvIncart;
-	EditText edtQuantity;
-	LinearLayout btnAddtoCart;
-	LinearLayout lnAddtoCart;
+		TextView tvModel;	
+		TextView tvColor;
+		TextView tvWeight;
+		TextView tvOtherFieldTitle;
+		TextView tvOtherFieldValue;
+		TextView tvPrice;
+		TextView tvMSRP;
+		TextView tvIncart;
+		EditText edtQuantity;
+		LinearLayout btnAddtoCart;
+		LinearLayout lnAddtoCart;
     }
 
     //-------------------------AddtoCart--------------------------------------------------------
@@ -209,15 +207,6 @@ public class ChildAdapter extends BaseAdapter {
 	    return null;
 	}
 
-	//	    protected void onPostExecute(String status) {	
-	//	    	if (status == null) {
-	//				Toast.makeText(context, "Can not add product to your cart. Please try again!", Toast.LENGTH_SHORT).show();
-	//			}else{
-	//				tvIncart.setText(String.valueOf(qty));
-	//			}
-	//	        pDialog.dismiss();	      
-	//	    }
-
 	protected void onPostExecute(String status) { 
 	    if (status == null) {
 		Toast.makeText(context, "Can not add product to your cart. Please try again!", Toast.LENGTH_SHORT).show();
@@ -225,7 +214,7 @@ public class ChildAdapter extends BaseAdapter {
 		((ProductDetailActivity)mContext).runOnUiThread(new Runnable() {
 		    @Override
 		    public void run() {
-			mtvIncart.setText(String.valueOf(qty));
+		    	mtvIncart.setText(String.valueOf(Integer.parseInt(mtvIncart.getText().toString().trim())+qty));
 		    }
 		});
 

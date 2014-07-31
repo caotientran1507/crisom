@@ -10,6 +10,7 @@ public class Constants {
 	public static final int BUTTON_MORE = 5;
 	
 	public static final String URL = "http://crimsonav.com";
+	public static final String URL_PAYPAL = "https://www.paypal.com/us/webapps/mpp/paypal-popup";
 	
 	public static final String URL_GETCATEGORIESBYID = "http://crimsonav.com/api/result/getCategoriesById";
 	public static final String URL_GETPRODUCTBYCATEGORYID = "http://crimsonav.com/api/result/getProductsByCategoryId";
@@ -28,6 +29,7 @@ public class Constants {
 	public static final String URL_GETALLADDRESS = "http://crimsonav.com/api/result/getAllAddress";
 	public static final String URL_APPLYCOUPON = "http://crimsonav.com/api/result/applyCoupon";
 	public static final String URL_CANCELCOUPON = "http://crimsonav.com/api/result/cancelCoupon";
+	
 	
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
