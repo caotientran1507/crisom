@@ -171,12 +171,28 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Tax: $" />
+                                android:text="Tax: " />
 
                             <TextView
                                 android:id="@+id/checkout_tvTax"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content" />
+                        </LinearLayout>
+                        
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shipping &amp; Handling: " />
+
+                            <TextView
+                                android:id="@+id/checkout_tvShippingHandling"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" /> 
                         </LinearLayout>
 
                         <LinearLayout
@@ -187,7 +203,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Grand Total: $"
+                                android:text="Grand Total: "
                                 android:textColor="@color/crisom_blue"
                                 android:textStyle="bold" />
 

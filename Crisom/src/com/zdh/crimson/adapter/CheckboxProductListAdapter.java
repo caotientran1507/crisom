@@ -20,7 +20,7 @@ import com.zdh.crimson.model.Product;
 public class CheckboxProductListAdapter extends BaseAdapter {
 
 	int currentPosition;	
-	CategoryHolder holder = null;
+	Holder holder = null;
 	private Context context;
 	private LayoutInflater inflater = null;
 	private ArrayList<Product> listProduct = new ArrayList<Product>();	
@@ -49,33 +49,23 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 	@SuppressLint("InflateParams")
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		TextView tv;	
-		CheckBox cbx;
-		LinearLayout ln;
 		View view = convertView;
 		currentPosition = position;
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.row_checkbox, null);
-			holder = new CategoryHolder();
+			holder = new Holder();
 			
-			tv = (TextView) view.findViewById(R.id.row_checkbox_tv);
-			cbx = (CheckBox) view.findViewById(R.id.row_checkbox_cbx);
-			ln = (LinearLayout) view.findViewById(R.id.row_checkbox_ln);
+			holder.tv = (TextView) view.findViewById(R.id.row_checkbox_tv);
+			holder.cbx = (CheckBox) view.findViewById(R.id.row_checkbox_cbx);
+			holder.ln = (LinearLayout) view.findViewById(R.id.row_checkbox_ln);
 			
-			
-			holder.tv = tv;
-			holder.cbx = cbx;
-			holder.ln = ln;
-
 			view.setTag(holder);
 		} else {
-			holder = (CategoryHolder) view.getTag();			
-			tv = holder.tv;
-			cbx = holder.cbx;	
-			ln = holder.ln;
+			holder = (Holder) view.getTag();			
+		
 		}
 		
-		ln.setOnClickListener(new OnClickListener() {
+		holder.ln.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {		
@@ -87,7 +77,7 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 		return view;
 	}
 
-	private class CategoryHolder {
+	private class Holder {
 		TextView tv;	
 		CheckBox cbx;
 		LinearLayout ln;

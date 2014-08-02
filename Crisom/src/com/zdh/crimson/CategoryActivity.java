@@ -10,6 +10,7 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,7 +43,7 @@ public class CategoryActivity extends Activity  implements View.OnClickListener{
 	private ListView lvCategory;
 	CategoryAdapter adapter;
 	static int currentCategory = 2;
-	
+	private ProgressDialog pDialog;
 	
 	
 	@Override
@@ -116,6 +117,8 @@ public class CategoryActivity extends Activity  implements View.OnClickListener{
 			   
 		   } 
 		});
+		
+		pDialog = new ProgressDialog(CategoryActivity.this);
 				
 	}
 	
@@ -210,6 +213,13 @@ public class CategoryActivity extends Activity  implements View.OnClickListener{
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
+	        if (pDialog != null ) {	        		 	        
+	 	        pDialog.setMessage("Loading...");
+	 	        pDialog.setIndeterminate(false);
+	 	        pDialog.setCancelable(true);
+	 	        pDialog.show();
+	 	        pDialog.setContentView(R.layout.dialog_process);
+			}
 	        
 	    }
 
@@ -250,7 +260,8 @@ public class CategoryActivity extends Activity  implements View.OnClickListener{
 	    		btnBack.setVisibility(View.VISIBLE);	
 			}else{
 				btnBack.setVisibility(View.INVISIBLE);								
-			}      
+			}   
+	    	pDialog.dismiss();
 	    }
 	}
 	

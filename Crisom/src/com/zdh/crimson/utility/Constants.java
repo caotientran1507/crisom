@@ -29,8 +29,9 @@ public class Constants {
 	public static final String URL_GETALLADDRESS = "http://crimsonav.com/api/result/getAllAddress";
 	public static final String URL_APPLYCOUPON = "http://crimsonav.com/api/result/applyCoupon";
 	public static final String URL_CANCELCOUPON = "http://crimsonav.com/api/result/cancelCoupon";
-	
-	
+	public static final String URL_GETCARTCOST = "http://crimsonav.com/api/result/getCartCost";
+	public static final String URL_GETSHIPPINGMETHOD = "http://crimsonav.com/api/result/getShippingMethod";
+	public static final String URL_GETCREDITCARD = "http://crimsonav.com/api/result/getCCSaved";
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
 	public static final String EXTENSION_FILE_PDF = ".pdf";

@@ -9,7 +9,6 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +26,7 @@ import com.zdh.crimson.utility.FileUtil;
 
 public class CheckoutAdapter extends BaseAdapter {
 
-	int currentPosition;	
-	CategoryHolder holder = null;
+	//	CategoryHolder holder = null;
 	private Context context;
 	private LayoutInflater inflater = null;
 	private ArrayList<RecentObject> listRecent = new ArrayList<RecentObject>();	
@@ -55,81 +53,47 @@ public class CheckoutAdapter extends BaseAdapter {
 	}
 
 	@SuppressLint("InflateParams")
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 
-		TextView tvPartNumber;	
-		TextView tvColor;
-		TextView tvDes;
-		final EditText edtQuantity;
-		TextView tvPrice;
-		final TextView tvSubtotal;
-		ImageView ivAvatar;
 		View view = convertView;
-		currentPosition = position;
+		final CategoryHolder holder;
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.row_checkout, null);
 			holder = new CategoryHolder();
+
+			holder.tvPartNumber = (TextView) view.findViewById(R.id.row_checkout_tvPartNumber);
+			holder.tvColor = (TextView) view.findViewById(R.id.row_checkout_tvColor);			
+			holder.tvDes = (TextView) view.findViewById(R.id.row_checkout_tvDesc);
+			holder.edtQuantity = (EditText) view.findViewById(R.id.row_checkout_edtQuantity);
+			holder.tvPrice = (TextView) view.findViewById(R.id.row_checkout_tvPrice);
+			holder.ivAvatar = (ImageView) view.findViewById(R.id.row_checkout_ivAvatar);
+			holder.tvSubtotal = (TextView) view.findViewById(R.id.row_checkout_tvSubtotal);		
 			
-			tvPartNumber = (TextView) view.findViewById(R.id.row_checkout_tvPartNumber);
-			tvColor = (TextView) view.findViewById(R.id.row_checkout_tvColor);			
-			tvDes = (TextView) view.findViewById(R.id.row_checkout_tvDesc);
-			edtQuantity = (EditText) view.findViewById(R.id.row_checkout_edtQuantity);
-			tvPrice = (TextView) view.findViewById(R.id.row_checkout_tvPrice);
-			ivAvatar = (ImageView) view.findViewById(R.id.row_checkout_ivAvatar);
-			tvSubtotal = (TextView) view.findViewById(R.id.row_checkout_tvSubtotal);		
-			
-			holder.ivAvatar = ivAvatar;
-			holder.tvPartNumber = tvPartNumber;
-			holder.tvColor = tvColor;
-			holder.tvDes = tvDes;
-			holder.edtQuantity = edtQuantity;
-			holder.tvSubtotal = tvSubtotal;
-			holder.tvPrice = tvPrice;
+			holder.mWatcher = new MutableWatcher(listRecent,holder.tvSubtotal);
+	        holder.edtQuantity.addTextChangedListener(holder.mWatcher);
 
 			view.setTag(holder);
 		} else {
 			holder = (CategoryHolder) view.getTag();			
-			ivAvatar = holder.ivAvatar;
-			tvPartNumber = holder.tvPartNumber;
-			tvColor = holder.tvColor;
-			tvDes = holder.tvDes;
-			edtQuantity = holder.edtQuantity;
-			tvPrice = holder.tvPrice;
-			tvSubtotal = holder.tvSubtotal;
-			
 		}
-		
-		edtQuantity.addTextChangedListener(new TextWatcher(){
-	        public void afterTextChanged(Editable s) {
-	        	if (FileUtil.listCartChange.containsKey(listRecent.get(currentPosition).getIdItem())) {
-	        		FileUtil.listCartChange.replace(listRecent.get(currentPosition).getIdItem(), edtQuantity.getText().toString().trim());
-				} else {
-					FileUtil.listCartChange.put(listRecent.get(currentPosition).getIdItem(), edtQuantity.getText().toString().trim());
-				}
-	        	
-	        	tvSubtotal.setText(CommonUtil.formatMoney(listRecent.get(currentPosition).getPrice()*Integer.parseInt(s.toString())));
-	            Log.d("edtQuantity.getText()", s.toString());
-	        }
-	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-	        public void onTextChanged(CharSequence s, int start, int before, int count){}
-	    });
-		
-		
-		
+
+	    holder.mWatcher.setPosition(position);
+	    holder.mWatcher.setActive(true);
+
 		// ------load data--------
 
-		tvPartNumber.setText(listRecent.get(currentPosition).getName());
-		
-		String des = "Desciption: "+ listRecent.get(currentPosition).getDesc();
+		holder.tvPartNumber.setText(listRecent.get(position).getName());
+
+		String des = "Desciption: "+ listRecent.get(position).getDesc();
 		Spannable desSpannable=new SpannableStringBuilder(des);
 		desSpannable.setSpan(new ForegroundColorSpan(color.crisom_blue), 0, 10, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-		tvDes.setText(desSpannable);
-		
-		tvColor.setText(listRecent.get(currentPosition).getColor());
-		edtQuantity.setText(String.valueOf(listRecent.get(currentPosition).getQuantity()));		
-		tvPrice.setText(CommonUtil.formatMoney(listRecent.get(currentPosition).getPrice()));
-		tvSubtotal.setText(CommonUtil.formatMoney(listRecent.get(currentPosition).getPrice()*listRecent.get(currentPosition).getQuantity()));
-		imageLoader.DisplayImage(listRecent.get(currentPosition).getImage(), ivAvatar);
+		holder.tvDes.setText(desSpannable);
+
+		holder.tvColor.setText(listRecent.get(position).getColor());
+		holder.edtQuantity.setText(String.valueOf(listRecent.get(position).getQuantity()));		
+		holder.tvPrice.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()));
+		holder.tvSubtotal.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()*listRecent.get(position).getQuantity()));
+		imageLoader.DisplayImage(listRecent.get(position).getImage(), holder.ivAvatar);
 		return view;
 	}
 
@@ -141,5 +105,52 @@ public class CheckoutAdapter extends BaseAdapter {
 		TextView tvPrice;
 		TextView tvSubtotal;
 		ImageView ivAvatar;
+		 public MutableWatcher mWatcher;
 	}
+	
+	
+}
+
+class MutableWatcher implements TextWatcher {
+
+    private ArrayList<RecentObject> mlistRecent;
+    private int mPosition;
+    private boolean mActive;
+    private TextView tvSubTotal;
+
+    public MutableWatcher(ArrayList<RecentObject> listRecent,TextView tvSubTotal ) {
+		// TODO Auto-generated constructor stub
+    	mlistRecent = listRecent;
+    	this.tvSubTotal = tvSubTotal;
+	}
+    void setPosition(int position) {
+        mPosition = position;
+    }
+
+    void setActive(boolean active) {
+        mActive = active;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) { }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+    	
+        if (mActive && !s.toString().trim().equals("")) {
+        	if (FileUtil.listCartChange.containsKey(mlistRecent.get(mPosition).getIdItem())) {
+        		FileUtil.listCartChange.replace(mlistRecent.get(mPosition).getIdItem(), s.toString().trim());
+			} else {
+				FileUtil.listCartChange.put(mlistRecent.get(mPosition).getIdItem(), s.toString().trim());
+			}
+        	
+        	tvSubTotal.setText(CommonUtil.formatMoney(mlistRecent.get(mPosition).getPrice()*Integer.parseInt(s.toString())));
+        	mlistRecent.get(mPosition).setQuantity(Integer.parseInt(s.toString()));
+        }
+    	
+        
+    }
 }

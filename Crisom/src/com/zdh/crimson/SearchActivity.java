@@ -111,7 +111,7 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 				startActivity(intent);
 	       } 
 		});
-				
+		pDialog = new ProgressDialog(SearchActivity.this);		
 	}
 	
 	private void handleOtherAction(){
@@ -214,11 +214,13 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
-	        pDialog = new ProgressDialog(SearchActivity.this);
-	        pDialog.setMessage("Loading...");
-	        pDialog.setIndeterminate(false);
-	        pDialog.setCancelable(true);
-	        pDialog.show();
+	        if (pDialog != null ) {	        		 	        
+	 	        pDialog.setMessage("Loading...");
+	 	        pDialog.setIndeterminate(false);
+	 	        pDialog.setCancelable(true);
+	 	        pDialog.show();
+	 	        pDialog.setContentView(R.layout.dialog_process);
+			}	
 	    }
 
 	    protected String doInBackground(String... params) {

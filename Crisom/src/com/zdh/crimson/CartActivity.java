@@ -117,6 +117,7 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 			   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 		   } 
 		});
+		pDialog = new ProgressDialog(CartActivity.this);
 				
 	}
 	
@@ -210,11 +211,13 @@ public class CartActivity extends Activity  implements View.OnClickListener{
 		@Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
-	        pDialog = new ProgressDialog(CartActivity.this);
-	        pDialog.setMessage("Loading...");
-	        pDialog.setIndeterminate(false);
-	        pDialog.setCancelable(true);
-	        pDialog.show();
+	        if (pDialog != null ) {	        		 	        
+	 	        pDialog.setMessage("Loading...");
+	 	        pDialog.setIndeterminate(false);
+	 	        pDialog.setCancelable(true);
+	 	        pDialog.show();
+	 	        pDialog.setContentView(R.layout.dialog_process);
+			}	        
 	    }
 
 	    protected String doInBackground(String... params) {

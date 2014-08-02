@@ -373,7 +373,10 @@
                             <ListView
                                 android:id="@+id/checkoutdetail_lvParcelService"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content" >
+                                android:layout_height="wrap_content"
+                                android:dividerHeight="5dp"
+                                android:divider="@color/transparent"
+                                android:choiceMode="singleChoice">
                             </ListView>
 
                             <TextView

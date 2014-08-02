@@ -62,68 +62,34 @@ public class DialogChildAdapter extends BaseAdapter {
 	@SuppressLint("InflateParams")
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		TextView tvModel;	
-		TextView tvColor;
-		TextView tvWeight;
-		TextView tvOtherFieldTitle;
-		TextView tvOtherFieldValue;
-		TextView tvPrice;
-		TextView tvMSRP;
-		
-		final EditText edtQuantity;
-		LinearLayout btnAddtoCart;
-		LinearLayout lnAddtoCart;
 		View view = convertView;
 		currentPosition = position;
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.row_child, null);
 			holder = new DialogChildHolder();
 			
-			tvModel = (TextView) view.findViewById(R.id.row_child_tvModel);
-			tvColor = (TextView) view.findViewById(R.id.row_child_tvColor);
-			tvWeight = (TextView) view.findViewById(R.id.row_child_tvShipWeight);
-			tvOtherFieldTitle = (TextView) view.findViewById(R.id.row_child_tvOtherFieldTitle);
-			tvOtherFieldValue = (TextView) view.findViewById(R.id.row_child_tvOtherFieldValue);
-			tvPrice = (TextView) view.findViewById(R.id.row_child_tvPrice);
-			tvMSRP = (TextView) view.findViewById(R.id.row_child_tvMSRP);
+			holder.tvModel = (TextView) view.findViewById(R.id.row_child_tvModel);
+			holder.tvColor = (TextView) view.findViewById(R.id.row_child_tvColor);
+			holder.tvWeight = (TextView) view.findViewById(R.id.row_child_tvShipWeight);
+			holder.tvOtherFieldTitle = (TextView) view.findViewById(R.id.row_child_tvOtherFieldTitle);
+			holder.tvOtherFieldValue = (TextView) view.findViewById(R.id.row_child_tvOtherFieldValue);
+			holder.tvPrice = (TextView) view.findViewById(R.id.row_child_tvPrice);
+			holder.tvMSRP = (TextView) view.findViewById(R.id.row_child_tvMSRP);
 			tvIncart = (TextView) view.findViewById(R.id.row_child_tvInCart);
-			edtQuantity = (EditText) view.findViewById(R.id.row_child_edtQuantityAddtocart);
-			btnAddtoCart = (LinearLayout) view.findViewById(R.id.row_child_btnAddtoCart);			
-			lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);
-			
-			holder.tvModel = tvModel;
-			holder.tvColor = tvColor;
-			holder.tvWeight = tvWeight;
-			holder.tvMSRP = tvMSRP;			
-			holder.tvIncart = tvIncart;
-			holder.tvPrice = tvPrice;
-			holder.tvOtherFieldTitle = tvOtherFieldTitle;
-			holder.tvOtherFieldValue = tvOtherFieldValue;
-			holder.edtQuantity = edtQuantity;
-			holder.lnAddtoCart = lnAddtoCart;			
-			holder.btnAddtoCart = btnAddtoCart;
+			holder.edtQuantity = (EditText) view.findViewById(R.id.row_child_edtQuantityAddtocart);
+			holder.btnAddtoCart = (LinearLayout) view.findViewById(R.id.row_child_btnAddtoCart);			
+			holder.lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);
 
 			view.setTag(holder);
 		} else {
 			holder = (DialogChildHolder) view.getTag();			
-			tvModel = holder.tvModel;
-			tvColor = holder.tvColor;
-			tvWeight = holder.tvWeight;
-			tvMSRP = holder.tvMSRP;
-			tvIncart = holder.tvIncart;
-			tvPrice = holder.tvPrice;
-			tvOtherFieldTitle = holder.tvOtherFieldTitle;
-			tvOtherFieldValue = holder.tvOtherFieldValue;
-			edtQuantity = holder.edtQuantity;
-			lnAddtoCart = holder.lnAddtoCart;
-			btnAddtoCart = holder.btnAddtoCart;
 		}
 		
-		btnAddtoCart.setOnClickListener(new OnClickListener() {
+		holder.btnAddtoCart.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				String quantity = edtQuantity.getText().toString().trim();
+				String quantity = holder.edtQuantity.getText().toString().trim();
 				if (quantity.equals("")) {
 					Toast.makeText(context, "Please input quantity!", Toast.LENGTH_SHORT).show();
 				}
@@ -144,19 +110,19 @@ public class DialogChildAdapter extends BaseAdapter {
 		
 		
 		if (SharedPreferencesUtil.getFlagLogin(context)) {
-			lnAddtoCart.setVisibility(View.VISIBLE);
+			holder.lnAddtoCart.setVisibility(View.VISIBLE);
 		} else {
-			lnAddtoCart.setVisibility(View.INVISIBLE);
+			holder.lnAddtoCart.setVisibility(View.INVISIBLE);
 		}
 
-		tvModel.setText(listOption.get(currentPosition).getSku());
-		tvColor.setText(listOption.get(currentPosition).getColor());
-		tvWeight.setText(String.valueOf(listOption.get(currentPosition).getWeight()));
-		tvMSRP.setText(String.valueOf(listOption.get(currentPosition).getMsrp()));
-		tvIncart.setText("");
-		tvPrice.setText(String.valueOf(listOption.get(currentPosition).getPrice()));
-		tvOtherFieldTitle.setText(listOption.get(currentPosition).getOtherFieldTitle());
-		tvOtherFieldValue.setText(listOption.get(currentPosition).getOtherFieldValue());
+		holder.tvModel.setText(listOption.get(currentPosition).getSku());
+		holder.tvColor.setText(listOption.get(currentPosition).getColor());
+		holder.tvWeight.setText(String.valueOf(listOption.get(currentPosition).getWeight()));
+		holder.tvMSRP.setText(String.valueOf(listOption.get(currentPosition).getMsrp()));
+		holder.tvIncart.setText("");
+		holder.tvPrice.setText(String.valueOf(listOption.get(currentPosition).getPrice()));
+		holder.tvOtherFieldTitle.setText(listOption.get(currentPosition).getOtherFieldTitle());
+		holder.tvOtherFieldValue.setText(listOption.get(currentPosition).getOtherFieldValue());
 		return view;
 	}
 
