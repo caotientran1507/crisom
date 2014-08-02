@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40"
+        android:layout_weight="50"
         android:background="@color/background_dialog"
         android:gravity="center"
         android:orientation="horizontal"
@@ -66,11 +66,12 @@
                         android:id="@+id/home_rdg"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="25"
+                        android:layout_weight="18"
                         android:gravity="center_vertical"
                         android:orientation="horizontal" >
 
                         <LinearLayout
+                            android:id="@+id/dialog_verify_lnFlatpanel"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
@@ -78,7 +79,7 @@
                             android:orientation="horizontal" >
 
                             <RadioButton
-                                android:id="@+id/home_rbnFlatpanel"
+                                android:id="@+id/dialog_verify_rbnFlatpanel"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:background="@drawable/radio_selector"
@@ -93,6 +94,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/dialog_verify_lnProjector"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="10dp"
@@ -101,7 +103,7 @@
                             android:orientation="horizontal" >
 
                             <RadioButton
-                                android:id="@+id/home_rbnProjector"
+                                android:id="@+id/dialog_verify_rbnProjector"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:background="@drawable/radio_selector"
@@ -117,36 +119,37 @@
                     <!-- End Radio button -->
 
                     <Spinner
-                        android:id="@+id/home_spnManufacturer"
+                        android:id="@+id/dialog_verify_spnManufacturer"                        
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="20"
+                        android:layout_weight="15"
                         android:background="@drawable/spinner_background" />
                     <TextView 
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="5"/>
+                        android:layout_weight="3"/>
 
                     <Spinner
-                        android:id="@+id/home_spnModel"
+                        android:id="@+id/dialog_verify_spnModel"                        
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="20"
+                        android:layout_weight="15"
                         android:background="@drawable/spinner_background" />
                     <TextView 
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="5"/>
+                        android:layout_weight="3"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="20"
+                        android:layout_weight="15"
                         android:gravity="center"
                         android:orientation="horizontal"
                         android:weightSum="100" >
 
                         <Button
+                            android:id="@+id/dialog_verify_btnVerify"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="70"
@@ -154,6 +157,20 @@
                             android:textColor="@color/crisom_white"
                             android:text="Verify Compatibility" />
                     </LinearLayout>
+                    
+                    <TextView 
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="3"/>
+                    
+                    <TextView 
+                        android:id="@+id/dialog_verify_tvResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="25"
+                        android:gravity="center"
+                        android:textSize="12sp"                        
+                        android:textColor="@color/crisom_red"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

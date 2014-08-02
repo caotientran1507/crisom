@@ -19,21 +19,28 @@ import org.json.JSONTokener;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,51 +68,66 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 	private ProgressDialog pDialog;
 	private Product product = new Product();
 	public ImageLoader imageLoader; 
-	
+
 	public static final int progress_bar_type = 0; 
 	DownloadAdapter downloadAdapter;
 	ChildAdapter childAdapter;
 	String urlInSDCard ="";
+
+	Dialog dialogVerifyNumber;
+	Spinner spnManufacturer,spnModel;
+	Button btnDialog;
+	TextView tvDialog;
+	LinearLayout lnFlatpanel, lnProjector;
+	RadioButton rdbFlatpanel, rdbProjector;
 	
+	ArrayList<String> listManufacturerName = new ArrayList<String>();
+	ArrayList<String> listModelName = new ArrayList<String>();
+	ArrayAdapter<String> manufacturerAdapter;
+	ArrayAdapter<String> modelAdapter;
+	
+	int radioChecked = 1;
+	int positionManufacturerName = 0;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product);
 		currentProduct = getIntent().getExtras().getInt(Constants.KEY_PRODUCTID);
-		
+
 		init();
 		initDataWebservice();
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		ChangeTextButtonLogin();
-		
+
 	}
-	
+
 	private void init(){
 		initView();
 		handleOtherAction();
 		initData();
 	}
-	
+
 	private void initView(){
 		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
 		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
 		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
 		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);	
-		
+
 		ivCategory = (ImageView)findViewById(R.id.include_footer_ivcategory);	
-		
+
 		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
 		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
 		btnBack = (Button)findViewById(R.id.include_header_btnBack);
-	
+
 		ivCategory.setImageResource(R.drawable.ico_category_active);
-		
+
 		tvTitle1 = (TextView)findViewById(R.id.product_tvTitle1);
 		tvShortDes = (TextView)findViewById(R.id.product_tvTitle2);
 		tvDes = (TextView)findViewById(R.id.product_tvDescription);
@@ -115,25 +137,25 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		tvDownload = (TextView)findViewById(R.id.product_tvDownload);
 		tvFAQ = (TextView)findViewById(R.id.product_tvFAQ);
 		tvVideo = (TextView)findViewById(R.id.product_tvVideo);
-		
+
 		btnVerify = (Button)findViewById(R.id.product_btnVerify);
 		ivAvatar = (ImageView)findViewById(R.id.product_ivAvatar);
-		
+
 		lnPrice = (LinearLayout)findViewById(R.id.product_lnPrice);
 		lnDownload = (LinearLayout)findViewById(R.id.product_lnDownload);
 		lnFaq = (LinearLayout)findViewById(R.id.product_lnFaq);
 		lnVideo = (LinearLayout)findViewById(R.id.product_lnVideo);
-		
+
 		lvPrice = (ListView)findViewById(R.id.product_lvPrice);
 		lvDownload = (ListView)findViewById(R.id.product_lvDownload);		
 		lvVideo = (ListView)findViewById(R.id.product_lvVideo);
 		tvFaqContent = (TextView)findViewById(R.id.product_tvFaqContent);
-		
+
 		imageLoader = new ImageLoader(ProductDetailActivity.this);
 
 		tvTitle.setText("PRODUCT");
 		btnBack.setVisibility(View.VISIBLE);
-				
+
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
@@ -148,32 +170,32 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		btnLogin.setOnClickListener(this);
 		btnVerify.setOnClickListener(this);
 		tvMainSite.setOnClickListener(this);
-				
+
 	}
-	
+
 	private void handleOtherAction(){
 		lvDownload.setOnItemClickListener(new OnItemClickListener() {
-		   @Override
-		   public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {	
-			   new DownloadFileFromURLAsyncTask().execute(product.getListDocument().get(position).getFile());
-		   } 
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {	
+				new DownloadFileFromURLAsyncTask().execute(product.getListDocument().get(position).getFile());
+			} 
 		});
 	}
-	
+
 	private void initData() {
 		downloadAdapter = new DownloadAdapter(ProductDetailActivity.this, product.getListDocument());
 		childAdapter = new ChildAdapter(ProductDetailActivity.this, product.getListOption(),currentProduct);
 		lvDownload.setAdapter(downloadAdapter);
 		lvPrice.setAdapter(childAdapter);
 	}
-	
+
 	private void initDataWebservice(){
 		new GetProductByIdAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(ProductDetailActivity.this), currentProduct).execute();
 	}
 
 	@Override
 	public void onClick(View v) {
-		
+
 		switch (v.getId()) {
 		//----------------Click tab bottom--------------------
 		//----------Home is clicked----------
@@ -182,33 +204,33 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			startActivity(home);
 			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;		
-		//----------Search is clicked----------
+			//----------Search is clicked----------
 		case R.id.include_footer_lnSearch:
 			Intent intent = new Intent(ProductDetailActivity.this, SearchActivity.class);
 			startActivity(intent);
 			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;
-			
-		//----------Category is clicked----------
+
+			//----------Category is clicked----------
 		case R.id.include_footer_lnCategory:
-			
+
 			break;
-			
-		//----------Cart is clicked----------
+
+			//----------Cart is clicked----------
 		case R.id.include_footer_lnCart:
 			Intent cart = new Intent(ProductDetailActivity.this, CartActivity.class);
 			startActivity(cart);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;
-			
-		//----------Contact is clicked----------
+
+			//----------Contact is clicked----------
 		case R.id.include_footer_lnContact:
 			Intent contact = new Intent(ProductDetailActivity.this, ContactActivity.class);
 			startActivity(contact);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;	
-		
-			
+
+
 		case R.id.include_header_btnLogin:
 			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
 				Intent login = new Intent(ProductDetailActivity.this, LoginActivity.class);
@@ -221,11 +243,11 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			finish();
 			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			break;	
-			
+
 		case R.id.product_btnVerify:
-			
+			showDialogVerifyCardNumber();
 			break;
-			
+
 		case R.id.product_tvMainSite:
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(product.getUrl()));
 			startActivity(browserIntent);
@@ -258,81 +280,81 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			lnFaq.setVisibility(View.GONE);
 			lnVideo.setVisibility(View.VISIBLE);
 			break;	
-		
+
 		default:
 			break;
 		}
-		
+
 	}
-	
+
 	//------------------------------------------------------------
-	
+
 	public class GetProductByIdAsyncTask extends AsyncTask<String, String, String> {
 
 		private int cid;
 		private int pid;
 		private String json;
-		
+
 		public GetProductByIdAsyncTask(int cid, int pid){
 			this.cid = cid;
 			this.pid = pid;
 		}
-	   
-	    @Override
-	    protected void onPreExecute() {
-	        super.onPreExecute();
-	        pDialog = new ProgressDialog(ProductDetailActivity.this);
-	        pDialog.setMessage("Loading...");
-	        pDialog.setIndeterminate(false);
-	        pDialog.setCancelable(true);
-	        pDialog.show();
-	        pDialog.setContentView(R.layout.dialog_process);
-	       
-	    }
 
-	    protected String doInBackground(String... params) {
-	    	
-	    	try {
-                // Building Parameters
-                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-                paramsUrl.add(new BasicNameValuePair("pid", String.valueOf(pid)));
-                paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(cid)));
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(ProductDetailActivity.this);
+			pDialog.setMessage("Loading...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+			pDialog.setContentView(R.layout.dialog_process);
 
-                json = JsonParser.makeHttpRequest(
-                		Constants.URL_GETPRODUCTBYID, "GET", paramsUrl);
-                if ((json != null) || (!json.equals(""))) { 
-                	JSONObject jsonObject = new JSONObject(json);	                	
-                	product.setId(jsonObject.getInt("entity_id"));
-                	product.setName(jsonObject.getString("name"));
-                	product.setDes(jsonObject.getString("description"));    
-                	product.setShortDes(jsonObject.getString("short_description"));    
-                	product.setUrl(jsonObject.getString("url"));    
-                	product.setFaq(jsonObject.getString("faq"));
-                	
-                	
-                	JSONObject jsonTemp= (JSONObject) new JSONTokener(json).nextValue();
-                	//-------get image------
-                	JSONArray jsonImage = jsonTemp.getJSONArray("image");
-                	if (jsonImage != null && jsonImage.length() != 0) {
-                		product.setImage(jsonImage.getString(0)); 
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("pid", String.valueOf(pid)));
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(cid)));
+
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETPRODUCTBYID, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) { 
+					JSONObject jsonObject = new JSONObject(json);	                	
+					product.setId(jsonObject.getInt("entity_id"));
+					product.setName(jsonObject.getString("name"));
+					product.setDes(jsonObject.getString("description"));    
+					product.setShortDes(jsonObject.getString("short_description"));    
+					product.setUrl(jsonObject.getString("url"));    
+					product.setFaq(jsonObject.getString("faq"));
+
+
+					JSONObject jsonTemp= (JSONObject) new JSONTokener(json).nextValue();
+					//-------get image------
+					JSONArray jsonImage = jsonTemp.getJSONArray("image");
+					if (jsonImage != null && jsonImage.length() != 0) {
+						product.setImage(jsonImage.getString(0)); 
 					}
 
-                	//------get all document for product-----
-                	JSONArray jsonArrayDocument = jsonTemp.getJSONArray("document");
-                	if (jsonArrayDocument != null && jsonArrayDocument.length() != 0) {
-                		for (int i = 0; i < jsonArrayDocument.length(); i++) {
+					//------get all document for product-----
+					JSONArray jsonArrayDocument = jsonTemp.getJSONArray("document");
+					if (jsonArrayDocument != null && jsonArrayDocument.length() != 0) {
+						for (int i = 0; i < jsonArrayDocument.length(); i++) {
 							DocumentObject documentObject = new DocumentObject();
 							documentObject.setDocType(jsonArrayDocument.getJSONObject(i).getString("doc_type"));
 							documentObject.setFile(jsonArrayDocument.getJSONObject(i).getString("file"));
 							product.getListDocument().add(documentObject);
 						}
-                	}
-                	
-                	
-                	//------get all options for product-----
-                	JSONArray jsonArrayOptions = jsonTemp.getJSONArray("options");
-                	if (jsonArrayOptions != null && jsonArrayOptions.length() != 0) {
-                		for (int i = 0; i < jsonArrayOptions.length(); i++) {
+					}
+
+
+					//------get all options for product-----
+					JSONArray jsonArrayOptions = jsonTemp.getJSONArray("options");
+					if (jsonArrayOptions != null && jsonArrayOptions.length() != 0) {
+						for (int i = 0; i < jsonArrayOptions.length(); i++) {
 							OptionObject optionObject = new OptionObject();
 							optionObject.setSku(jsonArrayOptions.getJSONObject(i).getString("sku"));
 							optionObject.setColor(jsonArrayOptions.getJSONObject(i).getString("color"));
@@ -346,24 +368,24 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 							optionObject.setInCart(jsonArrayOptions.getJSONObject(i).getInt("incart"));
 							product.getListOption().add(optionObject);
 						}
-                	}
+					}
 
-                }	
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+				}	
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 
-	        return null;
-	    }
+			return null;
+		}
 
-	    protected void onPostExecute(String file_url) {
-	    	tvTitle1.setText(product.getName());
-	    	tvShortDes.setText(product.getShortDes());
-	    	tvDes.setTag(product.getDes());
-	    	tvFaqContent.setText(product.getFaq());
-	    	imageLoader.DisplayImage(product.getImage(), ivAvatar);
-	        pDialog.dismiss();	      
-	    }
+		protected void onPostExecute(String file_url) {
+			tvTitle1.setText(product.getName());
+			tvShortDes.setText(product.getShortDes());
+			tvDes.setTag(product.getDes());
+			tvFaqContent.setText(product.getFaq());
+			imageLoader.DisplayImage(product.getImage(), ivAvatar);
+			pDialog.dismiss();	      
+		}
 	}
 
 
@@ -383,26 +405,26 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		// Setting Positive "Yes" Button
 		alertDialog.setPositiveButton("YES",
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int which) {
-						SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-						ChangeTextButtonLogin();
-						dialog.dismiss();
-					}
-				});
+			public void onClick(DialogInterface dialog,int which) {
+				SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
+				ChangeTextButtonLogin();
+				dialog.dismiss();
+			}
+		});
 		// Setting Negative "NO" Button
 		alertDialog.setNegativeButton("NO",
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,	int which) {
-						
-						dialog.dismiss();
-						
-					}
-				});
+			public void onClick(DialogInterface dialog,	int which) {
+
+				dialog.dismiss();
+
+			}
+		});
 
 		// Showing Alert Message
 		alertDialog.show();
 	}
-	
+
 	public void ChangeTextButtonLogin(){
 		if (SharedPreferencesUtil.getFlagLogin(ProductDetailActivity.this)) {
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
@@ -410,14 +432,14 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
 		}
 	}
-	
+
 
 	/**
 	 * Background Async Task to download file
 	 * */
 	class DownloadFileFromURLAsyncTask extends AsyncTask<String, String, String> {
-		
-		
+
+
 		public DownloadFileFromURLAsyncTask(){
 			CreateFolderData();
 		}
@@ -444,55 +466,55 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		@Override
 		protected String doInBackground(String... f_url) {
 			int count;
-	        try {
-	            URL url = new URL(f_url[0]);
-	            URLConnection conection = url.openConnection();
-	            conection.connect();
-	            // getting file length
-	            int lenghtOfFile = conection.getContentLength();
+			try {
+				URL url = new URL(f_url[0]);
+				URLConnection conection = url.openConnection();
+				conection.connect();
+				// getting file length
+				int lenghtOfFile = conection.getContentLength();
 
-	            // input stream to read file - with 8k buffer
-	            InputStream input = new BufferedInputStream(url.openStream(), 8192);
-	            
-	            // Output stream to write file
-	            urlInSDCard = Environment.getExternalStorageDirectory() + File.separator+ Constants.PathFolderDocument + File.separator+ ""+System.currentTimeMillis()+"-"+CommonUtil.getNameFile(f_url[0]);
-	            OutputStream output = new FileOutputStream(urlInSDCard);
+				// input stream to read file - with 8k buffer
+				InputStream input = new BufferedInputStream(url.openStream(), 8192);
 
-	            byte data[] = new byte[1024];
+				// Output stream to write file
+				urlInSDCard = Environment.getExternalStorageDirectory() + File.separator+ Constants.PathFolderDocument + File.separator+ ""+System.currentTimeMillis()+"-"+CommonUtil.getNameFile(f_url[0]);
+				OutputStream output = new FileOutputStream(urlInSDCard);
 
-	            long total = 0;
+				byte data[] = new byte[1024];
 
-	            while ((count = input.read(data)) != -1) {
-	                total += count;
-	                // publishing the progress....
-	                // After this onProgressUpdate will be called
-	                publishProgress(""+(int)((total*100)/lenghtOfFile));
-	                
-	                // writing data to file
-	                output.write(data, 0, count);
-	            }
+				long total = 0;
 
-	            // flushing output
-	            output.flush();
-	            
-	            // closing streams
-	            output.close();
-	            input.close();
-	            
-	        } catch (Exception e) {
-	        	return "false";
-	        }
-	        
-	        return "true";
+				while ((count = input.read(data)) != -1) {
+					total += count;
+					// publishing the progress....
+					// After this onProgressUpdate will be called
+					publishProgress(""+(int)((total*100)/lenghtOfFile));
+
+					// writing data to file
+					output.write(data, 0, count);
+				}
+
+				// flushing output
+				output.flush();
+
+				// closing streams
+				output.close();
+				input.close();
+
+			} catch (Exception e) {
+				return "false";
+			}
+
+			return "true";
 		}
-		
+
 		/**
 		 * Updating progress bar
 		 * */
 		protected void onProgressUpdate(String... progress) {
 			// setting progress percentage
-            pDialog.setProgress(Integer.parseInt(progress[0]));
-       }
+			pDialog.setProgress(Integer.parseInt(progress[0]));
+		}
 
 		/**
 		 * After completing background task
@@ -507,13 +529,13 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			} else {
 				Toast.makeText(ProductDetailActivity.this, "File was saved in "+urlInSDCard, Toast.LENGTH_LONG).show();
 			}
-			
+
 		}
 
 	}
-	
-	
-	
+
+
+
 	private void CreateFolderData(){
 		File folderRoot = new File(Environment.getExternalStorageDirectory(),Constants.PathFolderDataRoot);
 		File folderDocument = new File(Environment.getExternalStorageDirectory(),Constants.PathFolderDocument);
@@ -526,5 +548,124 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			}			
 		}
 	}
-	
+
+	private void showDialogVerifyCardNumber()
+	{		
+		dialogVerifyNumber = new Dialog(ProductDetailActivity.this, R.style.FullHeightDialog);
+		dialogVerifyNumber.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
+		dialogVerifyNumber.setContentView(R.layout.dialog_verify);	
+
+		spnManufacturer = (Spinner)dialogVerifyNumber.findViewById(R.id.dialog_verify_spnManufacturer);
+		spnModel = (Spinner)dialogVerifyNumber.findViewById(R.id.dialog_verify_spnModel);
+		btnDialog = (Button)dialogVerifyNumber.findViewById(R.id.dialog_verify_btnVerify);
+		tvDialog = (TextView)dialogVerifyNumber.findViewById(R.id.dialog_verify_tvResult);
+		lnFlatpanel = (LinearLayout)dialogVerifyNumber.findViewById(R.id.dialog_verify_lnFlatpanel);
+		lnProjector = (LinearLayout)dialogVerifyNumber.findViewById(R.id.dialog_verify_lnProjector);
+		rdbFlatpanel = (RadioButton)dialogVerifyNumber.findViewById(R.id.dialog_verify_rbnFlatpanel);
+		rdbProjector = (RadioButton)dialogVerifyNumber.findViewById(R.id.dialog_verify_rbnProjector);
+
+		dialogVerifyNumber.setOnCancelListener(new OnCancelListener() {
+
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				dialogVerifyNumber.dismiss();
+
+			}
+		});
+
+		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				if (i != 0) {
+					spnModel.setVisibility(View.VISIBLE);
+					new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
+					positionManufacturerName = i;
+				}
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		}); 
+
+		spnModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
+				if (i != 0) {
+					
+				}
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		}); 
+
+
+		dialogVerifyNumber.show();
+
+	}
+
+	//--------------------GetModelAsyncTask----------------------------------------
+	public class GetModelAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		int idDevide;
+		String manu;
+		public GetModelAsyncTask(int idDevide, String manu){
+			this.idDevide = idDevide;
+			this.manu = manu;
+		}
+
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {
+
+
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("devide", String.valueOf(idDevide)));
+				paramsUrl.add(new BasicNameValuePair("manu", manu));
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETMODEL, "GET", paramsUrl);
+				Log.d("json", json);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					clearSpinnerModel();
+					for (int j = 0; j < array.length(); j++) {
+						String name = array.getString(j);      						
+						listModelName.add(name);
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {	      
+			pDialog.dismiss();	
+		}
+	}
+
+	private void clearSpinnerModel(){
+		String model = "Select Model";
+		listModelName.clear();	
+		listModelName.add(model);
+	}
+
 }
