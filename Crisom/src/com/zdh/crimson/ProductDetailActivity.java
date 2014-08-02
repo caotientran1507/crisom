@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -44,6 +45,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zdh.crimson.HomeActivity.GetManufacturerAsyncTask;
 import com.zdh.crimson.adapter.ChildAdapter;
 import com.zdh.crimson.adapter.DownloadAdapter;
 import com.zdh.crimson.lazylist.ImageLoader;
@@ -80,12 +82,12 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 	TextView tvDialog;
 	LinearLayout lnFlatpanel, lnProjector;
 	RadioButton rdbFlatpanel, rdbProjector;
-	
+
 	ArrayList<String> listManufacturerName = new ArrayList<String>();
 	ArrayList<String> listModelName = new ArrayList<String>();
 	ArrayAdapter<String> manufacturerAdapter;
 	ArrayAdapter<String> modelAdapter;
-	
+
 	int radioChecked = 1;
 	int positionManufacturerName = 0;
 
@@ -170,6 +172,7 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		btnLogin.setOnClickListener(this);
 		btnVerify.setOnClickListener(this);
 		tvMainSite.setOnClickListener(this);
+		pDialog = new ProgressDialog(ProductDetailActivity.this);
 
 	}
 
@@ -534,8 +537,6 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 
 	}
 
-
-
 	private void CreateFolderData(){
 		File folderRoot = new File(Environment.getExternalStorageDirectory(),Constants.PathFolderDataRoot);
 		File folderDocument = new File(Environment.getExternalStorageDirectory(),Constants.PathFolderDocument);
@@ -573,6 +574,28 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			}
 		});
 
+		rdbFlatpanel.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				rdbFlatpanel.setChecked(true);
+				rdbProjector.setChecked(false);
+				radioChecked = 1;
+				new GetManufacturerAsyncTask(radioChecked).execute();
+			}
+		});
+
+		rdbProjector.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				rdbFlatpanel.setChecked(false);
+				rdbProjector.setChecked(true);
+				radioChecked = 2;
+				new GetManufacturerAsyncTask(radioChecked).execute();
+			}
+		});
+
 		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
@@ -590,7 +613,7 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		spnModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
 				if (i != 0) {
-					
+
 				}
 			} 
 
@@ -600,8 +623,61 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		}); 
 
 
+
 		dialogVerifyNumber.show();
 
+	}
+
+	//--------------------GetManufacturerAsyncTask----------------------------------------
+	public class GetManufacturerAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		int idDevide;
+
+		public GetManufacturerAsyncTask(int idDevide){
+			this.idDevide = idDevide;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("devide", String.valueOf(idDevide)));
+
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETMANUFACTURER, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					clearSpinnerManufacturer();
+					for (int j = 0; j < array.length(); j++) {
+						String name = array.getString(j);      						
+						listManufacturerName.add(name);
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {	      
+			pDialog.dismiss();
+		}
 	}
 
 	//--------------------GetModelAsyncTask----------------------------------------
@@ -620,15 +696,12 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {
-
-
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}
-
 		}
 
 		protected String doInBackground(String... params) {
@@ -638,9 +711,7 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				paramsUrl.add(new BasicNameValuePair("devide", String.valueOf(idDevide)));
 				paramsUrl.add(new BasicNameValuePair("manu", manu));
-				json = JsonParser.makeHttpRequest(
-						Constants.URL_GETMODEL, "GET", paramsUrl);
-				Log.d("json", json);
+				json = JsonParser.makeHttpRequest(Constants.URL_GETMODEL, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) {               
 					JSONArray array = new JSONArray(json);
 					clearSpinnerModel();
@@ -666,6 +737,12 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 		String model = "Select Model";
 		listModelName.clear();	
 		listModelName.add(model);
+	}
+	
+	private void clearSpinnerManufacturer(){		
+		String manufacturer = "Select Manufacturer";		
+		listManufacturerName.clear();		
+		listManufacturerName.add(manufacturer);
 	}
 
 }

@@ -598,8 +598,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	    protected void onPreExecute() {
 	        super.onPreExecute();
 	        if (pDialog != null ) {
-	        	
-	 	        
 	 	        pDialog.setMessage("Loading...");
 	 	        pDialog.setIndeterminate(false);
 	 	        pDialog.setCancelable(true);
