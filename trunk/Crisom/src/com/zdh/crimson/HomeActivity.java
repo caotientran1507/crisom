@@ -64,8 +64,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	private ArrayList<ImageView> listImage = new ArrayList<ImageView>();
 	private ImageView img1, img2, img3, img4;
 	
-//	ArrayList<KeyValueObject> listManufacturer = new ArrayList<KeyValueObject>();	
-//	ArrayList<KeyValueObject> listModel = new ArrayList<KeyValueObject>();
 	ArrayList<String> listManufacturerName = new ArrayList<String>();
 	ArrayList<String> listModelName = new ArrayList<String>();
 	ArrayAdapter<String> manufacturerAdapter;
@@ -195,9 +193,8 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		rbnFlatpanel.setOnClickListener(this);	
 		rbnProjector.setOnClickListener(this);	
 		lnSearchImage.setOnClickListener(this);	
-		
-		
 				
+		pDialog = new ProgressDialog(HomeActivity.this);		
 	}
 	
 	private void initDataWebservice(){
@@ -485,6 +482,13 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
+//	        if (pDialog != null ) {	        	
+//	 	        pDialog.setContentView(R.layout.dialog_process);
+//	 	        pDialog.setMessage("Loading...");
+//	 	        pDialog.setIndeterminate(false);
+//	 	        pDialog.setCancelable(true);
+//	 	        pDialog.show();
+//			}
 	        
 	    }
 
@@ -517,7 +521,8 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	        return null;
 	    }
 
-	    protected void onPostExecute(String file_url) {	      
+	    protected void onPostExecute(String file_url) {	  
+//	    	pDialog.dismiss();
 	    }
 	}
 	
@@ -534,11 +539,13 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
-	        pDialog = new ProgressDialog(HomeActivity.this);
-	        pDialog.setMessage("Loading...");
-	        pDialog.setIndeterminate(false);
-	        pDialog.setCancelable(true);
-	        pDialog.show();
+	        if (pDialog != null ) {	        		 	        
+	 	        pDialog.setMessage("Loading...");
+	 	        pDialog.setIndeterminate(false);
+	 	        pDialog.setCancelable(true);
+	 	        pDialog.show();
+	 	        pDialog.setContentView(R.layout.dialog_process);
+			}
 	    }
 
 	    protected String doInBackground(String... params) {
@@ -586,11 +593,16 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		@Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
-	        pDialog = new ProgressDialog(HomeActivity.this);
-	        pDialog.setMessage("Loading...");
-	        pDialog.setIndeterminate(false);
-	        pDialog.setCancelable(true);
-	        pDialog.show();
+	        if (pDialog != null ) {
+	        	
+	 	        
+	 	        pDialog.setMessage("Loading...");
+	 	        pDialog.setIndeterminate(false);
+	 	        pDialog.setCancelable(true);
+	 	        pDialog.show();
+	 	        pDialog.setContentView(R.layout.dialog_process);
+			}
+	       
 	    }
 
 	    protected String doInBackground(String... params) {

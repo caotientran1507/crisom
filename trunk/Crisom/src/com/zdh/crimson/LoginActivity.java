@@ -79,6 +79,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		lnCategory.setOnClickListener(this);
 		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
+		pDialog = new ProgressDialog(LoginActivity.this);
 		
 	}
 
@@ -177,11 +178,13 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
-	        pDialog = new ProgressDialog(LoginActivity.this);
-	        pDialog.setMessage("Checking...");
-	        pDialog.setIndeterminate(false);
-	        pDialog.setCancelable(true);
-	        pDialog.show();
+	        if (pDialog != null ) {	        		 	        
+	 	        pDialog.setMessage("Loading...");
+	 	        pDialog.setIndeterminate(false);
+	 	        pDialog.setCancelable(true);
+	 	        pDialog.show();
+	 	        pDialog.setContentView(R.layout.dialog_process);
+			}
 	    }
 
 	    protected String doInBackground(String... params) {

@@ -109,6 +109,8 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 			   startActivity(intent);
 		   } 
 		});
+		
+		pDialog = new ProgressDialog(ProductListActivity.this);
 				
 	}
 	
@@ -204,11 +206,15 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
-	        pDialog = new ProgressDialog(ProductListActivity.this);
-	        pDialog.setMessage("Loading...");
-	        pDialog.setIndeterminate(false);
-	        pDialog.setCancelable(true);
-	        pDialog.show();
+	        if (pDialog != null ) {	        		 	        
+	 	        pDialog.setMessage("Loading...");
+	 	        pDialog.setIndeterminate(false);
+	 	        pDialog.setCancelable(true);
+	 	        pDialog.show();
+	 	        pDialog.setContentView(R.layout.dialog_process);
+			}	
+	        
+	        
 	    }
 
 	    protected String doInBackground(String... params) {
