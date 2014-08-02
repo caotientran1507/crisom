@@ -74,6 +74,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	HomeAdapter adapter;
 	
 	int radioChecked = 1;
+	int positionManufacturerName = 0;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -241,6 +242,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		    	if (i != 0) {
 		    		spnModel.setVisibility(View.VISIBLE);
 		    		new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
+		    		positionManufacturerName = i;
 				}
 		    } 
 
@@ -253,7 +255,9 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
 		    	if (i != 0) {
 		    		Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-					intent.putExtra(Constants.KEY_SEARCH, listModelName.get(i));
+					intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, listModelName.get(i));
+					intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, listManufacturerName.get(positionManufacturerName));
+					intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
 					startActivity(intent);
 		    	}
 		    } 
@@ -462,7 +466,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 			Toast.makeText(HomeActivity.this, "Please input keyword!", Toast.LENGTH_SHORT).show();
 		}else{
 			Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-			intent.putExtra(Constants.KEY_SEARCH, edtSearch.getText().toString().trim());
+			intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, edtSearch.getText().toString().trim());
 			startActivity(intent);
 			
 		}

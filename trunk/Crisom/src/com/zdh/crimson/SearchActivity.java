@@ -10,15 +10,12 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -32,7 +29,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.zdh.crimson.adapter.ChildAdapter;
 import com.zdh.crimson.adapter.SearchAdapter;
 import com.zdh.crimson.model.Product;
 import com.zdh.crimson.utility.Constants;
@@ -131,9 +127,10 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 		adapter = new SearchAdapter(SearchActivity.this, FileUtil.listSearch);
 		listview.setAdapter(adapter);
 		if (getIntent().getExtras() != null) {
-			String key = getIntent().getExtras().getString(Constants.KEY_SEARCH);
-			new SearchAsyncTask(key).execute();
-			edtSearch.setText(key);
+			String model = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MODEL);
+			String manufacturer = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MANUFACTURER);
+			String device = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_DEVICE);
+			new MountFinderAsyncTask(device, manufacturer, model).execute();			
 		}
 	}
 	
@@ -200,7 +197,7 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	
-	//------------------------------------------------------------
+	//----------------------Search--------------------------------------
 	
 	public class SearchAsyncTask extends AsyncTask<String, String, String> {
 
@@ -232,7 +229,73 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 
                 json = JsonParser.makeHttpRequest(
                 		Constants.URL_SEARCH, "GET", paramsUrl);
-                Log.d("json", "json"+json);
+                if ((json != null) || (!json.equals(""))) {               
+                	JSONArray array = new JSONArray(json);
+                	FileUtil.listSearch.clear();
+        			for (int j = 0; j < array.length(); j++) {
+        				Product temp = new Product();
+        				temp.setId(array.getJSONObject(j).getInt("entity_id"));
+        				temp.setName(array.getJSONObject(j).getString("name"));
+        				temp.setDes(array.getJSONObject(j).getString("description"));    
+        				temp.setShortDes(array.getJSONObject(j).getString("short_description"));    
+        				temp.setImage(array.getJSONObject(j).getString("image"));
+        				FileUtil.listSearch.add(temp);					
+        			}
+        			
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+	        return null;
+	    }
+
+	    protected void onPostExecute(String file_url) {
+	    	adapter.notifyDataSetChanged();
+	        pDialog.dismiss();	      
+	    }
+	}
+	
+	
+	//----------------------Search--------------------------------------
+	
+	public class MountFinderAsyncTask extends AsyncTask<String, String, String> {
+
+		
+		private String json;
+		private String device;
+		private String manufacturer;
+		private String model;
+		
+		public MountFinderAsyncTask(String device,String manufacturer, String model){
+			this.device = device;
+			this.manufacturer = manufacturer;
+			this.model = model;
+		}
+	   
+	    @Override
+	    protected void onPreExecute() {
+	        super.onPreExecute();
+	        if (pDialog != null ) {	        		 	        
+	 	        pDialog.setMessage("Loading...");
+	 	        pDialog.setIndeterminate(false);
+	 	        pDialog.setCancelable(true);
+	 	        pDialog.show();
+	 	        pDialog.setContentView(R.layout.dialog_process);
+			}	
+	    }
+
+	    protected String doInBackground(String... params) {
+	    	
+	    	try {
+                // Building Parameters
+                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+                paramsUrl.add(new BasicNameValuePair("device", device));
+                paramsUrl.add(new BasicNameValuePair("manufacturer", manufacturer));
+                paramsUrl.add(new BasicNameValuePair("model", model));
+
+                json = JsonParser.makeHttpRequest(
+                		Constants.URL_MOUNTFINDER, "GET", paramsUrl);
                 if ((json != null) || (!json.equals(""))) {               
                 	JSONArray array = new JSONArray(json);
                 	FileUtil.listSearch.clear();
