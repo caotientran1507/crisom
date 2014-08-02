@@ -33,6 +33,7 @@ public class Constants {
 	public static final String URL_GETSHIPPINGMETHOD = "http://crimsonav.com/api/result/getShippingMethod";
 	public static final String URL_GETCREDITCARD = "http://crimsonav.com/api/result/getCCSaved";
 	public static final String URL_MOUNTFINDER = "http://crimsonav.com/api/result/mountFinder";	
+	public static final String URL_VERIFY = "http://crimsonav.com/api/result/verify";	
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
 	public static final String EXTENSION_FILE_PDF = ".pdf";
