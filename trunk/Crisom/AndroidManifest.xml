@@ -7,7 +7,7 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="19" />
-    
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- Permission: Allow Connect to Internet -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -18,44 +18,75 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:screenOrientation="portrait"
         android:theme="@style/Theme.Light.NoTitleBar.Fullscreen.WithColoredSpinners" >
-        <activity android:name="com.zdh.crimson.HomeActivity" 
-            android:configChanges="orientation|keyboardHidden"
-			android:windowSoftInputMode="stateHidden">
-			<intent-filter>
-			    <action android:name="android.intent.action.SEARCH" />
+        <activity
+            android:name="com.zdh.crimson.HomeActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
         </activity>
-        <activity android:name="com.zdh.crimson.CartActivity" >
+        <activity
+            android:name="com.zdh.crimson.CartActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.ContactActivity" >
+        <activity
+            android:name="com.zdh.crimson.ContactActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.RegisterActivity" >
-            
+        <activity
+            android:name="com.zdh.crimson.RegisterActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.CategoryActivity" >
+        <activity
+            android:name="com.zdh.crimson.CategoryActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.CategoryListActivity" >
+        <activity
+            android:name="com.zdh.crimson.CategoryListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.LoginActivity" >
+        <activity
+            android:name="com.zdh.crimson.LoginActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.ProductDetailActivity" 
-            android:screenOrientation="portrait">
+        <activity
+            android:name="com.zdh.crimson.ProductDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.ProductListActivity" >
+        <activity
+            android:name="com.zdh.crimson.ProductListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.CheckoutActivity" >
+        <activity
+            android:name="com.zdh.crimson.CheckoutActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.CheckoutDetailActivity" >
+        <activity
+            android:name="com.zdh.crimson.CheckoutDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
         </activity>
-        <activity android:name="com.zdh.crimson.SearchActivity" >
-           <intent-filter>
-			    <action android:name="android.intent.action.SEARCH" />
+        <activity
+            android:name="com.zdh.crimson.SearchActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
     </application>

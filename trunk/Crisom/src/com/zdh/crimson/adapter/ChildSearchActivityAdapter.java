@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zdh.crimson.ProductDetailActivity;
 import com.zdh.crimson.R;
 import com.zdh.crimson.SearchActivity;
 import com.zdh.crimson.model.OptionObject;

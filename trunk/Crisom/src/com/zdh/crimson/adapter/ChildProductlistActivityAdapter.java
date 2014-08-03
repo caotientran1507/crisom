@@ -22,14 +22,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zdh.crimson.ProductDetailActivity;
+import com.zdh.crimson.ProductListActivity;
 import com.zdh.crimson.R;
+import com.zdh.crimson.SearchActivity;
 import com.zdh.crimson.model.OptionObject;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
-public class ChildAdapter extends BaseAdapter {
+public class ChildProductlistActivityAdapter extends BaseAdapter {
 
 	int currentPosition;	
 	//    ChildHolder holder = null;
@@ -40,7 +41,7 @@ public class ChildAdapter extends BaseAdapter {
 	int idProduct;
 
 
-	public ChildAdapter(Context context,ArrayList<OptionObject> listOption,int idProduct) {
+	public ChildProductlistActivityAdapter(Context context,ArrayList<OptionObject> listOption,int idProduct) {
 		this.listOption = listOption;	
 		this.idProduct = idProduct;
 		this.context = context;
@@ -124,7 +125,7 @@ public class ChildAdapter extends BaseAdapter {
 		holder.tvIncart.setText(String.valueOf(listOption.get(currentPosition).getInCart()));
 		holder.tvPrice.setText(String.valueOf(listOption.get(currentPosition).getPrice()));
 
-		if (listOption.get(currentPosition).getOtherFieldTitle().equals("") || listOption.get(currentPosition).getOtherFieldTitle().equals("null")) {
+		if (listOption.get(currentPosition).getOtherFieldTitle().equals("")) {
 			holder.tvOtherFieldTitle.setVisibility(View.GONE);
 			holder.tvOtherFieldValue.setVisibility(View.GONE);
 		}else{
@@ -211,14 +212,12 @@ public class ChildAdapter extends BaseAdapter {
 			if (status == null) {
 				Toast.makeText(context, "Can not add product to your cart. Please try again!", Toast.LENGTH_SHORT).show();
 			}else{
-				((ProductDetailActivity)mContext).runOnUiThread(new Runnable() {
+				((ProductListActivity)mContext).runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						mtvIncart.setText(String.valueOf(Integer.parseInt(mtvIncart.getText().toString().trim())+qty));
 					}
 				});
-
-
 			}
 			pDialog.dismiss();       
 		}

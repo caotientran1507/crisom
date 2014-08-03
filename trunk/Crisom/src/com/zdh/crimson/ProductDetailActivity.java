@@ -576,8 +576,7 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				dialogVerifyNumber.dismiss();
-				
+				dialogVerifyNumber.dismiss();				
 			}
 		});
 		
@@ -585,8 +584,15 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				new VerifyAsyncTask(String.valueOf(radioChecked), listManufacturerName.get(positionManufacturerName), listModelName.get(positionModelName), product.getListOption().get(0).getSku(), tvDialog).execute();
+				if (positionManufacturerName == 0) {
+					Toast.makeText(dialogVerifyNumber.getContext(), "Please select Manufacturer!", Toast.LENGTH_SHORT).show();
+				}else{
+					if (positionModelName == 0) {
+						Toast.makeText(dialogVerifyNumber.getContext(), "Please select Model!", Toast.LENGTH_SHORT).show();
+					} else {
+						new VerifyAsyncTask(String.valueOf(radioChecked), listManufacturerName.get(positionManufacturerName), listModelName.get(positionModelName), product.getListOption().get(0).getSku(), tvDialog).execute();
+					}
+				}
 			}
 		});				
 

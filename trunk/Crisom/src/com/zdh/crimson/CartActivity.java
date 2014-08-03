@@ -241,6 +241,7 @@ public class CartActivity extends Activity  implements View.OnClickListener{
         				temp.setPrice(array.getJSONObject(j).getDouble("price")); 
         				temp.setQuantity(array.getJSONObject(j).getInt("qty"));   
         				temp.setImage(array.getJSONObject(j).getString("image"));   
+        				temp.setColor(array.getJSONObject(j).getString("color"));
         				FileUtil.listRecent.add(temp);
         			}
         			
