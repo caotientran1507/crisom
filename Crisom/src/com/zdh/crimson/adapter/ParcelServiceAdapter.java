@@ -71,6 +71,17 @@ public class ParcelServiceAdapter extends BaseAdapter {
 	    }
 	});
 
+	holder.rdb.setOnClickListener(new OnClickListener() {
+	    
+	    @Override
+	    public void onClick(View v) {
+		// TODO Auto-generated method stub
+		selectedIndex = position;
+		ParcelServiceAdapter.this.notifyDataSetChanged();
+	    }
+	});
+	
+	
 	if (position == selectedIndex) {
 	    holder.rdb.setChecked( true );
 	}
