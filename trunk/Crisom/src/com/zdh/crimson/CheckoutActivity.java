@@ -11,7 +11,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -236,8 +239,13 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 
 
 		case R.id.include_header_btnLogin:
-			Intent login = new Intent(CheckoutActivity.this, LoginActivity.class);
-			startActivity(login);
+			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
+				Intent login = new Intent(CheckoutActivity.this, LoginActivity.class);
+				startActivity(login);
+				overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
+			}else{
+				showDialog(CheckoutActivity.this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);
+			}
 			break;	
 
 		case R.id.include_header_btnBack:
@@ -809,6 +817,49 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		FileUtil.states.clear();
 		for (int i = 0; i < FileUtil.listState.size(); i++) {
 			FileUtil.states.add(FileUtil.listState.get(i).getName());
+		}
+	}
+	
+	private void showDialog(final Context mContext, String title, String msg){
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+
+		// Setting Dialog Title
+		alertDialog.setTitle(title);
+
+		// Setting Dialog Message
+		alertDialog.setMessage(msg);
+
+		// Setting Icon to Dialog
+		alertDialog.setIcon(R.drawable.delete);
+
+		// Setting Positive "Yes" Button
+		alertDialog.setPositiveButton("YES",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,int which) {
+						SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
+						ChangeTextButtonLogin();
+						dialog.dismiss();
+					}
+				});
+		// Setting Negative "NO" Button
+		alertDialog.setNegativeButton("NO",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog,	int which) {
+						
+						dialog.dismiss();
+						
+					}
+				});
+
+		// Showing Alert Message
+		alertDialog.show();
+	}
+	
+	private void ChangeTextButtonLogin(){
+		if (SharedPreferencesUtil.getFlagLogin(CheckoutActivity.this)) {
+			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
+		} else {
+			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
 		}
 	}
 
