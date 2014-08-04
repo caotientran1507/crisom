@@ -61,6 +61,10 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 	ArrayList<String> listProductTypes = new ArrayList<String>();
 	ArrayAdapter<String> productTypeAdapter;
 	
+	ArrayList<Category> listCategoryProductTypeChild = new ArrayList<Category>();
+	ArrayList<String> listProductTypesChild = new ArrayList<String>();
+	ArrayAdapter<String> productTypeAdapterChild;
+	
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 	
 	
@@ -140,10 +144,10 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 	private void initData() {
 		
 		tvSizeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listTvSizes);
-		productTypeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypes);
+		productTypeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypesChild);
 		
 		spnTvSize.setAdapter(tvSizeAdapter);
-		
+		spnType1.setAdapter(productTypeAdapter);
 		
 		adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
 		lvProduct.setAdapter(adapter);
