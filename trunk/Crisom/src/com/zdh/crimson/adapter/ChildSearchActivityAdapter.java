@@ -8,6 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.bool;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -38,6 +39,7 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 	private ArrayList<OptionObject> listOption = new ArrayList<OptionObject>();
 	private ProgressDialog pDialog;
 	int idProduct;
+	boolean update_layout_SearchActivity = false;
 
 
 	public ChildSearchActivityAdapter(Context context,ArrayList<OptionObject> listOption,int idProduct) {
@@ -45,6 +47,12 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 		this.idProduct = idProduct;
 		this.context = context;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);		
+	}
+	
+	
+
+	public void setUpdate_layout_SearchActivity(boolean update_layout_SearchActivity) {
+		this.update_layout_SearchActivity = update_layout_SearchActivity;
 	}
 
 	public int getCount() {
@@ -181,6 +189,7 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
+			pDialog.setContentView(R.layout.dialog_process);
 		}
 
 		protected String doInBackground(String... params) {
@@ -211,12 +220,13 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 			if (status == null) {
 				Toast.makeText(context, "Can not add product to your cart. Please try again!", Toast.LENGTH_SHORT).show();
 			}else{
-				((SearchActivity)mContext).runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						mtvIncart.setText(String.valueOf(Integer.parseInt(mtvIncart.getText().toString().trim())+qty));
-					}
-				});
+				if(update_layout_SearchActivity)
+					((SearchActivity)mContext).runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							mtvIncart.setText(String.valueOf(Integer.parseInt(mtvIncart.getText().toString().trim())+qty));
+						}
+					});
 			}
 			pDialog.dismiss();       
 		}

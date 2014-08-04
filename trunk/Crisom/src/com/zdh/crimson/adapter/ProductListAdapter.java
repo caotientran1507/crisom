@@ -269,7 +269,7 @@ private void showDialogChildrenProduct(Product product)
 
 	protected void onPostExecute(String file_url) {
 	    if(product.getListOption()!=null && product.getListOption().size()>0){
-		ChildSearchActivityAdapter childAdapter = new ChildSearchActivityAdapter(mContext, product.getListOption(),product.getId());
+		ChildProductlistActivityAdapter childAdapter = new ChildProductlistActivityAdapter(mContext, product.getListOption(),product.getId());
 		lvDialog.setAdapter(childAdapter);
 		dialogChildrenProduct.show();
 

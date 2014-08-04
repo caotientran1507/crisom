@@ -182,6 +182,7 @@ public class ChildProductlistActivityAdapter extends BaseAdapter {
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
+			pDialog.setContentView(R.layout.dialog_process);
 		}
 
 		protected String doInBackground(String... params) {
