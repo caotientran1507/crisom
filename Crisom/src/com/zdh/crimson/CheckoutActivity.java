@@ -18,9 +18,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.Log;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -36,6 +35,7 @@ import android.widget.Toast;
 import com.zdh.crimson.adapter.CheckoutAdapter;
 import com.zdh.crimson.model.CountryObject;
 import com.zdh.crimson.model.StateObject;
+import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
@@ -115,17 +115,6 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		btnQuote = (Button)findViewById(R.id.checkout_btnQuote);
 
 		listview = (ListView)findViewById(R.id.checkout_lv);
-		
-		listview.setOnTouchListener(new OnTouchListener() {
-		    @Override
-		    public boolean onTouch(View arg0, MotionEvent arg1) {
-			// TODO Auto-generated method stub
-			arg0.getParent().requestDisallowInterceptTouchEvent(true);
-			return false;
-		    }
-	        });
-		
-		
 		tvSubTotal = (TextView)findViewById(R.id.checkout_tvSubTotal);
 		tvTax = (TextView)findViewById(R.id.checkout_tvTax);
 		tvShippingHandling = (TextView)findViewById(R.id.checkout_tvShippingHandling);
@@ -174,8 +163,6 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 
 		adapter = new CheckoutAdapter(CheckoutActivity.this, FileUtil.listRecent);
 		listview.setAdapter(adapter);
-		
-		
 
 	}
 
@@ -529,26 +516,27 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+								
 				String ids = "";
-				int step = 0;
-				for (int i : FileUtil.listCartChange.keySet()) {
-					if (step == 0) {
-						ids = ids + String.valueOf(i);
-					}else{
-						ids = "," + ids + String.valueOf(i);
-					}
-
+				
+				String[] arrIds = new String[FileUtil.listCartChange.size()];
+				int i = 0;
+				for (int key : FileUtil.listCartChange.keySet()) {
+					arrIds[i] = String.valueOf(key);
+					i++;
 				}
-				step = 0;
+				ids = CommonUtil.combineString(arrIds, ",");
+				
 				String qty = "";
-				for (String s : FileUtil.listCartChange.values()) {
-					if (step == 0) {
-						qty = qty + s;
-					}else{
-						qty = "," + s;
-					}
-					qty += s;
+				String[] arrQty = new String[FileUtil.listCartChange.size()];
+				int j = 0;
+				for (String value : FileUtil.listCartChange.values()) {
+					arrQty[j] = value;
+					j++;
 				}
+				qty = CommonUtil.combineString(arrQty, ",");
+				Log.d("ids", ids);
+				Log.d("qty", qty);
 
 				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
 				paramsUrl.add(new BasicNameValuePair("ids", ids));
@@ -756,7 +744,7 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		}
 	}
 
-	//--------------------GetAQuote----------------------------------------
+	//--------------------GetCartCode----------------------------------------
 	public class GetCartCodeAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;

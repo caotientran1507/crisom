@@ -8,6 +8,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -21,7 +22,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -79,6 +79,11 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 	ParcelServiceAdapter parcelServiceAdapter;
 	String valueShipping = "";
 	String valueBilling = "";
+	
+	String sSubtotal = "";
+	String sShipping = "";
+	String sTax = "";
+	String sGrandTotal = "";
 
 
 	ReviewCheckoutDetailAdapter reviewCheckoutDetailAdapter;
@@ -225,7 +230,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		spnExpirationMonth.setAdapter(monthAdapter);
 		spnExpirationYear.setAdapter(yearAdapter);
 		spnCreditCardType.setAdapter(cardTypeAdapter);
-		
+
 		spnCreditCardOnFile.setAdapter(cardTypeOnFileAdapter);
 
 		reviewCheckoutDetailAdapter = new ReviewCheckoutDetailAdapter(CheckoutDetailActivity.this, FileUtil.listRecent);
@@ -233,7 +238,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 
 		parcelServiceAdapter = new ParcelServiceAdapter(CheckoutDetailActivity.this, FileUtil.listCarrier);
 		lvParcelService.setAdapter(parcelServiceAdapter);
-		
+
 		pDialog = new ProgressDialog(CheckoutDetailActivity.this);
 	}
 
@@ -326,32 +331,38 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			break;	
 
 		case R.id.checkoutdetail_ln2ShippingInfomation:
-			ln1BillingInfomationContent.setVisibility(View.GONE);
-			ln2ShippingInfomationContent.setVisibility(View.VISIBLE);
-			ln3ShippingMethodContent.setVisibility(View.GONE);
-			ln4PaymentInfomationContent.setVisibility(View.GONE);
-			ln5OrderReviewContent.setVisibility(View.GONE);		
+			if (ln5OrderReviewContent.getVisibility() == View.VISIBLE
+			|| ln4PaymentInfomationContent.getVisibility() == View.VISIBLE
+			|| ln3ShippingMethodContent.getVisibility() == View.VISIBLE) {
+				ln1BillingInfomationContent.setVisibility(View.GONE);
+				ln2ShippingInfomationContent.setVisibility(View.VISIBLE);
+				ln3ShippingMethodContent.setVisibility(View.GONE);
+				ln4PaymentInfomationContent.setVisibility(View.GONE);
+				ln5OrderReviewContent.setVisibility(View.GONE);	
+			}
+
 			break;
 		case R.id.checkoutdetail_ln3ShippingMethod:
-			ln1BillingInfomationContent.setVisibility(View.GONE);
-			ln2ShippingInfomationContent.setVisibility(View.GONE);
-			ln3ShippingMethodContent.setVisibility(View.VISIBLE);
-			ln4PaymentInfomationContent.setVisibility(View.GONE);
-			ln5OrderReviewContent.setVisibility(View.GONE);
+			if (ln5OrderReviewContent.getVisibility() == View.VISIBLE
+			|| ln4PaymentInfomationContent.getVisibility() == View.VISIBLE) {
+				ln1BillingInfomationContent.setVisibility(View.GONE);
+				ln2ShippingInfomationContent.setVisibility(View.GONE);
+				ln3ShippingMethodContent.setVisibility(View.VISIBLE);
+				ln4PaymentInfomationContent.setVisibility(View.GONE);
+				ln5OrderReviewContent.setVisibility(View.GONE);
+			}
 			break;
 		case R.id.checkoutdetail_ln4PaymentInfomation:
-			ln1BillingInfomationContent.setVisibility(View.GONE);
-			ln2ShippingInfomationContent.setVisibility(View.GONE);
-			ln3ShippingMethodContent.setVisibility(View.GONE);
-			ln4PaymentInfomationContent.setVisibility(View.VISIBLE);
-			ln5OrderReviewContent.setVisibility(View.GONE);
+			if (ln5OrderReviewContent.getVisibility() == View.VISIBLE
+			|| ln4PaymentInfomationContent.getVisibility() == View.VISIBLE) {
+				ln1BillingInfomationContent.setVisibility(View.GONE);
+				ln2ShippingInfomationContent.setVisibility(View.GONE);
+				ln3ShippingMethodContent.setVisibility(View.GONE);
+				ln4PaymentInfomationContent.setVisibility(View.VISIBLE);
+				ln5OrderReviewContent.setVisibility(View.GONE);
+			}
 			break;
-		case R.id.checkoutdetail_ln5OrderReview:
-			ln1BillingInfomationContent.setVisibility(View.GONE);
-			ln2ShippingInfomationContent.setVisibility(View.GONE);
-			ln3ShippingMethodContent.setVisibility(View.GONE);
-			ln4PaymentInfomationContent.setVisibility(View.GONE);
-			ln5OrderReviewContent.setVisibility(View.VISIBLE);
+		case R.id.checkoutdetail_ln5OrderReview:		
 			break;
 
 
@@ -477,11 +488,11 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -545,11 +556,11 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -601,11 +612,11 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -616,7 +627,6 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
 				json = JsonParser.makeHttpRequest(Constants.URL_GETCREDITCARD, "GET", paramsUrl);
-				Log.d("json", json);
 				if ((json != null) || (!json.equals(""))) {  
 
 					JSONArray array = new JSONArray(json);
@@ -639,6 +649,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 
 		protected void onPostExecute(String file_url) {	 
 			cardTypeOnFileAdapter.notifyDataSetChanged();
+			new GetCartCodeAsyncTask(idCustomer).execute();
 			pDialog.dismiss();	
 		}
 	}
@@ -671,7 +682,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		dialogVerifyNumber.show();
 
 	}
-	
+
 	private void clearSpinnerCreditCardOnFile(){		
 		String creditCard = "--Please Select--";		
 		creditCards.clear();		
@@ -692,26 +703,26 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		// Setting Positive "Yes" Button
 		alertDialog.setPositiveButton("YES",
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int which) {
-						SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-						ChangeTextButtonLogin();
-						dialog.dismiss();
-					}
-				});
+			public void onClick(DialogInterface dialog,int which) {
+				SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
+				ChangeTextButtonLogin();
+				dialog.dismiss();
+			}
+		});
 		// Setting Negative "NO" Button
 		alertDialog.setNegativeButton("NO",
 				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,	int which) {
-						
-						dialog.dismiss();
-						
-					}
-				});
+			public void onClick(DialogInterface dialog,	int which) {
+
+				dialog.dismiss();
+
+			}
+		});
 
 		// Showing Alert Message
 		alertDialog.show();
 	}
-	
+
 	private void ChangeTextButtonLogin(){
 		if (SharedPreferencesUtil.getFlagLogin(CheckoutDetailActivity.this)) {
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
@@ -719,6 +730,71 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
 		}
 	}
+	
+	//--------------------GetCartCode----------------------------------------
+		public class GetCartCodeAsyncTask extends AsyncTask<String, String, String> {
+
+			private String json;
+			int idCustomer;
+			public GetCartCodeAsyncTask(int idCustomer){
+				this.idCustomer = idCustomer;
+			}
+
+
+			@Override
+			protected void onPreExecute() {
+				super.onPreExecute();
+				if (pDialog != null ) {	        		 	        
+		 	        pDialog.setMessage("Loading...");
+		 	        pDialog.setIndeterminate(false);
+		 	        pDialog.setCancelable(true);
+		 	        pDialog.show();
+		 	        pDialog.setContentView(R.layout.dialog_process);
+				}
+			}
+
+			protected String doInBackground(String... params) {
+
+				try {
+					// Building Parameters
+					List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+					paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
+					json = JsonParser.makeHttpRequest(
+							Constants.URL_GETCARTCOST, "GET", paramsUrl);
+					if ((json != null) || (!json.equals(""))) {               
+						JSONObject jsonObject = new JSONObject(json);
+						JSONObject jsonObjectSubtotal = jsonObject.getJSONObject("subtotal");
+						JSONObject jsonObjectShipping = jsonObject.getJSONObject("shipping");
+						JSONObject jsonObjectTax = jsonObject.getJSONObject("tax");
+						JSONObject jsonObjectGrandTotal = jsonObject.getJSONObject("grandtotal");
+						
+						sSubtotal = jsonObjectSubtotal.getString("cost");
+						sShipping = jsonObjectShipping.getString("cost");
+						sTax = jsonObjectTax.getString("cost");
+						sGrandTotal = jsonObjectGrandTotal.getString("cost");
+						
+						runOnUiThread(new Runnable() {
+						    @Override
+						    public void run() {
+						    	tvSubtotal.setText(sSubtotal);
+								tvShippingHandling.setText(sShipping);
+								tvTax.setText(sTax);
+								tvGrandTotal.setText(sGrandTotal);
+						    }
+						});
+
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
+				return null;
+			}
+
+			protected void onPostExecute(String file_url) {	      
+				pDialog.dismiss();	
+			}
+		}
 
 
 }
