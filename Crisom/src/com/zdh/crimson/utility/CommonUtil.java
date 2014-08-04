@@ -12,7 +12,7 @@ public class CommonUtil {
 //		return fmt.format(money);
 		
 		String str = new DecimalFormat("#.00").format(money);
-		return str;
+		return "$"+str;
 	}
 	 
 	public static String getExtensionFile(String url){

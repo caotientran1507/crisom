@@ -3,35 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/crisom_red"
-    android:orientation="horizontal"
-    android:weightSum="100" >
+    android:orientation="horizontal" >
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="5" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="20"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/include_header_btnBack"
-            android:layout_width="55dp"
-            android:layout_height="25dp"
-            android:background="@drawable/btn_back"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="Back"
-            android:textColor="@color/crisom_white" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="5" />
+    <Button
+        android:id="@+id/include_header_btnBack"
+        android:layout_width="65dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="center"
+        android:background="@drawable/btn_back"
+        android:text="Back"
+        android:textColor="@color/crisom_white" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -49,26 +31,15 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="5" />
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="20"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/include_header_btnLogin"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:background="@drawable/login_background"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:text="Log In"
-            android:textColor="@color/crisom_white" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/include_header_btnLogin"
+        android:layout_width="65dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/login_background"
+        android:gravity="center"
+        android:text="Log In"
+        android:textColor="@color/crisom_white" />
 
 </LinearLayout>
