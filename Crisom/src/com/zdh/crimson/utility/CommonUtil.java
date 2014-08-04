@@ -1,7 +1,6 @@
 package com.zdh.crimson.utility;
 
-import java.text.NumberFormat;
-
+import java.text.DecimalFormat;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,10 +8,13 @@ import android.widget.Toast;
 
 public class CommonUtil {
 	public static String formatMoney(double money){
-		NumberFormat fmt = NumberFormat.getCurrencyInstance();
-		return fmt.format(money);
+//		NumberFormat fmt = new NumberFormat().
+//		return fmt.format(money);
+		
+		String str = new DecimalFormat("#.00").format(money);
+		return str;
 	}
-	
+	 
 	public static String getExtensionFile(String url){
 		return url.substring(url.length() - 4);
 	}
