@@ -9,12 +9,12 @@
     <TextView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="30" />
+        android:layout_weight="20" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="40"
+        android:layout_weight="60"
         android:gravity="center" >
 
         <TextView
@@ -30,18 +30,15 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="30"
+        android:layout_weight="20"
         android:gravity="center" >
 
         <Button
             android:id="@+id/include_header_btnLogin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_marginRight="10dp"
             android:background="@drawable/login_background"
-            android:paddingBottom="5dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:paddingTop="5dp"
             android:text="Log In"
             android:textColor="@color/crisom_white" />
     </LinearLayout>
