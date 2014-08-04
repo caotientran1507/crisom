@@ -20,13 +20,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.zdh.crimson.adapter.ProductListAdapter;
+import com.zdh.crimson.model.Category;
 import com.zdh.crimson.model.Product;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
@@ -44,6 +48,18 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 	private ProgressDialog pDialog;
 	ProductListAdapter adapter;
 	static int currentCategory = 0;
+	
+	private Spinner spnTvSize, spnType1, spnType2;
+	private CheckBox cbxAll;
+	private Button btnSearch, btnClearFilter;
+	
+	ArrayList<Category> listCategoryTvSize = new ArrayList<Category>();
+	ArrayList<String> listTvSizes = new ArrayList<String>();
+	ArrayAdapter<String> tvSizeAdapter;
+	
+	ArrayList<Category> listCategoryProductType = new ArrayList<Category>();
+	ArrayList<String> listProductTypes = new ArrayList<String>();
+	ArrayAdapter<String> productTypeAdapter;
 	
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 	
@@ -88,6 +104,13 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
 		btnBack = (Button)findViewById(R.id.include_header_btnBack);
 		
+		spnTvSize = (Spinner)findViewById(R.id.productlist_spnTVsize);
+		spnType1 = (Spinner)findViewById(R.id.productlist_spnType1);
+		spnType2 = (Spinner)findViewById(R.id.productlist_spnType2);
+		btnSearch = (Button)findViewById(R.id.productlist_btnSearch);
+		btnClearFilter = (Button)findViewById(R.id.productlist_btnClearFilter);
+		cbxAll = (CheckBox)findViewById(R.id.productlist_cbxAll);
+		
 		ivCategory.setImageResource(R.drawable.ico_category_active);
 		tvTitle.setText("CATEGORIES");
 				
@@ -115,6 +138,11 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 	}
 	
 	private void initData() {
+		
+		tvSizeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listTvSizes);
+		productTypeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypes);
+		
+		spnTvSize.setAdapter(tvSizeAdapter);
 		
 		
 		adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
@@ -249,11 +277,126 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 	    }
 
 	    protected void onPostExecute(String file_url) {
-	    	Log.d("FileUtil.listProduct", "FileUtil.listProduct"+FileUtil.listProduct.size());
 	    	adapter.notifyDataSetChanged();
 	        pDialog.dismiss();	      
 	    }
 	}
+	
+	
+	//------------------------------------------------------------
+	
+		public class GetTVSizeAsyncTask extends AsyncTask<String, String, String> {
+
+			private String json;
+			
+			public GetTVSizeAsyncTask(){
+			}
+		   
+		    @Override
+		    protected void onPreExecute() {
+		        super.onPreExecute();
+		        if (pDialog != null ) {	        		 	        
+		 	        pDialog.setMessage("Loading...");
+		 	        pDialog.setIndeterminate(false);
+		 	        pDialog.setCancelable(true);
+		 	        pDialog.show();
+		 	        pDialog.setContentView(R.layout.dialog_process);
+				}	
+		        
+		        
+		    }
+
+		    protected String doInBackground(String... params) {
+		    	
+		    	try {
+	                // Building Parameters
+	                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+	                paramsUrl.add(new BasicNameValuePair("cat_id", "16"));
+
+	                json = JsonParser.makeHttpRequest(
+	                		Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
+	                if ((json != null) || (!json.equals(""))) {               
+	                	JSONArray array = new JSONArray(json);
+	                	listCategoryTvSize.clear();
+	                	listTvSizes.clear();
+	        			for (int j = 0; j < array.length(); j++) {
+	        				Category temp = new Category();
+	        				temp.setId(array.getJSONObject(j).getInt("id"));
+	        				temp.setName(array.getJSONObject(j).getString("name"));
+	        				temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
+	        				temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
+	        				listCategoryTvSize.add(temp);		
+	        				listTvSizes.add(temp.getName());
+	        			}
+	        			
+	                }
+	            } catch (JSONException e) {
+	                e.printStackTrace();
+	            }
+
+		        return null;
+		    }
+
+		    protected void onPostExecute(String file_url) {
+		    	adapter.notifyDataSetChanged();
+		        pDialog.dismiss();	      
+		    }
+		}
+		
+		public class GetProductTypeAsyncTask extends AsyncTask<String, String, String> {
+
+			private String json;
+			
+			public GetProductTypeAsyncTask(){
+			}
+		   
+		    @Override
+		    protected void onPreExecute() {
+		        super.onPreExecute();
+		        if (pDialog != null ) {	        		 	        
+		 	        pDialog.setMessage("Loading...");
+		 	        pDialog.setIndeterminate(false);
+		 	        pDialog.setCancelable(true);
+		 	        pDialog.show();
+		 	        pDialog.setContentView(R.layout.dialog_process);
+				}	
+		    }
+
+		    protected String doInBackground(String... params) {
+		    	
+		    	try {
+	                // Building Parameters
+	                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+	                paramsUrl.add(new BasicNameValuePair("cat_id", "13"));
+
+	                json = JsonParser.makeHttpRequest(
+	                		Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
+	                if ((json != null) || (!json.equals(""))) {               
+	                	JSONArray array = new JSONArray(json);
+	                	listCategoryTvSize.clear();
+	                	listTvSizes.clear();
+	        			for (int j = 0; j < array.length(); j++) {
+	        				Category temp = new Category();
+	        				temp.setId(array.getJSONObject(j).getInt("id"));
+	        				temp.setName(array.getJSONObject(j).getString("name"));
+	        				temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
+	        				temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
+	        				listCategoryTvSize.add(temp);		
+	        				listTvSizes.add(temp.getName());
+	        			}	        			
+	                }
+	            } catch (JSONException e) {
+	                e.printStackTrace();
+	            }
+
+		        return null;
+		    }
+
+		    protected void onPostExecute(String file_url) {
+		    	adapter.notifyDataSetChanged();
+		        pDialog.dismiss();	      
+		    }
+		}
 	
 	
 	public void showDialog(final Context mContext){
