@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
@@ -85,10 +86,8 @@ public class CheckoutAdapter extends BaseAdapter {
 
 		holder.tvPartNumber.setText(listRecent.get(position).getName());
 
-		String des = "Desciption: "+ listRecent.get(position).getDesc();
-		Spannable desSpannable=new SpannableStringBuilder(des);
-		desSpannable.setSpan(new ForegroundColorSpan(color.crisom_blue), 0, 10, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-		holder.tvDes.setText(desSpannable);
+		String des = "<strong><font color=\"#2f3a76\">Desciption: </font></strong>"+ listRecent.get(position).getDesc();
+		holder.tvDes.setText(Html.fromHtml(des));
 
 		holder.tvColor.setText(listRecent.get(position).getColor());
 		holder.edtQuantity.setText(String.valueOf(listRecent.get(position).getQuantity()));		
