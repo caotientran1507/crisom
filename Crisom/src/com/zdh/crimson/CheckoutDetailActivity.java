@@ -78,8 +78,8 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 	ArrayAdapter<String> cardTypeAdapter;
 	ArrayAdapter<String> cardTypeOnFileAdapter;
 	ParcelServiceAdapter parcelServiceAdapter;
-	String valueShipping = "";
-	String valueBilling = "";
+	int positionShipping = 0;
+	int positionBilling = 0;
 
 	String sSubtotal = "";
 	String sShipping = "";
@@ -253,7 +253,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 	private void handleOtherAction(){
 		spnShippingAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-				valueShipping = addresses.get(i);
+				positionShipping = i;
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -262,7 +262,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		});
 		spnBillingAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-				valueBilling = addresses.get(i);
+				positionBilling = i;
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -391,8 +391,9 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 				ln3ShippingMethodContent.setVisibility(View.VISIBLE);
 				ln4PaymentInfomationContent.setVisibility(View.GONE);
 				ln5OrderReviewContent.setVisibility(View.GONE);
-				valueShipping = valueBilling;
-				new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(valueShipping)).execute();
+				positionShipping = positionBilling;
+				spnShippingAddress.setSelection(positionShipping);
+				new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 			} else {
 				ln1BillingInfomationContent.setVisibility(View.GONE);
 				ln2ShippingInfomationContent.setVisibility(View.VISIBLE);
@@ -404,14 +405,15 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			break;
 		case R.id.checkoutdetail_Shipping_btnContinue:
 			if (cbxUseBillingAddress.isChecked()) {
-				valueBilling = valueShipping;
+				positionBilling = positionShipping;
+				spnBillingAddress.setSelection(positionBilling);
 			}
 			ln1BillingInfomationContent.setVisibility(View.GONE);
 			ln2ShippingInfomationContent.setVisibility(View.GONE);
 			ln3ShippingMethodContent.setVisibility(View.VISIBLE);
 			ln4PaymentInfomationContent.setVisibility(View.GONE);
 			ln5OrderReviewContent.setVisibility(View.GONE);
-			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(valueShipping)).execute();
+			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 			break;
 		case R.id.checkoutdetail_ShippingMethod_btnContinue:
 			ln1BillingInfomationContent.setVisibility(View.GONE);
