@@ -34,6 +34,8 @@ public class Constants {
 	public static final String URL_GETCREDITCARD = "http://crimsonav.com/api/result/getCCSaved";
 	public static final String URL_MOUNTFINDER = "http://crimsonav.com/api/result/mountFinder";	
 	public static final String URL_VERIFY = "http://crimsonav.com/api/result/verify";	
+	public static final String URL_SAVESHIPPINGMETHOD = "http://crimsonav.com/api/result/saveShippingMethod";	
+	public static final String URL_SAVEPAYMENT = "http://crimsonav.com/api/result/savePayment";		
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
 	public static final String EXTENSION_FILE_PDF = ".pdf";
@@ -54,6 +56,9 @@ public class Constants {
 	public static final String TEXT_THEREARE = "There are ";
 	public static final String TEXT_ITEM = " item";
 	public static final String TEXT_ITEMS = " items";
+	
+	public static final String METHOD_LINKPOINT = "linkpoint";
+	public static final String METHOD_PAYPAL = "paypal";
 	
 	public static final String CONFIRM_LOGOUT_MESSAGE = "Are you sure you want log out now?";
 	public static final String CONFIRM_LOGOUT_TITLE = "Confirm Log out...";

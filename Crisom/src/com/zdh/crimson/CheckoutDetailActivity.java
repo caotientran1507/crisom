@@ -35,6 +35,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zdh.crimson.adapter.ParcelServiceAdapter;
 import com.zdh.crimson.adapter.ReviewCheckoutDetailAdapter;
@@ -79,7 +80,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 	ParcelServiceAdapter parcelServiceAdapter;
 	String valueShipping = "";
 	String valueBilling = "";
-	
+
 	String sSubtotal = "";
 	String sShipping = "";
 	String sTax = "";
@@ -181,6 +182,8 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		edtCreditCardNumber = (EditText)findViewById(R.id.checkoutdetail_edtCreditCardNumber);		
 		cbxSaveCreditCard = (CheckBox)findViewById(R.id.checkoutdetail_cbxSaveCreditCard);
 		tvWhatIsPaypal = (TextView)findViewById(R.id.checkoutdetail_tvWhatIsPaypal);
+
+		cbxUseBillingAddress = (CheckBox)findViewById(R.id.checkoutdetail_cbxUseBillingAddress);
 
 		ivCart.setImageResource(R.drawable.ico_cart_active);
 
@@ -375,10 +378,7 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		case R.id.checkoutdetail_rbnShipDifferentAddress:
 			rbnShipThisAddress.setChecked(false);
 			rbnShipDifferentAddress.setChecked(true);			
-			break;	
-
-
-
+			break;				
 			//-----------------Click button continue---------------------------------	
 
 		case R.id.checkoutdetail_lnPaypal:
@@ -391,20 +391,27 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 				ln3ShippingMethodContent.setVisibility(View.VISIBLE);
 				ln4PaymentInfomationContent.setVisibility(View.GONE);
 				ln5OrderReviewContent.setVisibility(View.GONE);
+				valueShipping = valueBilling;
+				new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(valueShipping)).execute();
 			} else {
 				ln1BillingInfomationContent.setVisibility(View.GONE);
 				ln2ShippingInfomationContent.setVisibility(View.VISIBLE);
 				ln3ShippingMethodContent.setVisibility(View.GONE);
 				ln4PaymentInfomationContent.setVisibility(View.GONE);
 				ln5OrderReviewContent.setVisibility(View.GONE);
-			}		
+			}	
+			
 			break;
 		case R.id.checkoutdetail_Shipping_btnContinue:
+			if (cbxUseBillingAddress.isChecked()) {
+				valueBilling = valueShipping;
+			}
 			ln1BillingInfomationContent.setVisibility(View.GONE);
 			ln2ShippingInfomationContent.setVisibility(View.GONE);
 			ln3ShippingMethodContent.setVisibility(View.VISIBLE);
 			ln4PaymentInfomationContent.setVisibility(View.GONE);
 			ln5OrderReviewContent.setVisibility(View.GONE);
+			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(valueShipping)).execute();
 			break;
 		case R.id.checkoutdetail_ShippingMethod_btnContinue:
 			ln1BillingInfomationContent.setVisibility(View.GONE);
@@ -421,7 +428,11 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			ln5OrderReviewContent.setVisibility(View.VISIBLE);
 			break;
 		case R.id.checkoutdetail_btnPlaceOrder:
-
+			String method = Constants.METHOD_LINKPOINT;
+			if (rbnPaypal.isChecked()) {
+				method = Constants.METHOD_PAYPAL;
+			}
+			new SavePaymentAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), "", method).execute();
 			break;
 
 
@@ -483,7 +494,6 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			this.idCustomer = idCustomer;
 		}
 
-
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -525,28 +535,17 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		protected void onPostExecute(String file_url) {	 
 			addressesAdapter.notifyDataSetChanged();
 			pDialog.dismiss();	
-			String keyShipping = "";
-			if (valueShipping.equals("")) {
-				valueShipping = addresses.get(0);
-			}
-			for (int i = 0; i < listAddress.size(); i++) {
-				if (listAddress.get(i).getValue().equals(valueShipping)) {
-					keyShipping = listAddress.get(i).getKey();
-				}
-			}
-			new GetUnitedParcelAsyncTask(idCustomer, keyShipping).execute();
-
 		}
 	}
 
 	//--------------------United Parcel Service----------------------------------------
-	public class GetUnitedParcelAsyncTask extends AsyncTask<String, String, String> {
+	public class GetShippingMethodAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
 		int idCustomer;
 		String address_id;
 
-		public GetUnitedParcelAsyncTask(int idCustomer,String address_id){
+		public GetShippingMethodAsyncTask(int idCustomer,String address_id){
 			this.idCustomer = idCustomer;
 			this.address_id = address_id;
 		}
@@ -730,71 +729,194 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
 		}
 	}
-	
+
 	//--------------------GetCartCode----------------------------------------
-		public class GetCartCodeAsyncTask extends AsyncTask<String, String, String> {
+	public class GetCartCodeAsyncTask extends AsyncTask<String, String, String> {
 
-			private String json;
-			int idCustomer;
-			public GetCartCodeAsyncTask(int idCustomer){
-				this.idCustomer = idCustomer;
-			}
-
-
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				if (pDialog != null ) {	        		 	        
-		 	        pDialog.setMessage("Loading...");
-		 	        pDialog.setIndeterminate(false);
-		 	        pDialog.setCancelable(true);
-		 	        pDialog.show();
-		 	        pDialog.setContentView(R.layout.dialog_process);
-				}
-			}
-
-			protected String doInBackground(String... params) {
-
-				try {
-					// Building Parameters
-					List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-					paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
-					json = JsonParser.makeHttpRequest(
-							Constants.URL_GETCARTCOST, "GET", paramsUrl);
-					if ((json != null) || (!json.equals(""))) {               
-						JSONObject jsonObject = new JSONObject(json);
-						JSONObject jsonObjectSubtotal = jsonObject.getJSONObject("subtotal");
-						JSONObject jsonObjectShipping = jsonObject.getJSONObject("shipping");
-						JSONObject jsonObjectTax = jsonObject.getJSONObject("tax");
-						JSONObject jsonObjectGrandTotal = jsonObject.getJSONObject("grandtotal");
-						
-						sSubtotal = jsonObjectSubtotal.getString("cost");
-						sShipping = jsonObjectShipping.getString("cost");
-						sTax = jsonObjectTax.getString("cost");
-						sGrandTotal = jsonObjectGrandTotal.getString("cost");
-						
-						runOnUiThread(new Runnable() {
-						    @Override
-						    public void run() {
-						    	tvSubtotal.setText(sSubtotal);
-								tvShippingHandling.setText(sShipping);
-								tvTax.setText(sTax);
-								tvGrandTotal.setText(sGrandTotal);
-						    }
-						});
-
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-
-				return null;
-			}
-
-			protected void onPostExecute(String file_url) {	      
-				pDialog.dismiss();	
-			}
+		private String json;
+		int idCustomer;
+		public GetCartCodeAsyncTask(int idCustomer){
+			this.idCustomer = idCustomer;
 		}
 
 
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETCARTCOST, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONObject jsonObject = new JSONObject(json);
+					JSONObject jsonObjectSubtotal = jsonObject.getJSONObject("subtotal");
+					JSONObject jsonObjectShipping = jsonObject.getJSONObject("shipping");
+					JSONObject jsonObjectTax = jsonObject.getJSONObject("tax");
+					JSONObject jsonObjectGrandTotal = jsonObject.getJSONObject("grandtotal");
+
+					sSubtotal = jsonObjectSubtotal.getString("cost");
+					sShipping = jsonObjectShipping.getString("cost");
+					sTax = jsonObjectTax.getString("cost");
+					sGrandTotal = jsonObjectGrandTotal.getString("cost");
+
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							tvSubtotal.setText(sSubtotal);
+							tvShippingHandling.setText(sShipping);
+							tvTax.setText(sTax);
+							tvGrandTotal.setText(sGrandTotal);
+						}
+					});
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {	      
+			pDialog.dismiss();	
+		}
+	}
+
+	//--------------------SaveShippingMethod----------------------------------------
+	public class SaveShippingMethodAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		int idCustomer;
+		String shipping_method;
+		public SaveShippingMethodAsyncTask(int idCustomer, String shipping_method){
+			this.idCustomer = idCustomer;
+			this.shipping_method = shipping_method;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
+				paramsUrl.add(new BasicNameValuePair("shipping_method", shipping_method));
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_SAVESHIPPINGMETHOD, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {   
+					JSONObject jsonObject = new JSONObject(json);
+					boolean s = jsonObject.getBoolean("info");
+					if (s) {
+						return "true";
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String result) {	      
+			pDialog.dismiss();	
+			if (result.equals("true")) {
+				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method success!", Toast.LENGTH_SHORT).show();
+			}else{
+				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method fail!", Toast.LENGTH_SHORT).show();
+			}
+
+		}
+	}
+
+	//--------------------SaveShippingMethod----------------------------------------
+	public class SavePaymentAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		int idCustomer;
+		String savecc_id;
+		String method;
+		public SavePaymentAsyncTask(int idCustomer, String savecc_id, String method){
+			this.idCustomer = idCustomer;
+			this.savecc_id = savecc_id;
+			this.method = method;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
+				paramsUrl.add(new BasicNameValuePair("savecc_id", savecc_id));
+				paramsUrl.add(new BasicNameValuePair("method", method));
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_SAVEPAYMENT, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {   
+					JSONObject jsonObject = new JSONObject(json);
+					boolean s = jsonObject.getBoolean("info");
+				
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String result) {	      
+			pDialog.dismiss();	
+//			if (result.equals("true")) {
+//				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method success!", Toast.LENGTH_SHORT).show();
+//			}else{
+//				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method fail!", Toast.LENGTH_SHORT).show();
+//			}
+
+		}
+	}
+
+	private String getKeyAddress(String address){
+		for (int i = 0; i < listAddress.size(); i++) {
+			if (listAddress.get(i).getValue().equals(address)) {
+				return listAddress.get(i).getKey();
+			}
+		}
+		return "";
+	}
 }
