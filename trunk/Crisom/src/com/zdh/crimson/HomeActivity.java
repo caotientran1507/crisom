@@ -418,7 +418,7 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	
-	private void showDialog(final Context mContext, String title, String msg){
+	private void showDialog(final Context mContext,final String title, String msg){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
 		// Setting Dialog Title
@@ -434,9 +434,16 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		alertDialog.setPositiveButton("YES",
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog,int which) {
-						SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-						ChangeTextButtonLogin();
-						dialog.dismiss();
+						if (title.equals(Constants.WARNING_LOGIN_TITLE)) {
+							SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
+							ChangeTextButtonLogin();
+							dialog.dismiss();
+						} else {
+							Intent cart = new Intent(HomeActivity.this, CartActivity.class);
+							startActivity(cart);
+							overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+						}
+						
 					}
 				});
 		// Setting Negative "NO" Button

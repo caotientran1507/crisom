@@ -368,7 +368,8 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="United Parcel Service"
-                                android:textStyle="bold" />
+                                android:textStyle="bold" 
+                                android:layout_marginBottom="10dp"/>
 
                             <ListView
                                 android:id="@+id/checkoutdetail_lvParcelService"
@@ -873,7 +874,7 @@
                             <ListView
                                 android:id="@+id/checkoutdetail_lvReview"
                                 android:layout_width="0dp"
-                                android:layout_height="wrap_content"
+                                android:layout_height="300dp"
                                 android:layout_weight="90"
                                 android:divider="@color/crisom_gray_divider"
                                 android:dividerHeight="1dp" >
@@ -913,7 +914,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="75"
-                                        android:text="Subtotal" />
+                                        android:text="Subtotal:" />
 
                                     <TextView
                                         android:id="@+id/checkoutdetail_tvSubtotal"
@@ -934,7 +935,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="75"
-                                        android:text="Shipping &amp; Handling (Will Call/Pickup - Free)" />
+                                        android:text="Shipping &amp; Handling: " />
 
                                     <TextView
                                         android:id="@+id/checkoutdetail_tvShippingHandling"
@@ -955,7 +956,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="75"
-                                        android:text="Tax" />
+                                        android:text="Tax: " />
 
                                     <TextView
                                         android:id="@+id/checkoutdetail_tvTax"
@@ -976,7 +977,7 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="75"
-                                        android:text="Grand Total"
+                                        android:text="Grand Total: "
                                         android:textStyle="bold" />
 
                                     <TextView
