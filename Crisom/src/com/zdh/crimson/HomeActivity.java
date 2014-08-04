@@ -90,8 +90,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		super.onResume();
 		ChangeTextButtonLogin();
 		
-		clearSpinnerManufacturer();
-		clearSpinnerModel();
 	}
 	
 	private void init(){
@@ -202,10 +200,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		clearSpinnerManufacturer();
 		clearSpinnerModel();
 		new GetManufacturerAsyncTask(radioChecked).execute();
-		manufacturerAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listManufacturerName);
-		modelAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listModelName);
-		spnManufacturer.setAdapter(manufacturerAdapter);
-		spnModel.setAdapter(modelAdapter);
 		
 		adapter = new HomeAdapter(HomeActivity.this, FileUtil.listHome);
 		lvCategory.setAdapter(adapter);
@@ -584,7 +578,9 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	        return null;
 	    }
 
-	    protected void onPostExecute(String file_url) {	      
+	    protected void onPostExecute(String file_url) {
+	    	manufacturerAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, listManufacturerName);
+	    	spnManufacturer.setAdapter(manufacturerAdapter);
 	    	pDialog.dismiss();
 	    }
 	}
@@ -643,6 +639,8 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 
 	    protected void onPostExecute(String file_url) {	      
 	    	pDialog.dismiss();	
+			modelAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, listModelName);
+			spnModel.setAdapter(modelAdapter);
 	    }
 	}
 }

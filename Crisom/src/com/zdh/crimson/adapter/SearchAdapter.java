@@ -273,6 +273,7 @@ public class SearchAdapter extends BaseAdapter {
 	protected void onPostExecute(String file_url) {
 	    if(product.getListOption()!=null && product.getListOption().size()>0){
 		ChildSearchActivityAdapter childAdapter = new ChildSearchActivityAdapter(mContext, product.getListOption(),product.getId());
+		childAdapter.setUpdate_layout_SearchActivity(true);
 		lvDialog.setAdapter(childAdapter);
 		dialogChildrenProduct.show();
 
