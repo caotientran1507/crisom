@@ -44,10 +44,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	private TextView tvTitle,tvCountItem,tvTotal,tvThereis,tvItem;
 	private ListView listview;
 	private ProgressDialog pDialog;
-	
-	
 	RecentAdapter adapter;
-	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
