@@ -15,7 +15,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -55,12 +57,12 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	CheckoutAdapter adapter;
 	int positionState = 0 ;
 	int positionCountry = 0 ;
-	
+
 	String sSubtotal = "";
 	String sShipping = "";
 	String sTax = "";
 	String sGrandTotal = "";
-	
+
 
 	private ProgressDialog pDialog;
 
@@ -77,8 +79,8 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		handleOtherAction();
 		initData();
 	}	
-	
-	
+
+
 
 	@Override
 	protected void onResume() {
@@ -110,6 +112,14 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		btnQuote = (Button)findViewById(R.id.checkout_btnQuote);
 
 		listview = (ListView)findViewById(R.id.checkout_lv);
+		listview.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				v.getParent().requestDisallowInterceptTouchEvent(true);
+				return false;
+			}
+		});
+
 		tvSubTotal = (TextView)findViewById(R.id.checkout_tvSubTotal);
 		tvTax = (TextView)findViewById(R.id.checkout_tvTax);
 		tvShippingHandling = (TextView)findViewById(R.id.checkout_tvShippingHandling);
@@ -139,7 +149,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		btnApplyCoupon.setOnClickListener(this);
 		btnQuote.setOnClickListener(this);
 		btnCancelCoupon.setOnClickListener(this);
-		
+
 		pDialog = new ProgressDialog(CheckoutActivity.this);
 
 	}
@@ -198,10 +208,10 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
-		
+
 		switch (v.getId()) {
 
-			//----------Button is clicked----------
+		//----------Button is clicked----------
 		case R.id.checkout_btnProceedCheckout:
 			Intent checkoutdetail = new Intent(CheckoutActivity.this, CheckoutDetailActivity.class);
 			startActivity(checkoutdetail);
@@ -276,11 +286,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -335,11 +345,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -396,11 +406,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -432,7 +442,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPostExecute(String file_url) {	 
 			updateListCountry();
 			countriesAdapter.notifyDataSetChanged();
-	    	pDialog.dismiss();	
+			pDialog.dismiss();	
 			new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 		}
 	}
@@ -451,11 +461,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -464,9 +474,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-								
+
 				String ids = "";
-				
+
 				String[] arrIds = new String[FileUtil.listCartChange.size()];
 				int i = 0;
 				for (int key : FileUtil.listCartChange.keySet()) {
@@ -474,7 +484,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 					i++;
 				}
 				ids = CommonUtil.combineString(arrIds, ",");
-				
+
 				String qty = "";
 				String[] arrQty = new String[FileUtil.listCartChange.size()];
 				int j = 0;
@@ -534,11 +544,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -592,11 +602,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -654,11 +664,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -706,11 +716,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPreExecute() {
 			super.onPreExecute();
 			if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
 		}
 
@@ -728,20 +738,20 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 					JSONObject jsonObjectShipping = jsonObject.getJSONObject("shipping");
 					JSONObject jsonObjectTax = jsonObject.getJSONObject("tax");
 					JSONObject jsonObjectGrandTotal = jsonObject.getJSONObject("grandtotal");
-					
+
 					sSubtotal = jsonObjectSubtotal.getString("cost");
 					sShipping = jsonObjectShipping.getString("cost");
 					sTax = jsonObjectTax.getString("cost");
 					sGrandTotal = jsonObjectGrandTotal.getString("cost");
-					
+
 					runOnUiThread(new Runnable() {
-					    @Override
-					    public void run() {
-					    	tvSubTotal.setText(sSubtotal);
+						@Override
+						public void run() {
+							tvSubTotal.setText(sSubtotal);
 							tvShippingHandling.setText(sShipping);
 							tvTax.setText(sTax);
 							tvGrandTotal.setText(sGrandTotal);
-					    }
+						}
 					});
 
 				}
@@ -770,5 +780,5 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			FileUtil.states.add(FileUtil.listState.get(i).getName());
 		}
 	}
-	
+
 }
