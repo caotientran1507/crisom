@@ -3,7 +3,6 @@ package com.zdh.crimson;
 import java.util.Collections;
 import java.util.Locale;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,7 +17,7 @@ import android.widget.Spinner;
 
 import com.zdh.crimson.utility.FileUtil;
 
-public class RegisterActivity extends Activity implements View.OnClickListener{
+public class RegisterActivity extends BaseActivity implements View.OnClickListener{
 
 	//--------define variables---------
 	LinearLayout  lnPersonalTitle, lnPersonalContent, lnBillingTitle, lnBillingContent, lnShippingTitle, lnShippingContent ;

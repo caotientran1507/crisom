@@ -9,9 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +24,7 @@ import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
-public class LoginActivity extends Activity implements View.OnClickListener{
+public class LoginActivity extends BaseActivity implements View.OnClickListener{
 
 	EditText edtEmail,edtPass;
 	Button btnLogin,btnCancel,btnLoginTop;
@@ -36,7 +34,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 	String pass;
 	
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact;		
+	private LinearLayout lnHome,lnSearch,lnCategory,lnContact;		
 	private TextView tvTitle;
 	
 	@Override
@@ -56,7 +54,6 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
 		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
-		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
 		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);		
 		
 		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);		
@@ -77,7 +74,6 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
-		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		pDialog = new ProgressDialog(LoginActivity.this);
 		
@@ -90,45 +86,9 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-		//----------------Click tab bottom--------------------
-		//----------Home is clicked----------
-		case R.id.include_footer_lnHome:
-			Intent home = new Intent(LoginActivity.this, HomeActivity.class);
-			startActivity(home);
-			overridePendingTransition(R.anim.slide_in_down,
-				    R.anim.slide_out_down);
-			break;		
-		//----------Search is clicked----------
-		case R.id.include_footer_lnSearch:
-			Intent intent = new Intent(LoginActivity.this, SearchActivity.class);
-			startActivity(intent);
-			overridePendingTransition(R.anim.fly_out_to_bottom, R.anim.stay);
-			break;
-			
-		//----------Category is clicked----------
-		case R.id.include_footer_lnCategory:
-			Intent category = new Intent(LoginActivity.this, CategoryActivity.class);
-			startActivity(category);
-			overridePendingTransition(R.anim.fly_out_to_bottom, R.anim.stay);
-			break;
-			
-		//----------Cart is clicked----------
-		case R.id.include_footer_lnCart:
-			Intent cart = new Intent(LoginActivity.this, LoginActivity.class);
-			startActivity(cart);
-			overridePendingTransition(R.anim.fly_out_to_bottom, R.anim.stay);
-			break;
-			
-		//----------Contact is clicked----------
-		case R.id.include_footer_lnContact:
-			Intent contact = new Intent(LoginActivity.this, ContactActivity.class);
-			startActivity(contact);
-			overridePendingTransition(R.anim.fly_out_to_bottom, R.anim.stay);
-			break;	
-				
-				
+		super.onClick(v);
 		
+		switch (v.getId()) {
 		
 		case R.id.login_btn_login:
 			if (checkValidInput()) {
@@ -169,6 +129,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 		private String email;
 		private String pass;
 		private String json;
+		private boolean status = false;
 		
 		public LoginAsyncTask(String email, String pass){
 			this.email = email;
@@ -201,7 +162,7 @@ public class LoginActivity extends Activity implements View.OnClickListener{
                 
                 if ((json != null) || (!json.equals(""))) {  
                 	JSONObject jsonObject = new JSONObject(json);
-                	boolean status = jsonObject.getBoolean("status");
+                	status = jsonObject.getBoolean("status");
                 	if (status) {
                 		Customer customer = new Customer();
                 		 JSONObject jsonTemp= (JSONObject) new JSONTokener(json).nextValue();
@@ -221,7 +182,13 @@ public class LoginActivity extends Activity implements View.OnClickListener{
 
 	    protected void onPostExecute(String file_url) {		  	    	
 	        pDialog.dismiss();	
-	        Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_LONG).show();
+	        if(status){
+	        	setResult(RESULT_OK);
+	        	Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();
+	        }else{
+	        	setResult(RESULT_CANCELED);
+	        	Toast.makeText(LoginActivity.this, "Login fail", Toast.LENGTH_SHORT).show();
+	        }
 	        LoginActivity.this.finish();
 	    }
 	}
