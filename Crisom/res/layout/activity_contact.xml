@@ -19,25 +19,22 @@
         android:layout_weight="12"
         layout="@layout/include_logo" />
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="70"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:scrollbars="none"
         android:weightSum="100" >
 
         <LinearLayout
             android:id="@+id/productlist_lv"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="90"
             android:orientation="vertical" >
-
-            <TextureView
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#686868" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -50,8 +47,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Toll Free: 866-668-6888
-Local: 847-730-3139"
+                android:layout_marginLeft="10dp"
+                android:text="Toll Free: 866-668-6888"
+                android:textColor="@color/crisom_text"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Local: 847-730-3139"
                 android:textColor="@color/crisom_text"
                 android:textSize="14sp" />
 
@@ -66,6 +71,7 @@ Local: 847-730-3139"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="customerservice@crimsonav.com"
                 android:textColor="@color/crisom_red"
                 android:textSize="14sp" />
@@ -81,6 +87,7 @@ Local: 847-730-3139"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:text="847-919-3483"
                 android:textColor="@color/crisom_text"
                 android:textSize="14sp" />
@@ -96,10 +103,8 @@ Local: 847-730-3139"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Crimson AV
-1854 Elmdale
-Glenview, IL60026
-USA"
+                android:layout_marginLeft="10dp"
+                android:text="Crimson AV \n1854 Elmdale\nGlenview, IL60026\nUSA"
                 android:textColor="@color/crisom_text"
                 android:textSize="14sp" />
 
@@ -112,64 +117,74 @@ USA"
                 android:textStyle="bold" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Order submission: "
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:text="Order submission:"
                     android:textColor="@color/crisom_text"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="     orders@crimsonav.com"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:text="orders@crimsonav.com"
                     android:textColor="@color/crisom_red"
                     android:textSize="14sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
                     android:text="Information:"
                     android:textColor="@color/crisom_text"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="                      info@crimsonav.com"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:text="info@crimsonav.com"
                     android:textColor="@color/crisom_red"
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+                  <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="0.4"
                     android:text="Technical support:"
                     android:textColor="@color/crisom_text"
                     android:textSize="14sp" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="    support@crimsonav.com"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:text="support@crimsonav.com""
                     android:textColor="@color/crisom_red"
                     android:textSize="14sp" />
             </LinearLayout>
+           
 
             <TextView
                 android:layout_width="wrap_content"
@@ -182,11 +197,12 @@ USA"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
                 android:text="orders@crimsonav.com"
                 android:textColor="@color/crisom_red"
                 android:textSize="14sp" />
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
 
     <TextView
         android:layout_width="match_parent"

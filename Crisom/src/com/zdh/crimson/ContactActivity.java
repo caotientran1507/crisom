@@ -27,10 +27,7 @@ public class ContactActivity extends BaseActivity  implements View.OnClickListen
 	protected void onResume() {
 		super.onResume();
 		ChangeTextButtonLogin();
-		
 	}
-	
-	
 	
 	private void init(){
 		initView();
