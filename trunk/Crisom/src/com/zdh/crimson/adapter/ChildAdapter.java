@@ -25,6 +25,7 @@ import android.widget.Toast;
 import com.zdh.crimson.ProductDetailActivity;
 import com.zdh.crimson.R;
 import com.zdh.crimson.model.OptionObject;
+import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
@@ -181,6 +182,7 @@ public class ChildAdapter extends BaseAdapter {
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
+			pDialog.setContentView(R.layout.dialog_process);
 		}
 
 		protected String doInBackground(String... params) {
@@ -220,7 +222,8 @@ public class ChildAdapter extends BaseAdapter {
 
 
 			}
-			pDialog.dismiss();       
+			pDialog.dismiss();   
+			CommonUtil.hideSoftKeyboard(mContext);
 		}
 
 	}

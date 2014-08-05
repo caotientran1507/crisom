@@ -13,7 +13,9 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -77,7 +79,11 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 	protected void onResume() {
 		super.onResume();
 		ChangeTextButtonLogin();
-		adapter.notifyDataSetChanged();
+		FileUtil.listProduct.clear();
+		if (adapter != null) {
+			adapter.notifyDataSetChanged();
+		}
+		
 
 	}
 
@@ -101,6 +107,14 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		lvCheckbox = (ListView)findViewById(R.id.productlist_lvCheckbox);
 
 		ivCategory = (ImageView)findViewById(R.id.include_footer_ivcategory);	
+		
+//		lvProduct.setOnTouchListener(new OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				v.getParent().requestDisallowInterceptTouchEvent(true);
+//				return false;
+//			}
+//		});
 
 		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
 		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
@@ -420,6 +434,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
+			new GetProductTypeAsyncTask().execute();
 			pDialog.dismiss();	      
 		}
 	}
@@ -475,6 +490,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 		protected void onPostExecute(String file_url) {
 			productTypeAdapter.notifyDataSetChanged();
+			new GetProductTypeChildAsyncTask().execute();
 			pDialog.dismiss();	      
 		}
 	}

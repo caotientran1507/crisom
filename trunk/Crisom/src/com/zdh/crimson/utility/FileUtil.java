@@ -49,4 +49,6 @@ public class FileUtil {
 		"2021", "2022", "2023", "2024"};
 	public static String creditCardType[] = { "--Please Select--", "American Express", "Visa",
 		"MasterCard", "Discover"};
+	public static String creditCardTypeID[] = { "--Please Select--", "AE", "VI",
+		"MC", "DI"};
 }
