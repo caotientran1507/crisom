@@ -13,7 +13,7 @@ public class Constants {
 	public static final String URL_STAGING = "http://23.21.185.157";
 	public static final String URL_PAYPAL = "https://www.paypal.com/us/webapps/mpp/paypal-popup";
 	
-	public static final String URL_CUSTOMAPI = URL_STAGING + "/customapi/result/";
+	public static final String URL_CUSTOMAPI = URL + "/customapi/result/";
 	
 	public static final String URL_GETCATEGORIESBYID = URL_CUSTOMAPI + "getCategoriesById";
 	public static final String URL_GETPRODUCTBYCATEGORYID = URL_CUSTOMAPI + "getProductsByCategoryId";
@@ -38,7 +38,9 @@ public class Constants {
 	public static final String URL_MOUNTFINDER = URL_CUSTOMAPI + "mountFinder";	
 	public static final String URL_VERIFY = URL_CUSTOMAPI + "verify";	
 	public static final String URL_SAVESHIPPINGMETHOD = URL_CUSTOMAPI + "saveShippingMethod";	
-	public static final String URL_SAVEPAYMENT = URL_CUSTOMAPI + "savePayment";		
+	public static final String URL_SAVEPAYMENT = URL_CUSTOMAPI + "savePayment";	
+	public static final String URL_NARROWSEARCH = URL_CUSTOMAPI + "narrowSearch";	
+	
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
 	public static final String EXTENSION_FILE_PDF = ".pdf";

@@ -30,7 +30,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zdh.crimson.ProductDetailActivity;
-import com.zdh.crimson.ProductListActivity;
 import com.zdh.crimson.R;
 import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.DocumentObject;

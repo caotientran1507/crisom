@@ -35,6 +35,8 @@ public class FileUtil {
 	public static ArrayList<StateObject> listState = new ArrayList<StateObject>();
 	public static ArrayList<CountryObject> listCountry = new ArrayList<CountryObject>();
 	
+	public static String codeRadioButtonShippingMethod = "";
+	
 	public static int POSITION_ACTIVITY = 1;
 	public static int RE_POSITION_ACTIVITY = 1;
 

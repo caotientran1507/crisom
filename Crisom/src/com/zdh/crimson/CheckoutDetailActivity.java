@@ -19,8 +19,10 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -164,6 +166,13 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		lvParcelService = (ListView)findViewById(R.id.checkoutdetail_lvParcelService);
 		lvReview = (ListView)findViewById(R.id.checkoutdetail_lvReview);
+		lvReview.setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				v.getParent().requestDisallowInterceptTouchEvent(true);
+				return false;
+			}
+		});
 
 		lnCreditCardOnFileContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardOnFileContent);
 		lnCreditCardContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardContent);
@@ -363,11 +372,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 			break;
 		case R.id.checkoutdetail_ShippingMethod_btnContinue:
+			new SaveShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this),FileUtil.codeRadioButtonShippingMethod).execute();
+			
 			ln1BillingInfomationContent.setVisibility(View.GONE);
 			ln2ShippingInfomationContent.setVisibility(View.GONE);
 			ln3ShippingMethodContent.setVisibility(View.GONE);
 			ln4PaymentInfomationContent.setVisibility(View.VISIBLE);
 			ln5OrderReviewContent.setVisibility(View.GONE);
+			
 			break;
 		case R.id.checkoutdetail_Payment_btnContinue:
 			ln1BillingInfomationContent.setVisibility(View.GONE);
@@ -540,6 +552,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		protected void onPostExecute(String file_url) {	 
 			parcelServiceAdapter.notifyDataSetChanged();
+			if (FileUtil.listCarrier.size() > 0) {
+				FileUtil.codeRadioButtonShippingMethod = FileUtil.listCarrier.get(0).getCode();
+			}			
 			pDialog.dismiss();	
 			new GetCreditCardOnFileAsyncTask(idCustomer).execute();
 		}
@@ -596,8 +611,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String file_url) {	 
-			cardTypeOnFileAdapter.notifyDataSetChanged();
-			new GetCartCodeAsyncTask(idCustomer).execute();
+			cardTypeOnFileAdapter.notifyDataSetChanged();				
 			pDialog.dismiss();	
 		}
 	}
@@ -753,9 +767,11 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			pDialog.dismiss();	
 			if (result.equals("true")) {
 				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method success!", Toast.LENGTH_SHORT).show();
+				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 			}else{
 				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method fail!", Toast.LENGTH_SHORT).show();
 			}
+			
 
 		}
 	}

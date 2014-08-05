@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.zdh.crimson.R;
 import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.CarrierObject;
+import com.zdh.crimson.utility.FileUtil;
 
 public class ParcelServiceAdapter extends BaseAdapter {
 	SparseBooleanArray mCheckStates; 
@@ -65,9 +66,10 @@ public class ParcelServiceAdapter extends BaseAdapter {
 		view.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {				
 				selectedIndex = position;
 				ParcelServiceAdapter.this.notifyDataSetChanged();	
+				FileUtil.codeRadioButtonShippingMethod = listCarrier.get(position).getCode();
 			}
 		});
 
@@ -88,8 +90,11 @@ public class ParcelServiceAdapter extends BaseAdapter {
 		else {
 			holder.rdb.setChecked ( false );
 		}
+//		if (selectedIndex == 0) {
+//			listCarrier.get(0).getCode();
+//		}
 
-		holder.tv.setText(listCarrier.get(position).getTitle()+listCarrier.get(position).getPrice());
+		holder.tv.setText(listCarrier.get(position).getTitle()+" "+listCarrier.get(position).getPrice());
 		return view;
 	}
 

@@ -43,7 +43,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 	private ProgressDialog pDialog;
 	ProductListAdapter adapter;
 	static int currentCategory = 0;
-	
+
 	CheckboxProductListAdapter checkboxProductListAdapter;
 
 	private Spinner spnTvSize, spnType1, spnType2;
@@ -61,9 +61,8 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 	ArrayList<Category> listCategoryProductTypeChild = new ArrayList<Category>();
 	ArrayList<String> listProductTypesChild = new ArrayList<String>();
 	ArrayAdapter<String> productTypeAdapterChild;
-	
-	ArrayList<Category> listCategoryCheck = new ArrayList<Category>();
 
+	ArrayList<Category> listCategoryCheck = new ArrayList<Category>();
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 
 
@@ -147,54 +146,69 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		clearSpinnerTVSize();
 		clearSpinnerProductType1();
 		clearSpinnerProductType2();
+
 		tvSizeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listTvSizes);
-		productTypeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypesChild);
+		productTypeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypes);
+		productTypeAdapterChild = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypesChild);
 
 		spnTvSize.setAdapter(tvSizeAdapter);
 		spnType1.setAdapter(productTypeAdapter);
+		spnType2.setAdapter(productTypeAdapterChild);
 
 		adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
 		lvProduct.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
-		
-		checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, listCategoryCheck);
+
+		checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, listCategoryCheck,listCheckbox);
 	}
 
 	private void initDataWebservice(){
 		new GetProductsByCategoryIdAsyncTask(currentCategory).execute();
 
 	}
-	
-	private void handleOtherAction(){
-		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-		    	if (i != 0) {
-		    		
-				}
-		    } 
 
-		    public void onNothingSelected(AdapterView<?> adapterView) {
-		        return;
-		    } 
+	private void handleOtherAction(){
+		spnTvSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				if (i != 0) {
+					
+				}
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
 		}); 
 		
-		spnType2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-		    	if (i != 0) {
-		    		
-				}
-		    } 
+		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				if (i != 0) {
 
-		    public void onNothingSelected(AdapterView<?> adapterView) {
-		        return;
-		    } 
+				}
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		}); 
+
+		spnType2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				if (i != 0) {
+
+				}
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
 		}); 
 	}
 
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
-		
+
 		switch (v.getId()) {
 
 		case R.id.productlist_Narrow_lnTitle:
@@ -204,6 +218,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 			}else{
 				lnNarrowContent.setVisibility(View.VISIBLE);
 				ivNarrowShow.setImageResource(R.drawable.ico_next_white);
+				new GetTVSizeAsyncTask().execute();
 			}
 
 			break;	
@@ -286,6 +301,67 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		}
 	}
 
+	//------------------------------------------------------------
+
+	public class NarrowSearchAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+
+		public NarrowSearchAsyncTask(){
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}	
+
+
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+
+//				paramsUrl.add(new BasicNameValuePair("cateids", String.valueOf(cat_id)));
+//				paramsUrl.add(new BasicNameValuePair("size", String.valueOf(cat_id)));
+
+				json = JsonParser.makeHttpRequest(Constants.URL_NARROWSEARCH, "GET", paramsUrl);
+
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					FileUtil.listProduct.clear();
+					for (int j = 0; j < array.length(); j++) {
+						Product temp = new Product();
+						temp.setId(array.getJSONObject(j).getInt("entity_id"));
+						temp.setName(array.getJSONObject(j).getString("name"));
+						temp.setDes(array.getJSONObject(j).getString("description"));    
+						temp.setShortDes(array.getJSONObject(j).getString("short_description"));    
+						temp.setImage(array.getJSONObject(j).getString("image"));
+						FileUtil.listProduct.add(temp);					
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {
+			adapter.notifyDataSetChanged();
+			pDialog.dismiss();	      
+		}
+	}
+
 
 	//------------------------------------------------------------
 
@@ -321,6 +397,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) {               
 					JSONArray array = new JSONArray(json);
+					clearSpinnerTVSize();
 					listCategoryTvSize.clear();
 					listTvSizes.clear();
 					for (int j = 0; j < array.length(); j++) {
@@ -377,16 +454,16 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) {               
 					JSONArray array = new JSONArray(json);
-					listCategoryTvSize.clear();
-					listTvSizes.clear();
+					clearSpinnerProductType1();
+					listCategoryProductType.clear();
 					for (int j = 0; j < array.length(); j++) {
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
 						temp.setName(array.getJSONObject(j).getString("name"));
 						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
-						listCategoryTvSize.add(temp);		
-						listTvSizes.add(temp.getName());
+						listCategoryProductType.add(temp);		
+						listProductTypes.add(temp.getName());
 					}	        			
 				}
 			} catch (JSONException e) {
@@ -397,7 +474,117 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		}
 
 		protected void onPostExecute(String file_url) {
-			adapter.notifyDataSetChanged();
+			productTypeAdapter.notifyDataSetChanged();
+			pDialog.dismiss();	      
+		}
+	}
+
+	public class GetProductTypeChildAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+
+		public GetProductTypeChildAsyncTask(){
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}	
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cat_id", "13"));
+
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					clearSpinnerProductType2();
+					listCategoryProductTypeChild.clear();
+					for (int j = 0; j < array.length(); j++) {
+						Category temp = new Category();
+						temp.setId(array.getJSONObject(j).getInt("id"));
+						temp.setName(array.getJSONObject(j).getString("name"));
+						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
+						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
+						listCategoryProductTypeChild.add(temp);		
+						listProductTypesChild.add(temp.getName());
+					}	        			
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {
+			productTypeAdapterChild.notifyDataSetChanged();
+			pDialog.dismiss();	      
+		}
+	}
+	
+	public class GetCategoryCheckAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+
+		public GetCategoryCheckAsyncTask(){
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}	
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cat_id", "13"));
+
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					listCategoryCheck.clear();
+					listCheckbox.clear();
+					for (int j = 0; j < array.length(); j++) {
+						Category temp = new Category();
+						temp.setId(array.getJSONObject(j).getInt("id"));
+						temp.setName(array.getJSONObject(j).getString("name"));
+						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
+						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
+						listCategoryCheck.add(temp);		
+						listCheckbox.add(false);
+					}	        			
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {
+			checkboxProductListAdapter.notifyDataSetChanged();
 			pDialog.dismiss();	      
 		}
 	}
@@ -407,13 +594,13 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		listTvSizes.clear();	
 		listTvSizes.add(first);
 	}
-	
+
 	private void clearSpinnerProductType1(){
 		String first = "All";
 		listProductTypes.clear();	
 		listProductTypes.add(first);
 	}
-	
+
 	private void clearSpinnerProductType2(){
 		String first = "All";
 		listProductTypesChild.clear();	
