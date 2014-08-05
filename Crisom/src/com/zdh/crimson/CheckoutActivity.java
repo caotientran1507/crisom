@@ -206,6 +206,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			Intent checkoutdetail = new Intent(CheckoutActivity.this, CheckoutDetailActivity.class);
 			startActivity(checkoutdetail);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CHECKOUTDETAIL;
 			break;	
 
 
@@ -213,6 +214,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			Intent continueShopping = new Intent(CheckoutActivity.this, HomeActivity.class);
 			startActivity(continueShopping);
 			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
 			break;	
 
 		case R.id.checkout_btnClearShopping:
@@ -225,6 +227,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			Intent checkoutdetail2 = new Intent(CheckoutActivity.this, CheckoutDetailActivity.class);
 			startActivity(checkoutdetail2);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CHECKOUTDETAIL;
 			break;	
 		case R.id.checkout_btnApplyCoupon:
 			String coupon = edtCoupon.getText().toString().trim();

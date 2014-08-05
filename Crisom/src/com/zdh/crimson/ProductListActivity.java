@@ -135,6 +135,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 				Intent intent = new Intent(ProductListActivity.this,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listProduct.get(position).getId());
 				startActivity(intent);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTDETAIL;
 			} 
 		});
 

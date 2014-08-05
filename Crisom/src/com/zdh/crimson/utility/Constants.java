@@ -74,4 +74,15 @@ public class Constants {
 	
 	public static final int KEY_DEVIDE_FLATPANEL = 1;
 	public static final int KEY_DEVIDE_PROJECTOR = 2;
+	
+	public static final int POSITION_ACTIVITY_LOGIN = 0;
+	public static final int POSITION_ACTIVITY_HOME = 1;
+	public static final int POSITION_ACTIVITY_CATEGORY = 2;
+	public static final int POSITION_ACTIVITY_PRODUCTLIST = 3;
+	public static final int POSITION_ACTIVITY_SEARCH = 4;
+	public static final int POSITION_ACTIVITY_PRODUCTDETAIL = 5;
+	public static final int POSITION_ACTIVITY_CART = 6;
+	public static final int POSITION_ACTIVITY_CHECKOUT = 7;
+	public static final int POSITION_ACTIVITY_CHECKOUTDETAIL = 8;
+	public static final int POSITION_ACTIVITY_CONTACT = 9;
 }

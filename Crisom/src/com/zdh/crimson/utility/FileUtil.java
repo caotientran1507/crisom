@@ -34,6 +34,9 @@ public class FileUtil {
 
 	public static ArrayList<StateObject> listState = new ArrayList<StateObject>();
 	public static ArrayList<CountryObject> listCountry = new ArrayList<CountryObject>();
+	
+	public static int POSITION_ACTIVITY = 1;
+	public static int RE_POSITION_ACTIVITY = 1;
 
 	public static String months[] = { "Month", "01 - January", "02 - February",
 			"03 - March", "04 - April", "05 - May", "06 - June", "07 - July",

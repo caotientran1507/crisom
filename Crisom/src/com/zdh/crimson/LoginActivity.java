@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.zdh.crimson.model.Customer;
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
@@ -45,6 +46,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 		init();
 	}
 	
+	
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_LOGIN;
+	}
+
+
+
 	private void init(){
     	initView();
     	initData();
