@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.zdh.crimson.ProductListActivity;
 import com.zdh.crimson.R;
-import com.zdh.crimson.SearchActivity;
 import com.zdh.crimson.model.OptionObject;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.JsonParser;
