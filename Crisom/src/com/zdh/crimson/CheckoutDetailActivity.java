@@ -84,7 +84,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	int positionCreditCardOnFile = 0;
 	int positionMonth = 0;
 	int positionYear = 0;
-	
+
 	String savecc_id = "";
 	String current_year= "";
 	String current_month= "";
@@ -264,8 +264,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	}
 
 	private void handleOtherAction(){
-		
-//		spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear
+
+		//		spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear
 		spnShippingAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				positionShipping = i;
@@ -284,14 +284,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				return;
 			} 
 		});
-		
+
 		spnCreditCardOnFile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
 				if (i != 0) {
 					savecc_id = listCreditCard.get(i).getId();
 					positionCreditCardOnFile = i;
 				}
-				
+
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -452,13 +452,27 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					ln5OrderReviewContent.setVisibility(View.VISIBLE);
 				}
 			}
-			
 			else{
 				if (rbnCreditCard.isChecked()) {
-					
+					if (checkInputDataCreditCard()) {
+						new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
+						ln1BillingInfomationContent.setVisibility(View.GONE);
+						ln2ShippingInfomationContent.setVisibility(View.GONE);
+						ln3ShippingMethodContent.setVisibility(View.GONE);
+						ln4PaymentInfomationContent.setVisibility(View.GONE);
+						ln5OrderReviewContent.setVisibility(View.VISIBLE);
+					}
+				}else{
+					new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
+					ln1BillingInfomationContent.setVisibility(View.GONE);
+					ln2ShippingInfomationContent.setVisibility(View.GONE);
+					ln3ShippingMethodContent.setVisibility(View.GONE);
+					ln4PaymentInfomationContent.setVisibility(View.GONE);
+					ln5OrderReviewContent.setVisibility(View.VISIBLE);
 				}
 			}
-			
+
+
 			break;
 		case R.id.checkoutdetail_btnPlaceOrder:
 			String method = Constants.METHOD_LINKPOINT;
@@ -466,16 +480,23 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				method = Constants.METHOD_PAYPAL;
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URL_PAYPAL_CART+SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)));
 				startActivity(browserIntent);
-				
 			}else{
 				if (rbnCreditCardOnFile.isChecked()) {
 					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), savecc_id, method).execute();
 				}else{
-					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), "", method).execute();
+					
+					int idCustomer = SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this);
+					String cc_type = FileUtil.creditCardTypeID[positionCreditCard];
+					String cc_number = edtCreditCardNumber.getText().toString().trim();
+					String cc_exp_month = String.valueOf(positionMonth + 1);
+					String cc_exp_year = String.valueOf(positionYear + 2013);
+					String cc_cid = edtCardVerification.getText().toString().trim();		
+					
+					new SubmitOrderAsyncTask(idCustomer,method,cc_type,cc_number,cc_exp_month,cc_exp_year,cc_cid).execute();
 				}
 			}
-			
 			break;
+
 
 		case R.id.checkoutdetail_tvEditYourCart:
 			finish();
@@ -928,14 +949,13 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		private String json;
 		int idCustomer;
-		String savecc_id;
 		String method;
 		String cc_type;
 		String cc_number;
 		String cc_exp_month;
 		String cc_exp_year;
 		String cc_cid;
-		
+
 		public SubmitOrderAsyncTask(int idCustomer, String method, String cc_type, String cc_number, String cc_exp_month, String cc_exp_year, String cc_cid){
 			this.idCustomer = idCustomer;
 			this.method = method;
@@ -970,7 +990,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				paramsUrl.add(new BasicNameValuePair("cc_exp_month", method));
 				paramsUrl.add(new BasicNameValuePair("cc_exp_year", method));
 				paramsUrl.add(new BasicNameValuePair("cc_cid", method));
-				
+
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_SAVEPAYMENT, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) 
@@ -1012,20 +1032,20 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 		return "";
 	}
-	
+
 	private boolean checkInputDataCreditCard(){
 		if (positionCreditCard == 0) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please select Credit Card Type!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		if (positionMonth == 0) {
-			Toast.makeText(CheckoutDetailActivity.this, "Please select Month!", Toast.LENGTH_SHORT).show();
-			return false;
-		}
-		if (positionYear == 0) {
-			Toast.makeText(CheckoutDetailActivity.this, "Please select Year!", Toast.LENGTH_SHORT).show();
-			return false;
-		}
+		//		if (positionMonth == 0) {
+		//			Toast.makeText(CheckoutDetailActivity.this, "Please select Month!", Toast.LENGTH_SHORT).show();
+		//			return false;
+		//		}
+		//		if (positionYear == 0) {
+		//			Toast.makeText(CheckoutDetailActivity.this, "Please select Year!", Toast.LENGTH_SHORT).show();
+		//			return false;
+		//		}
 		if (edtCreditCardNumber.getText().toString().trim().equals("")) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please input Credit Card Number!", Toast.LENGTH_SHORT).show();
 			return false;

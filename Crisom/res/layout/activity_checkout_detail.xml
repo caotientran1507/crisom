@@ -612,6 +612,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="5dp"
+                                        android:inputType="number"
                                         android:background="@drawable/edittext_background_radius"
                                         android:padding="5dp" />
 
@@ -692,6 +693,7 @@
                                             android:layout_weight="65"
                                             android:layout_height="wrap_content"
                                             android:layout_marginTop="5dp"
+                                            android:inputType="number"
                                             android:background="@drawable/edittext_background_radius"
                                             android:padding="5dp" />
                                         

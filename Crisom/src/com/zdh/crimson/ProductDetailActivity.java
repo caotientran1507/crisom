@@ -193,7 +193,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
-		
+
 		switch (v.getId()) {
 
 		case R.id.product_btnVerify:
@@ -467,7 +467,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		lnProjector = (LinearLayout)dialogVerifyNumber.findViewById(R.id.dialog_verify_lnProjector);
 		rdbFlatpanel = (RadioButton)dialogVerifyNumber.findViewById(R.id.dialog_verify_rbnFlatpanel);
 		rdbProjector = (RadioButton)dialogVerifyNumber.findViewById(R.id.dialog_verify_rbnProjector);
-		
+
 		clearSpinnerManufacturer();
 		clearSpinnerModel();
 		new GetManufacturerAsyncTask(radioChecked).execute();		
@@ -483,9 +483,9 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				dialogVerifyNumber.dismiss();				
 			}
 		});
-		
+
 		btnDialog.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				if (positionManufacturerName == 0) {
@@ -568,12 +568,12 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(dialogVerifyNumber.getContext());      		 	        
-				pDialog.setMessage("Loading...");
-				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
-				pDialog.show();
-				pDialog.setContentView(R.layout.dialog_process);
-			
+			pDialog.setMessage("Loading...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+			pDialog.setContentView(R.layout.dialog_process);
+
 		}
 
 		protected String doInBackground(String... params) {
@@ -622,12 +622,12 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(dialogVerifyNumber.getContext());     
-				pDialog.setMessage("Loading...");
-				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
-				pDialog.show();
-				pDialog.setContentView(R.layout.dialog_process);
-			
+			pDialog.setMessage("Loading...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+			pDialog.setContentView(R.layout.dialog_process);
+
 		}
 
 		protected String doInBackground(String... params) {
@@ -658,77 +658,77 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			pDialog.dismiss();	
 		}
 	}
-	
+
 	//--------------------VerifyAsyncTask----------------------------------------
-		public class VerifyAsyncTask extends AsyncTask<String, String, String> {
+	public class VerifyAsyncTask extends AsyncTask<String, String, String> {
 
-			private String json;
-			String device;
-			String manufacturer;
-			String model;
-			String sku;
-			TextView tvResult;
-			public VerifyAsyncTask(String device, String manufacturer,String model,String sku,TextView tvResult){
-				this.device = device;
-				this.manufacturer = manufacturer;
-				this.model = model;
-				this.sku = sku;
-				this.tvResult = tvResult;
-			}
-
-
-			@Override
-			protected void onPreExecute() {
-				super.onPreExecute();
-				pDialog = new ProgressDialog(dialogVerifyNumber.getContext());     
-					pDialog.setMessage("Loading...");
-					pDialog.setIndeterminate(false);
-					pDialog.setCancelable(true);
-					pDialog.show();
-					pDialog.setContentView(R.layout.dialog_process);
-				
-			}
-
-			protected String doInBackground(String... params) {
-
-				try {
-					// Building Parameters
-					List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-					paramsUrl.add(new BasicNameValuePair("device", device));
-					paramsUrl.add(new BasicNameValuePair("manufacturer", manufacturer));
-					paramsUrl.add(new BasicNameValuePair("model", model));
-					paramsUrl.add(new BasicNameValuePair("sku", sku));
-					json = JsonParser.makeHttpRequest(Constants.URL_VERIFY, "GET", paramsUrl);
-					if ((json != null) || (!json.equals(""))) {               
-						JSONObject jsonObject = new JSONObject(json);					
-						if (!jsonObject.getBoolean("info")) {
-							return "";
-						}
-					}
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-
-				return "true";
-			}
-
-			protected void onPostExecute(String result) {	
-				tvResult.setVisibility(View.VISIBLE);
-				if (result.equals("true")) {
-					tvResult.setText(Constants.VERIFY_OK);
-				}else{
-					tvResult.setText(Constants.VERIFY_NOK);
-				}
-				pDialog.dismiss();	
-			}
+		private String json;
+		String device;
+		String manufacturer;
+		String model;
+		String sku;
+		TextView tvResult;
+		public VerifyAsyncTask(String device, String manufacturer,String model,String sku,TextView tvResult){
+			this.device = device;
+			this.manufacturer = manufacturer;
+			this.model = model;
+			this.sku = sku;
+			this.tvResult = tvResult;
 		}
+
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(dialogVerifyNumber.getContext());     
+			pDialog.setMessage("Loading...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+			pDialog.setContentView(R.layout.dialog_process);
+
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("device", device));
+				paramsUrl.add(new BasicNameValuePair("manufacturer", manufacturer));
+				paramsUrl.add(new BasicNameValuePair("model", model));
+				paramsUrl.add(new BasicNameValuePair("sku", sku));
+				json = JsonParser.makeHttpRequest(Constants.URL_VERIFY, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONObject jsonObject = new JSONObject(json);					
+					if (!jsonObject.getBoolean("info")) {
+						return "";
+					}
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return "true";
+		}
+
+		protected void onPostExecute(String result) {	
+			tvResult.setVisibility(View.VISIBLE);
+			if (result.equals("true")) {
+				tvResult.setText(Constants.VERIFY_OK);
+			}else{
+				tvResult.setText(Constants.VERIFY_NOK);
+			}
+			pDialog.dismiss();	
+		}
+	}
 
 	private void clearSpinnerModel(){
 		String model = "Select Model";
 		listModelName.clear();	
 		listModelName.add(model);
 	}
-	
+
 	private void clearSpinnerManufacturer(){		
 		String manufacturer = "Select Manufacturer";		
 		listManufacturerName.clear();		

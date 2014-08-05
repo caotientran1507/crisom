@@ -8,7 +8,6 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.R.bool;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -26,6 +25,7 @@ import android.widget.Toast;
 import com.zdh.crimson.R;
 import com.zdh.crimson.SearchActivity;
 import com.zdh.crimson.model.OptionObject;
+import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
@@ -141,6 +141,16 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 			holder.tvOtherFieldTitle.setText(listOption.get(currentPosition).getOtherFieldTitle());
 			holder.tvOtherFieldValue.setText(listOption.get(currentPosition).getOtherFieldValue());
 		}
+		
+		if (listOption.get(currentPosition).getOtherFieldTitle().equals("") || listOption.get(currentPosition).getOtherFieldTitle().equals("null")) {
+			holder.tvOtherFieldTitle.setVisibility(View.GONE);
+			holder.tvOtherFieldValue.setVisibility(View.GONE);
+		}else{
+			holder.tvOtherFieldTitle.setVisibility(View.VISIBLE);
+			holder.tvOtherFieldValue.setVisibility(View.VISIBLE);
+			holder.tvOtherFieldTitle.setText(listOption.get(currentPosition).getOtherFieldTitle());
+			holder.tvOtherFieldValue.setText(listOption.get(currentPosition).getOtherFieldValue());
+		}
 
 		return view;
 	}
@@ -229,6 +239,7 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 					});
 			}
 			pDialog.dismiss();       
+			CommonUtil.hideSoftKeyboard(mContext);
 		}
 
 	}
