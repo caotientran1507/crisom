@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.zdh.crimson.R;
 import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.Category;
-import com.zdh.crimson.utility.FileUtil;
 
 public class CheckboxProductListAdapter extends BaseAdapter {
 
@@ -26,11 +25,14 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 	private LayoutInflater inflater = null;
 	private ArrayList<Category> listCheck = new ArrayList<Category>();	
 	public ImageLoader imageLoader; 
+	
+	private ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 
 
-	public CheckboxProductListAdapter(Context context,ArrayList<Category> listCheck) {
+	public CheckboxProductListAdapter(Context context,ArrayList<Category> listCheck,ArrayList<Boolean> listCheckbox) {
 		this.listCheck = listCheck;		
 		this.context = context;
+		this.listCheckbox = listCheckbox;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imageLoader = new ImageLoader(this.context);
 	}
@@ -79,18 +81,21 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {		
-				if (FileUtil.listCheckbox.containsKey(listCheck.get(position).getId())) {
-//					if (FileUtil.listCheckbox.get(listCheck.get(position).getId()).) {
-//						
-//					}
-//					FileUtil.listCheckbox.put(listCheck.get(position).getId(), );
+				if (listCheckbox.get(position)) {
+					listCheckbox.set(position, false);
+				}else{
+					listCheckbox.set(position, true);
 				}
 			}
 		});
-
-		if (!FileUtil.listCheckbox.containsKey(listCheck.get(position).getId())) {
-			FileUtil.listCheckbox.put(listCheck.get(position).getId(), false);
+		
+		if (listCheckbox.get(position)) {
+			holder.cbx.setChecked(true);
+		}else{
+			holder.cbx.setChecked(false);
 		}
+		holder.tv.setText(listCheck.get(position).getName());
+
 
 		return view;
 	}

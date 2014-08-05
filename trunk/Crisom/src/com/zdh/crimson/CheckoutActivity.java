@@ -112,6 +112,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		btnQuote = (Button)findViewById(R.id.checkout_btnQuote);
 
 		listview = (ListView)findViewById(R.id.checkout_lv);
+		
 		listview.setOnTouchListener(new OnTouchListener() {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
@@ -170,9 +171,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	}
 
 	private void initDataWebservice(){
-		if (FileUtil.listCountry.size() <= 0 ) {
-			new GetCountryAsyncTask().execute();
-		}
+		new GetCountryAsyncTask().execute();
 	}
 
 	private void handleOtherAction(){
