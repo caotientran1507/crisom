@@ -45,6 +45,7 @@ public class Constants {
 		
 	public static final String KEY_CATEGORYID = "KEY_CATEGORYID";
 	public static final String KEY_MOUNTFINDER_MODEL = "KEY_MOUNTFINDER_MODEL";
+	public static final String KEY_SEARCH_KEYWORD = "KEY_SEARCH_KEYWORD";
 	public static final String KEY_MOUNTFINDER_MANUFACTURER = "KEY_MOUNTFINDER_MANUFACTURER";
 	public static final String KEY_MOUNTFINDER_DEVICE = "KEY_MOUNTFINDER_DEVICE";
 	
