@@ -80,6 +80,7 @@ public class ParcelServiceAdapter extends BaseAdapter {
 				// TODO Auto-generated method stub
 				selectedIndex = position;
 				ParcelServiceAdapter.this.notifyDataSetChanged();
+				FileUtil.codeRadioButtonShippingMethod = listCarrier.get(position).getCode();
 			}
 		});
 
@@ -90,9 +91,6 @@ public class ParcelServiceAdapter extends BaseAdapter {
 		else {
 			holder.rdb.setChecked ( false );
 		}
-//		if (selectedIndex == 0) {
-//			listCarrier.get(0).getCode();
-//		}
 
 		holder.tv.setText(listCarrier.get(position).getTitle()+" "+listCarrier.get(position).getPrice());
 		return view;

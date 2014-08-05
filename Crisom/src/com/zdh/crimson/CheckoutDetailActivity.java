@@ -19,6 +19,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -59,7 +60,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	,tvWhatIsThis,tvWhatIsPaypal;
 
 	Spinner spnBillingAddress,spnShippingAddress,spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear;
-	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnCreditCardOnFile,rbnPaypal,rbnCreditTerms;
+	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnCreditCardOnFile,rbnPaypal,rbnCreditCard;
 	CheckBox cbxUseBillingAddress,cbxSaveCreditCard;
 	ListView lvParcelService,lvReview;
 	EditText edtCreditCardNumber,edtCardVerification;
@@ -79,6 +80,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	ParcelServiceAdapter parcelServiceAdapter;
 	int positionShipping = 0;
 	int positionBilling = 0;
+	int positionCreditCard = 0;
+	int positionCreditCardOnFile = 0;
+	int positionMonth = 0;
+	int positionYear = 0;
+	
+	String savecc_id = "";
+	String current_year= "";
+	String current_month= "";
 
 	String sSubtotal = "";
 	String sShipping = "";
@@ -162,7 +171,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		rbnShipDifferentAddress = (RadioButton)findViewById(R.id.checkoutdetail_rbnShipDifferentAddress);		
 		rbnCreditCardOnFile = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCardOnFile);
 		rbnPaypal = (RadioButton)findViewById(R.id.checkoutdetail_rbnPaypal);
-		rbnCreditTerms = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCard);
+		rbnCreditCard = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCard);
 
 		lvParcelService = (ListView)findViewById(R.id.checkoutdetail_lvParcelService);
 		lvReview = (ListView)findViewById(R.id.checkoutdetail_lvReview);
@@ -218,7 +227,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		rbnShipDifferentAddress.setOnClickListener(this);
 		rbnCreditCardOnFile.setOnClickListener(this);
 		rbnPaypal.setOnClickListener(this);
-		rbnCreditTerms.setOnClickListener(this);
+		rbnCreditCard.setOnClickListener(this);
 		tvEditYourCard.setOnClickListener(this);
 		tvWhatIsThis.setOnClickListener(this);
 		tvWhatIsPaypal.setOnClickListener(this);
@@ -255,6 +264,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	}
 
 	private void handleOtherAction(){
+		
+//		spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear
 		spnShippingAddress.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				positionShipping = i;
@@ -273,12 +284,59 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				return;
 			} 
 		});
+		
+		spnCreditCardOnFile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
+				if (i != 0) {
+					savecc_id = listCreditCard.get(i).getId();
+					positionCreditCardOnFile = i;
+				}
+				
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		});
+		spnCreditCardType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				positionCreditCard = i;
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		});
+		spnExpirationMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				if (i == 0) {
+					current_month = FileUtil.months[i];
+					positionMonth = i;
+				}
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		});
+		spnExpirationYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				if (i == 0) {
+					current_year = FileUtil.years[i];
+					positionYear = i;
+				}
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		});
 	}
 
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
-		
+
 		switch (v.getId()) {
 
 		case R.id.checkoutdetail_ln1BillingInfomation:
@@ -357,7 +415,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				ln4PaymentInfomationContent.setVisibility(View.GONE);
 				ln5OrderReviewContent.setVisibility(View.GONE);
 			}	
-			
+
 			break;
 		case R.id.checkoutdetail_Shipping_btnContinue:
 			if (cbxUseBillingAddress.isChecked()) {
@@ -373,27 +431,49 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			break;
 		case R.id.checkoutdetail_ShippingMethod_btnContinue:
 			new SaveShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this),FileUtil.codeRadioButtonShippingMethod).execute();
-			
+
 			ln1BillingInfomationContent.setVisibility(View.GONE);
 			ln2ShippingInfomationContent.setVisibility(View.GONE);
 			ln3ShippingMethodContent.setVisibility(View.GONE);
 			ln4PaymentInfomationContent.setVisibility(View.VISIBLE);
 			ln5OrderReviewContent.setVisibility(View.GONE);
-			
+
 			break;
 		case R.id.checkoutdetail_Payment_btnContinue:
-			ln1BillingInfomationContent.setVisibility(View.GONE);
-			ln2ShippingInfomationContent.setVisibility(View.GONE);
-			ln3ShippingMethodContent.setVisibility(View.GONE);
-			ln4PaymentInfomationContent.setVisibility(View.GONE);
-			ln5OrderReviewContent.setVisibility(View.VISIBLE);
+			if (rbnCreditCardOnFile.isChecked()) {
+				if (positionShipping == 0) {
+					Toast.makeText(CheckoutDetailActivity.this, "Please select select Credit Card Type!", Toast.LENGTH_SHORT).show();
+				}else{
+					new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
+					ln1BillingInfomationContent.setVisibility(View.GONE);
+					ln2ShippingInfomationContent.setVisibility(View.GONE);
+					ln3ShippingMethodContent.setVisibility(View.GONE);
+					ln4PaymentInfomationContent.setVisibility(View.GONE);
+					ln5OrderReviewContent.setVisibility(View.VISIBLE);
+				}
+			}
+			else{
+				if (rbnCreditCard.isChecked()) {
+					
+				}
+			}
+			
+			
 			break;
 		case R.id.checkoutdetail_btnPlaceOrder:
 			String method = Constants.METHOD_LINKPOINT;
 			if (rbnPaypal.isChecked()) {
 				method = Constants.METHOD_PAYPAL;
+			}else{
+				if (rbnCreditCardOnFile.isChecked()) {
+					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), savecc_id, method).execute();
+				}else{
+					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), "", method).execute();
+				}
 			}
-			new SavePaymentAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), "", method).execute();
+			
+			
+			
 			break;
 
 
@@ -405,7 +485,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		case R.id.checkoutdetail_rbnCreditCardOnFile:
 			rbnCreditCardOnFile.setChecked(true);
 			rbnPaypal.setChecked(false);	
-			rbnCreditTerms.setChecked(false);
+			rbnCreditCard.setChecked(false);
 			tvRedirectedPaypal.setVisibility(View.GONE);
 			lnCreditCardContent.setVisibility(View.GONE);
 			lnCreditCardOnFileContent.setVisibility(View.VISIBLE);
@@ -414,7 +494,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		case R.id.checkoutdetail_rbnCreditCard:
 			rbnCreditCardOnFile.setChecked(false);
 			rbnPaypal.setChecked(false);	
-			rbnCreditTerms.setChecked(true);
+			rbnCreditCard.setChecked(true);
 			tvRedirectedPaypal.setVisibility(View.GONE);	
 			lnCreditCardOnFileContent.setVisibility(View.GONE);
 			lnCreditCardContent.setVisibility(View.VISIBLE);
@@ -423,7 +503,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		case R.id.checkoutdetail_rbnPaypal:
 			rbnCreditCardOnFile.setChecked(false);
 			rbnPaypal.setChecked(true);	
-			rbnCreditTerms.setChecked(false);
+			rbnCreditCard.setChecked(false);
 			tvRedirectedPaypal.setVisibility(View.VISIBLE);	
 			lnCreditCardOnFileContent.setVisibility(View.GONE);
 			lnCreditCardContent.setVisibility(View.GONE);
@@ -560,7 +640,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 	}
 
-	//--------------------United Parcel Service----------------------------------------
+	//--------------------GetCreditCardOnFileAsyncTask----------------------------------------
 	public class GetCreditCardOnFileAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
@@ -681,7 +761,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_GETCARTCOST, "GET", paramsUrl);
-				if ((json != null) || (!json.equals(""))) {               
+
+				if ((json != null) || (!json.equals(""))) {    
+					Log.d("json", json);
 					JSONObject jsonObject = new JSONObject(json);
 					JSONObject jsonObjectSubtotal = jsonObject.getJSONObject("subtotal");
 					JSONObject jsonObjectShipping = jsonObject.getJSONObject("shipping");
@@ -766,24 +848,23 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
 			if (result.equals("true")) {
-				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method success!", Toast.LENGTH_SHORT).show();
-				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
+				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method success!", Toast.LENGTH_SHORT).show();				
 			}else{
 				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method fail!", Toast.LENGTH_SHORT).show();
 			}
-			
+
 
 		}
 	}
 
-	//--------------------SaveShippingMethod----------------------------------------
-	public class SavePaymentAsyncTask extends AsyncTask<String, String, String> {
+	//--------------------SubmitOrderOnFileAsyncTask----------------------------------------
+	public class SubmitOrderOnFileAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
 		int idCustomer;
 		String savecc_id;
 		String method;
-		public SavePaymentAsyncTask(int idCustomer, String savecc_id, String method){
+		public SubmitOrderOnFileAsyncTask(int idCustomer, String savecc_id, String method){
 			this.idCustomer = idCustomer;
 			this.savecc_id = savecc_id;
 			this.method = method;
@@ -811,20 +892,115 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				paramsUrl.add(new BasicNameValuePair("method", method));
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_SAVEPAYMENT, "GET", paramsUrl);
-				if ((json != null) || (!json.equals(""))) {   
+				if ((json != null) || (!json.equals(""))) 
+				{   
+					Log.d("json", json);
 					JSONObject jsonObject = new JSONObject(json);
-					boolean s = jsonObject.getBoolean("info");
-				
+					boolean b = jsonObject.getBoolean("info");
+					if (!b) {
+						return jsonObject.getString("message");
+					}
+
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
 
-			return null;
+			return "";
 		}
 
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
+			if (result.equals("")) {
+				Toast.makeText(CheckoutDetailActivity.this, "Your order has been received.\nThank you for your purchase!", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(CheckoutDetailActivity.this, HomeActivity.class);
+				startActivity(intent);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
+				overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);	
+			}else{
+				Toast.makeText(CheckoutDetailActivity.this, result, Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+
+	//--------------------SubmitOrderAsyncTask----------------------------------------
+	public class SubmitOrderAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		int idCustomer;
+		String savecc_id;
+		String method;
+		String cc_type;
+		String cc_number;
+		String cc_exp_month;
+		String cc_exp_year;
+		String cc_cid;
+		
+		public SubmitOrderAsyncTask(int idCustomer, String method, String cc_type, String cc_number, String cc_exp_month, String cc_exp_year, String cc_cid){
+			this.idCustomer = idCustomer;
+			this.method = method;
+			this.cc_type = cc_type;
+			this.cc_number = cc_number;
+			this.cc_exp_month = cc_exp_month;
+			this.cc_exp_year = cc_exp_year;
+			this.cc_cid = cc_cid;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
+				paramsUrl.add(new BasicNameValuePair("method", method));
+				paramsUrl.add(new BasicNameValuePair("cc_type", method));
+				paramsUrl.add(new BasicNameValuePair("cc_number", method));
+				paramsUrl.add(new BasicNameValuePair("cc_exp_month", method));
+				paramsUrl.add(new BasicNameValuePair("cc_exp_year", method));
+				paramsUrl.add(new BasicNameValuePair("cc_cid", method));
+				
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_SAVEPAYMENT, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) 
+				{   
+					Log.d("json", json);
+					JSONObject jsonObject = new JSONObject(json);
+					boolean b = jsonObject.getBoolean("info");
+					if (!b) {
+						return jsonObject.getString("message");
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return "";
+		}
+
+		protected void onPostExecute(String result) {	      
+			pDialog.dismiss();	
+			if (result.equals("")) {
+				Toast.makeText(CheckoutDetailActivity.this, "Your order has been received.\nThank you for your purchase!", Toast.LENGTH_LONG).show();
+				Intent intent = new Intent(CheckoutDetailActivity.this, HomeActivity.class);
+				startActivity(intent);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
+				overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);	
+			}else{
+				Toast.makeText(CheckoutDetailActivity.this, result, Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 
@@ -835,5 +1011,29 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			}
 		}
 		return "";
+	}
+	
+	private boolean checkInputDataCreditCard(){
+		if (positionCreditCard == 0) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please select Credit Card Type!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (positionMonth == 0) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please select Month!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (positionYear == 0) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please select Year!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (edtCreditCardNumber.getText().toString().trim().equals("")) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please input Credit Card Number!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (edtCardVerification.getText().toString().trim().equals("")) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please input Card Verification Number!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
 	}
 }
