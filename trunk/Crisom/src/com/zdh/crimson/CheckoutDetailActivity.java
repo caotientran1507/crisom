@@ -452,18 +452,21 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					ln5OrderReviewContent.setVisibility(View.VISIBLE);
 				}
 			}
+			
 			else{
 				if (rbnCreditCard.isChecked()) {
 					
 				}
 			}
 			
-			
 			break;
 		case R.id.checkoutdetail_btnPlaceOrder:
 			String method = Constants.METHOD_LINKPOINT;
 			if (rbnPaypal.isChecked()) {
 				method = Constants.METHOD_PAYPAL;
+				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URL_PAYPAL_CART+SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)));
+				startActivity(browserIntent);
+				
 			}else{
 				if (rbnCreditCardOnFile.isChecked()) {
 					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), savecc_id, method).execute();
@@ -472,10 +475,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				}
 			}
 			
-			
-			
 			break;
-
 
 		case R.id.checkoutdetail_tvEditYourCart:
 			finish();
