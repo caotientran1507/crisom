@@ -121,12 +121,6 @@ public class BaseActivity extends Activity implements OnClickListener{
 			ChangeTextButtonLogin();
 	}
 	
-	
-
-	@Override
-	public void onBackPressed() {		
-	}
-
 
 	private void showDialog(final Context mContext, String title, String msg){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
