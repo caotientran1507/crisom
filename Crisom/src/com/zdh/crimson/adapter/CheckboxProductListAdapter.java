@@ -15,27 +15,28 @@ import android.widget.TextView;
 
 import com.zdh.crimson.R;
 import com.zdh.crimson.lazylist.ImageLoader;
-import com.zdh.crimson.model.Product;
+import com.zdh.crimson.model.Category;
+import com.zdh.crimson.utility.FileUtil;
 
 public class CheckboxProductListAdapter extends BaseAdapter {
 
 	int currentPosition;	
-	Holder holder = null;
+
 	private Context context;
 	private LayoutInflater inflater = null;
-	private ArrayList<Product> listProduct = new ArrayList<Product>();	
+	private ArrayList<Category> listCheck = new ArrayList<Category>();	
 	public ImageLoader imageLoader; 
 
 
-	public CheckboxProductListAdapter(Context context,ArrayList<Product> listProduct) {
-		this.listProduct = listProduct;		
+	public CheckboxProductListAdapter(Context context,ArrayList<Category> listCheck) {
+		this.listCheck = listCheck;		
 		this.context = context;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imageLoader = new ImageLoader(this.context);
 	}
 
 	public int getCount() {
-		return listProduct.size();
+		return listCheck.size();
 	}
 
 	public Object getItem(int position) {
@@ -47,33 +48,50 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 	}
 
 	@SuppressLint("InflateParams")
-	public View getView(int position, View convertView, ViewGroup parent) {
-
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		Holder holder = null;
 		View view = convertView;
 		currentPosition = position;
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.row_checkbox, null);
 			holder = new Holder();
-			
+
 			holder.tv = (TextView) view.findViewById(R.id.row_checkbox_tv);
 			holder.cbx = (CheckBox) view.findViewById(R.id.row_checkbox_cbx);
 			holder.ln = (LinearLayout) view.findViewById(R.id.row_checkbox_ln);
-			
+
 			view.setTag(holder);
 		} else {
 			holder = (Holder) view.getTag();			
-		
+
 		}
-		
+
 		holder.ln.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {		
-				
+
 			}
 		});
-		
-		
+		holder.tv.setText(listCheck.get(position).getName());
+
+		holder.cbx.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {		
+				if (FileUtil.listCheckbox.containsKey(listCheck.get(position).getId())) {
+//					if (FileUtil.listCheckbox.get(listCheck.get(position).getId()).) {
+//						
+//					}
+//					FileUtil.listCheckbox.put(listCheck.get(position).getId(), );
+				}
+			}
+		});
+
+		if (!FileUtil.listCheckbox.containsKey(listCheck.get(position).getId())) {
+			FileUtil.listCheckbox.put(listCheck.get(position).getId(), false);
+		}
+
 		return view;
 	}
 

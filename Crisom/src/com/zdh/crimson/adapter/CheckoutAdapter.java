@@ -10,7 +10,6 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,10 +93,10 @@ public class CheckoutAdapter extends BaseAdapter {
 		holder.tvPrice.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()));
 		holder.tvSubtotal.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()*listRecent.get(position).getQuantity()));
 		imageLoader.DisplayImage(listRecent.get(position).getImage(), holder.ivAvatar);
-		Log.d("listRecent.get(position).getIdItem()", ""+listRecent.get(position).getIdItem());
-		Log.d("listRecent.get(position).getQuantity()", ""+listRecent.get(position).getQuantity());
 		
-		FileUtil.listCartChange.put(listRecent.get(position).getIdItem(), String.valueOf(listRecent.get(position).getQuantity()));
+		if (!FileUtil.listCartChange.containsKey(listRecent.get(position).getIdItem())) {
+			FileUtil.listCartChange.put(listRecent.get(position).getIdItem(), String.valueOf(listRecent.get(position).getQuantity()));
+		}		
 		return view;
 	}
 

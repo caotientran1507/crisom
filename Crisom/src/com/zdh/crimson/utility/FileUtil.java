@@ -28,6 +28,7 @@ public class FileUtil {
 	public static ArrayList<Product> listSearch = new ArrayList<Product>();
 	public static ArrayList<RecentObject> listRecent = new ArrayList<RecentObject>();
 	public static ConcurrentMap<Integer, String> listCartChange = new ConcurrentHashMap<Integer, String>();
+	public static ConcurrentMap<Integer, Boolean> listCheckbox = new ConcurrentHashMap<Integer, Boolean>();
 
 	public static ArrayList<CarrierObject> listCarrier = new ArrayList<CarrierObject>();
 
