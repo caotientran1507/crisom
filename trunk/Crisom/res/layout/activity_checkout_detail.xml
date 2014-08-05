@@ -646,7 +646,7 @@
                                             android:layout_weight="55"
                                             android:layout_height="30dp"
                                             android:layout_marginTop="5dp"
-                                            android:background="@drawable/spinner_background" />
+                                            android:background="@drawable/spinner_month" />
                                         
                                         <TextView 
                                             android:layout_width="0dp"
@@ -659,7 +659,7 @@
                                             android:layout_weight="40"
                                             android:layout_height="30dp"
                                             android:layout_marginTop="5dp"
-                                            android:background="@drawable/spinner_background" />
+                                            android:background="@drawable/spinner_year" />
                                     </LinearLayout>
 
                                     <LinearLayout
