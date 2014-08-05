@@ -12,7 +12,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -97,7 +96,6 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 				if (FileUtil.listCategory.get(position).getSubcat()) {
 					currentCategory = FileUtil.listCategory.get(position)
 							.getId();
-					Log.d("currentCategory", "" + currentCategory);
 					new GetCategoriesByIdAsyncTask(currentCategory).execute();
 				} else {
 					Intent intent = new Intent(CategoryActivity.this,
@@ -105,6 +103,8 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 					intent.putExtra(Constants.KEY_CATEGORYID,
 							FileUtil.listCategory.get(position).getId());
 					startActivity(intent);
+					overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTLIST;
 				}
 
 			}

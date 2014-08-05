@@ -8,11 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -108,7 +104,9 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 			   Intent intent = new Intent(CartActivity.this,ProductDetailActivity.class);
 			   intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listRecent.get(position).getIdEntity());
 			   startActivity(intent);	
+			   
 			   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+			   FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTDETAIL;
 		   } 
 		});
 		pDialog = new ProgressDialog(CartActivity.this);
@@ -135,6 +133,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 				Intent checkout = new Intent(CartActivity.this, CheckoutActivity.class);
 				startActivity(checkout);
 				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CHECKOUT;
 			}
 			else{
 				Toast.makeText(CartActivity.this, "No item in your cart!", Toast.LENGTH_SHORT).show();

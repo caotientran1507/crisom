@@ -1,6 +1,7 @@
 package com.zdh.crimson;
 
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 import android.app.Activity;
@@ -34,20 +35,31 @@ public class BaseActivity extends Activity implements OnClickListener{
 				case R.id.include_footer_lnHome:
 					Intent home = new Intent(getApplicationContext(), HomeActivity.class);
 					startActivity(home);
-					overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
+					overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);					
 					break;		
 				//----------Search is clicked----------
 				case R.id.include_footer_lnSearch:
 					Intent search = new Intent(getApplicationContext(), SearchActivity.class);
 					startActivity(search);
-					overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+					if (FileUtil.POSITION_ACTIVITY > Constants.POSITION_ACTIVITY_SEARCH) {
+						overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+					}else{
+						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+					}		
+					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
 					break;
 					
 				//----------Category is clicked----------
 				case R.id.include_footer_lnCategory:
 					Intent category = new Intent(getApplicationContext(), CategoryActivity.class);
 					startActivity(category);
-					overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+					if (FileUtil.POSITION_ACTIVITY > Constants.POSITION_ACTIVITY_CATEGORY) {
+						overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+					}else{
+						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+					}	
+					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
 					break;
 					
 				//----------Cart is clicked----------
@@ -59,7 +71,12 @@ public class BaseActivity extends Activity implements OnClickListener{
 					} else {
 						Intent cart = new Intent(getApplicationContext(),CartActivity.class);
 						startActivity(cart);
-						overridePendingTransition(R.anim.fly_in_from_right,R.anim.fly_out_to_left);
+						if (FileUtil.POSITION_ACTIVITY > Constants.POSITION_ACTIVITY_CART) {
+							overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+						}else{
+							overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+						}
+						FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CART;
 					}
 					break;
 					
@@ -67,6 +84,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 				case R.id.include_footer_lnContact:
 					Intent contact = new Intent(getApplicationContext(), ContactActivity.class);
 					startActivity(contact);
+					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CONTACT;
 					overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 					break;	
 				
@@ -86,6 +104,9 @@ public class BaseActivity extends Activity implements OnClickListener{
 				case R.id.include_header_btnBack:
 					finish();
 					overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+					if (FileUtil.POSITION_ACTIVITY != 0 || FileUtil.POSITION_ACTIVITY != Constants.POSITION_ACTIVITY_CATEGORY) {
+						FileUtil.POSITION_ACTIVITY = FileUtil.POSITION_ACTIVITY - 1;
+					}					
 					break;	
 		}
 	}
@@ -99,6 +120,13 @@ public class BaseActivity extends Activity implements OnClickListener{
 		if (requestCode == requestCodeLogin)
 			ChangeTextButtonLogin();
 	}
+	
+	
+
+	@Override
+	public void onBackPressed() {		
+	}
+
 
 	private void showDialog(final Context mContext, String title, String msg){
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);

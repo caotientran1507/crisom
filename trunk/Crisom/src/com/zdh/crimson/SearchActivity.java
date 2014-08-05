@@ -98,6 +98,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	    	   Intent intent = new Intent(SearchActivity.this,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listSearch.get(position).getId());
 				startActivity(intent);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTDETAIL;
 	       } 
 		});
 		pDialog = new ProgressDialog(SearchActivity.this);		

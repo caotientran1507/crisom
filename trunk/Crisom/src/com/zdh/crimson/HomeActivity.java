@@ -252,6 +252,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 					intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, listManufacturerName.get(positionManufacturerName));
 					intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
 					startActivity(intent);
+					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
 		    	}
 		    } 
 
@@ -266,7 +267,8 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 				   
 				   Intent intent = new Intent(HomeActivity.this,CategoryActivity.class);
 				   intent.putExtra(Constants.KEY_CATEGORYID, FileUtil.listHome.get(position).getId());
-				   startActivity(intent);				   
+				   startActivity(intent);	
+				   FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
 			   } 
 			});
 	}
@@ -293,6 +295,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			Intent browsercategories = new Intent(HomeActivity.this, CategoryActivity.class);
 			startActivity(browsercategories);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
 			break;	
 			
 		//--------click radio button----------
@@ -369,6 +372,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
 			intent.putExtra(Constants.KEY_SEARCH_KEYWORD, edtSearch.getText().toString().trim());
 			startActivity(intent);
+			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
 			
 		}
 	}

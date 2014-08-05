@@ -30,6 +30,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zdh.crimson.ProductDetailActivity;
+import com.zdh.crimson.ProductListActivity;
 import com.zdh.crimson.R;
 import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.DocumentObject;
@@ -95,7 +96,7 @@ public class ProductListAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				Intent intent = new Intent(context,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listProduct.get(position).getId());
-				context.startActivity(intent);
+				context.startActivity(intent);				
 			}
 		});
 		
