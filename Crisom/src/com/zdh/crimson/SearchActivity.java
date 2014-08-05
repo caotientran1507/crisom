@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -103,6 +104,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	}
 	
 	private void handleOtherAction(){
+
 		edtSearch.setOnEditorActionListener(new OnEditorActionListener() {
 		    @Override
 		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -116,13 +118,25 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	}
 	
 	private void initData() {		
-		adapter = new SearchAdapter(SearchActivity.this, FileUtil.listSearch);
-		listview.setAdapter(adapter);
 		if (getIntent().getExtras() != null) {
+			String dataSearch = getIntent().getExtras().getString(Constants.KEY_SEARCH_KEYWORD);
 			String model = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MODEL);
 			String manufacturer = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MANUFACTURER);
 			String device = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_DEVICE);
-			new MountFinderAsyncTask(device, manufacturer, model).execute();			
+			
+			if(dataSearch != null && model == null){
+				edtSearch.setText(dataSearch);
+				new SearchAsyncTask(dataSearch).execute();
+			}else{
+				new MountFinderAsyncTask(device, manufacturer, model).execute();	
+			}
+		}
+		
+		if(adapter == null){
+			adapter = new SearchAdapter(SearchActivity.this, FileUtil.listSearch);
+			listview.setAdapter(adapter);
+		}else{
+			adapter.notifyDataSetChanged();
 		}
 	}
 	
@@ -244,6 +258,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
                 json = JsonParser.makeHttpRequest(
                 		Constants.URL_MOUNTFINDER, "GET", paramsUrl);
+                Log.d("Json", json);
                 if ((json != null) || (!json.equals(""))) {               
                 	JSONArray array = new JSONArray(json);
                 	FileUtil.listSearch.clear();

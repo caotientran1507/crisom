@@ -82,6 +82,10 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
+		
+		if(!edtSearch.getText().equals(""))
+			edtSearch.setText("");
+		
 		ChangeTextButtonLogin();
 		
 	}
@@ -363,7 +367,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			Toast.makeText(HomeActivity.this, "Please input keyword!", Toast.LENGTH_SHORT).show();
 		}else{
 			Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-			intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, edtSearch.getText().toString().trim());
+			intent.putExtra(Constants.KEY_SEARCH_KEYWORD, edtSearch.getText().toString().trim());
 			startActivity(intent);
 			
 		}
