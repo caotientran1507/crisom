@@ -10,11 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -41,16 +37,16 @@ import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
-public class CheckoutActivity extends Activity  implements View.OnClickListener{
+public class CheckoutActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact;
+	private LinearLayout lnHome,lnSearch,lnCategory,lnContact;
 	private ImageView ivCart;	
-	private Button btnLogin,btnBack,btnProceedCheckout,btnContinueShopping,btnClearShopping,btnUpdateShopping,btnProceedMutilAddress
+	private Button btnProceedCheckout,btnContinueShopping,btnClearShopping,btnUpdateShopping,btnProceedMutilAddress
 	,btnApplyCoupon,btnCancelCoupon,btnQuote;
 	private TextView tvTitle,tvSubTotal,tvTax,tvGrandTotal,tvShippingHandling,tvCoupon;
 	private ListView listview;	
-	private EditText edtCoupon,edtZipCode,edtState;
+	private EditText edtCoupon,edtState;
 	private Spinner spnCountry,spnState;
 
 	ArrayAdapter<String> countriesAdapter;
@@ -95,7 +91,6 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
 		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
-		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
 		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);		
 
 		ivCart = (ImageView)findViewById(R.id.include_footer_ivCart);	
@@ -122,7 +117,6 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		edtCoupon = (EditText)findViewById(R.id.checkout_edtCoupon);
 		spnState = (Spinner)findViewById(R.id.checkout_spnState);
 		edtState = (EditText)findViewById(R.id.checkout_edtState);
-		edtZipCode = (EditText)findViewById(R.id.checkout_edtZipCode);
 		spnCountry = (Spinner)findViewById(R.id.checkout_spnCountry);
 
 		ivCart.setImageResource(R.drawable.ico_cart_active);
@@ -134,7 +128,6 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
-		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
 		btnBack.setOnClickListener(this);
@@ -204,57 +197,9 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 
 	@Override
 	public void onClick(View v) {
-
+		super.onClick(v);
+		
 		switch (v.getId()) {
-		//----------------Click tab bottom--------------------
-		//----------Home is clicked----------
-		case R.id.include_footer_lnHome:
-			Intent home = new Intent(CheckoutActivity.this, HomeActivity.class);
-			startActivity(home);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;		
-			//----------Search is clicked----------
-		case R.id.include_footer_lnSearch:
-			Intent search = new Intent(CheckoutActivity.this, SearchActivity.class);
-			startActivity(search);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;
-
-			//----------Category is clicked----------
-		case R.id.include_footer_lnCategory:
-			Intent category = new Intent(CheckoutActivity.this, CategoryActivity.class);
-			startActivity(category);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;
-
-			//----------Cart is clicked----------
-		case R.id.include_footer_lnCart:
-
-			break;
-
-			//----------Contact is clicked----------
-		case R.id.include_footer_lnContact:
-			Intent contact = new Intent(CheckoutActivity.this, ContactActivity.class);
-			startActivity(contact);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;	
-
-
-		case R.id.include_header_btnLogin:
-			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
-				Intent login = new Intent(CheckoutActivity.this, LoginActivity.class);
-				startActivity(login);
-				overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
-			}else{
-				showDialog(CheckoutActivity.this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);
-			}
-			break;	
-
-		case R.id.include_header_btnBack:
-			finish();
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;		
-
 
 			//----------Button is clicked----------
 		case R.id.checkout_btnProceedCheckout:
@@ -823,48 +768,4 @@ public class CheckoutActivity extends Activity  implements View.OnClickListener{
 		}
 	}
 	
-	private void showDialog(final Context mContext, String title, String msg){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-		// Setting Dialog Title
-		alertDialog.setTitle(title);
-
-		// Setting Dialog Message
-		alertDialog.setMessage(msg);
-
-		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.delete);
-
-		// Setting Positive "Yes" Button
-		alertDialog.setPositiveButton("YES",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int which) {
-						SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-						ChangeTextButtonLogin();
-						dialog.dismiss();
-					}
-				});
-		// Setting Negative "NO" Button
-		alertDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,	int which) {
-						
-						dialog.dismiss();
-						
-					}
-				});
-
-		// Showing Alert Message
-		alertDialog.show();
-	}
-	
-	private void ChangeTextButtonLogin(){
-		if (SharedPreferencesUtil.getFlagLogin(CheckoutActivity.this)) {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
-		} else {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
-		}
-	}
-
-
 }

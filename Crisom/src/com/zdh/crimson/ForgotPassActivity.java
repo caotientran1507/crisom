@@ -1,12 +1,11 @@
 package com.zdh.crimson;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ForgotPassActivity extends Activity implements View.OnClickListener{
+public class ForgotPassActivity extends BaseActivity implements View.OnClickListener{
 	EditText edtEmail;
 	Button btnSubmit;
 	

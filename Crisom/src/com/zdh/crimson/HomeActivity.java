@@ -8,11 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -44,14 +40,12 @@ import com.zdh.crimson.model.Category;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
-import com.zdh.crimson.utility.SharedPreferencesUtil;
 
-public class HomeActivity extends Activity  implements View.OnClickListener{
+public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
 	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact,lnBrowser,lnSearchImage;
 	private ImageView ivHome;	
-	private Button btnLogin;
 	private TextView tvTitle, tvMainSite;
 	private EditText edtSearch;
 	private Spinner spnManufacturer,spnModel;
@@ -177,7 +171,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		listImage.add(img4);
 		
 		tvMainSite.setOnClickListener(this);
-		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
 		lnCart.setOnClickListener(this);
@@ -187,13 +180,15 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 		img3.setOnClickListener(this);
 		img4.setOnClickListener(this);
 		tvTitle.setOnClickListener(this);
-		btnLogin.setOnClickListener(this);
 		lnBrowser.setOnClickListener(this);		
 		rbnFlatpanel.setOnClickListener(this);	
 		rbnProjector.setOnClickListener(this);	
 		lnSearchImage.setOnClickListener(this);	
+		btnLogin.setOnClickListener(this);
 				
 		pDialog = new ProgressDialog(HomeActivity.this);		
+		
+		ChangeTextButtonLogin();
 	}
 	
 	private void initDataWebservice(){
@@ -275,46 +270,9 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 
 	@Override
 	public void onClick(View v) {
+		super.onClick(v);
 		
 		switch (v.getId()) {
-		//----------------Click tab bottom--------------------
-		//----------Home is clicked----------
-		case R.id.include_footer_lnHome:
-			
-			break;		
-		//----------Search is clicked----------
-		case R.id.include_footer_lnSearch:
-			Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-			startActivity(intent);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;
-			
-		//----------Category is clicked----------
-		case R.id.include_footer_lnCategory:
-			Intent category = new Intent(HomeActivity.this, CategoryActivity.class);
-			startActivity(category);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;
-			
-		//----------Cart is clicked----------
-		case R.id.include_footer_lnCart:
-			if (!SharedPreferencesUtil.getFlagLogin(HomeActivity.this)) {
-				showDialog(HomeActivity.this,Constants.WARNING_LOGIN_TITLE, Constants.WARNING_LOGIN_MESSAGE);
-			}else{
-				Intent cart = new Intent(HomeActivity.this, CartActivity.class);
-				startActivity(cart);
-				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			}
-			
-			break;
-			
-		//----------Contact is clicked----------
-		case R.id.include_footer_lnContact:
-			Intent contact = new Intent(HomeActivity.this, ContactActivity.class);
-			startActivity(contact);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;	
-		
 		//----------------Click other--------------------
 		case R.id.home_tv_mainsite:
 			Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
@@ -326,18 +284,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 			callSearchFeature();
 			break;	
 			
-			
-		case R.id.include_header_btnLogin:
-			
-			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
-				Intent login = new Intent(HomeActivity.this, LoginActivity.class);
-				startActivity(login);
-				overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
-			}else{
-				showDialog(HomeActivity.this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);
-			}
-				
-			break;	
 			
 		case R.id.home_lnBrowsercategories:
 			Intent browsercategories = new Intent(HomeActivity.this, CategoryActivity.class);
@@ -412,56 +358,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	}
 	
 	
-	private void showDialog(final Context mContext,final String title, String msg){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-		// Setting Dialog Title
-		alertDialog.setTitle(title);
-
-		// Setting Dialog Message
-		alertDialog.setMessage(msg);
-
-		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.delete);
-
-		// Setting Positive "Yes" Button
-		alertDialog.setPositiveButton("YES",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int which) {
-						if (title.equals(Constants.WARNING_LOGIN_TITLE)) {
-							SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-							ChangeTextButtonLogin();
-							dialog.dismiss();
-						} else {
-							Intent cart = new Intent(HomeActivity.this, CartActivity.class);
-							startActivity(cart);
-							overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-						}
-						
-					}
-				});
-		// Setting Negative "NO" Button
-		alertDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,	int which) {
-						
-						dialog.dismiss();
-						
-					}
-				});
-
-		// Showing Alert Message
-		alertDialog.show();
-	}
-	
-	private void ChangeTextButtonLogin(){
-		if (SharedPreferencesUtil.getFlagLogin(HomeActivity.this)) {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
-		} else {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
-		}
-	}
-	
 	private void callSearchFeature(){
 		if (edtSearch.getText().toString().trim().equals("")) {
 			Toast.makeText(HomeActivity.this, "Please input keyword!", Toast.LENGTH_SHORT).show();
@@ -487,14 +383,6 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	    @Override
 	    protected void onPreExecute() {
 	        super.onPreExecute();
-//	        if (pDialog != null ) {	        	
-//	 	        pDialog.setContentView(R.layout.dialog_process);
-//	 	        pDialog.setMessage("Loading...");
-//	 	        pDialog.setIndeterminate(false);
-//	 	        pDialog.setCancelable(true);
-//	 	        pDialog.show();
-//			}
-	        
 	    }
 
 	    protected String doInBackground(String... params) {
@@ -526,8 +414,8 @@ public class HomeActivity extends Activity  implements View.OnClickListener{
 	        return null;
 	    }
 
-	    protected void onPostExecute(String file_url) {	  
-//	    	pDialog.dismiss();
+	    protected void onPostExecute(String file_url) {	
+	    	
 	    }
 	}
 	

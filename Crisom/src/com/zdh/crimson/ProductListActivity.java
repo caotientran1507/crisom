@@ -8,11 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,15 +32,13 @@ import com.zdh.crimson.model.Product;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
-import com.zdh.crimson.utility.SharedPreferencesUtil;
 
-public class ProductListActivity extends Activity  implements View.OnClickListener{
+public class ProductListActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact,lnNarrowTitle,lnNarrowContent;
+	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnNarrowTitle,lnNarrowContent;
 	private ListView lvProduct,lvCheckbox;
 	private ImageView ivCategory,ivNarrowShow;	
-	private Button btnLogin,btnBack;
 	private TextView tvTitle;
 	private ProgressDialog pDialog;
 	ProductListAdapter adapter;
@@ -98,7 +92,6 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 	private void initView(){
 		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
-		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
 		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
 		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);	
 
@@ -126,7 +119,6 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
-		lnCategory.setOnClickListener(this);
 		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
@@ -200,56 +192,9 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 
 	@Override
 	public void onClick(View v) {
-
+		super.onClick(v);
+		
 		switch (v.getId()) {
-		//----------------Click tab bottom--------------------
-		//----------Home is clicked----------
-		case R.id.include_footer_lnHome:
-			Intent home = new Intent(ProductListActivity.this, HomeActivity.class);
-			startActivity(home);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;		
-			//----------Search is clicked----------
-		case R.id.include_footer_lnSearch:
-			Intent intent = new Intent(ProductListActivity.this, SearchActivity.class);
-			startActivity(intent);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;
-
-			//----------Category is clicked----------
-		case R.id.include_footer_lnCategory:
-
-			break;
-
-			//----------Cart is clicked----------
-		case R.id.include_footer_lnCart:
-			Intent cart = new Intent(ProductListActivity.this, LoginActivity.class);
-			startActivity(cart);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;
-
-			//----------Contact is clicked----------
-		case R.id.include_footer_lnContact:
-			Intent contact = new Intent(ProductListActivity.this, ContactActivity.class);
-			startActivity(contact);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;	
-
-
-		case R.id.include_header_btnLogin:
-			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
-				Intent login = new Intent(ProductListActivity.this, LoginActivity.class);
-				startActivity(login);
-			}else{
-				showDialog(ProductListActivity.this);
-			}
-			break;	
-
-		case R.id.include_header_btnBack:
-			finish();
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;	
-
 
 		case R.id.productlist_Narrow_lnTitle:
 			if (lnNarrowContent.getVisibility() == View.VISIBLE) {
@@ -456,51 +401,6 @@ public class ProductListActivity extends Activity  implements View.OnClickListen
 		}
 	}
 
-
-	public void showDialog(final Context mContext){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-		// Setting Dialog Title
-		alertDialog.setTitle("Confirm Log out...");
-
-		// Setting Dialog Message
-		alertDialog.setMessage("Are you sure you want log out now?");
-
-		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.delete);
-
-		// Setting Positive "Yes" Button
-		alertDialog.setPositiveButton("YES",
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,int which) {
-				SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-				ChangeTextButtonLogin();
-				adapter.notifyDataSetChanged();
-				dialog.dismiss();
-			}
-		});
-		// Setting Negative "NO" Button
-		alertDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,	int which) {
-
-				dialog.dismiss();
-
-			}
-		});
-
-		// Showing Alert Message
-		alertDialog.show();
-	}
-
-	public void ChangeTextButtonLogin(){
-		if (SharedPreferencesUtil.getFlagLogin(ProductListActivity.this)) {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
-		} else {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
-		}		
-	}
-	
 	private void clearSpinnerTVSize(){
 		String first = "All";
 		listTvSizes.clear();	

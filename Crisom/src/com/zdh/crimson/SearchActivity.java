@@ -8,11 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -34,14 +30,12 @@ import com.zdh.crimson.model.Product;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
-import com.zdh.crimson.utility.SharedPreferencesUtil;
 
-public class SearchActivity extends Activity  implements View.OnClickListener{
+public class SearchActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact,lnSearchImage;
+	private LinearLayout lnHome,lnCategory,lnCart,lnContact,lnSearchImage;
 	private ImageView ivSearch;	
-	private Button btnLogin;
 	private TextView tvTitle;
 	private EditText edtSearch;
 	private ListView listview;
@@ -72,7 +66,6 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 
 	private void initView(){
 		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
-		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
 		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
 		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
 		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);		
@@ -92,7 +85,6 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 		ivSearch.setImageResource(R.drawable.ico_search_active);
 		
 		lnHome.setOnClickListener(this);
-		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
 		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
@@ -137,53 +129,9 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 
 	@Override
 	public void onClick(View v) {
+		super.onClick(v);
 		
 		switch (v.getId()) {
-		//----------------Click tab bottom--------------------
-		//----------Home is clicked----------
-		case R.id.include_footer_lnHome:
-			Intent home = new Intent(SearchActivity.this, HomeActivity.class);
-			startActivity(home);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;		
-		//----------Search is clicked----------
-		case R.id.include_footer_lnSearch:
-			break;
-			
-		//----------Category is clicked----------
-		case R.id.include_footer_lnCategory:
-			Intent category = new Intent(SearchActivity.this, CategoryActivity.class);
-			startActivity(category);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;
-			
-		//----------Cart is clicked----------
-		case R.id.include_footer_lnCart:
-			if (!SharedPreferencesUtil.getFlagLogin(SearchActivity.this)) {
-				showDialog(SearchActivity.this,Constants.WARNING_LOGIN_TITLE, Constants.WARNING_LOGIN_MESSAGE);
-			}else{
-				Intent cart = new Intent(SearchActivity.this, CartActivity.class);
-				startActivity(cart);
-				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			}
-			break;
-			
-		//----------Contact is clicked----------
-		case R.id.include_footer_lnContact:
-			Intent contact = new Intent(SearchActivity.this, ContactActivity.class);
-			startActivity(contact);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;	
-		
-			
-		case R.id.include_header_btnLogin:
-			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
-				Intent login = new Intent(SearchActivity.this, LoginActivity.class);
-				startActivity(login);
-			}else{
-				showDialog(SearchActivity.this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);
-			}
-			break;	
 			
 		case R.id.include_search_lnImage:
 			new SearchAsyncTask(edtSearch.getText().toString().trim()).execute();
@@ -322,52 +270,5 @@ public class SearchActivity extends Activity  implements View.OnClickListener{
 	        pDialog.dismiss();	      
 	    }
 	}
-	
-
-	public void showDialog(final Context mContext, String title, String msg){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-		// Setting Dialog Title
-		alertDialog.setTitle(title);
-
-		// Setting Dialog Message
-		alertDialog.setMessage(msg);
-
-		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.delete);
-
-		// Setting Positive "Yes" Button
-		alertDialog.setPositiveButton("YES",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int which) {
-						SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-						ChangeTextButtonLogin();
-						dialog.dismiss();
-					}
-				});
-		// Setting Negative "NO" Button
-		alertDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,	int which) {
-						
-						dialog.dismiss();
-						
-					}
-				});
-
-		// Showing Alert Message
-		alertDialog.show();
-	}
-	
-	public void ChangeTextButtonLogin(){
-		if (SharedPreferencesUtil.getFlagLogin(SearchActivity.this)) {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
-		} else {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
-		}
-	}
-	
-	
-	
 	
 }

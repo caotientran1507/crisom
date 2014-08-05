@@ -17,11 +17,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -55,14 +52,14 @@ import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
-public class ProductDetailActivity extends Activity  implements View.OnClickListener{
+public class ProductDetailActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact,lnTitle,
+	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnTitle,
 	lnPrice,lnDownload,lnFaq,lnVideo;
 	private ListView lvPrice,lvDownload,lvVideo;
 	private ImageView ivCategory,ivAvatar;	
-	private Button btnLogin,btnVerify,btnBack;
+	private Button btnVerify;
 	private TextView tvTitle,tvTitle1,tvShortDes,tvDes,tvMainSite,tvPrice,tvDownload,tvFAQ,tvVideo,tvFaqContent;	
 	static int currentProduct = 0;
 	private ProgressDialog pDialog;
@@ -117,7 +114,6 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 	private void initView(){
 		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
-		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
 		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
 		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);	
 
@@ -159,7 +155,6 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
-		lnCategory.setOnClickListener(this);
 		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
@@ -197,54 +192,9 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 
 	@Override
 	public void onClick(View v) {
-
+		super.onClick(v);
+		
 		switch (v.getId()) {
-		//----------------Click tab bottom--------------------
-		//----------Home is clicked----------
-		case R.id.include_footer_lnHome:
-			Intent home = new Intent(ProductDetailActivity.this, HomeActivity.class);
-			startActivity(home);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;		
-			//----------Search is clicked----------
-		case R.id.include_footer_lnSearch:
-			Intent intent = new Intent(ProductDetailActivity.this, SearchActivity.class);
-			startActivity(intent);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;
-
-			//----------Category is clicked----------
-		case R.id.include_footer_lnCategory:
-
-			break;
-
-			//----------Cart is clicked----------
-		case R.id.include_footer_lnCart:
-			Intent cart = new Intent(ProductDetailActivity.this, CartActivity.class);
-			startActivity(cart);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;
-
-			//----------Contact is clicked----------
-		case R.id.include_footer_lnContact:
-			Intent contact = new Intent(ProductDetailActivity.this, ContactActivity.class);
-			startActivity(contact);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;	
-
-
-		case R.id.include_header_btnLogin:
-			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
-				Intent login = new Intent(ProductDetailActivity.this, LoginActivity.class);
-				startActivity(login);
-			}else{
-				showDialog(ProductDetailActivity.this);
-			}
-			break;	
-		case R.id.include_header_btnBack:
-			finish();
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;	
 
 		case R.id.product_btnVerify:
 			showDialogVerifyCardNumber();
@@ -389,52 +339,6 @@ public class ProductDetailActivity extends Activity  implements View.OnClickList
 			pDialog.dismiss();	      
 		}
 	}
-
-
-
-	public void showDialog(final Context mContext){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-		// Setting Dialog Title
-		alertDialog.setTitle("Confirm Log out...");
-
-		// Setting Dialog Message
-		alertDialog.setMessage("Are you sure you want log out now?");
-
-		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.delete);
-
-		// Setting Positive "Yes" Button
-		alertDialog.setPositiveButton("YES",
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,int which) {
-				SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-				ChangeTextButtonLogin();
-				dialog.dismiss();
-			}
-		});
-		// Setting Negative "NO" Button
-		alertDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,	int which) {
-
-				dialog.dismiss();
-
-			}
-		});
-
-		// Showing Alert Message
-		alertDialog.show();
-	}
-
-	public void ChangeTextButtonLogin(){
-		if (SharedPreferencesUtil.getFlagLogin(ProductDetailActivity.this)) {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
-		} else {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
-		}
-	}
-
 
 	/**
 	 * Background Async Task to download file

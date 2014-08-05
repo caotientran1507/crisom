@@ -10,11 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -47,15 +44,15 @@ import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
-public class CheckoutDetailActivity extends Activity  implements View.OnClickListener{
+public class CheckoutDetailActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact,lnPaypal
+	private LinearLayout lnHome,lnSearch,lnCategory,lnContact,lnPaypal
 	,ln1BillingInfomation,ln2ShippingInfomation,ln3ShippingMethod,ln4PaymentInfomation,ln5OrderReview
 	,ln1BillingInfomationContent,ln2ShippingInfomationContent,ln3ShippingMethodContent,ln4PaymentInfomationContent,ln5OrderReviewContent
 	,lnCreditCardOnFileContent, lnCreditCardContent;
 	private ImageView ivCart;	
-	private Button btnLogin,btnBack,btnBillingContinue,btnShippingContinue,btnShippingMethodContinue,btnPaymentContinue,btnPlaceOrder;
+	private Button btnBillingContinue,btnShippingContinue,btnShippingMethodContinue,btnPaymentContinue,btnPlaceOrder;
 	private TextView tvTitle,tvSubtotal,tvShippingHandling,tvTax,tvGrandTotal,tvEditYourCard,tvRedirectedPaypal
 	,tvWhatIsThis,tvWhatIsPaypal;
 
@@ -123,7 +120,6 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
 		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
-		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
 		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);		
 
 		ivCart = (ImageView)findViewById(R.id.include_footer_ivCart);	
@@ -194,7 +190,6 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		lnHome.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
-		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
 		btnBack.setOnClickListener(this);
@@ -273,57 +268,9 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 
 	@Override
 	public void onClick(View v) {
-
+		super.onClick(v);
+		
 		switch (v.getId()) {
-		//----------------Click tab bottom--------------------
-		//----------Home is clicked----------
-		case R.id.include_footer_lnHome:
-			Intent home = new Intent(CheckoutDetailActivity.this, HomeActivity.class);
-			startActivity(home);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;		
-			//----------Search is clicked----------
-		case R.id.include_footer_lnSearch:
-			Intent search = new Intent(CheckoutDetailActivity.this, SearchActivity.class);
-			startActivity(search);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;
-
-			//----------Category is clicked----------
-		case R.id.include_footer_lnCategory:
-			Intent category = new Intent(CheckoutDetailActivity.this, CategoryActivity.class);
-			startActivity(category);
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;
-
-			//----------Cart is clicked----------
-		case R.id.include_footer_lnCart:
-
-			break;
-
-			//----------Contact is clicked----------
-		case R.id.include_footer_lnContact:
-			Intent contact = new Intent(CheckoutDetailActivity.this, ContactActivity.class);
-			startActivity(contact);
-			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-			break;	
-
-
-		case R.id.include_header_btnLogin:
-			if (btnLogin.getText().toString().trim().equals(Constants.TEXT_BUTTON_LOGIN)) {
-				Intent login = new Intent(CheckoutDetailActivity.this, LoginActivity.class);
-				startActivity(login);
-				overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
-			}else{
-				showDialog(CheckoutDetailActivity.this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);
-			}
-			break;	
-
-		case R.id.include_header_btnBack:
-			finish();
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-			break;		
-
 
 		case R.id.checkoutdetail_ln1BillingInfomation:
 			ln1BillingInfomationContent.setVisibility(View.VISIBLE);
@@ -689,48 +636,6 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 		creditCards.clear();		
 		creditCards.add(creditCard);
 	}
-	private void showDialog(final Context mContext, String title, String msg){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-		// Setting Dialog Title
-		alertDialog.setTitle(title);
-
-		// Setting Dialog Message
-		alertDialog.setMessage(msg);
-
-		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.delete);
-
-		// Setting Positive "Yes" Button
-		alertDialog.setPositiveButton("YES",
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,int which) {
-				SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-				ChangeTextButtonLogin();
-				dialog.dismiss();
-			}
-		});
-		// Setting Negative "NO" Button
-		alertDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,	int which) {
-
-				dialog.dismiss();
-
-			}
-		});
-
-		// Showing Alert Message
-		alertDialog.show();
-	}
-
-	private void ChangeTextButtonLogin(){
-		if (SharedPreferencesUtil.getFlagLogin(CheckoutDetailActivity.this)) {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
-		} else {
-			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
-		}
-	}
 
 	//--------------------GetCartCode----------------------------------------
 	public class GetCartCodeAsyncTask extends AsyncTask<String, String, String> {
@@ -904,12 +809,6 @@ public class CheckoutDetailActivity extends Activity  implements View.OnClickLis
 
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
-//			if (result.equals("true")) {
-//				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method success!", Toast.LENGTH_SHORT).show();
-//			}else{
-//				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method fail!", Toast.LENGTH_SHORT).show();
-//			}
-
 		}
 	}
 
