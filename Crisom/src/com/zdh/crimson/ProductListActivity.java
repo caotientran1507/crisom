@@ -176,7 +176,6 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		lvProduct.setExpanded(true);
 		adapter.notifyDataSetChanged();
 
-		checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, listCategoryCheck,listCheckbox);
 	}
 
 	private void initDataWebservice(){
@@ -212,7 +211,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		spnType2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
-
+					new GetCategoryCheckAsyncTask().execute();
 				}
 			} 
 
@@ -603,7 +602,11 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		}
 
 		protected void onPostExecute(String file_url) {
-			checkboxProductListAdapter.notifyDataSetChanged();
+			if(checkboxProductListAdapter == null){
+				checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, listCategoryCheck,listCheckbox);
+				lvCheckbox.setAdapter(checkboxProductListAdapter);
+			} else 
+				checkboxProductListAdapter.notifyDataSetChanged();
 			pDialog.dismiss();	      
 		}
 	}
