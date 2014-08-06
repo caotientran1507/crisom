@@ -160,7 +160,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		adapter = new CheckoutAdapter(CheckoutActivity.this, FileUtil.listRecent);
 		listview.setAdapter(adapter);
 		listview.setExpanded(true);
-
+		listview.setFocusable(false);
 	}
 
 	private void initDataWebservice(){
