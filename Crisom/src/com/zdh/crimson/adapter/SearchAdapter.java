@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -41,7 +42,7 @@ import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 public class SearchAdapter extends BaseAdapter {
 
-	private Context context;
+	private Activity context;
 	private LayoutInflater inflater = null;
 	private ArrayList<Product> listProduct = new ArrayList<Product>();	
 	public ImageLoader imageLoader;
@@ -51,7 +52,7 @@ public class SearchAdapter extends BaseAdapter {
 	TextView tvDialog;
 
 
-	public SearchAdapter(Context context,ArrayList<Product> listProduct) {
+	public SearchAdapter(Activity context,ArrayList<Product> listProduct) {
 		this.listProduct = listProduct;		
 		this.context = context;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -97,6 +98,7 @@ public class SearchAdapter extends BaseAdapter {
 				Intent intent = new Intent(context,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, listProduct.get(position).getId());
 				context.startActivity(intent);
+				context.overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			}
 		});
 
@@ -107,6 +109,7 @@ public class SearchAdapter extends BaseAdapter {
 				Intent intent = new Intent(context,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, listProduct.get(position).getId());
 				context.startActivity(intent);
+				context.overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			}
 		});
 

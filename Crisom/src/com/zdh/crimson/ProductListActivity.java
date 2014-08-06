@@ -144,6 +144,7 @@ public class ProductListActivity extends BaseActivity implements
 				Intent intent = new Intent(ProductListActivity.this,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listProduct.get(position).getId());
 				startActivity(intent);
+				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTDETAIL;
 			}
 		});

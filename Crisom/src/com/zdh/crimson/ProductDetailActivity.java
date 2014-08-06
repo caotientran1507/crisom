@@ -203,6 +203,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		case R.id.product_tvMainSite:
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(product.getUrl()));
 			startActivity(browserIntent);
+			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;	
 		case R.id.product_tvPrice:
 			lnTitle.setBackgroundResource(R.drawable.tab_a);
