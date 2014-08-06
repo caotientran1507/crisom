@@ -37,6 +37,7 @@ import android.widget.ViewFlipper;
 
 import com.zdh.crimson.adapter.HomeAdapter;
 import com.zdh.crimson.model.Category;
+import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
@@ -132,6 +133,10 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			
 		});
 		//--------------------------------------------------------------------
+		
+		if (!CommonUtil.TestNetWork(HomeActivity.this)) {
+			CommonUtil.showWifiNetworkAlert(HomeActivity.this);
+		}
 		
 	}
 
@@ -231,12 +236,15 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		});
 		
 		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-		    	if (i != 0) {
-		    		spnModel.setVisibility(View.VISIBLE);
-		    		new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
-		    		positionManufacturerName = i;
+		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
+		    	if (listManufacturerName.size() > 0 ) {
+		    		if (i != 0) {
+			    		spnModel.setVisibility(View.VISIBLE);
+			    		new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
+			    		positionManufacturerName = i;
+					}
 				}
+		    	
 		    } 
 
 		    public void onNothingSelected(AdapterView<?> adapterView) {
@@ -246,14 +254,17 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 		spnModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
-		    	if (i != 0) {
-		    		Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-					intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, listModelName.get(i));
-					intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, listManufacturerName.get(positionManufacturerName));
-					intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
-					startActivity(intent);
-					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
-		    	}
+		    	if (listModelName.size() > 0) {
+		    		if (i != 0) {
+			    		Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+						intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, listModelName.get(i));
+						intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, listManufacturerName.get(positionManufacturerName));
+						intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
+						startActivity(intent);
+						FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
+			    	}
+				}
+		    	
 		    } 
 
 		    public void onNothingSelected(AdapterView<?> adapterView) {

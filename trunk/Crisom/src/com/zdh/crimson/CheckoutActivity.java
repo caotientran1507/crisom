@@ -169,9 +169,12 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 
 	private void handleOtherAction(){
 		spnCountry.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-				new GetStateAsyncTask(FileUtil.listCountry.get(i).getCode()).execute();
-				positionCountry = i;
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
+				if (FileUtil.listCountry.size() > 0) {
+					new GetStateAsyncTask(FileUtil.listCountry.get(i).getCode()).execute();
+					positionCountry = i;
+				}
+				
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -760,17 +763,22 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	}
 
 	private void updateListCountry(){
-		FileUtil.countries.clear();
-		for (int i = 0; i < FileUtil.listCountry.size(); i++) {
-			FileUtil.countries.add(FileUtil.listCountry.get(i).getName());
-		}
+		if (FileUtil.listCountry.size() > 0) {
+			FileUtil.countries.clear();
+			for (int i = 0; i < FileUtil.listCountry.size(); i++) {
+				FileUtil.countries.add(FileUtil.listCountry.get(i).getName());
+			}
+		}		
 	}
 
 	private void updateListState(){
-		FileUtil.states.clear();
-		for (int i = 0; i < FileUtil.listState.size(); i++) {
-			FileUtil.states.add(FileUtil.listState.get(i).getName());
+		if (FileUtil.listState.size() > 0) {
+			FileUtil.states.clear();
+			for (int i = 0; i < FileUtil.listState.size(); i++) {
+				FileUtil.states.add(FileUtil.listState.get(i).getName());
+			}
 		}
+		
 	}
 
 }

@@ -6,6 +6,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.provider.Settings;
+import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -116,5 +121,63 @@ public class CommonUtil {
 				.getSystemService(Activity.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(((Activity)mContext).getCurrentFocus()
 				.getWindowToken(), 0);
+	}
+	
+	public static void hideSoftKeyboardPro(Activity activity, View v) {
+		InputMethodManager inputMethodManager = (InputMethodManager) activity
+				.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+		
+	}
+	
+	public static void hideSoftKeyboardPro(Context mContext, View v) {
+		InputMethodManager inputMethodManager = (InputMethodManager) ((Activity)mContext)
+				.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+		
+	}
+	
+	static public void showWifiNetworkAlert(final Context mContext) {
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
+		alertDialog.setTitle("Warning");
+		alertDialog.setMessage("Connect internet please!");
+
+		alertDialog.setPositiveButton("Setting",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						Intent intent = new Intent(Settings.ACTION_SETTINGS);
+						mContext.startActivity(intent);
+					}
+				});
+
+		alertDialog.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
+		alertDialog.show();
+
+	}
+	
+	public static boolean TestNetWork(Context mContext) {
+		boolean status = false;
+		try {
+			ConnectivityManager cm = (ConnectivityManager)mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo netInfo = cm.getNetworkInfo(0);
+			if (netInfo != null
+					&& netInfo.getState() == NetworkInfo.State.CONNECTED) {
+				status = true;
+			} else {
+				netInfo = cm.getNetworkInfo(1);
+				if (netInfo != null
+						&& netInfo.getState() == NetworkInfo.State.CONNECTED)
+					status = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		return status;
 	}
 }

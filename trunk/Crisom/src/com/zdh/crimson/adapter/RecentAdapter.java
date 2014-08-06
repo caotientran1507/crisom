@@ -55,7 +55,12 @@ public class RecentAdapter extends BaseAdapter {
 		ImageView ivAvatar = (ImageView) vi.findViewById(R.id.row_recent_ivAvatar); 
 		tvCost.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()));
 		tvQuantity.setText(String.valueOf(listRecent.get(position).getQuantity()));
-		tvTitle.setText(listRecent.get(position).getName());
+		if (listRecent.get(position).getColor()!= null || !listRecent.get(position).getColor().equals("")) {
+			tvTitle.setText(listRecent.get(position).getName()+" - "+listRecent.get(position).getColor());
+		}else{
+			tvTitle.setText(listRecent.get(position).getName());
+		}
+		
 		imageLoader.DisplayImage(listRecent.get(position).getImage(), ivAvatar);
 		
 		return vi;
