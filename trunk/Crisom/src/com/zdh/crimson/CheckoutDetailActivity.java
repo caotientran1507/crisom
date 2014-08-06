@@ -43,6 +43,7 @@ import com.zdh.crimson.model.Address;
 import com.zdh.crimson.model.CarrierObject;
 import com.zdh.crimson.model.CreditCardObject;
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
@@ -62,7 +63,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	Spinner spnBillingAddress,spnShippingAddress,spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear;
 	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnCreditCardOnFile,rbnPaypal,rbnCreditCard;
 	CheckBox cbxUseBillingAddress,cbxSaveCreditCard;
-	ListView lvParcelService,lvReview;
+	ListView lvParcelService;
+	ExpandableHeightListView lvReview;
 	EditText edtCreditCardNumber,edtCardVerification;
 
 	ArrayList<Boolean> listRadioButton = new ArrayList<Boolean>();
@@ -174,14 +176,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		rbnCreditCard = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCard);
 
 		lvParcelService = (ListView)findViewById(R.id.checkoutdetail_lvParcelService);
-		lvReview = (ListView)findViewById(R.id.checkoutdetail_lvReview);
-		lvReview.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				v.getParent().requestDisallowInterceptTouchEvent(true);
-				return false;
-			}
-		});
+		lvReview = (ExpandableHeightListView)findViewById(R.id.checkoutdetail_lvReview);
 
 		lnCreditCardOnFileContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardOnFileContent);
 		lnCreditCardContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardContent);
@@ -251,6 +246,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		reviewCheckoutDetailAdapter = new ReviewCheckoutDetailAdapter(CheckoutDetailActivity.this, FileUtil.listRecent);
 		lvReview.setAdapter(reviewCheckoutDetailAdapter);
+		lvReview.setExpanded(true);
+		
 
 		parcelServiceAdapter = new ParcelServiceAdapter(CheckoutDetailActivity.this, FileUtil.listCarrier);
 		lvParcelService.setAdapter(parcelServiceAdapter);
@@ -481,6 +478,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				method = Constants.METHOD_PAYPAL;
 				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URL_PAYPAL_CART+SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)));
 				startActivity(browserIntent);
+				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			}else{
 				if (rbnCreditCardOnFile.isChecked()) {
 					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), savecc_id, method).execute();
@@ -538,6 +536,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		case R.id.checkoutdetail_tvWhatIsPaypal:
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URL_PAYPAL));
 			startActivity(browserIntent);
+			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;
 
 

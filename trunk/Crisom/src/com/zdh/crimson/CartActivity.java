@@ -103,7 +103,8 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 			   
 			   Intent intent = new Intent(CartActivity.this,ProductDetailActivity.class);
 			   intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listRecent.get(position).getIdEntity());
-			   startActivity(intent);	
+			   startActivity(intent);
+			   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			   
 			   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			   FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTDETAIL;

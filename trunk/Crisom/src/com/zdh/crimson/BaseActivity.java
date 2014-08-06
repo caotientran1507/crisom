@@ -102,11 +102,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 					break;
 				
 				case R.id.include_header_btnBack:
-					finish();
-					overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
-					if (FileUtil.POSITION_ACTIVITY != 0 || FileUtil.POSITION_ACTIVITY != Constants.POSITION_ACTIVITY_CATEGORY) {
-						FileUtil.POSITION_ACTIVITY = FileUtil.POSITION_ACTIVITY - 1;
-					}					
+					actionBackButton();
 					break;	
 		}
 	}
@@ -144,7 +140,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 						} else {
 							Intent login = new Intent(getApplicationContext(),LoginActivity.class);
 							startActivityForResult(login, requestCodeLogin);
-							overridePendingTransition(R.anim.fly_in_from_right,R.anim.fly_out_to_left);
+							overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
 						}
 						dialog.dismiss();
 					}
@@ -170,7 +166,23 @@ public class BaseActivity extends Activity implements OnClickListener{
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
 		}
 	}
+
+
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		actionBackButton();
+	}
 	
+	private void actionBackButton(){
+		
+		finish();
+		overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+		if (FileUtil.POSITION_ACTIVITY != 0 || FileUtil.POSITION_ACTIVITY != Constants.POSITION_ACTIVITY_CATEGORY) {
+			FileUtil.POSITION_ACTIVITY = FileUtil.POSITION_ACTIVITY - 1;
+		}	
+		
+	}
 	
 	
 }

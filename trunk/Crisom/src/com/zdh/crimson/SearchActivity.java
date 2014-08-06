@@ -102,6 +102,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				Intent intent = new Intent(SearchActivity.this,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listSearch.get(position).getId());
 				startActivity(intent);
+				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTDETAIL;
 			} 
 		});

@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -42,7 +43,7 @@ import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 public class ProductListAdapter extends BaseAdapter {
 
-	private Context context;
+	private Activity context;
 	private LayoutInflater inflater = null;
 	private ArrayList<Product> listProduct = new ArrayList<Product>();	
 	public ImageLoader imageLoader; 
@@ -51,7 +52,7 @@ public class ProductListAdapter extends BaseAdapter {
     ListView lvDialog;
     TextView tvDialog;
 
-	public ProductListAdapter(Context context,ArrayList<Product> listProduct) {
+	public ProductListAdapter(Activity context,ArrayList<Product> listProduct) {
 		this.listProduct = listProduct;		
 		this.context = context;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -95,7 +96,8 @@ public class ProductListAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				Intent intent = new Intent(context,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listProduct.get(position).getId());
-				context.startActivity(intent);				
+				context.startActivity(intent);
+				context.overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			}
 		});
 		
@@ -106,6 +108,7 @@ public class ProductListAdapter extends BaseAdapter {
 				Intent intent = new Intent(context,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listProduct.get(position).getId());
 				context.startActivity(intent);
+				context.overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			}
 		});
 		

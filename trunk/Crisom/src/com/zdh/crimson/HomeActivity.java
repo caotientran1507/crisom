@@ -261,10 +261,10 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 						intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, listManufacturerName.get(positionManufacturerName));
 						intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
 						startActivity(intent);
+						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 						FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
 			    	}
 				}
-		    	
 		    } 
 
 		    public void onNothingSelected(AdapterView<?> adapterView) {
@@ -278,7 +278,8 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 				   
 				   Intent intent = new Intent(HomeActivity.this,CategoryActivity.class);
 				   intent.putExtra(Constants.KEY_CATEGORYID, FileUtil.listHome.get(position).getId());
-				   startActivity(intent);	
+				   startActivity(intent);
+				   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 				   FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
 			   } 
 			});
@@ -294,6 +295,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		case R.id.home_tv_mainsite:
 			Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
 			startActivity(launchBrowser);
+			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;
 			
 			
@@ -383,6 +385,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
 			intent.putExtra(Constants.KEY_SEARCH_KEYWORD, edtSearch.getText().toString().trim());
 			startActivity(intent);
+			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
 			
 		}

@@ -109,7 +109,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 			break;
 		case R.id.login_btn_cancel:
 			finish();
-			overridePendingTransition(R.anim.fly_out_to_bottom, R.anim.stay);
+			overridePendingTransition(R.anim.stay ,R.anim.fly_out_to_bottom);
 			break;
 
 		default:
@@ -204,4 +204,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 	        LoginActivity.this.finish();
 	    }
 	}
+
+	@Override
+	public void onBackPressed() {
+		finish();
+		overridePendingTransition(R.anim.stay ,R.anim.fly_out_to_bottom);
+	}
+	
+	
 }
