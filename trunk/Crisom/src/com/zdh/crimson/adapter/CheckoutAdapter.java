@@ -6,10 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Editable;
 import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
 import android.text.TextWatcher;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zdh.crimson.R;
-import com.zdh.crimson.R.color;
 import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.RecentObject;
 import com.zdh.crimson.utility.CommonUtil;

@@ -14,10 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -488,8 +485,6 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 					j++;
 				}
 				qty = CommonUtil.combineString(arrQty, ",");
-				Log.d("ids", ids);
-				Log.d("qty", qty);
 
 				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
 				paramsUrl.add(new BasicNameValuePair("ids", ids));
@@ -514,10 +509,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 
 		protected void onPostExecute(String s) {	  	    	
 			pDialog.dismiss();	
-			if (s == null) {
+			if (s == null) {				
 				Toast.makeText(CheckoutActivity.this, "Update shopping cart failed!", Toast.LENGTH_SHORT).show();
 			}else{
 				Toast.makeText(CheckoutActivity.this, "Update shopping cart success!", Toast.LENGTH_SHORT).show();
+				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 			}
 
 		}
@@ -569,15 +565,16 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				e.printStackTrace();
 			}
 
-			return null;
+			return "false";
 		}
 
 		protected void onPostExecute(String s) {	     
-			if (s == null) {
+			if (s.equals("true")) {
 				tvCoupon.setVisibility(View.VISIBLE);
 				btnCancelCoupon.setVisibility(View.VISIBLE);
+				Toast.makeText(CheckoutActivity.this, "Apply coupon success!", Toast.LENGTH_SHORT).show();
 			}else{
-				Toast.makeText(CheckoutActivity.this, "Apply coupn success!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(CheckoutActivity.this, "Apply coupon fail!", Toast.LENGTH_SHORT).show();
 			}
 			pDialog.dismiss();	
 		}
@@ -624,16 +621,17 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				e.printStackTrace();
 			}
 
-			return null;
+			return "false";
 		}
 
 		protected void onPostExecute(String s) {	   
-			if (s == null) {
-
-			}else{
-				Toast.makeText(CheckoutActivity.this, "Apply coupn success!", Toast.LENGTH_SHORT).show();
+			if (s.equals("true")) {
+				Toast.makeText(CheckoutActivity.this, "Cancel coupon success!", Toast.LENGTH_SHORT).show();
 				tvCoupon.setVisibility(View.GONE);
 				btnCancelCoupon.setVisibility(View.GONE);
+				edtCoupon.setText("");
+			}else{
+				Toast.makeText(CheckoutActivity.this, "Cancel coupon fail!", Toast.LENGTH_SHORT).show();
 			}
 			pDialog.dismiss();	
 		}
