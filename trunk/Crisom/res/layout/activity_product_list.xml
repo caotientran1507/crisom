@@ -177,12 +177,14 @@
                                 android:orientation="horizontal"
                                 android:weightSum="100" >
 
-                                <ListView
+                                <com.zdh.crimson.utility.ExpandableHeightListView
                                     android:id="@+id/productlist_lvCheckbox"
-                                    android:layout_width="0dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="90" >
-                                </ListView>
+                                    android:layout_weight="90"
+                                    android:dividerHeight="0dp"
+                                    android:divider="@color/transparent" >
+                                </com.zdh.crimson.utility.ExpandableHeightListView>
                             </LinearLayout>
                             <!-- end linear checkbox -->
 
@@ -233,6 +235,8 @@
                         android:id="@+id/productlist_lv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="5dp"
                         android:layout_marginTop="20dp"
                         android:divider="@color/transparent"
                         android:dividerHeight="10dp" >

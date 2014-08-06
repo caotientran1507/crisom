@@ -21,7 +21,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -34,13 +33,14 @@ import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 
-public class ProductListActivity extends BaseActivity  implements View.OnClickListener{
+public class ProductListActivity extends BaseActivity implements
+		View.OnClickListener {
 
-	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnNarrowTitle,lnNarrowContent,lncheckboxAll;
-	private ListView lvCheckbox;
-	private ExpandableHeightListView lvProduct;
-	private ImageView ivCategory,ivNarrowShow;	
+	// --------define variables---------
+	private LinearLayout lnHome, lnSearch, lnCart, lnContact, lnNarrowTitle,
+			lnNarrowContent, lncheckboxAll;
+	private ExpandableHeightListView lvProduct, lvCheckbox;
+	private ImageView ivCategory, ivNarrowShow;
 	private TextView tvTitle;
 	private ProgressDialog pDialog;
 	ProductListAdapter adapter;
@@ -66,17 +66,18 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 	ArrayList<Category> listCategoryCheck = new ArrayList<Category>();
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
-	
-	boolean flagCheckAll = false;
 
+	boolean flagCheckAll = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_list);
-		currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);		
+		currentCategory = getIntent().getExtras().getInt(
+				Constants.KEY_CATEGORYID);
 		init();
 	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -85,50 +86,41 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		if (adapter != null) {
 			adapter.notifyDataSetChanged();
 		}
-		
 
 	}
 
-	private void init(){
+	private void init() {
 		initView();
 		initData();
 		initDataWebservice();
 		handleOtherAction();
 	}
 
-	private void initView(){
-		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
-		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
-		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
-		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);	
+	private void initView() {
+		lnHome = (LinearLayout) findViewById(R.id.include_footer_lnHome);
+		lnSearch = (LinearLayout) findViewById(R.id.include_footer_lnSearch);
+		lnCart = (LinearLayout) findViewById(R.id.include_footer_lnCart);
+		lnContact = (LinearLayout) findViewById(R.id.include_footer_lnContact);
 
-		lnNarrowTitle = (LinearLayout)findViewById(R.id.productlist_Narrow_lnTitle);
-		lnNarrowContent = (LinearLayout)findViewById(R.id.productlist_Narrow_lnContent);
-		ivNarrowShow = (ImageView)findViewById(R.id.productlist_Narrow_img);	
-		lvProduct = (ExpandableHeightListView)findViewById(R.id.productlist_lv);
-		lvCheckbox = (ListView)findViewById(R.id.productlist_lvCheckbox);
+		lnNarrowTitle = (LinearLayout) findViewById(R.id.productlist_Narrow_lnTitle);
+		lnNarrowContent = (LinearLayout) findViewById(R.id.productlist_Narrow_lnContent);
+		ivNarrowShow = (ImageView) findViewById(R.id.productlist_Narrow_img);
+		lvProduct = (ExpandableHeightListView) findViewById(R.id.productlist_lv);
+		lvCheckbox = (ExpandableHeightListView) findViewById(R.id.productlist_lvCheckbox);
 
-		ivCategory = (ImageView)findViewById(R.id.include_footer_ivcategory);	
-		
-//		lvProduct.setOnTouchListener(new OnTouchListener() {
-//			@Override
-//			public boolean onTouch(View v, MotionEvent event) {
-//				v.getParent().requestDisallowInterceptTouchEvent(true);
-//				return false;
-//			}
-//		});
+		ivCategory = (ImageView) findViewById(R.id.include_footer_ivcategory);
 
-		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
-		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
-		btnBack = (Button)findViewById(R.id.include_header_btnBack);
+		tvTitle = (TextView) findViewById(R.id.include_header_tvTitle);
+		btnLogin = (Button) findViewById(R.id.include_header_btnLogin);
+		btnBack = (Button) findViewById(R.id.include_header_btnBack);
 
-		spnTvSize = (Spinner)findViewById(R.id.productlist_spnTVsize);
-		spnType1 = (Spinner)findViewById(R.id.productlist_spnType1);
-		spnType2 = (Spinner)findViewById(R.id.productlist_spnType2);
-		btnSearch = (Button)findViewById(R.id.productlist_btnSearch);
-		btnClearFilter = (Button)findViewById(R.id.productlist_btnClearFilter);
-		cbxAll = (CheckBox)findViewById(R.id.productlist_cbxAll);
-		lncheckboxAll = (LinearLayout)findViewById(R.id.productlist_lncheckboxAll);
+		spnTvSize = (Spinner) findViewById(R.id.productlist_spnTVsize);
+		spnType1 = (Spinner) findViewById(R.id.productlist_spnType1);
+		spnType2 = (Spinner) findViewById(R.id.productlist_spnType2);
+		btnSearch = (Button) findViewById(R.id.productlist_btnSearch);
+		btnClearFilter = (Button) findViewById(R.id.productlist_btnClearFilter);
+		cbxAll = (CheckBox) findViewById(R.id.productlist_cbxAll);
+		lncheckboxAll = (LinearLayout) findViewById(R.id.productlist_lncheckboxAll);
 
 		ivCategory.setImageResource(R.drawable.ico_category_active);
 		tvTitle.setText("CATEGORIES");
@@ -147,13 +139,13 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 		lvProduct.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {	
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
 
 				Intent intent = new Intent(ProductListActivity.this,ProductDetailActivity.class);
 				intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listProduct.get(position).getId());
 				startActivity(intent);
 				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTDETAIL;
-			} 
+			}
 		});
 
 		pDialog = new ProgressDialog(ProductListActivity.this);
@@ -165,7 +157,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		clearSpinnerProductType1();
 		clearSpinnerProductType2();
 
-		tvSizeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listTvSizes);
+		tvSizeAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, listTvSizes);
 		productTypeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypes);
 		productTypeAdapterChild = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypesChild);
 
@@ -180,48 +172,52 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 	}
 
-	private void initDataWebservice(){
+	private void initDataWebservice() {
 		new GetProductsByCategoryIdAsyncTask(currentCategory).execute();
 
 	}
 
-	private void handleOtherAction(){
-		spnTvSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-				if (i != 0) {
-					
-				}
-			} 
+	private void handleOtherAction() {
+		spnTvSize
+				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+					public void onItemSelected(AdapterView<?> adapterView,
+							View view, int i, long l) {
+						if (i != 0) {
 
-			public void onNothingSelected(AdapterView<?> adapterView) {
-				return;
-			} 
-		}); 
-		
+						}
+					}
+
+					public void onNothingSelected(AdapterView<?> adapterView) {
+						return;
+					}
+				});
+
 		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+			public void onItemSelected(AdapterView<?> adapterView, View view,
+					int i, long l) {
 				if (i != 0) {
 					spnType2.setVisibility(View.VISIBLE);
 					lncheckboxAll.setVisibility(View.VISIBLE);
 				}
-			} 
+			}
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
 				return;
-			} 
-		}); 
+			}
+		});
 
 		spnType2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+			public void onItemSelected(AdapterView<?> adapterView, View view,
+					int i, long l) {
 				if (i != 0) {
 					new GetCategoryCheckAsyncTask().execute();
 				}
-			} 
+			}
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
 				return;
-			} 
-		}); 
+			}
+		});
 	}
 
 	@Override
@@ -234,31 +230,31 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 			if (lnNarrowContent.getVisibility() == View.VISIBLE) {
 				lnNarrowContent.setVisibility(View.GONE);
 				ivNarrowShow.setImageResource(R.drawable.ico_next_white);
-			}else{
+			} else {
 				lnNarrowContent.setVisibility(View.VISIBLE);
 				ivNarrowShow.setImageResource(R.drawable.ico_down_white);
 				new GetTVSizeAsyncTask().execute();
 			}
 
-			break;	
+			break;
 		case R.id.productlist_cbxAll:
 			if (!flagCheckAll) {
 				checkAll();
 				flagCheckAll = true;
-			}else{
+			} else {
 				uncheckAll();
 				flagCheckAll = false;
 			}
-			
+
 			checkboxProductListAdapter.notifyDataSetChanged();
-			break;	
+			break;
 		case R.id.productlist_btnSearch:
 
 			break;
 		case R.id.productlist_btnClearFilter:
 			lncheckboxAll.setVisibility(View.GONE);
 			lvCheckbox.setVisibility(View.GONE);
-			spnType2.setVisibility(View.GONE); 
+			spnType2.setVisibility(View.GONE);
 			clearSpinnerTVSize();
 			clearSpinnerProductType1();
 			clearSpinnerProductType2();
@@ -267,35 +263,34 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 			productTypeAdapter.notifyDataSetChanged();
 			break;
 
-
 		default:
 			break;
 		}
 
 	}
 
-	//------------------------------------------------------------
+	// ------------------------------------------------------------
 
-	public class GetProductsByCategoryIdAsyncTask extends AsyncTask<String, String, String> {
+	public class GetProductsByCategoryIdAsyncTask extends
+			AsyncTask<String, String, String> {
 
 		private int cat_id;
 		private String json;
 
-		public GetProductsByCategoryIdAsyncTask(int cat_id){
+		public GetProductsByCategoryIdAsyncTask(int cat_id) {
 			this.cat_id = cat_id;
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (pDialog != null ) {	        		 	        
+			if (pDialog != null) {
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
-			}	
-
+			}
 
 		}
 
@@ -306,20 +301,21 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				paramsUrl.add(new BasicNameValuePair("cat_id", String.valueOf(cat_id)));
 
-				json = JsonParser.makeHttpRequest(
-						Constants.URL_GETPRODUCTBYCATEGORYID, "GET", paramsUrl);
-				Log.d("json", "json"+json);
-				if ((json != null) || (!json.equals(""))) {               
+				json = JsonParser.makeHttpRequest(Constants.URL_GETPRODUCTBYCATEGORYID, "GET", paramsUrl);
+				Log.d("json", "json" + json);
+				if ((json != null) || (!json.equals(""))) {
 					JSONArray array = new JSONArray(json);
 					FileUtil.listProduct.clear();
 					for (int j = 0; j < array.length(); j++) {
 						Product temp = new Product();
 						temp.setId(array.getJSONObject(j).getInt("entity_id"));
 						temp.setName(array.getJSONObject(j).getString("name"));
-						temp.setDes(array.getJSONObject(j).getString("description"));    
-						temp.setShortDes(array.getJSONObject(j).getString("short_description"));    
+						temp.setDes(array.getJSONObject(j).getString(
+								"description"));
+						temp.setShortDes(array.getJSONObject(j).getString(
+								"short_description"));
 						temp.setImage(array.getJSONObject(j).getString("image"));
-						FileUtil.listProduct.add(temp);					
+						FileUtil.listProduct.add(temp);
 					}
 
 				}
@@ -332,30 +328,30 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
-			pDialog.dismiss();	      
+			pDialog.dismiss();
 		}
 	}
 
-	//------------------------------------------------------------
+	// ------------------------------------------------------------
 
-	public class NarrowSearchAsyncTask extends AsyncTask<String, String, String> {
+	public class NarrowSearchAsyncTask extends
+			AsyncTask<String, String, String> {
 
 		private String json;
 
-		public NarrowSearchAsyncTask(){
+		public NarrowSearchAsyncTask() {
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (pDialog != null ) {	        		 	        
+			if (pDialog != null) {
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
-			}	
-
+			}
 
 		}
 
@@ -365,22 +361,24 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 
-//				paramsUrl.add(new BasicNameValuePair("cateids", String.valueOf(cat_id)));
-//				paramsUrl.add(new BasicNameValuePair("size", String.valueOf(cat_id)));
+				// paramsUrl.add(new BasicNameValuePair("cateids",
+				// String.valueOf(cat_id)));
+				// paramsUrl.add(new BasicNameValuePair("size",
+				// String.valueOf(cat_id)));
 
-				json = JsonParser.makeHttpRequest(Constants.URL_NARROWSEARCH, "GET", paramsUrl);
+				json = JsonParser.makeHttpRequest(Constants.URL_NARROWSEARCH,"GET", paramsUrl);
 
-				if ((json != null) || (!json.equals(""))) {               
+				if ((json != null) || (!json.equals(""))) {
 					JSONArray array = new JSONArray(json);
 					FileUtil.listProduct.clear();
 					for (int j = 0; j < array.length(); j++) {
 						Product temp = new Product();
 						temp.setId(array.getJSONObject(j).getInt("entity_id"));
 						temp.setName(array.getJSONObject(j).getString("name"));
-						temp.setDes(array.getJSONObject(j).getString("description"));    
-						temp.setShortDes(array.getJSONObject(j).getString("short_description"));    
+						temp.setDes(array.getJSONObject(j).getString("description"));
+						temp.setShortDes(array.getJSONObject(j).getString("short_description"));
 						temp.setImage(array.getJSONObject(j).getString("image"));
-						FileUtil.listProduct.add(temp);					
+						FileUtil.listProduct.add(temp);
 					}
 
 				}
@@ -393,31 +391,29 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
-			pDialog.dismiss();	      
+			pDialog.dismiss();
 		}
 	}
 
-
-	//------------------------------------------------------------
+	// ------------------------------------------------------------
 
 	public class GetTVSizeAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
 
-		public GetTVSizeAsyncTask(){
+		public GetTVSizeAsyncTask() {
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (pDialog != null ) {	        		 	        
+			if (pDialog != null) {
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
-			}	
-
+			}
 
 		}
 
@@ -430,7 +426,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
-				if ((json != null) || (!json.equals(""))) {               
+				if ((json != null) || (!json.equals(""))) {
 					JSONArray array = new JSONArray(json);
 					clearSpinnerTVSize();
 					listCategoryTvSize.clear();
@@ -439,9 +435,9 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
 						temp.setName(array.getJSONObject(j).getString("name"));
-						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
+						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
-						listCategoryTvSize.add(temp);		
+						listCategoryTvSize.add(temp);
 						listTvSizes.add(temp.getName());
 					}
 
@@ -456,27 +452,28 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
 			new GetProductTypeAsyncTask().execute();
-			pDialog.dismiss();	      
+			pDialog.dismiss();
 		}
 	}
 
-	public class GetProductTypeAsyncTask extends AsyncTask<String, String, String> {
+	public class GetProductTypeAsyncTask extends
+			AsyncTask<String, String, String> {
 
 		private String json;
 
-		public GetProductTypeAsyncTask(){
+		public GetProductTypeAsyncTask() {
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (pDialog != null ) {	        		 	        
+			if (pDialog != null) {
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
-			}	
+			}
 		}
 
 		protected String doInBackground(String... params) {
@@ -488,7 +485,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
-				if ((json != null) || (!json.equals(""))) {               
+				if ((json != null) || (!json.equals(""))) {
 					JSONArray array = new JSONArray(json);
 					clearSpinnerProductType1();
 					listCategoryProductType.clear();
@@ -496,11 +493,11 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
 						temp.setName(array.getJSONObject(j).getString("name"));
-						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
+						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
-						listCategoryProductType.add(temp);		
+						listCategoryProductType.add(temp);
 						listProductTypes.add(temp.getName());
-					}	        			
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -512,27 +509,28 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		protected void onPostExecute(String file_url) {
 			productTypeAdapter.notifyDataSetChanged();
 			new GetProductTypeChildAsyncTask().execute();
-			pDialog.dismiss();	      
+			pDialog.dismiss();
 		}
 	}
 
-	public class GetProductTypeChildAsyncTask extends AsyncTask<String, String, String> {
+	public class GetProductTypeChildAsyncTask extends
+			AsyncTask<String, String, String> {
 
 		private String json;
 
-		public GetProductTypeChildAsyncTask(){
+		public GetProductTypeChildAsyncTask() {
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (pDialog != null ) {	        		 	        
+			if (pDialog != null) {
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
-			}	
+			}
 		}
 
 		protected String doInBackground(String... params) {
@@ -544,7 +542,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
-				if ((json != null) || (!json.equals(""))) {               
+				if ((json != null) || (!json.equals(""))) {
 					JSONArray array = new JSONArray(json);
 					clearSpinnerProductType2();
 					listCategoryProductTypeChild.clear();
@@ -552,11 +550,11 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
 						temp.setName(array.getJSONObject(j).getString("name"));
-						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
+						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
-						listCategoryProductTypeChild.add(temp);		
+						listCategoryProductTypeChild.add(temp);
 						listProductTypesChild.add(temp.getName());
-					}	        			
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -567,27 +565,28 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 		protected void onPostExecute(String file_url) {
 			productTypeAdapterChild.notifyDataSetChanged();
-			pDialog.dismiss();	      
+			pDialog.dismiss();
 		}
 	}
-	
-	public class GetCategoryCheckAsyncTask extends AsyncTask<String, String, String> {
+
+	public class GetCategoryCheckAsyncTask extends
+			AsyncTask<String, String, String> {
 
 		private String json;
 
-		public GetCategoryCheckAsyncTask(){
+		public GetCategoryCheckAsyncTask() {
 		}
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (pDialog != null ) {	        		 	        
+			if (pDialog != null) {
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
 				pDialog.setCancelable(true);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
-			}	
+			}
 		}
 
 		protected String doInBackground(String... params) {
@@ -597,9 +596,8 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				paramsUrl.add(new BasicNameValuePair("cat_id", "13"));
 
-				json = JsonParser.makeHttpRequest(
-						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
-				if ((json != null) || (!json.equals(""))) {               
+				json = JsonParser.makeHttpRequest(Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {
 					JSONArray array = new JSONArray(json);
 					listCategoryCheck.clear();
 					listCheckbox.clear();
@@ -607,11 +605,11 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
 						temp.setName(array.getJSONObject(j).getString("name"));
-						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));    
+						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
-						listCategoryCheck.add(temp);		
+						listCategoryCheck.add(temp);
 						listCheckbox.add(false);
-					}	        			
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -621,46 +619,46 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		}
 
 		protected void onPostExecute(String file_url) {
-			if(checkboxProductListAdapter == null){
-				checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, listCategoryCheck,listCheckbox);
+			if (checkboxProductListAdapter == null) {
+				checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, 
+																			listCategoryCheck,
+																			listCheckbox);
 				lvCheckbox.setAdapter(checkboxProductListAdapter);
-			} else 
+				lvCheckbox.setExpanded(true);
+			} else
 				checkboxProductListAdapter.notifyDataSetChanged();
-			pDialog.dismiss();	      
+			pDialog.dismiss();
 		}
 	}
 
-	private void clearSpinnerTVSize(){
+	private void clearSpinnerTVSize() {
 		String first = "All";
-		listTvSizes.clear();	
+		listTvSizes.clear();
 		listTvSizes.add(first);
 	}
 
-	private void clearSpinnerProductType1(){
+	private void clearSpinnerProductType1() {
 		String first = "All";
-		listProductTypes.clear();	
+		listProductTypes.clear();
 		listProductTypes.add(first);
 	}
 
-	private void clearSpinnerProductType2(){
+	private void clearSpinnerProductType2() {
 		String first = "All";
-		listProductTypesChild.clear();	
+		listProductTypesChild.clear();
 		listProductTypesChild.add(first);
 	}
-	
-	private void checkAll(){
-		for (int i = 0; i < listCheckbox.size(); i++) {
-			listCheckbox.set(i, true);
-		}
-	}
-	
-	private void uncheckAll(){
-		for (int i = 0; i < listCheckbox.size(); i++) {
-			listCheckbox.set(i, true);
-		}
-	}
-	
-	
 
+	private void checkAll() {
+		for (int i = 0; i < listCheckbox.size(); i++) {
+			listCheckbox.set(i, true);
+		}
+	}
+
+	private void uncheckAll() {
+		for (int i = 0; i < listCheckbox.size(); i++) {
+			listCheckbox.set(i, true);
+		}
+	}
 
 }

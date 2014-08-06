@@ -112,14 +112,6 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		btnQuote = (Button)findViewById(R.id.checkout_btnQuote);
 
 		listview = (ExpandableHeightListView)findViewById(R.id.checkout_lv);
-		
-		listview.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				v.getParent().requestDisallowInterceptTouchEvent(true);
-				return false;
-			}
-		});
 
 		tvSubTotal = (TextView)findViewById(R.id.checkout_tvSubTotal);
 		tvTax = (TextView)findViewById(R.id.checkout_tvTax);
