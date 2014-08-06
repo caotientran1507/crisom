@@ -67,14 +67,14 @@
             android:paddingTop="5dp"
             android:text="$130.00"
             android:textSize="12sp" />
-        
+
         <TextView
             android:id="@+id/row_recent_tvDetail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="5dp"
-            android:textColor="@color/crisom_red"
             android:text="Details"
+            android:textColor="@color/crisom_red"
             android:textSize="12sp" />
     </LinearLayout>
 

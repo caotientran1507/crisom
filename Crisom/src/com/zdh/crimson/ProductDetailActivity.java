@@ -523,12 +523,15 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		});
 
 		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-				if (i != 0) {
-					spnModel.setVisibility(View.VISIBLE);
-					new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
-					positionManufacturerName = i;
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
+				if (listManufacturerName.size() > 0) {
+					if (i != 0) {
+						spnModel.setVisibility(View.VISIBLE);
+						new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
+						positionManufacturerName = i;
+					}
 				}
+				
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {

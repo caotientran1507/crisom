@@ -286,12 +286,13 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		});
 
 		spnCreditCardOnFile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
-				if (i != 0) {
-					savecc_id = listCreditCard.get(i).getId();
-					positionCreditCardOnFile = i;
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
+				if (listCreditCard.size() > 0) {
+					if (i != 0) {
+						savecc_id = listCreditCard.get(i).getId();
+						positionCreditCardOnFile = i;
+					}
 				}
-
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -484,14 +485,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				if (rbnCreditCardOnFile.isChecked()) {
 					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), savecc_id, method).execute();
 				}else{
-					
+
 					int idCustomer = SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this);
 					String cc_type = FileUtil.creditCardTypeID[positionCreditCard];
 					String cc_number = edtCreditCardNumber.getText().toString().trim();
 					String cc_exp_month = String.valueOf(positionMonth + 1);
 					String cc_exp_year = String.valueOf(positionYear + 2013);
 					String cc_cid = edtCardVerification.getText().toString().trim();		
-					
+
 					new SubmitOrderAsyncTask(idCustomer,method,cc_type,cc_number,cc_exp_month,cc_exp_year,cc_cid).execute();
 				}
 			}
@@ -1025,9 +1026,13 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	}
 
 	private String getKeyAddress(String address){
-		for (int i = 0; i < listAddress.size(); i++) {
-			if (listAddress.get(i).getValue().equals(address)) {
-				return listAddress.get(i).getKey();
+		if (listAddress.size() > 0 ) {
+			for (int i = 0; i < listAddress.size(); i++) {
+
+				if (listAddress.get(i).getValue().equals(address)) {
+					return listAddress.get(i).getKey();
+				}
+
 			}
 		}
 		return "";
