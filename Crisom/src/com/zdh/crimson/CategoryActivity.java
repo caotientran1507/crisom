@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -86,7 +87,15 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 		lnCart.setOnClickListener(this);
 		lnContact.setOnClickListener(this);
 		btnLogin.setOnClickListener(this);
-		btnBack.setOnClickListener(this);
+		btnBack.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				new GetCategoriesByIdAsyncTask(FileUtil.listCategory.get(0)
+				.getIdParent()).execute();
+			}
+		});
 
 		lvCategory.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -128,22 +137,22 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 
 	}
 
-	@Override
-	public void onClick(View v) {
-		super.onClick(v);
-		
-		switch (v.getId()) {
-		// ----------Click Back---------
-		case R.id.include_header_btnBack:
-			new GetCategoriesByIdAsyncTask(FileUtil.listCategory.get(0)
-					.getIdParent()).execute();
-			break;
-
-		default:
-			break;
-		}
-
-	}
+//	@Override
+//	public void onClick(View v) {
+//		super.onClick(v);
+//		
+//		switch (v.getId()) {
+//		// ----------Click Back---------
+//		case R.id.include_header_btnBack:
+////			new GetCategoriesByIdAsyncTask(FileUtil.listCategory.get(0)
+////					.getIdParent()).execute();
+//			break;
+//
+//		default:
+//			break;
+//		}
+//
+//	}
 
 	// ------------------------------------------------------------
 
