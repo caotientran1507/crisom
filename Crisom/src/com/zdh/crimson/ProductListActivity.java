@@ -32,6 +32,7 @@ import com.zdh.crimson.adapter.ProductListAdapter;
 import com.zdh.crimson.model.Category;
 import com.zdh.crimson.model.Product;
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 
@@ -39,7 +40,8 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 	//--------define variables---------
 	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnNarrowTitle,lnNarrowContent;
-	private ListView lvProduct,lvCheckbox;
+	private ListView lvCheckbox;
+	private ExpandableHeightListView lvProduct;
 	private ImageView ivCategory,ivNarrowShow;	
 	private TextView tvTitle;
 	private ProgressDialog pDialog;
@@ -103,7 +105,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		lnNarrowTitle = (LinearLayout)findViewById(R.id.productlist_Narrow_lnTitle);
 		lnNarrowContent = (LinearLayout)findViewById(R.id.productlist_Narrow_lnContent);
 		ivNarrowShow = (ImageView)findViewById(R.id.productlist_Narrow_img);	
-		lvProduct = (ListView)findViewById(R.id.productlist_lv);
+		lvProduct = (ExpandableHeightListView)findViewById(R.id.productlist_lv);
 		lvCheckbox = (ListView)findViewById(R.id.productlist_lvCheckbox);
 
 		ivCategory = (ImageView)findViewById(R.id.include_footer_ivcategory);	
@@ -171,6 +173,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 		adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
 		lvProduct.setAdapter(adapter);
+		lvProduct.setExpanded(true);
 		adapter.notifyDataSetChanged();
 
 		checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, listCategoryCheck,listCheckbox);

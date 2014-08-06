@@ -24,20 +24,21 @@
         android:layout_height="0dp"
         android:layout_weight="70"
         android:gravity="center_horizontal"
+        android:fillViewport="true"
         android:orientation="horizontal"
         android:weightSum="100" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:weightSum="100" >
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="90"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
                 android:orientation="vertical"
                 android:weightSum="90" >
 
@@ -98,7 +99,7 @@
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
                         android:paddingBottom="10dp"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:weightSum="100" >
 
                         <LinearLayout
@@ -225,17 +226,17 @@
                     
                     
 
-                    <ListView
+                    <com.zdh.crimson.utility.ExpandableHeightListView
                         android:id="@+id/productlist_lv"
                         android:layout_width="match_parent"
-                        android:layout_height="450dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:divider="@color/transparent"
                         android:dividerHeight="10dp" >
-                    </ListView>
+                    </com.zdh.crimson.utility.ExpandableHeightListView>
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
     <TextView
