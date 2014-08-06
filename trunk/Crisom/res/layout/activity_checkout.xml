@@ -22,19 +22,21 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         android:layout_marginBottom="10dp"
         android:layout_weight="74" >
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             android:weightSum="100" >
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentTop="true"
                 android:layout_weight="90"
                 android:orientation="vertical" >
 
@@ -69,13 +71,13 @@
                     android:orientation="horizontal"
                     android:weightSum="100" >
 
-                    <ListView
+                    <com.zdh.crimson.utility.ExpandableHeightListView
                         android:id="@+id/checkout_lv"
                         android:layout_width="0dp"
-                        android:layout_height="300dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:layout_weight="90" >
-                    </ListView>
+                    </com.zdh.crimson.utility.ExpandableHeightListView>
                 </LinearLayout>
 
                 <!-- end linear listview -->
@@ -434,7 +436,7 @@
                 <!-- end Linear Tax -->
 
             </LinearLayout>
-        </LinearLayout>
+        </RelativeLayout>
     </ScrollView>
 
     <!-- Button bot -->
