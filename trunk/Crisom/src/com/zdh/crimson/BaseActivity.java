@@ -103,7 +103,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 				
 				case R.id.include_header_btnBack:
 					actionBackButton();
-					break;	
+					break;	  
 		}
 	}
 	
