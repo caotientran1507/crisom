@@ -143,12 +143,15 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="30dp"
                                 android:layout_marginTop="10dp"
+                                android:visibility="gone"
                                 android:background="@drawable/spinner_background" />
 
                             <LinearLayout
+                                android:id="@+id/productlist_lncheckboxAll"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
+                                android:visibility="gone"
                                 android:orientation="horizontal" >
 
                                 <CheckBox

@@ -13,9 +13,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -39,7 +37,7 @@ import com.zdh.crimson.utility.JsonParser;
 public class ProductListActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnNarrowTitle,lnNarrowContent;
+	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnNarrowTitle,lnNarrowContent,lncheckboxAll;
 	private ListView lvCheckbox;
 	private ExpandableHeightListView lvProduct;
 	private ImageView ivCategory,ivNarrowShow;	
@@ -68,6 +66,8 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 
 	ArrayList<Category> listCategoryCheck = new ArrayList<Category>();
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
+	
+	boolean flagCheckAll = false;
 
 
 	@Override
@@ -128,6 +128,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		btnSearch = (Button)findViewById(R.id.productlist_btnSearch);
 		btnClearFilter = (Button)findViewById(R.id.productlist_btnClearFilter);
 		cbxAll = (CheckBox)findViewById(R.id.productlist_cbxAll);
+		lncheckboxAll = (LinearLayout)findViewById(R.id.productlist_lncheckboxAll);
 
 		ivCategory.setImageResource(R.drawable.ico_category_active);
 		tvTitle.setText("CATEGORIES");
@@ -142,6 +143,7 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		cbxAll.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
 		btnClearFilter.setOnClickListener(this);
+		lncheckboxAll.setOnClickListener(this);
 
 		lvProduct.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -199,7 +201,8 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
-
+					spnType2.setVisibility(View.VISIBLE);
+					lncheckboxAll.setVisibility(View.VISIBLE);
 				}
 			} 
 
@@ -230,22 +233,38 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		case R.id.productlist_Narrow_lnTitle:
 			if (lnNarrowContent.getVisibility() == View.VISIBLE) {
 				lnNarrowContent.setVisibility(View.GONE);
-				ivNarrowShow.setImageResource(R.drawable.ico_down_white);
+				ivNarrowShow.setImageResource(R.drawable.ico_next_white);
 			}else{
 				lnNarrowContent.setVisibility(View.VISIBLE);
-				ivNarrowShow.setImageResource(R.drawable.ico_next_white);
+				ivNarrowShow.setImageResource(R.drawable.ico_down_white);
 				new GetTVSizeAsyncTask().execute();
 			}
 
 			break;	
 		case R.id.productlist_cbxAll:
-
+			if (!flagCheckAll) {
+				checkAll();
+				flagCheckAll = true;
+			}else{
+				uncheckAll();
+				flagCheckAll = false;
+			}
+			
+			checkboxProductListAdapter.notifyDataSetChanged();
 			break;	
 		case R.id.productlist_btnSearch:
 
 			break;
 		case R.id.productlist_btnClearFilter:
-
+			lncheckboxAll.setVisibility(View.GONE);
+			lvCheckbox.setVisibility(View.GONE);
+			spnType2.setVisibility(View.GONE); 
+			clearSpinnerTVSize();
+			clearSpinnerProductType1();
+			clearSpinnerProductType2();
+			tvSizeAdapter.notifyDataSetChanged();
+			productTypeAdapterChild.notifyDataSetChanged();
+			productTypeAdapter.notifyDataSetChanged();
 			break;
 
 
@@ -628,6 +647,20 @@ public class ProductListActivity extends BaseActivity  implements View.OnClickLi
 		listProductTypesChild.clear();	
 		listProductTypesChild.add(first);
 	}
+	
+	private void checkAll(){
+		for (int i = 0; i < listCheckbox.size(); i++) {
+			listCheckbox.set(i, true);
+		}
+	}
+	
+	private void uncheckAll(){
+		for (int i = 0; i < listCheckbox.size(); i++) {
+			listCheckbox.set(i, true);
+		}
+	}
+	
+	
 
 
 }
