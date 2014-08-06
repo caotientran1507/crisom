@@ -64,7 +64,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnCreditCardOnFile,rbnPaypal,rbnCreditCard;
 	CheckBox cbxUseBillingAddress,cbxSaveCreditCard;
 	ListView lvParcelService;
-	ExpandableHeightListView lvReview;
+	private ExpandableHeightListView lvReview;
 	EditText edtCreditCardNumber,edtCardVerification;
 
 	ArrayList<Boolean> listRadioButton = new ArrayList<Boolean>();
@@ -177,6 +177,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		lvParcelService = (ListView)findViewById(R.id.checkoutdetail_lvParcelService);
 		lvReview = (ExpandableHeightListView)findViewById(R.id.checkoutdetail_lvReview);
+		
 
 		lnCreditCardOnFileContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardOnFileContent);
 		lnCreditCardContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardContent);
