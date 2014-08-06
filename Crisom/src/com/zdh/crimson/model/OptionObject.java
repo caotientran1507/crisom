@@ -6,8 +6,8 @@ public class OptionObject {
 	String otherFieldTitle;
 	String otherFieldValue;
 	double weight;
-	double price;
-	int msrp;
+	String price;
+	String msrp;
 	int oid;
 	int value;
 	int inCart;
@@ -30,16 +30,17 @@ public class OptionObject {
 	public void setWeight(double weight) {
 		this.weight = weight;
 	}
-	public double getPrice() {
+	
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
-	public int getMsrp() {
+	public String getMsrp() {
 		return msrp;
 	}
-	public void setMsrp(int msrp) {
+	public void setMsrp(String msrp) {
 		this.msrp = msrp;
 	}
 	public int getOid() {

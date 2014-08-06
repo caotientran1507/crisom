@@ -312,8 +312,8 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 							optionObject.setSku(jsonArrayOptions.getJSONObject(i).getString("sku"));
 							optionObject.setColor(jsonArrayOptions.getJSONObject(i).getString("color"));
 							optionObject.setWeight(jsonArrayOptions.getJSONObject(i).getDouble("weight"));
-							optionObject.setPrice(jsonArrayOptions.getJSONObject(i).getDouble("price"));
-							optionObject.setMsrp(jsonArrayOptions.getJSONObject(i).getInt("msrp"));
+							optionObject.setPrice(jsonArrayOptions.getJSONObject(i).getString("price"));
+							optionObject.setMsrp(jsonArrayOptions.getJSONObject(i).getString("msrp"));
 							optionObject.setOid(jsonArrayOptions.getJSONObject(i).getInt("oid"));
 							optionObject.setValue(jsonArrayOptions.getJSONObject(i).getInt("value"));
 							optionObject.setOtherFieldTitle(jsonArrayOptions.getJSONObject(i).getString("other_field_title"));

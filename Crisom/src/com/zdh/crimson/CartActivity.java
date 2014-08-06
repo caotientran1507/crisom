@@ -212,9 +212,21 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	
 	
 	private void updateText(){
-		tvCountItem.setText(String.valueOf(FileUtil.listRecent.size()));
+		if (FileUtil.listRecent.size() > 0) {
+			tvCountItem.setText(String.valueOf(getQuantityAll()));
+		} else {
+			tvCountItem.setText("0");
+		}		
     	tvTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
     	changeTextThereIs();
+	}
+	
+	private int getQuantityAll(){
+		int i = 0;
+		for (int j = 0; j < FileUtil.listRecent.size(); j++) {
+			i = i + FileUtil.listRecent.get(j).getQuantity();
+		}		
+		return i;		
 	}
 	
 	

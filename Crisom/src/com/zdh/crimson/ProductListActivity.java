@@ -28,6 +28,7 @@ import com.zdh.crimson.adapter.CheckboxProductListAdapter;
 import com.zdh.crimson.adapter.ProductListAdapter;
 import com.zdh.crimson.model.Category;
 import com.zdh.crimson.model.Product;
+import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
@@ -68,6 +69,11 @@ public class ProductListActivity extends BaseActivity implements
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 
 	boolean flagCheckAll = false;
+	
+	int positionTV = 0;
+	int positionType1 = 0;
+	int positionType2 = 0;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -183,9 +189,7 @@ public class ProductListActivity extends BaseActivity implements
 				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 					public void onItemSelected(AdapterView<?> adapterView,
 							View view, int i, long l) {
-						if (i != 0) {
-
-						}
+						positionTV = i;
 					}
 
 					public void onNothingSelected(AdapterView<?> adapterView) {
@@ -196,9 +200,11 @@ public class ProductListActivity extends BaseActivity implements
 		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view,
 					int i, long l) {
+				positionType1 = i;
 				if (i != 0) {
 					spnType2.setVisibility(View.VISIBLE);
-					lncheckboxAll.setVisibility(View.VISIBLE);
+					
+					new GetProductTypeChildAsyncTask(String.valueOf(listCategoryProductType.get(i-1).getId())).execute();					
 				}
 			}
 
@@ -210,8 +216,17 @@ public class ProductListActivity extends BaseActivity implements
 		spnType2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view,
 					int i, long l) {
+				positionType1 = 2;
 				if (i != 0) {
-					new GetCategoryCheckAsyncTask().execute();
+					lncheckboxAll.setVisibility(View.VISIBLE);
+					lvCheckbox.setVisibility(View.VISIBLE);
+					new GetCategoryCheckAsyncTask(String.valueOf(listCategoryProductTypeChild.get(i-1).getId())).execute();
+				}else{
+					lncheckboxAll.setVisibility(View.GONE);
+					lvCheckbox.setVisibility(View.GONE);
+					listCategoryCheck.clear();
+					listCheckbox.clear();
+//					checkboxProductListAdapter.notifyDataSetChanged();					
 				}
 			}
 
@@ -250,18 +265,19 @@ public class ProductListActivity extends BaseActivity implements
 			checkboxProductListAdapter.notifyDataSetChanged();
 			break;
 		case R.id.productlist_btnSearch:
-
+			if (positionTV != 0 || positionType1 != 0) {
+				new NarrowSearchAsyncTask().execute();
+			}			
 			break;
 		case R.id.productlist_btnClearFilter:
 			lncheckboxAll.setVisibility(View.GONE);
 			lvCheckbox.setVisibility(View.GONE);
 			spnType2.setVisibility(View.GONE);
-			clearSpinnerTVSize();
-			clearSpinnerProductType1();
 			clearSpinnerProductType2();
-			tvSizeAdapter.notifyDataSetChanged();
 			productTypeAdapterChild.notifyDataSetChanged();
-			productTypeAdapter.notifyDataSetChanged();
+			spnType1.setSelection(0);
+			spnType2.setSelection(0);
+			spnTvSize.setSelection(0);
 			break;
 
 		default:
@@ -361,15 +377,40 @@ public class ProductListActivity extends BaseActivity implements
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-
-				// paramsUrl.add(new BasicNameValuePair("cateids",
-				// String.valueOf(cat_id)));
-				// paramsUrl.add(new BasicNameValuePair("size",
-				// String.valueOf(cat_id)));
+				
+				if (positionType1 != 0) {
+					String cateids = "";
+					ArrayList<String> listCategoryTemp = new ArrayList<String>();
+					if (positionType2 != 0) {						
+						for (int i = 0; i < listCheckbox.size(); i++) {
+							if (listCheckbox.get(i)) {
+								listCategoryTemp.add(String.valueOf(listCategoryCheck.get(i).getId()));
+							}					
+						}
+					} else {
+						for (int i = 0; i < listCategoryProductTypeChild.size(); i++) {
+								listCategoryTemp.add(String.valueOf(listCategoryProductTypeChild.get(i).getId()));										
+						}
+					}
+					String[] arrIds = new String[listCategoryTemp.size()];
+					int i = 0;
+					for (String key : listCategoryTemp) {
+						arrIds[i] = key;
+						i++;
+					}
+					cateids = CommonUtil.combineString(arrIds, ",");
+					paramsUrl.add(new BasicNameValuePair("cateids", cateids));
+				}
+				if (positionTV != 0) {
+					paramsUrl.add(new BasicNameValuePair("size", String.valueOf(listCategoryTvSize.get(positionTV).getId())));
+				}
+				
+				
 
 				json = JsonParser.makeHttpRequest(Constants.URL_NARROWSEARCH,"GET", paramsUrl);
 
 				if ((json != null) || (!json.equals(""))) {
+					Log.d("json", json);
 					JSONArray array = new JSONArray(json);
 					FileUtil.listProduct.clear();
 					for (int j = 0; j < array.length(); j++) {
@@ -431,7 +472,6 @@ public class ProductListActivity extends BaseActivity implements
 					JSONArray array = new JSONArray(json);
 					clearSpinnerTVSize();
 					listCategoryTvSize.clear();
-					listTvSizes.clear();
 					for (int j = 0; j < array.length(); j++) {
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
@@ -509,7 +549,6 @@ public class ProductListActivity extends BaseActivity implements
 
 		protected void onPostExecute(String file_url) {
 			productTypeAdapter.notifyDataSetChanged();
-			new GetProductTypeChildAsyncTask().execute();
 			pDialog.dismiss();
 		}
 	}
@@ -518,8 +557,9 @@ public class ProductListActivity extends BaseActivity implements
 			AsyncTask<String, String, String> {
 
 		private String json;
-
-		public GetProductTypeChildAsyncTask() {
+		String cat_id;
+		public GetProductTypeChildAsyncTask(String cat_id) {
+			this.cat_id = cat_id;
 		}
 
 		@Override
@@ -539,7 +579,7 @@ public class ProductListActivity extends BaseActivity implements
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				paramsUrl.add(new BasicNameValuePair("cat_id", "13"));
+				paramsUrl.add(new BasicNameValuePair("cat_id", cat_id));
 
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
@@ -574,9 +614,11 @@ public class ProductListActivity extends BaseActivity implements
 			AsyncTask<String, String, String> {
 
 		private String json;
-
-		public GetCategoryCheckAsyncTask() {
+		String cat_id;
+		public GetCategoryCheckAsyncTask(String cat_id) {
+			this.cat_id = cat_id;
 		}
+		
 
 		@Override
 		protected void onPreExecute() {
@@ -595,7 +637,7 @@ public class ProductListActivity extends BaseActivity implements
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				paramsUrl.add(new BasicNameValuePair("cat_id", "13"));
+				paramsUrl.add(new BasicNameValuePair("cat_id", cat_id));
 
 				json = JsonParser.makeHttpRequest(Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) {
@@ -658,7 +700,7 @@ public class ProductListActivity extends BaseActivity implements
 
 	private void uncheckAll() {
 		for (int i = 0; i < listCheckbox.size(); i++) {
-			listCheckbox.set(i, true);
+			listCheckbox.set(i, false);
 		}
 	}
 

@@ -128,9 +128,9 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 		holder.tvModel.setText(listOption.get(currentPosition).getSku());
 		holder.tvColor.setText(listOption.get(currentPosition).getColor());
 		holder.tvWeight.setText(String.valueOf(listOption.get(currentPosition).getWeight()));
-		holder.tvMSRP.setText(String.valueOf(listOption.get(currentPosition).getMsrp()));
+		holder.tvMSRP.setText(listOption.get(currentPosition).getMsrp());
 		holder.tvIncart.setText(String.valueOf(listOption.get(currentPosition).getInCart()));
-		holder.tvPrice.setText(String.valueOf(listOption.get(currentPosition).getPrice()));
+		holder.tvPrice.setText(listOption.get(currentPosition).getPrice());
 
 		if (listOption.get(currentPosition).getOtherFieldTitle().equals("")) {
 			holder.tvOtherFieldTitle.setVisibility(View.GONE);
