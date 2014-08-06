@@ -25,7 +25,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +34,7 @@ import com.zdh.crimson.model.CountryObject;
 import com.zdh.crimson.model.StateObject;
 import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
@@ -47,7 +47,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	private Button btnProceedCheckout,btnContinueShopping,btnClearShopping,btnUpdateShopping,btnProceedMutilAddress
 	,btnApplyCoupon,btnCancelCoupon,btnQuote;
 	private TextView tvTitle,tvSubTotal,tvTax,tvGrandTotal,tvShippingHandling,tvCoupon;
-	private ListView listview;	
+	private ExpandableHeightListView listview;	
 	private EditText edtCoupon,edtState;
 	private Spinner spnCountry,spnState;
 
@@ -111,7 +111,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		tvCoupon = (TextView)findViewById(R.id.checkout_tvCoupon);
 		btnQuote = (Button)findViewById(R.id.checkout_btnQuote);
 
-		listview = (ListView)findViewById(R.id.checkout_lv);
+		listview = (ExpandableHeightListView)findViewById(R.id.checkout_lv);
 		
 		listview.setOnTouchListener(new OnTouchListener() {
 			@Override
@@ -167,6 +167,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 
 		adapter = new CheckoutAdapter(CheckoutActivity.this, FileUtil.listRecent);
 		listview.setAdapter(adapter);
+		listview.setExpanded(true);
 
 	}
 
