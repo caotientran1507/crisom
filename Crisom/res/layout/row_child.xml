@@ -278,6 +278,19 @@
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
+        
+        <TextView
+            android:id="@+id/productlist_message_cart_no_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:text="@string/productList_alert_no_login"
+            android:textColor="@color/crisom_red"
+            android:textSize="12sp"
+            android:layout_margin="5dp"
+            android:visibility="gone" />
+        
     </LinearLayout>
 
 </LinearLayout>

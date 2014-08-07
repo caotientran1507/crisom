@@ -64,7 +64,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	protected void ChangeTextButtonLogin() {
 		super.ChangeTextButtonLogin();
 		
-		if (FileUtil.listProduct != null && FileUtil.listProduct.size() > 0 && adapter != null)
+		if (FileUtil.listSearch != null && FileUtil.listSearch.size() > 0 && adapter != null)
 			adapter.notifyDataSetChanged();
 	}
 

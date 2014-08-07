@@ -55,8 +55,7 @@ import com.zdh.crimson.utility.SharedPreferencesUtil;
 public class ProductDetailActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnTitle,
-	lnPrice,lnDownload,lnFaq,lnVideo;
+	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnTitle, lnPrice,lnDownload,lnFaq,lnVideo;
 	private ListView lvPrice,lvDownload,lvVideo;
 	private ImageView ivCategory,ivAvatar;	
 	private Button btnVerify;
@@ -240,7 +239,17 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 
 	}
 
+	
 	//------------------------------------------------------------
+
+	@Override
+	protected void ChangeTextButtonLogin() {
+		super.ChangeTextButtonLogin();
+		
+		if(product != null && product.getListOption().size() > 0)
+			childAdapter.notifyDataSetChanged();
+	}
+
 
 	public class GetProductByIdAsyncTask extends AsyncTask<String, String, String> {
 
@@ -273,8 +282,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				paramsUrl.add(new BasicNameValuePair("pid", String.valueOf(pid)));
 				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(cid)));
 
-				json = JsonParser.makeHttpRequest(
-						Constants.URL_GETPRODUCTBYID, "GET", paramsUrl);
+				json = JsonParser.makeHttpRequest(Constants.URL_GETPRODUCTBYID, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) { 
 					JSONObject jsonObject = new JSONObject(json);	                	
 					product.setId(jsonObject.getInt("entity_id"));

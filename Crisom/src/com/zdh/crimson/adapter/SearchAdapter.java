@@ -86,6 +86,7 @@ public class SearchAdapter extends BaseAdapter {
 			holder.lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);				
 			holder.tvDivider =  (TextView) view.findViewById(R.id.row_product_tvDivider);
 			holder.lnValue = (LinearLayout) view.findViewById(R.id.row_product_tvValue);
+			holder.productlist_message_cart_no_login = (TextView)view.findViewById(R.id.productlist_message_cart_no_login);
 			view.setTag(holder);
 		} else {
 			holder = (CategoryHolder) view.getTag();			
@@ -122,11 +123,11 @@ public class SearchAdapter extends BaseAdapter {
 		});
 
 		if (SharedPreferencesUtil.getFlagLogin(context)) {
-			holder.tvDivider.setVisibility(View.VISIBLE);
-			holder.lnAddtoCart.setVisibility(View.VISIBLE);
+		    holder.lnAddtoCart.setVisibility(View.VISIBLE);
+		    holder.productlist_message_cart_no_login.setVisibility(View.GONE);
 		} else {
-			holder.tvDivider.setVisibility(View.INVISIBLE);
-			holder.lnAddtoCart.setVisibility(View.INVISIBLE);
+			holder.lnAddtoCart.setVisibility(View.GONE);
+		    holder.productlist_message_cart_no_login.setVisibility(View.VISIBLE);
 		}
 
 		// -----------load data------------
@@ -154,6 +155,7 @@ public class SearchAdapter extends BaseAdapter {
 		LinearLayout lnValue;
 		LinearLayout lnAddtoCart;
 		ImageView ivAvatar;
+		TextView productlist_message_cart_no_login;
 	}
 
 	private void showDialogChildrenProduct(Product product)
