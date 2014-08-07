@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.text.Html;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.style.ForegroundColorSpan;
@@ -57,11 +58,9 @@ public class ReviewCheckoutDetailAdapter extends BaseAdapter {
 		TextView tvSubtotal = (TextView) vi.findViewById(R.id.row_checkoutdetail_tvSubtotal); 
 		
 		tvPartNumber.setText(listRecent.get(position).getName());
-		
-		String des = "Desciption: "+ listRecent.get(position).getDesc();
-		Spannable desSpannable=new SpannableStringBuilder(des);
-		desSpannable.setSpan(new ForegroundColorSpan(color.crisom_blue), 0, 10, Spannable.SPAN_EXCLUSIVE_INCLUSIVE);
-		tvDes.setText(desSpannable);		
+
+		String des = "<strong><font color=\"#2f3a76\">Desciption: </font></strong>"+ listRecent.get(position).getDesc();
+		tvDes.setText(Html.fromHtml(des));		
 		tvColor.setText(listRecent.get(position).getColor());
 		tvQty.setText(String.valueOf(listRecent.get(position).getQuantity()));		
 		tvPrice.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()));

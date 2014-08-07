@@ -157,7 +157,7 @@ public class ProductListActivity extends BaseActivity implements
 
 		pDialog = new ProgressDialog(ProductListActivity.this);
 
-	}
+	} 
 
 	private void initData() {
 		clearSpinnerTVSize();
