@@ -877,8 +877,7 @@
                             <com.zdh.crimson.utility.ExpandableHeightListView
                                 android:id="@+id/checkoutdetail_lvReview"
                                 android:layout_width="0dp"
-                                android:layout_height="200dp"
-
+                                android:layout_height="wrap_content"
                                 android:layout_weight="90"
                                 android:divider="@color/crisom_gray_divider"
                                 android:dividerHeight="1dp" 
