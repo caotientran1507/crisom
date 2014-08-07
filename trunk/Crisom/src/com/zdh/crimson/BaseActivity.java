@@ -1,18 +1,18 @@
 package com.zdh.crimson;
 
-import com.zdh.crimson.utility.Constants;
-import com.zdh.crimson.utility.FileUtil;
-import com.zdh.crimson.utility.SharedPreferencesUtil;
-
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.FileUtil;
+import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 public class BaseActivity extends Activity implements OnClickListener{
 
@@ -119,44 +119,45 @@ public class BaseActivity extends Activity implements OnClickListener{
 	
 
 	private void showDialog(final Context mContext, String title, String msg){
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
-
-		// Setting Dialog Title
-		alertDialog.setTitle(title);
-
-		// Setting Dialog Message
-		alertDialog.setMessage(msg);
-
-		// Setting Icon to Dialog
-		alertDialog.setIcon(R.drawable.delete);
-
-		// Setting Positive "Yes" Button
-		alertDialog.setPositiveButton("YES",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,int which) {
-						if (SharedPreferencesUtil.getFlagLogin(getApplicationContext())) {
-							SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-							ChangeTextButtonLogin();
-						} else {
-							Intent login = new Intent(getApplicationContext(),LoginActivity.class);
-							startActivityForResult(login, requestCodeLogin);
-							overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
-						}
-						dialog.dismiss();
-					}
-				});
-		// Setting Negative "NO" Button
-		alertDialog.setNegativeButton("NO",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog,	int which) {
-						
-						dialog.dismiss();
-						
-					}
-				});
-
-		// Showing Alert Message
-		alertDialog.show();
+		
+		final Dialog alert = new Dialog(mContext,R.style.CustomAlertDialog);
+		alert.setContentView(R.layout.dialog_alert_login);
+		
+		//set value to title & message
+		TextView alertTitle = (TextView) alert.findViewById(R.id.alert_title);
+		alertTitle.setText(title);
+		
+		TextView alertMessage = (TextView) alert.findViewById(R.id.alert_message);
+		alertMessage.setText(msg);
+		
+		// progress button yes & no
+		Button alertYes = (Button) alert.findViewById(R.id.alert_button_yes);
+		alertYes.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (SharedPreferencesUtil.getFlagLogin(getApplicationContext())) {
+					SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
+					ChangeTextButtonLogin();
+				} else {
+					Intent login = new Intent(getApplicationContext(),LoginActivity.class);
+					startActivityForResult(login, requestCodeLogin);
+					overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
+				}
+				alert.dismiss();
+			}
+		});
+		
+		Button alertNo = (Button) alert.findViewById(R.id.alert_button_no);
+		alertNo.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				alert.dismiss();
+			}
+		});
+		
+		alert.show();
 	}
 	
 	protected void ChangeTextButtonLogin(){
