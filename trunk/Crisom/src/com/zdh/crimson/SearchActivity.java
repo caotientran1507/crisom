@@ -57,10 +57,10 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	protected void onResume() {
 		super.onResume();
 		ChangeTextButtonLogin();
-		FileUtil.listSearch.clear();
-		if (adapter != null) {
-			adapter.notifyDataSetChanged();
-		}		
+//		FileUtil.listSearch.clear();
+//		if (adapter != null) {
+//			adapter.notifyDataSetChanged();
+//		}		
 	}
 
 	private void init(){

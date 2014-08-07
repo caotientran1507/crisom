@@ -131,8 +131,16 @@ public class ProductListAdapter extends BaseAdapter {
 		// -----------load data------------
 
 		holder.tvTitle.setText(listProduct.get(position).getName());
-		holder.tvDes1.setText(listProduct.get(position).getShortDes());
-		holder.tvDes2.setText(listProduct.get(position).getDes());
+		if (listProduct.get(position).getShortDes().equals("null")) {
+			holder.tvDes1.setVisibility(View.GONE);
+		}else{
+			holder.tvDes1.setText(listProduct.get(position).getShortDes());
+		}
+		if (listProduct.get(position).getDes().equals("null")) {
+			holder.tvDes2.setVisibility(View.GONE);
+		}else{
+			holder.tvDes2.setText(listProduct.get(position).getDes());
+		}		
 		imageLoader.DisplayImage(listProduct.get(position).getImage(), holder.ivAvatar);
 		return view;
 	}
