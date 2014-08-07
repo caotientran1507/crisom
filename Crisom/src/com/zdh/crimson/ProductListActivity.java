@@ -88,10 +88,10 @@ public class ProductListActivity extends BaseActivity implements
 	protected void onResume() {
 		super.onResume();
 		ChangeTextButtonLogin();
-		FileUtil.listProduct.clear();
-		if (adapter != null) {
-			adapter.notifyDataSetChanged();
-		}
+//		FileUtil.listProduct.clear();
+//		if (adapter != null) {
+//			adapter.notifyDataSetChanged();
+//		}
 
 	}
 
