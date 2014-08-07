@@ -17,5 +17,9 @@
     <style name="FullHeightDialog" parent="android:style/Theme.Dialog">
         <item name="android:windowNoTitle">true</item>
     </style>
+    
+    <style name="CustomAlertDialog" parent="@android:style/Theme.Holo.Dialog.MinWidth">
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
 </resources>
