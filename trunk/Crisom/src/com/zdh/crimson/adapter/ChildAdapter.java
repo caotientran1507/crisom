@@ -81,6 +81,7 @@ public class ChildAdapter extends BaseAdapter {
 			holder.edtQuantity = (EditText) view.findViewById(R.id.row_child_edtQuantityAddtocart);
 			holder.btnAddtoCart = (LinearLayout) view.findViewById(R.id.row_child_btnAddtoCart);			
 			holder.lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);
+			holder.productlist_message_cart_no_login = (TextView)view.findViewById(R.id.productlist_message_cart_no_login);
 
 
 			view.setTag(holder);
@@ -114,8 +115,10 @@ public class ChildAdapter extends BaseAdapter {
 
 		if (SharedPreferencesUtil.getFlagLogin(context)) {
 			holder.lnAddtoCart.setVisibility(View.VISIBLE);
+			holder.productlist_message_cart_no_login.setVisibility(View.GONE);
 		} else {
-			holder.lnAddtoCart.setVisibility(View.INVISIBLE);
+			holder.lnAddtoCart.setVisibility(View.GONE);
+			holder.productlist_message_cart_no_login.setVisibility(View.VISIBLE);
 		}
 
 		holder.tvModel.setText(listOption.get(currentPosition).getSku());
@@ -147,6 +150,7 @@ public class ChildAdapter extends BaseAdapter {
 		TextView tvPrice;
 		TextView tvMSRP;
 		TextView tvIncart;
+		TextView productlist_message_cart_no_login;
 		EditText edtQuantity;
 		LinearLayout btnAddtoCart;
 		LinearLayout lnAddtoCart;
