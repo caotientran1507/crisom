@@ -202,6 +202,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 	        	Toast.makeText(LoginActivity.this, "Login fail", Toast.LENGTH_SHORT).show();
 	        }
 	        LoginActivity.this.finish();
+	        overridePendingTransition(R.anim.stay ,R.anim.fly_out_to_bottom);
 	    }
 	}
 

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
@@ -17,7 +18,7 @@ import com.zdh.crimson.utility.SharedPreferencesUtil;
 public class BaseActivity extends Activity implements OnClickListener{
 
 	protected Button btnLogin, btnBack;
-	private int requestCodeLogin = 100;
+	protected int requestCodeLogin = 100;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 					
 					if (!SharedPreferencesUtil.getFlagLogin(getApplicationContext())) {
 						Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-						startActivity(login);
+						startActivityForResult(login, requestCodeLogin);
 						overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
 					}else{
 						showDialog(this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);
@@ -112,7 +113,6 @@ public class BaseActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		
 		if (requestCode == requestCodeLogin){
 			ChangeTextButtonLogin();
 			if (FileUtil.POSITION_ACTIVITY == Constants.POSITION_ACTIVITY_CHECKOUT 
@@ -194,6 +194,4 @@ public class BaseActivity extends Activity implements OnClickListener{
 		}	
 		
 	}
-	
-	
 }
