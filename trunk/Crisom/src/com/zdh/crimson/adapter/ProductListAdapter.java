@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -81,7 +82,8 @@ public class ProductListAdapter extends BaseAdapter {
 			holder.ivAvatar =  (ImageView) view.findViewById(R.id.row_product_ivAvatar);
 			holder.tvTitle = (TextView) view.findViewById(R.id.row_product_tvTitle);
 			holder.tvDes1 = (TextView) view.findViewById(R.id.row_product_tvDes1);
-			holder.tvDes2 =  (TextView) view.findViewById(R.id.row_product_tvDes2);			
+			holder.tvDes2 =  (TextView) view.findViewById(R.id.row_product_tvDes2);	
+			holder.productlist_message_cart_no_login = (TextView)view.findViewById(R.id.productlist_message_cart_no_login);
 			holder.lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);				
 			holder.tvDivider =  (TextView) view.findViewById(R.id.row_product_tvDivider);
 			holder.lnValue = (LinearLayout) view.findViewById(R.id.row_product_tvValue);
@@ -121,11 +123,11 @@ public class ProductListAdapter extends BaseAdapter {
 		});
 		
 		if (SharedPreferencesUtil.getFlagLogin(context)) {
-		    holder.tvDivider.setVisibility(View.VISIBLE);
 		    holder.lnAddtoCart.setVisibility(View.VISIBLE);
+		    holder.productlist_message_cart_no_login.setVisibility(View.GONE);
 		} else {
-		    holder.tvDivider.setVisibility(View.INVISIBLE);
-		    holder.lnAddtoCart.setVisibility(View.INVISIBLE);
+			holder.lnAddtoCart.setVisibility(View.GONE);
+		    holder.productlist_message_cart_no_login.setVisibility(View.VISIBLE);
 		}
 		
 		// -----------load data------------
@@ -150,6 +152,7 @@ public class ProductListAdapter extends BaseAdapter {
 		TextView tvDes1;
 		TextView tvDes2;		
 		TextView tvDivider;
+		TextView productlist_message_cart_no_login;
 		LinearLayout lnValue;
 		LinearLayout lnAddtoCart;
 		ImageView ivAvatar;
