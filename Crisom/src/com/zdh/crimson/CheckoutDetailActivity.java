@@ -308,7 +308,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		});
 		spnExpirationMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-				if (i == 0) {
+				if (i != 0) {
 					current_month = FileUtil.months[i];
 					positionMonth = i;
 				}
@@ -320,7 +320,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		});
 		spnExpirationYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
-				if (i == 0) {
+				if (i != 0) {
 					current_year = FileUtil.years[i];
 					positionYear = i;
 				}
@@ -488,7 +488,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					int idCustomer = SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this);
 					String cc_type = FileUtil.creditCardTypeID[positionCreditCard];
 					String cc_number = edtCreditCardNumber.getText().toString().trim();
-					String cc_exp_month = String.valueOf(positionMonth + 1);
+					String cc_exp_month = String.valueOf(positionMonth);
 					String cc_exp_year = String.valueOf(positionYear + 2013);
 					String cc_cid = edtCardVerification.getText().toString().trim();		
 
@@ -986,14 +986,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
 				paramsUrl.add(new BasicNameValuePair("method", method));
-				paramsUrl.add(new BasicNameValuePair("cc_type", method));
-				paramsUrl.add(new BasicNameValuePair("cc_number", method));
-				paramsUrl.add(new BasicNameValuePair("cc_exp_month", method));
-				paramsUrl.add(new BasicNameValuePair("cc_exp_year", method));
-				paramsUrl.add(new BasicNameValuePair("cc_cid", method));
+				paramsUrl.add(new BasicNameValuePair("cc_type", cc_type));
+				paramsUrl.add(new BasicNameValuePair("cc_number", cc_number));
+				paramsUrl.add(new BasicNameValuePair("cc_exp_month", cc_exp_month));
+				paramsUrl.add(new BasicNameValuePair("cc_exp_year", cc_exp_year));
+				paramsUrl.add(new BasicNameValuePair("cc_cid", cc_cid));
 
 				json = JsonParser.makeHttpRequest(
-						Constants.URL_SAVEPAYMENT, "GET", paramsUrl);
+						Constants.URL_SAVEPAYMENT, "POST", paramsUrl);
 				if ((json != null) || (!json.equals(""))) 
 				{   
 					Log.d("json", json);
