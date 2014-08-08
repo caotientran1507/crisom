@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zdh.crimson.adapter.CheckboxProductListAdapter;
 import com.zdh.crimson.adapter.ProductListAdapter;
@@ -34,7 +33,6 @@ import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
-import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 public class ProductListActivity extends BaseActivity implements
 		View.OnClickListener {
@@ -90,6 +88,7 @@ public class ProductListActivity extends BaseActivity implements
 	protected void onResume() {
 		super.onResume();
 		ChangeTextButtonLogin();
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -284,7 +283,8 @@ public class ProductListActivity extends BaseActivity implements
 			spnType2.setSelection(0);
 			spnTvSize.setSelection(0);
 			break;
-
+			
+		
 		default:
 			break;
 		}
@@ -707,6 +707,14 @@ public class ProductListActivity extends BaseActivity implements
 		for (int i = 0; i < listCheckbox.size(); i++) {
 			listCheckbox.set(i, false);
 		}
+	}
+	
+	@Override
+	public void logout() {
+		// TODO Auto-generated method stub
+		super.logout();
+		adapter.notifyDataSetChanged();
+		
 	}
 
 }

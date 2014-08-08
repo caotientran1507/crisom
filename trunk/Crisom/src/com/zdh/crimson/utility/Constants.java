@@ -13,28 +13,29 @@ public class Constants {
 	public static final String URL_STAGING = "http://23.21.185.157";
 	public static final String URL_PAYPAL = "https://www.paypal.com/us/webapps/mpp/paypal-popup";
 	
-	public static final String URL_CUSTOMAPI = URL + "/customapi/result/";
+	public static final String URL_CUSTOMAPI = URL_STAGING + "/customapi/result/";
 	
 	public static final String URL_GETCATEGORIESBYID = URL_CUSTOMAPI + "getCategoriesById";
 	public static final String URL_GETPRODUCTBYCATEGORYID = URL_CUSTOMAPI + "getProductsByCategoryId";
-	public static final String URL_SEARCH = URL_CUSTOMAPI + "search";
-	public static final String URL_GETPRODUCTBYID = URL_CUSTOMAPI + "getProductById";
-	public static final String URL_LOGIN = URL_CUSTOMAPI + "login";
 	public static final String URL_GETMANUFACTURER = URL_CUSTOMAPI + "getManufacturer";
 	public static final String URL_GETMODEL = URL_CUSTOMAPI + "getModel";
 	public static final String URL_GETCARTITEM = URL_CUSTOMAPI + "getCartItem";
 	public static final String URL_GETCOUNTRY = URL_CUSTOMAPI + "getCountry";
 	public static final String URL_GETSTATE = URL_CUSTOMAPI + "getStateByCountryId";
+	public static final String URL_SEARCH = URL_CUSTOMAPI + "search";
+	public static final String URL_GETPRODUCTBYID = URL_CUSTOMAPI + "getProductById";
+	public static final String URL_GETCARTCOST = URL_CUSTOMAPI + "getCartCost";
+	public static final String URL_GETSHIPPINGMETHOD = URL_CUSTOMAPI + "getShippingMethod";
+	public static final String URL_GETCREDITCARD = URL_CUSTOMAPI + "getCCSaved";
+	public static final String URL_GETALLADDRESS = URL_CUSTOMAPI + "getAllAddress";
+	
+	public static final String URL_LOGIN = URL_CUSTOMAPI + "login";
 	public static final String URL_ADDTOCART = URL_CUSTOMAPI + "addCart";
 	public static final String URL_ROOT_PRODUCT_IMAGE = "http://23.21.185.157/media/catalog/product";
 	public static final String URL_CLEARCART = URL_CUSTOMAPI + "clearCart";
 	public static final String URL_UPDATECART = URL_CUSTOMAPI + "updateCart";
-	public static final String URL_GETALLADDRESS = URL_CUSTOMAPI + "getAllAddress";
 	public static final String URL_APPLYCOUPON = URL_CUSTOMAPI + "applyCoupon";
 	public static final String URL_CANCELCOUPON = URL_CUSTOMAPI + "cancelCoupon";
-	public static final String URL_GETCARTCOST = URL_CUSTOMAPI + "getCartCost";
-	public static final String URL_GETSHIPPINGMETHOD = URL_CUSTOMAPI + "getShippingMethod";
-	public static final String URL_GETCREDITCARD = URL_CUSTOMAPI + "getCCSaved";
 	public static final String URL_MOUNTFINDER = URL_CUSTOMAPI + "mountFinder";	
 	public static final String URL_VERIFY = URL_CUSTOMAPI + "verify";	
 	public static final String URL_SAVESHIPPINGMETHOD = URL_CUSTOMAPI + "saveShippingMethod";	

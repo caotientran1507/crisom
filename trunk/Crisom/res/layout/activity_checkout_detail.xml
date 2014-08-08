@@ -123,6 +123,7 @@
                                         android:checked="true" />
 
                                     <TextView
+                                        android:id="@+id/checkoutdetail_tvShipThisAddress"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
@@ -144,6 +145,7 @@
                                         android:button="@null" />
 
                                     <TextView
+                                        android:id="@+id/checkoutdetail_tvShipDifferentAddress"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
@@ -270,6 +272,7 @@
                                     android:button="@null" />
 
                                 <TextView
+                                    android:id="@+id/checkoutdetail_tvUseBillingAddress"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
@@ -491,6 +494,7 @@
                                         android:button="@null" />
 
                                     <TextView
+                                        android:id="@+id/checkoutdetail_tvCreditCardOnFile"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
@@ -550,6 +554,7 @@
                                         android:button="@null" />
 
                                     <TextView
+                                        android:id="@+id/checkoutdetail_tvCreditCard"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
@@ -728,6 +733,7 @@
                                             android:button="@null" />
 
                                         <TextView
+                                            android:id="@+id/checkoutdetail_tvSaveCreditCard"
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="10dp"
