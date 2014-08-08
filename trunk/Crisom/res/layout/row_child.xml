@@ -91,18 +91,11 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:id="@+id/row_child_tvOtherFieldTitle"
+                    android:id="@+id/row_child_tvOtherField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Extension: "
-                    android:textColor="@color/crisom_blue"
-                    android:textStyle="bold" />                
+                    android:text="Extension: " />                
 
-                <TextView
-                    android:id="@+id/row_child_tvOtherFieldValue"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="JS" />
             </LinearLayout>
 
             <LinearLayout

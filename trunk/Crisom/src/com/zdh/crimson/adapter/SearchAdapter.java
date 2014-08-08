@@ -83,8 +83,7 @@ public class SearchAdapter extends BaseAdapter {
 			holder.tvTitle = (TextView) view.findViewById(R.id.row_product_tvTitle);
 			holder.tvDes1 = (TextView) view.findViewById(R.id.row_product_tvDes1);
 			holder.tvDes2 =  (TextView) view.findViewById(R.id.row_product_tvDes2);			
-			holder.lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);				
-			holder.tvDivider =  (TextView) view.findViewById(R.id.row_product_tvDivider);
+			holder.lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);
 			holder.lnValue = (LinearLayout) view.findViewById(R.id.row_product_tvValue);
 			holder.productlist_message_cart_no_login = (TextView)view.findViewById(R.id.productlist_message_cart_no_login);
 			view.setTag(holder);
@@ -150,8 +149,7 @@ public class SearchAdapter extends BaseAdapter {
 	private class CategoryHolder {
 		TextView tvTitle;	
 		TextView tvDes1;
-		TextView tvDes2;		
-		TextView tvDivider;
+		TextView tvDes2;
 		LinearLayout lnValue;
 		LinearLayout lnAddtoCart;
 		ImageView ivAvatar;

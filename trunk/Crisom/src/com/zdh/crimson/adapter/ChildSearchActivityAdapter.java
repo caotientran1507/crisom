@@ -12,6 +12,7 @@ import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -80,8 +81,7 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 			holder.tvModel = (TextView) view.findViewById(R.id.row_child_tvModel);
 			holder.tvColor = (TextView) view.findViewById(R.id.row_child_tvColor);
 			holder.tvWeight = (TextView) view.findViewById(R.id.row_child_tvShipWeight);
-			holder.tvOtherFieldTitle = (TextView) view.findViewById(R.id.row_child_tvOtherFieldTitle);
-			holder.tvOtherFieldValue = (TextView) view.findViewById(R.id.row_child_tvOtherFieldValue);
+			holder.tvOtherField = (TextView) view.findViewById(R.id.row_child_tvOtherField);
 			holder.tvPrice = (TextView) view.findViewById(R.id.row_child_tvPrice);
 			holder.tvMSRP = (TextView) view.findViewById(R.id.row_child_tvMSRP);
 			holder.tvIncart = (TextView) view.findViewById(R.id.row_child_tvInCart);
@@ -131,25 +131,13 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 		holder.tvMSRP.setText(listOption.get(currentPosition).getMsrp());
 		holder.tvIncart.setText(String.valueOf(listOption.get(currentPosition).getInCart()));
 		holder.tvPrice.setText(listOption.get(currentPosition).getPrice());
-
-		if (listOption.get(currentPosition).getOtherFieldTitle().equals("")) {
-			holder.tvOtherFieldTitle.setVisibility(View.GONE);
-			holder.tvOtherFieldValue.setVisibility(View.GONE);
-		}else{
-			holder.tvOtherFieldTitle.setVisibility(View.VISIBLE);
-			holder.tvOtherFieldValue.setVisibility(View.VISIBLE);
-			holder.tvOtherFieldTitle.setText(listOption.get(currentPosition).getOtherFieldTitle());
-			holder.tvOtherFieldValue.setText(listOption.get(currentPosition).getOtherFieldValue());
-		}
 		
 		if (listOption.get(currentPosition).getOtherFieldTitle().equals("") || listOption.get(currentPosition).getOtherFieldTitle().equals("null")) {
-			holder.tvOtherFieldTitle.setVisibility(View.GONE);
-			holder.tvOtherFieldValue.setVisibility(View.GONE);
+			holder.tvOtherField.setVisibility(View.GONE);
 		}else{
-			holder.tvOtherFieldTitle.setVisibility(View.VISIBLE);
-			holder.tvOtherFieldValue.setVisibility(View.VISIBLE);
-			holder.tvOtherFieldTitle.setText(listOption.get(currentPosition).getOtherFieldTitle());
-			holder.tvOtherFieldValue.setText(listOption.get(currentPosition).getOtherFieldValue());
+			holder.tvOtherField.setVisibility(View.VISIBLE);
+			String s = "<strong><font color=\"#2f3a76\">"+listOption.get(currentPosition).getOtherFieldTitle()+": </font></strong>"+ listOption.get(currentPosition).getOtherFieldValue();
+			holder.tvOtherField.setText(Html.fromHtml(s));
 		}
 
 		return view;
@@ -159,8 +147,7 @@ public class ChildSearchActivityAdapter extends BaseAdapter {
 		TextView tvModel;	
 		TextView tvColor;
 		TextView tvWeight;
-		TextView tvOtherFieldTitle;
-		TextView tvOtherFieldValue;
+		TextView tvOtherField;
 		TextView tvPrice;
 		TextView tvMSRP;
 		TextView tvIncart;
