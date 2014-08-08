@@ -25,7 +25,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -85,7 +84,6 @@ public class ProductListAdapter extends BaseAdapter {
 			holder.tvDes2 =  (TextView) view.findViewById(R.id.row_product_tvDes2);	
 			holder.productlist_message_cart_no_login = (TextView)view.findViewById(R.id.productlist_message_cart_no_login);
 			holder.lnAddtoCart = (LinearLayout) view.findViewById(R.id.row_product_lnAddtocart);				
-			holder.tvDivider =  (TextView) view.findViewById(R.id.row_product_tvDivider);
 			holder.lnValue = (LinearLayout) view.findViewById(R.id.row_product_tvValue);
 			view.setTag(holder);
 		} else {
@@ -150,8 +148,7 @@ public class ProductListAdapter extends BaseAdapter {
 	private class CategoryHolder {
 		TextView tvTitle;	
 		TextView tvDes1;
-		TextView tvDes2;		
-		TextView tvDivider;
+		TextView tvDes2;
 		TextView productlist_message_cart_no_login;
 		LinearLayout lnValue;
 		LinearLayout lnAddtoCart;

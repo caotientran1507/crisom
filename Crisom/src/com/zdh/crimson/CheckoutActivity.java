@@ -14,6 +14,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -556,6 +557,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				if ((json != null) || (!json.equals(""))) {               
 					JSONObject jsonObject = new JSONObject(json);
 					boolean s = jsonObject.getBoolean("info");
+					Log.d("json", json);
 					if (s) {
 						return "true";
 					}
@@ -638,62 +640,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	}
 
 	//--------------------GetAQuote----------------------------------------
-	public class GetAQuoteAsyncTask extends AsyncTask<String, String, String> {
-
-		private String json;
-		int idCustomer;
-		String country;
-		String state;
-		String postalCode;
-		public GetAQuoteAsyncTask(int idCustomer,String country,String state,String postalCode){
-			this.idCustomer = idCustomer;
-			this.country = country;
-			this.state = state;
-			this.postalCode = postalCode;
-		}
-
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			if (pDialog != null ) {	        		 	        
-				pDialog.setMessage("Loading...");
-				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
-				pDialog.show();
-				pDialog.setContentView(R.layout.dialog_process);
-			}
-		}
-
-		protected String doInBackground(String... params) {
-
-			try {
-				// Building Parameters
-				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
-				paramsUrl.add(new BasicNameValuePair("country", country));
-				paramsUrl.add(new BasicNameValuePair("state", state));
-				paramsUrl.add(new BasicNameValuePair("postalCode", postalCode));
-				json = JsonParser.makeHttpRequest(Constants.URL_GETMODEL, "GET", paramsUrl);
-				if ((json != null) || (!json.equals(""))) {               
-					JSONArray array = new JSONArray(json);
-					for (int j = 0; j < array.length(); j++) {
-						String name = array.getString(j);      						
-
-					}
-
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-
-			return null;
-		}
-
-		protected void onPostExecute(String file_url) {	      
-			pDialog.dismiss();	
-		}
-	}
+	
 
 	//--------------------GetCartCode----------------------------------------
 	public class GetCartCodeAsyncTask extends AsyncTask<String, String, String> {
