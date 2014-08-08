@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -100,8 +101,8 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	@Override
 	protected void onResume() {
 		super.onResume();
-		ChangeTextButtonLogin();
-		childAdapter.notifyDataSetChanged();
+//		ChangeTextButtonLogin();
+//		childAdapter.notifyDataSetChanged();
 	}
 
 	private void init(){
@@ -166,6 +167,8 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		btnVerify.setOnClickListener(this);
 		tvMainSite.setOnClickListener(this);
 		pDialog = new ProgressDialog(ProductDetailActivity.this);
+		
+		ChangeTextButtonLogin();
 
 	}
 
@@ -251,8 +254,12 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	protected void ChangeTextButtonLogin() {
 		super.ChangeTextButtonLogin();
 		
-		if(product != null && product.getListOption().size() > 0)
-			childAdapter.notifyDataSetChanged();
+		if(product != null && childAdapter != null){
+			product = new Product();
+			initDataWebservice();
+//			childAdapter = new ChildAdapter(ProductDetailActivity.this, product.getListOption(),currentProduct);
+//			lvPrice.setAdapter(childAdapter);
+		}
 	}
 
 
@@ -288,6 +295,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(cid)));
 
 				json = JsonParser.makeHttpRequest(Constants.URL_GETPRODUCTBYID, "GET", paramsUrl);
+				Log.d("Product Detail - Json", json);
 				if ((json != null) || (!json.equals(""))) { 
 					JSONObject jsonObject = new JSONObject(json);	                	
 					product.setId(jsonObject.getInt("entity_id"));
@@ -350,6 +358,12 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			tvDes.setTag(product.getDes());
 			tvFaqContent.setText(product.getFaq());
 			imageLoader.DisplayImage(product.getImage(), ivAvatar);
+			
+			if(product != null && childAdapter != null){
+				childAdapter = new ChildAdapter(ProductDetailActivity.this, product.getListOption(),currentProduct);
+				lvPrice.setAdapter(childAdapter);
+			}
+			
 			pDialog.dismiss();	      
 		}
 	}
@@ -466,6 +480,11 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			}			
 		}
 	}
+	
+	private void resetSpinner(){
+		spnManufacturer.setSelection(0);
+		spnModel.setSelection(0);
+	}
 
 	private void showDialogVerifyCardNumber()
 	{		
@@ -522,6 +541,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				rdbProjector.setChecked(false);
 				radioChecked = 1;
 				new GetManufacturerAsyncTask(radioChecked).execute();
+				resetSpinner();
 			}
 		});
 
@@ -533,6 +553,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				rdbProjector.setChecked(true);
 				radioChecked = 2;
 				new GetManufacturerAsyncTask(radioChecked).execute();
+				resetSpinner();
 			}
 		});
 
