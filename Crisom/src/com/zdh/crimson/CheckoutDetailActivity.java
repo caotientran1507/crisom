@@ -20,10 +20,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -55,10 +53,11 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	,ln1BillingInfomation,ln2ShippingInfomation,ln3ShippingMethod,ln4PaymentInfomation,ln5OrderReview
 	,ln1BillingInfomationContent,ln2ShippingInfomationContent,ln3ShippingMethodContent,ln4PaymentInfomationContent,ln5OrderReviewContent
 	,lnCreditCardOnFileContent, lnCreditCardContent;
-	private ImageView ivCart;	
+	private ImageView ivCart,ivPaypal;	
 	private Button btnBillingContinue,btnShippingContinue,btnShippingMethodContinue,btnPaymentContinue,btnPlaceOrder;
 	private TextView tvTitle,tvSubtotal,tvShippingHandling,tvTax,tvGrandTotal,tvEditYourCard,tvRedirectedPaypal
-	,tvWhatIsThis,tvWhatIsPaypal;
+	,tvWhatIsThis,tvWhatIsPaypal,tvShipThisAddress,tvShipDifferentAddress,tvCreditCardOnFile,tvCreditCard
+	,tvUseBillingAddress,tvSaveCreditCard;
 
 	Spinner spnBillingAddress,spnShippingAddress,spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear;
 	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnCreditCardOnFile,rbnPaypal,rbnCreditCard;
@@ -174,11 +173,16 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		rbnCreditCardOnFile = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCardOnFile);
 		rbnPaypal = (RadioButton)findViewById(R.id.checkoutdetail_rbnPaypal);
 		rbnCreditCard = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCard);
+		
+		tvShipThisAddress = (TextView)findViewById(R.id.checkoutdetail_tvShipThisAddress);
+		tvShipDifferentAddress = (TextView)findViewById(R.id.checkoutdetail_tvShipDifferentAddress);
+		tvCreditCardOnFile = (TextView)findViewById(R.id.checkoutdetail_tvCreditCardOnFile);
+		tvCreditCard = (TextView)findViewById(R.id.checkoutdetail_tvCreditCard);
+		ivPaypal = (ImageView)findViewById(R.id.checkoutdetail_ivPaypal);
 
 		lvParcelService = (ListView)findViewById(R.id.checkoutdetail_lvParcelService);
 		lvReview = (ExpandableHeightListView)findViewById(R.id.checkoutdetail_lvReview);
 		
-
 		lnCreditCardOnFileContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardOnFileContent);
 		lnCreditCardContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardContent);
 		tvRedirectedPaypal = (TextView)findViewById(R.id.checkoutdetail_tvRedirectedPaypal);
@@ -194,6 +198,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		tvWhatIsPaypal = (TextView)findViewById(R.id.checkoutdetail_tvWhatIsPaypal);
 
 		cbxUseBillingAddress = (CheckBox)findViewById(R.id.checkoutdetail_cbxUseBillingAddress);
+		
+		tvUseBillingAddress  = (TextView)findViewById(R.id.checkoutdetail_tvUseBillingAddress);
+		tvSaveCreditCard  = (TextView)findViewById(R.id.checkoutdetail_tvSaveCreditCard);
 
 		ivCart.setImageResource(R.drawable.ico_cart_active);
 
@@ -227,6 +234,15 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		tvEditYourCard.setOnClickListener(this);
 		tvWhatIsThis.setOnClickListener(this);
 		tvWhatIsPaypal.setOnClickListener(this);
+		
+		tvShipThisAddress.setOnClickListener(this);
+		tvShipDifferentAddress.setOnClickListener(this);
+		tvCreditCardOnFile.setOnClickListener(this);
+		tvCreditCard.setOnClickListener(this);
+		ivPaypal.setOnClickListener(this);
+		tvUseBillingAddress.setOnClickListener(this);
+		tvSaveCreditCard.setOnClickListener(this);
+				
 	}
 
 	private void initData() {
@@ -540,8 +556,59 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;
 
-
-
+		case R.id.checkoutdetail_tvShipThisAddress:
+			rbnShipThisAddress.setChecked(true);
+			rbnShipDifferentAddress.setChecked(false);	
+			break;
+			
+		case R.id.checkoutdetail_tvShipDifferentAddress:
+			rbnShipThisAddress.setChecked(false);
+			rbnShipDifferentAddress.setChecked(true);	
+			break;
+			
+		case R.id.checkoutdetail_tvCreditCardOnFile:
+			rbnCreditCardOnFile.setChecked(true);
+			rbnPaypal.setChecked(false);	
+			rbnCreditCard.setChecked(false);
+			tvRedirectedPaypal.setVisibility(View.GONE);
+			lnCreditCardContent.setVisibility(View.GONE);
+			lnCreditCardOnFileContent.setVisibility(View.VISIBLE);
+			break;
+			
+		case R.id.checkoutdetail_tvCreditCard:
+			rbnCreditCardOnFile.setChecked(false);
+			rbnPaypal.setChecked(false);	
+			rbnCreditCard.setChecked(true);
+			tvRedirectedPaypal.setVisibility(View.GONE);	
+			lnCreditCardOnFileContent.setVisibility(View.GONE);
+			lnCreditCardContent.setVisibility(View.VISIBLE);
+			break;
+			
+		case R.id.checkoutdetail_ivPaypal:
+			rbnCreditCardOnFile.setChecked(false);
+			rbnPaypal.setChecked(true);	
+			rbnCreditCard.setChecked(false);
+			tvRedirectedPaypal.setVisibility(View.VISIBLE);	
+			lnCreditCardOnFileContent.setVisibility(View.GONE);
+			lnCreditCardContent.setVisibility(View.GONE);
+			break;
+			
+		case R.id.checkoutdetail_tvUseBillingAddress:
+			if (cbxUseBillingAddress.isChecked()) {
+				cbxUseBillingAddress.setChecked(false);
+			} else {
+				cbxUseBillingAddress.setChecked(true);
+			}
+			break;
+			
+		case R.id.checkoutdetail_tvSaveCreditCard:
+			if (cbxSaveCreditCard.isChecked()) {
+				cbxSaveCreditCard.setChecked(false);
+			} else {
+				cbxSaveCreditCard.setChecked(true);
+			}
+			break;
+		
 		default:
 			break;
 		}

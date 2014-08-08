@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
@@ -149,6 +148,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 				if (SharedPreferencesUtil.getFlagLogin(getApplicationContext())) {
 					SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
 					ChangeTextButtonLogin();
+					logout();
 				} else {
 					Intent login = new Intent(getApplicationContext(),LoginActivity.class);
 					startActivityForResult(login, requestCodeLogin);
@@ -193,5 +193,8 @@ public class BaseActivity extends Activity implements OnClickListener{
 			FileUtil.POSITION_ACTIVITY = FileUtil.POSITION_ACTIVITY - 1;
 		}	
 		
+	}
+	
+	public void logout(){				
 	}
 }

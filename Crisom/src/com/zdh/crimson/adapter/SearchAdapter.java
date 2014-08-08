@@ -160,7 +160,12 @@ public class SearchAdapter extends BaseAdapter {
 
 	private void showDialogChildrenProduct(Product product)
 	{		
-		new GetProductByIdAsyncTask(context,SharedPreferencesUtil.getIdCustomerLogin(context), product.getId()).execute();
+		if (SharedPreferencesUtil.getFlagLogin(context)) {
+			new GetProductByIdAsyncTask(context,SharedPreferencesUtil.getIdCustomerLogin(context), product.getId()).execute();
+		} else {
+			new GetProductByIdAsyncTask(context,0, product.getId()).execute();
+		}
+		
 		dialogChildrenProduct = new Dialog(context, R.style.FullHeightDialog);
 		dialogChildrenProduct.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 

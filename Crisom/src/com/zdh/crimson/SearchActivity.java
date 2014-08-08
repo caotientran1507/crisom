@@ -57,13 +57,14 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	protected void onResume() {
 		super.onResume();
 		ChangeTextButtonLogin();
+		adapter.notifyDataSetChanged();
 	}
 
-	
+
 	@Override
 	protected void ChangeTextButtonLogin() {
 		super.ChangeTextButtonLogin();
-		
+
 		if (FileUtil.listSearch != null && FileUtil.listSearch.size() > 0 && adapter != null)
 			adapter.notifyDataSetChanged();
 	}
@@ -162,6 +163,17 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			new SearchAsyncTask(edtSearch.getText().toString().trim()).execute();
 			break;	
 
+//		case R.id.include_header_btnLogin:
+//
+//			if (!SharedPreferencesUtil.getFlagLogin(getApplicationContext())) {
+//				Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+//				startActivityForResult(login, requestCodeLogin);
+//				overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
+//			}else{
+//				showDialog(this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);
+//			}
+//
+//			break;
 
 		default:
 			break;
@@ -297,5 +309,14 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			pDialog.dismiss();	      
 		}
 	}
+	
+	
 
+	@Override
+	public void logout() {
+		// TODO Auto-generated method stub
+		super.logout();
+		adapter.notifyDataSetChanged();
+		
+	}
 }

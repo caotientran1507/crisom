@@ -101,7 +101,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	protected void onResume() {
 		super.onResume();
 		ChangeTextButtonLogin();
-
+		childAdapter.notifyDataSetChanged();
 	}
 
 	private void init(){
@@ -186,7 +186,12 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	}
 
 	private void initDataWebservice(){
-		new GetProductByIdAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(ProductDetailActivity.this), currentProduct).execute();
+		if (SharedPreferencesUtil.getFlagLogin(ProductDetailActivity.this)) {
+			new GetProductByIdAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(ProductDetailActivity.this), currentProduct).execute();
+		}else{
+			new GetProductByIdAsyncTask(0, currentProduct).execute();
+		}
+
 	}
 
 	@Override
@@ -540,7 +545,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 						positionManufacturerName = i;
 					}
 				}
-				
+
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -745,6 +750,14 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		String manufacturer = "Select Manufacturer";		
 		listManufacturerName.clear();		
 		listManufacturerName.add(manufacturer);
+	}
+	
+	@Override
+	public void logout() {
+		// TODO Auto-generated method stub
+		super.logout();
+		childAdapter.notifyDataSetChanged();
+		
 	}
 
 }
