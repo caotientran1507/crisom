@@ -114,16 +114,19 @@ public class BaseActivity extends Activity implements OnClickListener{
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == requestCodeLogin){
 			ChangeTextButtonLogin();
-			if (FileUtil.POSITION_ACTIVITY == Constants.POSITION_ACTIVITY_CHECKOUT 
-					|| FileUtil.POSITION_ACTIVITY == Constants.POSITION_ACTIVITY_CHECKOUTDETAIL
-					|| FileUtil.POSITION_ACTIVITY == Constants.POSITION_ACTIVITY_CART ) {
-				Intent home = new Intent(getApplicationContext(), HomeActivity.class);
-				startActivity(home);
-				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
-				overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);	
-			}
+		}			
+	}
+	
+	private void backToHome(){
+		ChangeTextButtonLogin();
+		if (FileUtil.POSITION_ACTIVITY == Constants.POSITION_ACTIVITY_CHECKOUT 
+				|| FileUtil.POSITION_ACTIVITY == Constants.POSITION_ACTIVITY_CHECKOUTDETAIL
+				|| FileUtil.POSITION_ACTIVITY == Constants.POSITION_ACTIVITY_CART ) {
+			Intent home = new Intent(getApplicationContext(), HomeActivity.class);
+			startActivity(home);
+			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);	
 		}
-			
 	}
 	
 
@@ -147,7 +150,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 			public void onClick(View v) {
 				if (SharedPreferencesUtil.getFlagLogin(getApplicationContext())) {
 					SharedPreferencesUtil.saveFlagLogin(false, 0,mContext);
-					ChangeTextButtonLogin();
+					backToHome();
 					logout();
 				} else {
 					Intent login = new Intent(getApplicationContext(),LoginActivity.class);
