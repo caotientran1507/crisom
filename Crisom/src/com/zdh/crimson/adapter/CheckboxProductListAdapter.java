@@ -89,6 +89,18 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 			}
 		});
 		
+		holder.tv.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {		
+				if (listCheckbox.get(position)) {
+					listCheckbox.set(position, false);
+				}else{
+					listCheckbox.set(position, true);
+				}
+			}
+		});
+		
 		if (listCheckbox.get(position)) {
 			holder.cbx.setChecked(true);
 		}else{

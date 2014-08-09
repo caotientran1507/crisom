@@ -375,14 +375,15 @@
                                 android:textStyle="bold" 
                                 android:layout_marginBottom="10dp"/>
 
-                            <ListView
+                            <com.zdh.crimson.utility.ExpandableHeightListView
                                 android:id="@+id/checkoutdetail_lvParcelService"
                                 android:layout_width="match_parent"
-                                android:layout_height="200dp"
+                                android:layout_height="wrap_content"
                                 android:dividerHeight="5dp"
                                 android:divider="@color/transparent"
+                                android:layout_marginBottom="10dp"
                                 android:choiceMode="singleChoice">
-                            </ListView>
+                            </com.zdh.crimson.utility.ExpandableHeightListView>
 
                             <TextView
                                 android:layout_width="match_parent"

@@ -43,14 +43,14 @@
                 android:paddingRight="5dp"
                 android:weightSum="100" >
 
-                <ListView
+                <com.zdh.crimson.utility.ExpandableHeightListView
                     android:id="@+id/dialog_child_lv"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="100"
                     android:divider="@color/crisom_gray_divider"
                     android:dividerHeight="1dp" >
-                </ListView>
+                </com.zdh.crimson.utility.ExpandableHeightListView>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
