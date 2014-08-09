@@ -42,7 +42,7 @@ public class ProductListActivity extends BaseActivity implements
 			lnNarrowContent, lncheckboxAll;
 	private ExpandableHeightListView lvProduct, lvCheckbox;
 	private ImageView ivCategory, ivNarrowShow;
-	private TextView tvTitle;
+	private TextView tvTitle,tvAll;
 	private ProgressDialog pDialog;
 	ProductListAdapter adapter;
 	static int currentCategory = 0;
@@ -130,6 +130,8 @@ public class ProductListActivity extends BaseActivity implements
 		btnSearch = (Button) findViewById(R.id.productlist_btnSearch);
 		btnClearFilter = (Button) findViewById(R.id.productlist_btnClearFilter);
 		cbxAll = (CheckBox) findViewById(R.id.productlist_cbxAll);
+		tvAll = (TextView) findViewById(R.id.productlist_tvAll);
+		
 		lncheckboxAll = (LinearLayout) findViewById(R.id.productlist_lncheckboxAll);
 
 		ivCategory.setImageResource(R.drawable.ico_category_active);
@@ -143,6 +145,7 @@ public class ProductListActivity extends BaseActivity implements
 		btnBack.setOnClickListener(this);
 		lnNarrowTitle.setOnClickListener(this);
 		cbxAll.setOnClickListener(this);
+		tvAll.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
 		btnClearFilter.setOnClickListener(this);
 		lncheckboxAll.setOnClickListener(this);
@@ -258,6 +261,15 @@ public class ProductListActivity extends BaseActivity implements
 
 			break;
 		case R.id.productlist_cbxAll:
+			if (!flagCheckAll) {
+				checkAll();
+				flagCheckAll = true;
+			} else {
+				uncheckAll();
+				flagCheckAll = false;
+			}
+			
+		case R.id.productlist_tvAll:
 			if (!flagCheckAll) {
 				checkAll();
 				flagCheckAll = true;

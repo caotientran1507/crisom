@@ -237,7 +237,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
-		    	if (listManufacturerName.size() > 0 ) {
+		    	if (listManufacturerName.size() > 1 ) {
 		    		if (i != 0) {
 			    		spnModel.setVisibility(View.VISIBLE);
 			    		new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
@@ -254,7 +254,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 		spnModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
-		    	if (listModelName.size() > 0) {
+		    	if (listModelName.size() > 1) {
 		    		if (i != 0) {
 			    		Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
 						intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, listModelName.get(i));
@@ -529,8 +529,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
                 paramsUrl.add(new BasicNameValuePair("manu", manu));
                 Log.d("idDevide+manu", "idDevide"+idDevide+"manu"+manu);
                 json = JsonParser.makeHttpRequest(
-                		Constants.URL_GETMODEL, "GET", paramsUrl);
-                Log.d("json", json);
+                		Constants.URL_GETMODEL, "GET", paramsUrl);                
                 if ((json != null) || (!json.equals(""))) {               
                 	JSONArray array = new JSONArray(json);
                 	clearSpinnerModel();

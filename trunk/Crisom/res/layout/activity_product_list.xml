@@ -170,7 +170,8 @@
                                         android:button="@null" />
 
                                     <TextView
-                                        android:layout_width="wrap_content"
+                                        android:id="@+id/productlist_tvAll"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:text="All" />

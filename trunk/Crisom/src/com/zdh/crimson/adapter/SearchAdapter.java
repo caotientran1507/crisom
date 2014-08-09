@@ -27,7 +27,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zdh.crimson.ProductDetailActivity;
@@ -37,6 +36,7 @@ import com.zdh.crimson.model.DocumentObject;
 import com.zdh.crimson.model.OptionObject;
 import com.zdh.crimson.model.Product;
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
@@ -48,7 +48,7 @@ public class SearchAdapter extends BaseAdapter {
 	public ImageLoader imageLoader;
 
 	Dialog dialogChildrenProduct;
-	ListView lvDialog;
+	ExpandableHeightListView lvDialog;
 	TextView tvDialog;
 
 
@@ -168,11 +168,8 @@ public class SearchAdapter extends BaseAdapter {
 		dialogChildrenProduct.getWindow().setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
 
 		dialogChildrenProduct.setContentView(R.layout.dialog_child);
-		lvDialog = (ListView) dialogChildrenProduct.findViewById(R.id.dialog_child_lv);
+		lvDialog = (ExpandableHeightListView) dialogChildrenProduct.findViewById(R.id.dialog_child_lv);
 		tvDialog = (TextView) dialogChildrenProduct.findViewById(R.id.include_header_tvTitle);
-
-		//	ChildSearchActivityAdapter childAdapter = new ChildSearchActivityAdapter(mContext, product.getListOption(),product.getId());
-		//	lvDialog.setAdapter(childAdapter);
 
 		dialogChildrenProduct.setOnCancelListener(new OnCancelListener() {
 

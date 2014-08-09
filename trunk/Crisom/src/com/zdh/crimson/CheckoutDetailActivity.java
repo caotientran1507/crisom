@@ -62,7 +62,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	Spinner spnBillingAddress,spnShippingAddress,spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear;
 	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnCreditCardOnFile,rbnPaypal,rbnCreditCard;
 	CheckBox cbxUseBillingAddress,cbxSaveCreditCard;
-	ListView lvParcelService;
+	ExpandableHeightListView lvParcelService;
 	private ExpandableHeightListView lvReview;
 	EditText edtCreditCardNumber,edtCardVerification;
 
@@ -180,7 +180,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		tvCreditCard = (TextView)findViewById(R.id.checkoutdetail_tvCreditCard);
 		ivPaypal = (ImageView)findViewById(R.id.checkoutdetail_ivPaypal);
 
-		lvParcelService = (ListView)findViewById(R.id.checkoutdetail_lvParcelService);
+		lvParcelService = (ExpandableHeightListView)findViewById(R.id.checkoutdetail_lvParcelService);
 		lvReview = (ExpandableHeightListView)findViewById(R.id.checkoutdetail_lvReview);
 		
 		lnCreditCardOnFileContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardOnFileContent);
@@ -456,8 +456,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			break;
 		case R.id.checkoutdetail_Payment_btnContinue:
 			if (rbnCreditCardOnFile.isChecked()) {
-				if (positionShipping == 0) {
-					Toast.makeText(CheckoutDetailActivity.this, "Please select select Credit Card Type!", Toast.LENGTH_SHORT).show();
+				if (positionCreditCardOnFile == 0) {
+					Toast.makeText(CheckoutDetailActivity.this, "Please select Credit Card Type!", Toast.LENGTH_SHORT).show();
 				}else{
 					new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 					ln1BillingInfomationContent.setVisibility(View.GONE);

@@ -13,7 +13,7 @@ public class Constants {
 	public static final String URL_STAGING = "http://23.21.185.157";
 	public static final String URL_PAYPAL = "https://www.paypal.com/us/webapps/mpp/paypal-popup";
 	
-	public static final String URL_CUSTOMAPI = URL_STAGING + "/customapi/result/";
+	public static final String URL_CUSTOMAPI = URL + "/customapi/result/";
 	
 	public static final String URL_GETCATEGORIESBYID = URL_CUSTOMAPI + "getCategoriesById";
 	public static final String URL_GETPRODUCTBYCATEGORYID = URL_CUSTOMAPI + "getProductsByCategoryId";
