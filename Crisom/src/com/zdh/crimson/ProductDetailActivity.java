@@ -86,8 +86,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	int radioChecked = 1;
 	int positionManufacturerName = 0;
 	int positionModelName = 0;
-
-
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -101,8 +100,12 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	@Override
 	protected void onResume() {
 		super.onResume();
-//		ChangeTextButtonLogin();
-//		childAdapter.notifyDataSetChanged();
+		
+		if(product != null && childAdapter != null && 
+				oldStatusLogin != SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
+			product = new Product();
+			initDataWebservice();
+		}
 	}
 
 	private void init(){
@@ -257,8 +260,6 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		if(product != null && childAdapter != null){
 			product = new Product();
 			initDataWebservice();
-//			childAdapter = new ChildAdapter(ProductDetailActivity.this, product.getListOption(),currentProduct);
-//			lvPrice.setAdapter(childAdapter);
 		}
 	}
 

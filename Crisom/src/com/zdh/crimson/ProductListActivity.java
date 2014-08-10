@@ -92,6 +92,16 @@ public class ProductListActivity extends BaseActivity implements
 		if (FileUtil.listProduct != null && FileUtil.listProduct.size() > 0 && adapter != null)
 			adapter.notifyDataSetChanged();
 	}
+	
+	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		
+		if (FileUtil.listProduct != null && FileUtil.listProduct.size() > 0 && adapter != null)
+			adapter.notifyDataSetChanged();
+	}
 
 	private void init() {
 		initView();
