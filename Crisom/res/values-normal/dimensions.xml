@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="textsize_buton_top">14sp</dimen>
+    <dimen name="textsize_title_top">18sp</dimen>
+    <dimen name="padding_top_bottom_buton">10dp</dimen>
+
+    <!-- ***************** about ***************** -->
+    <dimen name="about_textsize_buton">18sp</dimen>
+    <!-- ***************** detail ***************** -->
+    <dimen name="textsize_content">14sp</dimen>    
+    <dimen name="textsize_title">16sp</dimen>
+    <!-- ***************** placelist ***************** -->
+    <dimen name="imagesize">60dp</dimen>
+    <dimen name="textsize_content_distance">10sp</dimen>
+</resources>

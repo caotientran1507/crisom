@@ -574,11 +574,15 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (s.equals("true")) {
 				tvCoupon.setVisibility(View.VISIBLE);
 				btnCancelCoupon.setVisibility(View.VISIBLE);
-				Toast.makeText(CheckoutActivity.this, "Apply coupon success!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(CheckoutActivity.this, "Apply coupon success!", Toast.LENGTH_SHORT).show();				
+				pDialog.dismiss();	
+				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
+				
 			}else{
 				Toast.makeText(CheckoutActivity.this, "Apply coupon fail!", Toast.LENGTH_SHORT).show();
+				pDialog.dismiss();	
 			}
-			pDialog.dismiss();	
+			
 		}
 	}
 
@@ -632,10 +636,14 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				tvCoupon.setVisibility(View.GONE);
 				btnCancelCoupon.setVisibility(View.GONE);
 				edtCoupon.setText("");
+				pDialog.dismiss();	
+				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 			}else{
 				Toast.makeText(CheckoutActivity.this, "Cancel coupon fail!", Toast.LENGTH_SHORT).show();
+				pDialog.dismiss();	
+				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 			}
-			pDialog.dismiss();	
+			
 		}
 	}
 

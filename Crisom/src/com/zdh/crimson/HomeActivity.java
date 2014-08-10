@@ -314,16 +314,19 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		//--------click radio button----------
 			
 		case R.id.home_rbnFlatpanel:
+			spnModel.setVisibility(View.GONE);
 			rbnFlatpanel.setChecked(true);
 			rbnProjector.setChecked(false);
 			radioChecked = 1;
 			new GetManufacturerAsyncTask(radioChecked).execute();
+			
 			break;	
 		case R.id.home_rbnProjector:
+			spnModel.setVisibility(View.GONE);
 			rbnFlatpanel.setChecked(false);
 			rbnProjector.setChecked(true);
 			radioChecked = 2;
-			new GetManufacturerAsyncTask(radioChecked).execute();
+			new GetManufacturerAsyncTask(radioChecked).execute();						
 			break;	
 			
 			
