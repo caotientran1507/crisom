@@ -43,8 +43,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	private ListView listview;
 	SearchAdapter adapter;
 	private ProgressDialog pDialog;
-
-
+	static String keySearch ="";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +57,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		super.onResume();
 		ChangeTextButtonLogin();
 		adapter.notifyDataSetChanged();
+		edtSearch.setText(keySearch);
 	}
 
 
@@ -122,7 +122,10 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				boolean handled = false;
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-					new SearchAsyncTask(edtSearch.getText().toString().trim()).execute();		        	
+					keySearch = edtSearch.getText().toString().trim();
+					FileUtil.listSearch.clear();
+					adapter.notifyDataSetChanged();
+					new SearchAsyncTask(keySearch).execute();		        	
 				}
 				return handled;
 			}
@@ -160,27 +163,17 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		switch (v.getId()) {
 
 		case R.id.include_search_lnImage:
-			new SearchAsyncTask(edtSearch.getText().toString().trim()).execute();
+			keySearch = edtSearch.getText().toString().trim();
+			FileUtil.listSearch.clear();
+			adapter.notifyDataSetChanged();
+			new SearchAsyncTask(keySearch).execute();
 			break;	
-
-//		case R.id.include_header_btnLogin:
-//
-//			if (!SharedPreferencesUtil.getFlagLogin(getApplicationContext())) {
-//				Intent login = new Intent(getApplicationContext(), LoginActivity.class);
-//				startActivityForResult(login, requestCodeLogin);
-//				overridePendingTransition(R.anim.fly_in_from_top, R.anim.stay);	
-//			}else{
-//				showDialog(this,Constants.CONFIRM_LOGOUT_TITLE, Constants.CONFIRM_LOGOUT_MESSAGE);
-//			}
-//
-//			break;
 
 		default:
 			break;
 		}
 
 	}
-
 
 	//----------------------Search--------------------------------------
 
@@ -310,8 +303,6 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		}
 	}
 	
-	
-
 	@Override
 	public void logout() {
 		// TODO Auto-generated method stub

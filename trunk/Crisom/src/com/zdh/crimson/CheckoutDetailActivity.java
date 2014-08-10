@@ -29,7 +29,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -87,8 +86,6 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	int positionYear = 0;
 
 	String savecc_id = "";
-	String current_year= "";
-	String current_month= "";
 
 	String sSubtotal = "";
 	String sShipping = "";
@@ -325,7 +322,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		spnExpirationMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
-					current_month = FileUtil.months[i];
+//					current_month = FileUtil.months[i];
 					positionMonth = i;
 				}
 			} 
@@ -337,7 +334,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		spnExpirationYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
-					current_year = FileUtil.years[i];
+//					current_year = FileUtil.years[i];
 					positionYear = i;
 				}
 			} 
@@ -469,6 +466,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			}
 			else{
 				if (rbnCreditCard.isChecked()) {
+					Log.d("positionMonth", ""+positionMonth);
+					Log.d("positionYear", ""+positionYear);
 					if (checkInputDataCreditCard()) {
 						new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 						ln1BillingInfomationContent.setVisibility(View.GONE);
@@ -1099,7 +1098,6 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				if (listAddress.get(i).getValue().equals(address)) {
 					return listAddress.get(i).getKey();
 				}
-
 			}
 		}
 		return "";
@@ -1110,14 +1108,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			Toast.makeText(CheckoutDetailActivity.this, "Please select Credit Card Type!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		//		if (positionMonth == 0) {
-		//			Toast.makeText(CheckoutDetailActivity.this, "Please select Month!", Toast.LENGTH_SHORT).show();
-		//			return false;
-		//		}
-		//		if (positionYear == 0) {
-		//			Toast.makeText(CheckoutDetailActivity.this, "Please select Year!", Toast.LENGTH_SHORT).show();
-		//			return false;
-		//		}
+		if (positionMonth == 0) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please select Month!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		if (positionYear == 0) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please select Year!", Toast.LENGTH_SHORT).show();
+			return false;
+		}
 		if (edtCreditCardNumber.getText().toString().trim().equals("")) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please input Credit Card Number!", Toast.LENGTH_SHORT).show();
 			return false;
