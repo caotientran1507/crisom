@@ -543,6 +543,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				radioChecked = 1;
 				new GetManufacturerAsyncTask(radioChecked).execute();
 				resetSpinner();
+				tvDialog.setVisibility(View.GONE);
 			}
 		});
 
@@ -556,6 +557,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				radioChecked = 2;
 				new GetManufacturerAsyncTask(radioChecked).execute();
 				resetSpinner();
+				tvDialog.setVisibility(View.GONE);
 			}
 		});
 

@@ -113,7 +113,11 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		reviewCheckoutDetailAdapter.notifyDataSetChanged();
+		if(!SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
+			this.finish();
+		}else{
+			reviewCheckoutDetailAdapter.notifyDataSetChanged();
+		}
 	}
 
 
