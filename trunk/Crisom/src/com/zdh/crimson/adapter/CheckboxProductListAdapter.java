@@ -101,7 +101,7 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 			}
 		});
 		
-		if (listCheckbox.get(position)) {
+		if (!listCheckbox.get(position)) {
 			holder.cbx.setChecked(true);
 		}else{
 			holder.cbx.setChecked(false);
@@ -112,7 +112,7 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 		return view;
 	}
 
-	private class Holder {
+	public class Holder {
 		TextView tv;	
 		CheckBox cbx;
 		LinearLayout ln;

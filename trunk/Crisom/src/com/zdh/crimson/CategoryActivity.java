@@ -99,19 +99,15 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 
 		lvCategory.setOnItemClickListener(new OnItemClickListener() {
 			@Override
-			public void onItemClick(AdapterView<?> adapter, View view,
-					int position, long arg) {
+			public void onItemClick(AdapterView<?> adapter, View view,int position, long arg) {
 				
 				if (FileUtil.listCategory.size() > 0) {
 					if (FileUtil.listCategory.get(position).getSubcat()) {
-						currentCategory = FileUtil.listCategory.get(position)
-								.getId();
+						currentCategory = FileUtil.listCategory.get(position).getId();
 						new GetCategoriesByIdAsyncTask(currentCategory).execute();
 					} else {
-						Intent intent = new Intent(CategoryActivity.this,
-								ProductListActivity.class);
-						intent.putExtra(Constants.KEY_CATEGORYID,
-								FileUtil.listCategory.get(position).getId());
+						Intent intent = new Intent(CategoryActivity.this,ProductListActivity.class);
+						intent.putExtra(Constants.KEY_CATEGORYID,FileUtil.listCategory.get(position).getId());
 						startActivity(intent);
 						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 						FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTLIST;
