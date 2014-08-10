@@ -101,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="15"
-                android:background="@drawable/spinner_background"
+                android:background="@drawable/spinner_background_month"
                 android:paddingRight="25dp" />
 
             <TextView
@@ -114,7 +114,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="15"
-                android:background="@drawable/spinner_background"
+                android:background="@drawable/spinner_background_month"
                 android:paddingRight="25dp" />
 
             <TextView
