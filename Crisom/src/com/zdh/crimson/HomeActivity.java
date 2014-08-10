@@ -207,7 +207,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 		adapter = new HomeAdapter(HomeActivity.this, FileUtil.listHome);
 		lvCategory.setAdapter(adapter);
-		lvCategory.setEnabled(true);
+		lvCategory.setExpanded(true);
 		adapter.notifyDataSetChanged();
 	}
 	
