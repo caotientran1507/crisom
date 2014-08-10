@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="60"
+        android:layout_weight="65"
         android:orientation="horizontal"
         android:weightSum="100" >
 
@@ -151,7 +151,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40"
+        android:layout_weight="30"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         android:paddingTop="@dimen/padding"
@@ -161,7 +161,7 @@
             android:id="@+id/row_product_lnAddtocart"
             android:layout_width="0dp"
             android:layout_height="@dimen/row_child"
-            android:layout_weight="85"
+            android:layout_weight="95"
             android:orientation="horizontal"
             android:visibility="visible"
             android:weightSum="100" >
@@ -169,7 +169,7 @@
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="56" >
+                android:layout_weight="60" >
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -215,8 +215,8 @@
                             android:layout_weight="20" >
 
                             <ImageView
-                                android:layout_width="@dimen/include_search_iv"
-                                android:layout_height="@dimen/include_search_iv"
+                                android:layout_width="@dimen/include_footer_iv"
+                                android:layout_height="@dimen/include_footer_iv"
                                 android:src="@drawable/ico_cart_color" />
                         </LinearLayout>
 
@@ -234,12 +234,12 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="3" />
+                android:layout_weight="2" />
 
             <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="41" >
+                android:layout_weight="38" >
 
                 <ImageView
                     android:layout_width="match_parent"
