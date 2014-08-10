@@ -61,8 +61,8 @@
                             android:layout_height="wrap_content"
                             android:background="@color/crisom_blue"
                             android:gravity="center_vertical"
-                            android:paddingBottom="5dp"
-                            android:paddingTop="5dp"
+                            android:paddingBottom="@dimen/padding_small"
+                            android:paddingTop="@dimen/padding_small"
                             android:weightSum="100" >
 
                             <TextView
@@ -81,6 +81,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="NARROW YOUR SEARCH"
                                     android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal"
                                     android:textStyle="bold" />
                             </LinearLayout>
 
@@ -92,8 +93,8 @@
 
                                 <ImageView
                                     android:id="@+id/productlist_Narrow_img"
-                                    android:layout_width="15dp"
-                                    android:layout_height="15dp"
+                                    android:layout_width="@dimen/include_search_iv"
+                                    android:layout_height="@dimen/include_search_iv"
                                     android:src="@drawable/ico_next_white" />
                             </LinearLayout>
                         </LinearLayout>
@@ -106,14 +107,14 @@
                             android:background="#f1f1f1"
                             android:gravity="center_horizontal"
                             android:orientation="horizontal"
-                            android:paddingBottom="10dp"
-                            android:visibility="gone"
+                            android:paddingBottom="@dimen/padding"
+                            android:visibility="visible"
                             android:weightSum="100" >
 
                             <LinearLayout
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="20dp"
+                                android:layout_marginTop="@dimen/padding_large"
                                 android:layout_weight="90"
                                 android:orientation="vertical" >
 
@@ -121,36 +122,38 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="TV Size"
+                                    android:textSize="@dimen/textsize_normal"
                                     android:textColor="@color/crisom_red"
                                     android:textStyle="bold" />
 
                                 <Spinner
                                     android:id="@+id/productlist_spnTVsize"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_height="@dimen/spinner_height"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:background="@drawable/spinner_background" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:text="Type"
+                                    android:textSize="@dimen/textsize_normal"
                                     android:textColor="@color/crisom_red"
                                     android:textStyle="bold" />
 
                                 <Spinner
                                     android:id="@+id/productlist_spnType1"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_height="@dimen/spinner_height"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:background="@drawable/spinner_background" />
 
                                 <Spinner
                                     android:id="@+id/productlist_spnType2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="30dp"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_height="@dimen/spinner_height"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:background="@drawable/spinner_background"
                                     android:visibility="gone" />
 
@@ -158,14 +161,14 @@
                                     android:id="@+id/productlist_lncheckboxAll"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:orientation="horizontal"
                                     android:visibility="gone" >
 
                                     <CheckBox
                                         android:id="@+id/productlist_cbxAll"
-                                        android:layout_width="20dp"
-                                        android:layout_height="20dp"
+                                        android:layout_width="@dimen/include_footer_iv"
+                                        android:layout_height="@dimen/include_footer_iv"
                                         android:background="@drawable/checkbox_selector"
                                         android:button="@null" />
 
@@ -173,7 +176,7 @@
                                         android:id="@+id/productlist_tvAll"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:layout_marginLeft="10dp"
+                                        android:layout_marginLeft="@dimen/padding"
                                         android:text="All" />
                                 </LinearLayout>
 
@@ -182,8 +185,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="10dp"
-                                    android:layout_marginTop="5dp"
+                                    android:layout_marginLeft="@dimen/padding"
+                                    android:layout_marginTop="@dimen/padding_small"
                                     android:gravity="center_horizontal"
                                     android:orientation="horizontal"
                                     android:weightSum="100" >
@@ -194,7 +197,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="90"
                                         android:divider="@color/transparent"
-                                        android:dividerHeight="5dp" >
+                                        android:dividerHeight="@dimen/padding_small" >
                                     </com.zdh.crimson.utility.ExpandableHeightListView>
                                 </LinearLayout>
                                 <!-- end linear checkbox -->
@@ -202,21 +205,22 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:gravity="center"
                                     android:orientation="horizontal"
-                                    android:paddingBottom="20dp"
+                                    android:paddingBottom="@dimen/padding_large"
                                     android:weightSum="100" >
 
                                     <Button
                                         android:id="@+id/productlist_btnSearch"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="35"
+                                        android:layout_weight="40"
                                         android:background="@drawable/button_red_background"
-                                        android:paddingBottom="5dp"
-                                        android:paddingTop="5dp"
+                                        android:paddingBottom="@dimen/padding_small"
+                                        android:paddingTop="@dimen/padding_small"
                                         android:text="Search"
+                                        android:textSize="@dimen/textsize_normal"
                                         android:textColor="@color/crisom_white" />
 
                                     <TextView
@@ -228,11 +232,12 @@
                                         android:id="@+id/productlist_btnClearFilter"
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:layout_weight="35"
+                                        android:layout_weight="40"
                                         android:background="@drawable/button_red_background"
-                                        android:paddingBottom="5dp"
-                                        android:paddingTop="5dp"
+                                        android:paddingBottom="@dimen/padding_small"
+                                        android:paddingTop="@dimen/padding_small"
                                         android:text="Clear all filter"
+                                        android:textSize="@dimen/textsize_normal"
                                         android:textColor="@color/crisom_white" />
                                 </LinearLayout>
                             </LinearLayout>
@@ -244,9 +249,9 @@
                             android:id="@+id/productlist_lv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
+                            android:layout_marginTop="@dimen/padding_large"
                             android:divider="@color/transparent"
-                            android:dividerHeight="10dp">
+                            android:dividerHeight="@dimen/padding">
                         </com.zdh.crimson.utility.ExpandableHeightListView>
                     </LinearLayout>
                 </LinearLayout>

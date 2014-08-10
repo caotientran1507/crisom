@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="250dp"
-    android:layout_height="300dp"
+    android:layout_width="@dimen/dialog_verify_width"
+    android:layout_height="@dimen/dialog_verify_height"
     android:gravity="center"
     android:orientation="vertical"
     android:weightSum="100" >
@@ -12,8 +12,8 @@
         android:background="#b7151a"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
+        android:paddingBottom="@dimen/padding"
+        android:paddingTop="@dimen/padding"
         android:weightSum="100" >
 
         <TextView
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:text="EZ MOUNTER FINDER"
             android:textColor="@color/crisom_white"
-            android:textSize="16sp"
+            android:textSize="@dimen/include_header_with_btn_back_tv"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -54,14 +54,12 @@
                     android:id="@+id/dialog_verify_lnFlatpanel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
                     android:orientation="horizontal" >
 
                     <RadioButton
                         android:id="@+id/dialog_verify_rbnFlatpanel"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/include_footer_iv"
+                        android:layout_height="@dimen/include_footer_iv"
                         android:background="@drawable/radio_selector"
                         android:button="@null"
                         android:checked="true" />
@@ -69,31 +67,31 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="Flat Panel" />
+                        android:layout_marginLeft="@dimen/padding_small"
+                        android:text="Flat Panel"
+                        android:textSize="@dimen/textsize_normal" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/dialog_verify_lnProjector"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/padding"
                     android:orientation="horizontal" >
 
                     <RadioButton
                         android:id="@+id/dialog_verify_rbnProjector"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
+                        android:layout_width="@dimen/include_footer_iv"
+                        android:layout_height="@dimen/include_footer_iv"
                         android:background="@drawable/radio_selector"
                         android:button="@null" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="Projector" />
+                        android:layout_marginLeft="@dimen/padding_small"
+                        android:text="Projector"
+                        android:textSize="@dimen/textsize_normal" />
                 </LinearLayout>
             </LinearLayout>
             <!-- End Radio button -->
@@ -103,8 +101,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="15"
-                android:paddingRight="25dp"
-                android:background="@drawable/spinner_background" />
+                android:background="@drawable/spinner_background"
+                android:paddingRight="25dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -116,8 +114,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="15"
-                android:paddingRight="25dp"
-                android:background="@drawable/spinner_background" />
+                android:background="@drawable/spinner_background"
+                android:paddingRight="25dp" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -139,7 +137,8 @@
                     android:layout_weight="70"
                     android:background="@drawable/button_background"
                     android:text="Verify Compatibility"
-                    android:textColor="@color/crisom_white" />
+                    android:textColor="@color/crisom_white"
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
 
             <TextView
@@ -154,7 +153,7 @@
                 android:layout_weight="25"
                 android:gravity="center"
                 android:textColor="@color/crisom_red"
-                android:textSize="12sp" />
+                android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
     </LinearLayout>
 

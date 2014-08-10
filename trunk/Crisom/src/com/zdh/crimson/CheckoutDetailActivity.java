@@ -263,12 +263,13 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		spnCreditCardOnFile.setAdapter(cardTypeOnFileAdapter);
 
 		reviewCheckoutDetailAdapter = new ReviewCheckoutDetailAdapter(CheckoutDetailActivity.this, FileUtil.listRecent);
-		lvReview.setAdapter(reviewCheckoutDetailAdapter);
+		lvReview.setAdapter(reviewCheckoutDetailAdapter);		
 		lvReview.setExpanded(true);
 		
 
 		parcelServiceAdapter = new ParcelServiceAdapter(CheckoutDetailActivity.this, FileUtil.listCarrier);
 		lvParcelService.setAdapter(parcelServiceAdapter);
+		lvParcelService.setExpanded(true);
 
 		pDialog = new ProgressDialog(CheckoutDetailActivity.this);
 	}

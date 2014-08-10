@@ -37,7 +37,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="20"
+                android:layout_weight="23"
                 android:background="@drawable/linear_background"
                 android:orientation="horizontal"
                 android:weightSum="100" >
@@ -46,7 +46,7 @@
                     android:id="@+id/product_ivAvatar"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/padding"
                     android:layout_weight="30"
                     android:scaleType="fitXY"
                     android:src="@drawable/row_product_avatar" />
@@ -84,6 +84,7 @@
                             android:layout_weight="20"
                             android:gravity="center_vertical"
                             android:text="VW4600"
+                            android:textSize="@dimen/textsize_title"
                             android:textColor="@color/crisom_red"
                             android:textStyle="bold" />
 
@@ -93,6 +94,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="15"
                             android:text="Video Wall Mount"
+                            android:textSize="@dimen/textsize_normal"
                             android:textColor="@color/crisom_red"
                             android:textStyle="bold" />
 
@@ -102,6 +104,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="44"
                             android:maxLines="3"
+                            android:textSize="@dimen/textsize_normal"
                             android:text="Crimson’s best value in class VW4600 Video Wall Mount System features lateral, vertical, horizontal, and plumb adjustments. Includes an integrated"
                             android:textStyle="italic" />
 
@@ -112,6 +115,7 @@
                             android:layout_weight="15"
                             android:gravity="right"
                             android:text="Go to Main Site"
+                            android:textSize="@dimen/textsize_normal"
                             android:textColor="@color/crisom_blue"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -139,6 +143,7 @@
                     android:background="@drawable/button_red_background"
                     android:text="Verify Compatibility"
                     android:textColor="@color/crisom_white"
+                    android:textSize="@dimen/textsize_normal"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -152,7 +157,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="43"
+                android:layout_weight="40"
                 android:background="@drawable/linear_background_radius"
                 android:orientation="vertical"
                 android:weightSum="25" >
@@ -173,6 +178,7 @@
                         android:layout_weight="25"
                         android:gravity="center"
                         android:text="PRICE"
+                        android:textSize="@dimen/textsize_normal"
                         android:textColor="@color/crisom_white"
                         android:textStyle="bold" />
 
@@ -183,6 +189,7 @@
                         android:layout_weight="30"
                         android:gravity="center"
                         android:text="DOWNLOAD"
+                        android:textSize="@dimen/textsize_normal"
                         android:textColor="@color/crisom_white"
                         android:textStyle="bold" />
 
@@ -193,6 +200,7 @@
                         android:layout_weight="22"
                         android:gravity="center"
                         android:text="FAQ"
+                        android:textSize="@dimen/textsize_normal"
                         android:textColor="@color/crisom_white"
                         android:textStyle="bold" />
 
@@ -203,6 +211,7 @@
                         android:layout_weight="23"
                         android:gravity="center"
                         android:text="VIDEO"
+                        android:textSize="@dimen/textsize_normal"
                         android:textColor="@color/crisom_white"
                         android:textStyle="bold" />
                 </LinearLayout>

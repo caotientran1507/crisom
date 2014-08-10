@@ -2,7 +2,12 @@
 <resources>
     
     <dimen name="textsize_normal">20sp</dimen>
-    <dimen name="row_padding">18dp</dimen>
+    <dimen name="textsize_title">24sp</dimen>
+    <dimen name="padding">18dp</dimen>
+    <dimen name="padding_large">30dp</dimen>
+    <dimen name="padding_small">11dp</dimen>
+    
+    <dimen name="spinner_height">45dp</dimen>
     
     <!-- ***************** include_header_with_btn_back ***************** -->
     <dimen name="include_header_with_btn_back_button_width">100dp</dimen>
@@ -23,5 +28,28 @@
     
     <!-- ***************** row_child ***************** -->
     <dimen name="row_child">40dp</dimen>
+    
+    <!-- ***************** row_download ***************** -->
+    <dimen name="row_download_width">40dp</dimen>
+    <dimen name="row_download_height">55dp</dimen>
+    
+    <!-- ***************** row_product ***************** -->
+    
+    <dimen name="row_product_height">210dp</dimen>
+    <dimen name="row_product_height_iv">180dp</dimen>
+    <dimen name="row_product_height_iv_addtocart">40dp</dimen>
+    
+    <!-- ***************** row_product ***************** -->    
+    <dimen name="row_recent_height">140dp</dimen>
+    
+    <!-- ***************** dialog_verify ***************** -->    
+    <dimen name="dialog_verify_height">450dp</dimen>
+    <dimen name="dialog_verify_width">350dp</dimen>
+    
+    <!-- ***************** dialog_process ***************** -->    
+    <dimen name="dialog_process_iv">50dp</dimen>
+    
+    <!-- ***************** dialog_alert_login ***************** -->    
+    <dimen name="dialog_alert_login_height">45dp</dimen>
 
 </resources>

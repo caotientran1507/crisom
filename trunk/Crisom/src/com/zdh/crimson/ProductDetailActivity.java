@@ -403,6 +403,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			int count;
 			try {
 				URL url = new URL(f_url[0]);
+				Log.d("url", ""+url.toString());
 				URLConnection conection = url.openConnection();
 				conection.connect();
 				// getting file length

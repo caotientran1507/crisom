@@ -4,9 +4,9 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingTop="@dimen/row_padding"
+    android:paddingTop="@dimen/padding"
     android:background="@drawable/change_color_background_item"
-    android:paddingBottom="@dimen/row_padding"
+    android:paddingBottom="@dimen/padding"
     android:weightSum="100" >
 
     <TextView

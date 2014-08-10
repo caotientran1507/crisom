@@ -1,26 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <dimen name="textsize_normal">26sp</dimen>
-    <dimen name="row_padding">25dp</dimen>
+    <dimen name="textsize_title">30sp</dimen>
+    <dimen name="padding">25dp</dimen>
+    <dimen name="padding_large">40dp</dimen>
+    <dimen name="padding_small">15dp</dimen>
+    <dimen name="spinner_height">60dp</dimen>
+    
     <!-- ***************** include_header_with_btn_back ***************** -->
     <dimen name="include_header_with_btn_back_button_width">150dp</dimen>
     <dimen name="include_header_with_btn_back_button_height">55dp</dimen>
     <dimen name="include_header_with_btn_back_tv">40dp</dimen>
-    
+
     <!-- ***************** include_search ***************** -->
     <dimen name="include_search_iv">30dp</dimen>
-    
+
     <!-- ***************** include_footer ***************** -->
-    <dimen name="include_footer_iv">45dp</dimen>
-    
+    <dimen name="include_footer_iv">50dp</dimen>
+
     <!-- ***************** row_category ***************** -->
     <dimen name="row_category_tv">35sp</dimen>
-    
+
     <!-- ***************** row_checkout ***************** -->
     <dimen name="row_checkout_iv">230dp</dimen>
-    
+
     <!-- ***************** row_child ***************** -->
     <dimen name="row_child">50dp</dimen>
+
+    <!-- ***************** row_download ***************** -->
+    <dimen name="row_download_width">50dp</dimen>
+    <dimen name="row_download_height">65dp</dimen>
+
+    <!-- ***************** row_product ***************** -->
+
+    <dimen name="row_product_height">280dp</dimen>
+    <dimen name="row_product_height_iv">240dp</dimen>
+    <dimen name="row_product_height_iv_addtocart">60dp</dimen>
+    <!-- ***************** row_product ***************** -->
+    <dimen name="row_recent_height">220dp</dimen>
     
+    <!-- ***************** dialog_verify ***************** -->    
+    <dimen name="dialog_verify_height">600dp</dimen>
+    <dimen name="dialog_verify_width">500dp</dimen>
+    
+    <!-- ***************** dialog_process ***************** -->    
+    <dimen name="dialog_process_iv">70dp</dimen>
+    
+    <!-- ***************** dialog_alert_login ***************** -->    
+    <dimen name="dialog_alert_login_height">60dp</dimen>
 
 </resources>

@@ -25,8 +25,8 @@
         android:layout_weight="70"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="@dimen/padding"
+        android:paddingRight="@dimen/padding"
         android:scrollbars="none"
         android:weightSum="100" >
 
@@ -39,87 +39,87 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="10dp"
+                android:paddingTop="@dimen/padding"
                 android:text="Phone:"
-                android:textSize="16sp"
+                android:textSize="@dimen/textsize_title"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/padding"
                 android:text="Toll Free: 866-668-6888"
                 android:textColor="@color/crisom_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/textsize_normal" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/padding"
                 android:text="Local: 847-730-3139"
                 android:textColor="@color/crisom_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/textsize_normal"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:paddingTop="@dimen/padding"
                 android:text="Email:"
-                android:textSize="16sp"
+                android:textSize="@dimen/textsize_title"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/padding"
                 android:text="customerservice@crimsonav.com"
                 android:textColor="@color/crisom_red"
-                android:textSize="14sp" />
+                android:textSize="@dimen/textsize_normal" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:paddingTop="@dimen/padding"
                 android:text="Fax:"
-                android:textSize="16sp"
+                android:textSize="@dimen/textsize_title"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/padding"
                 android:text="847-919-3483"
                 android:textColor="@color/crisom_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/textsize_normal"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:paddingTop="@dimen/padding"
                 android:text="Address:"
-                android:textSize="16sp"
+                android:textSize="@dimen/textsize_title"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/padding"
                 android:text="Crimson AV \n1854 Elmdale\nGlenview, IL60026\nUSA"
                 android:textColor="@color/crisom_text"
-                android:textSize="14sp" />
+                android:textSize="@dimen/textsize_normal"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:paddingTop="@dimen/padding"
                 android:text="Important Emails:"
-                android:textSize="16sp"
+                android:textSize="@dimen/textsize_title"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/padding"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -128,7 +128,7 @@
                     android:layout_weight="0.4"
                     android:text="Order submission:"
                     android:textColor="@color/crisom_text"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/textsize_normal" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -136,13 +136,13 @@
                     android:layout_weight="0.6"
                     android:text="orders@crimsonav.com"
                     android:textColor="@color/crisom_red"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/padding"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -151,7 +151,7 @@
                     android:layout_weight="0.4"
                     android:text="Information:"
                     android:textColor="@color/crisom_text"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/textsize_normal" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -159,13 +159,13 @@
                     android:layout_weight="0.6"
                     android:text="info@crimsonav.com"
                     android:textColor="@color/crisom_red"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/textsize_normal"/>
             </LinearLayout>
 
                   <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/padding"
                 android:orientation="horizontal" >
 
                 <TextView
@@ -182,25 +182,25 @@
                     android:layout_weight="0.6"
                     android:text="support@crimsonav.com"
                     android:textColor="@color/crisom_red"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/textsize_normal"/>
             </LinearLayout>
            
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:paddingTop="@dimen/padding"
                 android:text="Please email orders to:"
-                android:textSize="16sp"
+                android:textSize="@dimen/textsize_title"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
+                android:paddingLeft="@dimen/padding"
                 android:text="orders@crimsonav.com"
                 android:textColor="@color/crisom_red"
-                android:textSize="14sp" />
+                android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
     </ScrollView>
 

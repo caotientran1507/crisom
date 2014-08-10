@@ -2,14 +2,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="15dp"
-    android:layout_marginTop="15dp"
+    android:paddingTop="@dimen/padding_small"
+    android:gravity="center_vertical"
     android:orientation="horizontal" >
 
     <RadioButton
         android:id="@+id/row_parcel_service_rbn"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="@dimen/include_footer_iv"
+        android:layout_height="@dimen/include_footer_iv"
         android:background="@drawable/radio_selector"
         android:button="@null" />
 
@@ -17,7 +17,8 @@
         android:id="@+id/row_parcel_service_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/padding"
+        android:textSize="@dimen/textsize_normal"
         android:text="UPS Ground" />
 
 </LinearLayout>
