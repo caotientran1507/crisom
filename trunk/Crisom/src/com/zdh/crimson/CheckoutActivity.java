@@ -84,7 +84,11 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		initDataWebservice();
+		if(!SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
+			this.finish();
+		}else{
+			initDataWebservice();
+		}
 	}
 
 	private void initView(){

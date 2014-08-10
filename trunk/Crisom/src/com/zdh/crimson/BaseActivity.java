@@ -125,11 +125,10 @@ public class BaseActivity extends Activity implements OnClickListener{
 			Intent home = new Intent(getApplicationContext(), HomeActivity.class);
 			startActivity(home);
 			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
-			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);	
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 		}
 	}
 	
-
 	private void showDialog(final Context mContext, String title, String msg){
 		
 		final Dialog alert = new Dialog(mContext,R.style.CustomAlertDialog);

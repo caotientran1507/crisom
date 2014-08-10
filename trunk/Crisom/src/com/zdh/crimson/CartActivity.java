@@ -52,9 +52,14 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
-		updateText();
-		adapter.notifyDataSetChanged();
-		ChangeTextButtonLogin();
+		
+		if(!SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
+			this.finish();
+		}else{
+			updateText();
+			adapter.notifyDataSetChanged();
+			ChangeTextButtonLogin();
+		}
 		
 	}
 	
