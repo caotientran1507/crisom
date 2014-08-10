@@ -238,7 +238,7 @@ public class ProductListActivity extends BaseActivity implements
 		spnType2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view,
 					int i, long l) {
-				positionType1 = 2;
+				positionType2 = i;
 				if (i != 0) {
 					lncheckboxAll.setVisibility(View.VISIBLE);
 					lvCheckbox.setVisibility(View.VISIBLE);
