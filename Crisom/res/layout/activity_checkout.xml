@@ -55,27 +55,28 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:paddingTop="5dp"
+                        android:paddingTop="@dimen/padding_small"
                         android:weightSum="100" >
 
                         <Button
                             android:id="@+id/checkout_btnProceedCheckout"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="50"
+                            android:layout_weight="60"
                             android:background="@drawable/button_red_background"
-                            android:paddingBottom="5dp"
-                            android:paddingTop="5dp"
+                            android:paddingBottom="@dimen/padding_small"
+                            android:paddingTop="@dimen/padding_small"
                             android:text="Proceed to Checkout"
-                            android:textColor="@color/crisom_white" />
+                            android:textColor="@color/crisom_white"
+                            android:textSize="@dimen/textsize_normal" />
                     </LinearLayout>
                     <!-- end linear button Proceed to Checkout -->
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="@dimen/padding"
+                        android:layout_marginTop="@dimen/padding"
                         android:background="#f1f1f1"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
@@ -85,8 +86,8 @@
                             android:id="@+id/checkout_lv"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="10dp"
-                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="@dimen/padding"
+                            android:layout_marginTop="@dimen/padding"
                             android:layout_weight="90"
                             android:background="#f1f1f1"
                             android:gravity="center_horizontal" >
@@ -106,42 +107,45 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="50"
+                            android:layout_weight="60"
                             android:orientation="vertical"
-                            android:paddingBottom="10dp" >
+                            android:paddingBottom="@dimen/padding" >
 
                             <Button
                                 android:id="@+id/checkout_btnContinueShopping"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="@dimen/padding"
                                 android:background="@drawable/button_red_background"
-                                android:paddingBottom="5dp"
-                                android:paddingTop="5dp"
+                                android:paddingBottom="@dimen/padding_small"
+                                android:paddingTop="@dimen/padding_small"
                                 android:text="Continue Shopping"
-                                android:textColor="@color/crisom_white" />
+                                android:textColor="@color/crisom_white"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <Button
                                 android:id="@+id/checkout_btnClearShopping"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="@dimen/padding"
                                 android:background="@drawable/button_red_background"
-                                android:paddingBottom="5dp"
-                                android:paddingTop="5dp"
+                                android:paddingBottom="@dimen/padding_small"
+                                android:paddingTop="@dimen/padding_small"
                                 android:text="Clear Shopping Cart"
-                                android:textColor="@color/crisom_white" />
+                                android:textColor="@color/crisom_white"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <Button
                                 android:id="@+id/checkout_btnUpdateShopping"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="@dimen/padding"
                                 android:background="@drawable/button_red_background"
-                                android:paddingBottom="5dp"
-                                android:paddingTop="5dp"
+                                android:paddingBottom="@dimen/padding_small"
+                                android:paddingTop="@dimen/padding_small"
                                 android:text="Update Shopping Cart"
-                                android:textColor="@color/crisom_white" />
+                                android:textColor="@color/crisom_white"
+                                android:textSize="@dimen/textsize_normal" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -150,12 +154,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="@dimen/padding_large"
                         android:background="#e3e3e3"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
                         android:weightSum="100" >
 
                         <LinearLayout
@@ -172,12 +176,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Subtotal: " />
+                                    android:text="Subtotal: "
+                                    android:textSize="@dimen/textsize_normal" />
 
                                 <TextView
                                     android:id="@+id/checkout_tvSubTotal"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -188,12 +194,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Tax: " />
+                                    android:text="Tax: "
+                                    android:textSize="@dimen/textsize_normal" />
 
                                 <TextView
                                     android:id="@+id/checkout_tvTax"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -204,12 +212,14 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Shipping &amp; Handling: " />
+                                    android:text="Shipping &amp; Handling: "
+                                    android:textSize="@dimen/textsize_normal" />
 
                                 <TextView
                                     android:id="@+id/checkout_tvShippingHandling"
                                     android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content" />
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -222,6 +232,7 @@
                                     android:layout_height="wrap_content"
                                     android:text="Grand Total: "
                                     android:textColor="@color/crisom_blue"
+                                    android:textSize="@dimen/textsize_normal"
                                     android:textStyle="bold" />
 
                                 <TextView
@@ -229,6 +240,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:textColor="@color/crisom_blue"
+                                    android:textSize="@dimen/textsize_normal"
                                     android:textStyle="bold" />
                             </LinearLayout>
 
@@ -242,8 +254,8 @@
                                 <LinearLayout
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_weight="60"
+                                    android:layout_marginTop="@dimen/padding"
+                                    android:layout_weight="70"
                                     android:gravity="center_horizontal"
                                     android:orientation="vertical" >
 
@@ -252,10 +264,11 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/button_red_background"
-                                        android:paddingBottom="5dp"
-                                        android:paddingTop="5dp"
+                                        android:paddingBottom="@dimen/padding_small"
+                                        android:paddingTop="@dimen/padding_small"
                                         android:text="Proceed to Checkout"
-                                        android:textColor="@color/crisom_white" />
+                                        android:textColor="@color/crisom_white"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -265,12 +278,12 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="@dimen/padding_large"
                         android:background="@drawable/linear_background"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
                         android:weightSum="100" >
 
                         <LinearLayout
@@ -284,20 +297,23 @@
                                 android:layout_height="wrap_content"
                                 android:text="DISCOUNT CODES"
                                 android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Enter your coupon code if you have one" />
+                                android:text="Enter your coupon code if you have one"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <EditText
                                 android:id="@+id/checkout_edtCoupon"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="@dimen/padding_small"
                                 android:background="@drawable/edittext_background_radius"
-                                android:padding="5dp" />
+                                android:padding="@dimen/padding_small"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -310,13 +326,14 @@
                                     android:id="@+id/checkout_btnApplyCoupon"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:layout_weight="37"
                                     android:background="@drawable/button_red_background"
-                                    android:paddingBottom="5dp"
-                                    android:paddingTop="5dp"
+                                    android:paddingBottom="@dimen/padding_small"
+                                    android:paddingTop="@dimen/padding_small"
                                     android:text="Apply Coupon"
-                                    android:textColor="@color/crisom_white" />
+                                    android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal" />
 
                                 <TextView
                                     android:id="@+id/checkout_tvCoupon"
@@ -329,13 +346,14 @@
                                     android:id="@+id/checkout_btnCancelCoupon"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:layout_weight="37"
                                     android:background="@drawable/button_red_background"
-                                    android:paddingBottom="5dp"
-                                    android:paddingTop="5dp"
+                                    android:paddingBottom="@dimen/padding_small"
+                                    android:paddingTop="@dimen/padding_small"
                                     android:text="Cancel Coupon"
                                     android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal"
                                     android:visibility="gone" />
                             </LinearLayout>
                         </LinearLayout>
@@ -345,13 +363,13 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="@dimen/padding"
+                        android:layout_marginTop="@dimen/padding_large"
                         android:background="@drawable/linear_background"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
+                        android:paddingBottom="@dimen/padding"
+                        android:paddingTop="@dimen/padding"
                         android:visibility="gone"
                         android:weightSum="100" >
 
@@ -366,39 +384,43 @@
                                 android:layout_height="wrap_content"
                                 android:text="ESTIMATE SHIPPING AND TAX"
                                 android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Enter your destination to get a estimate" />
+                                android:text="Enter your destination to get a estimate"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="@dimen/padding"
                                 android:text="Country"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <Spinner
                                 android:id="@+id/checkout_spnCountry"
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:layout_marginTop="5dp"
+                                android:layout_height="@dimen/spinner_height"
+                                android:layout_marginTop="@dimen/padding"
                                 android:background="@drawable/spinner_background" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="@dimen/padding"
                                 android:text="State/Province"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <Spinner
                                 android:id="@+id/checkout_spnState"
                                 android:layout_width="match_parent"
-                                android:layout_height="30dp"
-                                android:layout_marginTop="5dp"
+                                android:layout_height="@dimen/spinner_height"
+                                android:layout_marginTop="@dimen/padding"
                                 android:background="@drawable/spinner_background"
                                 android:visibility="gone" />
 
@@ -406,24 +428,27 @@
                                 android:id="@+id/checkout_edtState"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="@dimen/padding_small"
                                 android:background="@drawable/edittext_background_radius"
-                                android:padding="5dp" />
+                                android:padding="@dimen/padding_small"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
+                                android:layout_marginTop="@dimen/padding"
                                 android:text="Zip/Postal Code"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <EditText
                                 android:id="@+id/checkout_edtZipCode"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
+                                android:layout_marginTop="@dimen/padding_small"
                                 android:background="@drawable/edittext_background_radius"
-                                android:padding="5dp" />
+                                android:padding="@dimen/padding_small"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -436,13 +461,14 @@
                                     android:id="@+id/checkout_btnQuote"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginTop="@dimen/padding"
                                     android:layout_weight="50"
                                     android:background="@drawable/button_red_background"
-                                    android:paddingBottom="5dp"
-                                    android:paddingTop="5dp"
+                                    android:paddingBottom="@dimen/padding_small"
+                                    android:paddingTop="@dimen/padding_small"
                                     android:text="Get a Quote"
-                                    android:textColor="@color/crisom_white" />
+                                    android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

@@ -1,23 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
     android:gravity="center_vertical"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp">
+    android:paddingTop="@dimen/padding"
+    android:paddingBottom="@dimen/padding">
     
     <ImageView 
         android:id="@+id/row_download_iv"
-        android:layout_width="30dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/row_download_width"
+        android:layout_height="@dimen/row_download_height"
         android:src="@drawable/pdf"/>
     
     <TextView 
         android:id="@+id/row_download_tv"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/padding"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_normal"
         android:text="Product Manual"/>
     
 </LinearLayout>

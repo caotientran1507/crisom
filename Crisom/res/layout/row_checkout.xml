@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/row_padding"
-    android:paddingTop="@dimen/row_padding"
+    android:paddingBottom="@dimen/padding"
+    android:paddingTop="@dimen/padding"
     android:weightSum="100" >
 
     <LinearLayout
@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/row_checkout_iv"
             android:background="@drawable/linear_background"
-            android:padding="@dimen/row_padding" >
+            android:padding="@dimen/padding" >
 
             <ImageView
                 android:id="@+id/row_checkout_ivAvatar"

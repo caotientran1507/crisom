@@ -27,7 +27,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -39,6 +38,7 @@ import com.zdh.crimson.adapter.HomeAdapter;
 import com.zdh.crimson.model.Category;
 import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 
@@ -51,7 +51,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	private EditText edtSearch;
 	private Spinner spnManufacturer,spnModel;
 	private RadioButton rbnFlatpanel,rbnProjector;	
-	private ListView lvCategory;
+	private ExpandableHeightListView lvCategory;
 	
 	private Uri uriUrl = Uri.parse(Constants.URL);
 	private Animation slideLeftIn, slideLeftOut;
@@ -155,7 +155,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
 		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
 				
-		lvCategory =(ListView)findViewById(R.id.home_lv);		
+		lvCategory =(ExpandableHeightListView)findViewById(R.id.home_lv);		
 		spnManufacturer = (Spinner)findViewById(R.id.home_spnManufacturer);
 		spnModel = (Spinner)findViewById(R.id.home_spnModel);
 		rbnFlatpanel = (RadioButton)findViewById(R.id.home_rbnFlatpanel);
@@ -207,6 +207,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 		adapter = new HomeAdapter(HomeActivity.this, FileUtil.listHome);
 		lvCategory.setAdapter(adapter);
+		lvCategory.setEnabled(true);
 		adapter.notifyDataSetChanged();
 	}
 	

@@ -2,8 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/row_padding"
-    android:paddingBottom="@dimen/row_padding"
+    android:paddingTop="@dimen/padding"
     android:orientation="horizontal"
     android:id="@+id/row_checkbox_ln" >
 
@@ -18,7 +17,7 @@
         android:id="@+id/row_checkbox_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/row_padding"
+        android:layout_marginLeft="@dimen/padding"
         android:text="Ultra-Flat" />
 
 </LinearLayout>
