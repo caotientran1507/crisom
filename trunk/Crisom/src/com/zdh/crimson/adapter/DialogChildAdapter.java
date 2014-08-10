@@ -31,7 +31,7 @@ import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 public class DialogChildAdapter extends BaseAdapter {
 
-	int currentPosition;	
+		
 	DialogChildHolder holder = null;
 	private Context context;
 	private LayoutInflater inflater = null;
@@ -61,10 +61,9 @@ public class DialogChildAdapter extends BaseAdapter {
 	}
 
 	@SuppressLint("InflateParams")
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 
 		View view = convertView;
-		currentPosition = position;
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.row_child, null);
 			holder = new DialogChildHolder();
@@ -102,7 +101,7 @@ public class DialogChildAdapter extends BaseAdapter {
 				if (quantityNumber < 1) {
 					Toast.makeText(context, "Quantity must be greater 0!", Toast.LENGTH_SHORT).show();
 				}else{
-					new AddtoCartAsyncTask(idProduct,listOption.get(currentPosition).getOid(),listOption.get(currentPosition).getValue(),quantityNumber,SharedPreferencesUtil.getIdCustomerLogin(context)).execute();
+					new AddtoCartAsyncTask(idProduct,listOption.get(position).getOid(),listOption.get(position).getValue(),quantityNumber,SharedPreferencesUtil.getIdCustomerLogin(context)).execute();
 					
 				}
 			}
@@ -115,17 +114,17 @@ public class DialogChildAdapter extends BaseAdapter {
 			holder.lnAddtoCart.setVisibility(View.INVISIBLE);
 		}
 
-		holder.tvModel.setText(listOption.get(currentPosition).getSku());
-		holder.tvColor.setText(listOption.get(currentPosition).getColor());
-		holder.tvWeight.setText(String.valueOf(listOption.get(currentPosition).getWeight()));
-		holder.tvMSRP.setText(String.valueOf(listOption.get(currentPosition).getMsrp()));
+		holder.tvModel.setText(listOption.get(position).getSku());
+		holder.tvColor.setText(listOption.get(position).getColor());
+		holder.tvWeight.setText(String.valueOf(listOption.get(position).getWeight()));
+		holder.tvMSRP.setText(String.valueOf(listOption.get(position).getMsrp()));
 		holder.tvIncart.setText("");
-		holder.tvPrice.setText(String.valueOf(listOption.get(currentPosition).getPrice()));
-		if (listOption.get(currentPosition).getOtherFieldTitle().equals("") || listOption.get(currentPosition).getOtherFieldTitle().equals("null")) {
+		holder.tvPrice.setText(String.valueOf(listOption.get(position).getPrice()));
+		if (listOption.get(position).getOtherFieldTitle().equals("") || listOption.get(position).getOtherFieldTitle().equals("null")) {
 			holder.tvOtherField.setVisibility(View.GONE);
 		}else{
 			holder.tvOtherField.setVisibility(View.VISIBLE);
-			String s = "<strong><font color=\"#2f3a76\">"+listOption.get(currentPosition).getOtherFieldTitle()+": </font></strong>"+ listOption.get(currentPosition).getOtherFieldValue();
+			String s = "<strong><font color=\"#2f3a76\">"+listOption.get(position).getOtherFieldTitle()+": </font></strong>"+ listOption.get(position).getOtherFieldValue();
 			holder.tvOtherField.setText(Html.fromHtml(s));
 		}
 		return view;
