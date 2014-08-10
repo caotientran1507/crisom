@@ -1,10 +1,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="@dimen/row_padding"
+    android:paddingTop="@dimen/row_padding" >
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -16,13 +16,15 @@
             android:layout_height="wrap_content"
             android:text="Part Number: "
             android:textColor="@color/crisom_blue"
+            android:textSize="@dimen/textsize_normal"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/row_checkoutdetail_tvPartNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="CQUAD65" />
+            android:text="CQUAD65"
+            android:textSize="@dimen/textsize_normal" />
     </LinearLayout>
 
     <LinearLayout
@@ -35,20 +37,23 @@
             android:layout_height="wrap_content"
             android:text="Color: "
             android:textColor="@color/crisom_blue"
+            android:textSize="@dimen/textsize_normal"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/row_checkoutdetail_tvColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Black" />
+            android:text="Black"
+            android:textSize="@dimen/textsize_normal" />
     </LinearLayout>
 
     <TextView
         android:id="@+id/row_checkoutdetail_tvDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Description: Ceiling mounted Quad display system for 37&quot;to 65&quot;+ monitors, includes a Universal mounting interface" />
+        android:text="Description: Ceiling mounted Quad display system for 37&quot;to 65&quot;+ monitors, includes a Universal mounting interface"
+        android:textSize="@dimen/textsize_normal" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -60,13 +65,15 @@
             android:layout_height="wrap_content"
             android:text="Price: "
             android:textColor="@color/crisom_blue"
+            android:textSize="@dimen/textsize_normal"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/row_checkoutdetail_tvPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$1,600.00" />
+            android:text="$1,600.00"
+            android:textSize="@dimen/textsize_normal" />
     </LinearLayout>
 
     <LinearLayout
@@ -79,13 +86,15 @@
             android:layout_height="wrap_content"
             android:text="Qty: "
             android:textColor="@color/crisom_blue"
+            android:textSize="@dimen/textsize_normal"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/row_checkoutdetail_tvQuantity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="1"/>
+            android:text="1"
+            android:textSize="@dimen/textsize_normal" />
     </LinearLayout>
 
     <LinearLayout
@@ -98,13 +107,15 @@
             android:layout_height="wrap_content"
             android:text="Subtotal: "
             android:textColor="@color/crisom_blue"
+            android:textSize="@dimen/textsize_normal"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/row_checkoutdetail_tvSubtotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$1,600.00" />
+            android:text="$1,600.00"
+            android:textSize="@dimen/textsize_normal" />
     </LinearLayout>
 
 </LinearLayout>

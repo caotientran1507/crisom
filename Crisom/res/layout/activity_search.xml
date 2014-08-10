@@ -45,6 +45,7 @@
                 android:divider="@color/transparent"
                 android:dividerHeight="10dp" >
             </ListView>
+
         </LinearLayout>
     </LinearLayout>
     

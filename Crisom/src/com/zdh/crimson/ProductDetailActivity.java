@@ -537,6 +537,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 
 			@Override
 			public void onClick(View v) {
+				spnModel.setVisibility(View.GONE);
 				rdbFlatpanel.setChecked(true);
 				rdbProjector.setChecked(false);
 				radioChecked = 1;
@@ -549,6 +550,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 
 			@Override
 			public void onClick(View v) {
+				spnModel.setVisibility(View.GONE);
 				rdbFlatpanel.setChecked(false);
 				rdbProjector.setChecked(true);
 				radioChecked = 2;

@@ -36,8 +36,8 @@
                 android:gravity="center" >
 
                 <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="@dimen/include_search_iv"
+                    android:layout_height="@dimen/include_search_iv"
                     android:src="@drawable/ico_search_red" />
             </LinearLayout>
 
@@ -52,7 +52,7 @@
                 android:imeOptions="actionSearch"
                 android:lines="1"
                 android:maxLines="1"
-                android:textSize="15sp" />
+                android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
     </LinearLayout>
 

@@ -65,6 +65,7 @@
                             android:id="@+id/cart_tvThereIs"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="@dimen/textsize_normal"
                             android:text="There is " />
 
                         <TextView
@@ -72,6 +73,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="1"
+                            android:textSize="@dimen/textsize_normal"
                             android:textColor="@color/crisom_red" />
                         
                         <TextView
@@ -79,11 +81,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text=" item"
+                            android:textSize="@dimen/textsize_normal"
                             android:textColor="@color/crisom_red"  />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="@dimen/textsize_normal"
                             android:text=" in your cart " />
                     </LinearLayout>
 
@@ -103,12 +107,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="@dimen/textsize_normal"
                             android:text="Cart SubTotal: " />
 
                         <TextView
                             android:id="@+id/cart_tvTotal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="@dimen/textsize_normal"
                             android:text="$130.00" />
                     </LinearLayout>
 
@@ -132,6 +138,7 @@
                             android:layout_weight="4"
                             android:text="Checkout" 
                             android:textColor="@color/crisom_white"
+                            android:textSize="@dimen/textsize_normal"
                             android:background="@drawable/button_red_background"/>
                     </LinearLayout>
                 </LinearLayout>

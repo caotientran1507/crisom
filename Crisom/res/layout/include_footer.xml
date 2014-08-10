@@ -18,8 +18,8 @@
 
         <ImageView
             android:id="@+id/include_footer_ivhome"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/include_footer_iv"
+            android:layout_height="@dimen/include_footer_iv"
             android:src="@drawable/ico_home" />
     </LinearLayout>
 
@@ -46,8 +46,8 @@
 
         <ImageView
             android:id="@+id/include_footer_ivcategory"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/include_footer_iv"
+            android:layout_height="@dimen/include_footer_iv"
             android:src="@drawable/ico_category" />
     </LinearLayout>
 
@@ -74,8 +74,8 @@
 
         <ImageView
             android:id="@+id/include_footer_ivsearch"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/include_footer_iv"
+            android:layout_height="@dimen/include_footer_iv"
             android:src="@drawable/ico_search" />
     </LinearLayout>
 
@@ -102,8 +102,8 @@
 
         <ImageView
             android:id="@+id/include_footer_ivCart"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/include_footer_iv"
+            android:layout_height="@dimen/include_footer_iv"
             android:src="@drawable/ico_cart" />
     </LinearLayout>
 
@@ -130,8 +130,8 @@
 
         <ImageView
             android:id="@+id/include_footer_ivcontact"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_width="@dimen/include_footer_iv"
+            android:layout_height="@dimen/include_footer_iv"
             android:src="@drawable/ico_contact" />
     </LinearLayout>
 

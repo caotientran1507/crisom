@@ -3,17 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/crisom_red"
+    android:gravity="center_vertical"
     android:orientation="horizontal" >
 
-    <Button
-        android:id="@+id/include_header_btnBack"
-        android:layout_width="65dp"
-        android:layout_height="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_gravity="center"
-        android:background="@drawable/btn_back"
-        android:text="Back"
-        android:textColor="@color/crisom_white" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="30"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/include_header_btnBack"
+            android:layout_width="@dimen/include_header_with_btn_back_button_width"
+            android:layout_height="@dimen/include_header_with_btn_back_button_height"
+            android:layout_gravity="center"
+            android:background="@drawable/btn_back"
+            android:text="Back"
+            android:textColor="@color/crisom_white"
+            android:textSize="@dimen/textsize_normal" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="0dp"
@@ -27,19 +35,26 @@
             android:layout_height="wrap_content"
             android:text="HOME"
             android:textColor="@color/crisom_white"
-            android:textSize="20dp"
+            android:textSize="@dimen/include_header_with_btn_back_tv"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/include_header_btnLogin"
-        android:layout_width="65dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginRight="10dp"
-        android:background="@drawable/login_background"
-        android:gravity="center"
-        android:text="Log In"
-        android:textColor="@color/crisom_white" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="30"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/include_header_btnLogin"
+            android:layout_width="@dimen/include_header_with_btn_back_button_width"
+            android:layout_height="@dimen/include_header_with_btn_back_button_height"
+            android:layout_gravity="center"
+            android:background="@drawable/login_background"
+            android:gravity="center"
+            android:text="Log In"
+            android:textColor="@color/crisom_white"
+            android:textSize="@dimen/textsize_normal" />
+    </LinearLayout>
 
 </LinearLayout>
