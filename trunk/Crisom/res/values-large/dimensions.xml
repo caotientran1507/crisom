@@ -1,18 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <dimen name="textsize_buton_top">20sp</dimen>
-    <dimen name="textsize_title_top">27sp</dimen>
-    <dimen name="padding_top_bottom_buton">15dp</dimen>
-
-    <!-- ***************** about ***************** -->
-    <dimen name="about_textsize_buton">23sp</dimen>
-    <!-- ***************** detail ***************** -->
-    <dimen name="textsize_content">20sp</dimen>
-    <dimen name="textsize_title">23sp</dimen>
+    <dimen name="textsize_normal">20sp</dimen>
+    <dimen name="row_padding">18dp</dimen>
     
-    <!-- ***************** placelist ***************** -->
-    <dimen name="imagesize">80dp</dimen>
-    <dimen name="textsize_content_distance">16sp</dimen>
+    <!-- ***************** include_header_with_btn_back ***************** -->
+    <dimen name="include_header_with_btn_back_button_width">100dp</dimen>
+    <dimen name="include_header_with_btn_back_button_height">40dp</dimen>
+    <dimen name="include_header_with_btn_back_tv">30dp</dimen>
+    
+    <!-- ***************** include_search ***************** -->
+    <dimen name="include_search_iv">20dp</dimen>
+    
+    <!-- ***************** include_footer ***************** -->
+    <dimen name="include_footer_iv">30dp</dimen>
+    
+    <!-- ***************** row_category ***************** -->
+    <dimen name="row_category_tv">25sp</dimen>
+    
+    <!-- ***************** row_checkout ***************** -->
+    <dimen name="row_checkout_iv">160dp</dimen>
+    
+    <!-- ***************** row_child ***************** -->
+    <dimen name="row_child">40dp</dimen>
 
 </resources>

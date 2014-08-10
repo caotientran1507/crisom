@@ -1,24 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="135dp"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp"
+    android:paddingBottom="@dimen/row_padding"
+    android:paddingTop="@dimen/row_padding"
     android:weightSum="100" >
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="32"
+        android:layout_weight="30"
         android:gravity="top" >
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="@dimen/row_checkout_iv"
             android:background="@drawable/linear_background"
-            android:padding="10dp" >
+            android:padding="@dimen/row_padding" >
 
             <ImageView
                 android:id="@+id/row_checkout_ivAvatar"
@@ -36,7 +36,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="66"
+        android:layout_weight="68"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="Part Number: "
                 android:textColor="@color/crisom_blue"
-                android:textSize="12sp"
+                android:textSize="@dimen/textsize_normal"
                 android:textStyle="bold" />
 
             <TextView
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="C37D"
-                android:textSize="12sp" />
+                android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="Color: "
                 android:textColor="@color/crisom_blue"
-                android:textSize="12sp"
+                android:textSize="@dimen/textsize_normal"
                 android:textStyle="bold" />
 
             <TextView
@@ -79,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Black"
-                android:textSize="12sp" />
+                android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
 
         <RelativeLayout
@@ -96,7 +96,7 @@
                 android:singleLine="false" 
                 android:layout_toRightOf="@+id/description_title"
                 android:text="Fixed position mount for 10 to 30 flat panel screens"
-                android:textSize="12sp" />
+                android:textSize="@dimen/textsize_normal" />
         </RelativeLayout>
 
         <LinearLayout
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:text="Price: "
                 android:textColor="@color/crisom_blue"
-                android:textSize="12sp"
+                android:textSize="@dimen/textsize_normal"
                 android:textStyle="bold" />
 
             <TextView
@@ -118,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="123"
-                android:textSize="12sp" />
+                android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:text="Quantity: "
                 android:textColor="@color/crisom_blue"
-                android:textSize="12sp"
+                android:textSize="@dimen/textsize_normal"
                 android:textStyle="bold" />
 
             <EditText
@@ -145,7 +145,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:text="1"
-                android:textSize="12sp" />
+                android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
 
         <LinearLayout
@@ -159,7 +159,7 @@
                 android:layout_height="wrap_content"
                 android:text="Subtotal: "
                 android:textColor="@color/crisom_blue"
-                android:textSize="12sp"
+                android:textSize="@dimen/textsize_normal"
                 android:textStyle="bold" />
 
             <TextView
@@ -167,7 +167,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="$123"
-                android:textSize="12sp" />
+                android:textSize="@dimen/textsize_normal" />
         </LinearLayout>
     </LinearLayout>
 

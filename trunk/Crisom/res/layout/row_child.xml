@@ -1,16 +1,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="5dp"
-    android:paddingBottom="5dp"
+    android:paddingBottom="@dimen/row_padding"
+    android:paddingTop="@dimen/row_padding"
     android:weightSum="100" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="65"
+        android:layout_weight="60"
         android:orientation="horizontal"
         android:weightSum="100" >
 
@@ -30,13 +30,15 @@
                     android:layout_height="wrap_content"
                     android:text="Model #: "
                     android:textColor="@color/crisom_blue"
+                    android:textSize="@dimen/textsize_normal"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/row_child_tvModel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="JS" />
+                    android:text="JS"
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -49,13 +51,15 @@
                     android:layout_height="wrap_content"
                     android:text="Color: "
                     android:textColor="@color/crisom_blue"
+                    android:textSize="@dimen/textsize_normal"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/row_child_tvColor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="JS" />
+                    android:text="JS"
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -68,13 +72,15 @@
                     android:layout_height="wrap_content"
                     android:text="Ship Weight: "
                     android:textColor="@color/crisom_blue"
+                    android:textSize="@dimen/textsize_normal"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/row_child_tvShipWeight"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="JS" />
+                    android:text="JS"
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
         </LinearLayout>
 
@@ -94,8 +100,8 @@
                     android:id="@+id/row_child_tvOtherField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Extension: " />                
-
+                    android:text="Extension: "
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -108,13 +114,15 @@
                     android:layout_height="wrap_content"
                     android:text="Price: "
                     android:textColor="@color/crisom_blue"
+                    android:textSize="@dimen/textsize_normal"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/row_child_tvPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="JS" />
+                    android:text="JS"
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -127,13 +135,15 @@
                     android:layout_height="wrap_content"
                     android:text="MSRP: "
                     android:textColor="@color/crisom_blue"
+                    android:textSize="@dimen/textsize_normal"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/row_child_tvMSRP"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="JS" />
+                    android:text="JS"
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -141,18 +151,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="35"
+        android:layout_weight="40"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
+        android:paddingTop="@dimen/row_padding"
         android:weightSum="100" >
 
         <LinearLayout
             android:id="@+id/row_product_lnAddtocart"
             android:layout_width="0dp"
-            android:layout_height="30dp"
-            android:layout_weight="80"
+            android:layout_height="@dimen/row_child"
+            android:layout_weight="85"
             android:orientation="horizontal"
-            android:paddingTop="5dp"
+            android:visibility="visible"
             android:weightSum="100" >
 
             <FrameLayout
@@ -162,7 +173,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/row_child"
                     android:scaleType="fitXY"
                     android:src="@drawable/add_to_cart_background" />
 
@@ -179,10 +190,10 @@
                         android:layout_weight="25"
                         android:background="@android:color/transparent"
                         android:gravity="center"
+                        android:inputType="number"
                         android:lines="1"
                         android:maxLines="1"
-                        android:textSize="10sp" 
-                        android:inputType="number"/>
+                        android:textSize="@dimen/textsize_normal" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -204,8 +215,8 @@
                             android:layout_weight="20" >
 
                             <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
+                                android:layout_width="@dimen/include_search_iv"
+                                android:layout_height="@dimen/include_search_iv"
                                 android:src="@drawable/ico_cart_color" />
                         </LinearLayout>
 
@@ -214,7 +225,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="50"
                             android:text="Add to Cart"
-                            android:textSize="10dp"
+                            android:textSize="@dimen/textsize_normal"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -232,7 +243,7 @@
 
                 <ImageView
                     android:layout_width="match_parent"
-                    android:layout_height="20dp"
+                    android:layout_height="@dimen/row_child"
                     android:scaleType="fitXY"
                     android:src="@drawable/in_cart_background" />
 
@@ -253,7 +264,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="50"
                         android:text="In Cart"
-                        android:textSize="10dp" />
+                        android:textSize="@dimen/textsize_normal" />
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -263,15 +274,15 @@
 
                         <TextView
                             android:id="@+id/row_child_tvInCart"
-                            android:layout_width="wrap_content"                            
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="0"
-                            android:textSize="10sp" />
+                            android:textSize="@dimen/textsize_normal" />
                     </LinearLayout>
                 </LinearLayout>
             </FrameLayout>
         </LinearLayout>
-        
+
         <TextView
             android:id="@+id/productlist_message_cart_no_login"
             android:layout_width="wrap_content"
@@ -280,10 +291,8 @@
             android:gravity="center_vertical"
             android:text="@string/productList_alert_no_login"
             android:textColor="@color/crisom_red"
-            android:textSize="12sp"
-            android:layout_margin="5dp"
+            android:textSize="@dimen/textsize_normal"
             android:visibility="gone" />
-        
     </LinearLayout>
 
 </LinearLayout>
