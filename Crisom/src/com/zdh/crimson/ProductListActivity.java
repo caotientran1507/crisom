@@ -19,6 +19,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -79,16 +81,8 @@ public class ProductListActivity extends BaseActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_list);
-		currentCategory = getIntent().getExtras().getInt(
-				Constants.KEY_CATEGORYID);
+		currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);
 		init();
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		ChangeTextButtonLogin();
-		adapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -144,11 +138,26 @@ public class ProductListActivity extends BaseActivity implements
 		btnLogin.setOnClickListener(this);
 		btnBack.setOnClickListener(this);
 		lnNarrowTitle.setOnClickListener(this);
-		cbxAll.setOnClickListener(this);
 		tvAll.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
 		btnClearFilter.setOnClickListener(this);
 		lncheckboxAll.setOnClickListener(this);
+		
+		cbxAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+				if (!arg1) {
+					checkAll();
+					flagCheckAll = true;
+				} else {
+					uncheckAll();
+					flagCheckAll = false;
+				}
+				
+				checkboxProductListAdapter.notifyDataSetChanged();
+			}
+		});
 
 		lvProduct.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -179,11 +188,6 @@ public class ProductListActivity extends BaseActivity implements
 		spnType1.setAdapter(productTypeAdapter);
 		spnType2.setAdapter(productTypeAdapterChild);
 
-		adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
-		lvProduct.setAdapter(adapter);
-		lvProduct.setExpanded(true);
-		adapter.notifyDataSetChanged();
-
 	}
 
 	private void initDataWebservice() {
@@ -205,13 +209,14 @@ public class ProductListActivity extends BaseActivity implements
 				});
 
 		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> adapterView, View view,
-					int i, long l) {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 				positionType1 = i;
 				if (i != 0) {
 					spnType2.setVisibility(View.VISIBLE);
-					
 					new GetProductTypeChildAsyncTask(String.valueOf(listCategoryProductType.get(i-1).getId())).execute();					
+				}else{
+					clearSpinnerProductType2();
+					productTypeAdapterChild.notifyDataSetChanged();
 				}
 			}
 
@@ -233,7 +238,6 @@ public class ProductListActivity extends BaseActivity implements
 					lvCheckbox.setVisibility(View.GONE);
 					listCategoryCheck.clear();
 					listCheckbox.clear();
-//					checkboxProductListAdapter.notifyDataSetChanged();					
 				}
 			}
 
@@ -260,21 +264,15 @@ public class ProductListActivity extends BaseActivity implements
 			}
 
 			break;
-		case R.id.productlist_cbxAll:
-			if (!flagCheckAll) {
-				checkAll();
-				flagCheckAll = true;
-			} else {
-				uncheckAll();
-				flagCheckAll = false;
-			}
-			
+
 		case R.id.productlist_tvAll:
 			if (!flagCheckAll) {
 				checkAll();
+				cbxAll.setChecked(false);
 				flagCheckAll = true;
 			} else {
 				uncheckAll();
+				cbxAll.setChecked(false);
 				flagCheckAll = false;
 			}
 
@@ -344,10 +342,8 @@ public class ProductListActivity extends BaseActivity implements
 						Product temp = new Product();
 						temp.setId(array.getJSONObject(j).getInt("entity_id"));
 						temp.setName(array.getJSONObject(j).getString("name"));
-						temp.setDes(array.getJSONObject(j).getString(
-								"description"));
-						temp.setShortDes(array.getJSONObject(j).getString(
-								"short_description"));
+						temp.setDes(array.getJSONObject(j).getString("description"));
+						temp.setShortDes(array.getJSONObject(j).getString("short_description"));
 						temp.setImage(array.getJSONObject(j).getString("image"));
 						FileUtil.listProduct.add(temp);
 					}
@@ -361,7 +357,14 @@ public class ProductListActivity extends BaseActivity implements
 		}
 
 		protected void onPostExecute(String file_url) {
-			adapter.notifyDataSetChanged();
+			
+			if(adapter == null){
+				adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
+				lvProduct.setAdapter(adapter);
+				lvProduct.setExpanded(true);
+			}else
+				adapter.notifyDataSetChanged();
+			
 			pDialog.dismiss();
 		}
 	}
@@ -685,6 +688,7 @@ public class ProductListActivity extends BaseActivity implements
 																			listCheckbox);
 				lvCheckbox.setAdapter(checkboxProductListAdapter);
 				lvCheckbox.setExpanded(true);
+				cbxAll.setChecked(true);
 			} else
 				checkboxProductListAdapter.notifyDataSetChanged();
 			pDialog.dismiss();
