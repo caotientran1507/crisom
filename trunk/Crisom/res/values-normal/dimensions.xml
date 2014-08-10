@@ -33,8 +33,8 @@
     <dimen name="row_download_height">40dp</dimen>
     
     <!-- ***************** row_product ***************** -->        
-    <dimen name="row_product_height">150dp</dimen>
-    <dimen name="row_product_height_iv">130dp</dimen>
+    <dimen name="row_product_height">170dp</dimen>
+    <dimen name="row_product_height_iv">150dp</dimen>
     <dimen name="row_product_height_iv_addtocart">25dp</dimen>
     
     <!-- ***************** row_product ***************** -->    
