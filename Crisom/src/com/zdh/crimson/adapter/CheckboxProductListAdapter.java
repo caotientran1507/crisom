@@ -19,8 +19,6 @@ import com.zdh.crimson.model.Category;
 
 public class CheckboxProductListAdapter extends BaseAdapter {
 
-	int currentPosition;	
-
 	private Context context;
 	private LayoutInflater inflater = null;
 	private ArrayList<Category> listCheck = new ArrayList<Category>();	
@@ -53,7 +51,6 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		Holder holder = null;
 		View view = convertView;
-		currentPosition = position;
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.row_checkbox, null);
 			holder = new Holder();
