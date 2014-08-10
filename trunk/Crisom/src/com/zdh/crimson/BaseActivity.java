@@ -18,6 +18,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 
 	protected Button btnLogin, btnBack;
 	protected int requestCodeLogin = 100;
+	protected boolean oldStatusLogin = false;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -175,8 +176,10 @@ public class BaseActivity extends Activity implements OnClickListener{
 	protected void ChangeTextButtonLogin(){
 		if (SharedPreferencesUtil.getFlagLogin(getApplicationContext())) {
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGOUT);
+			oldStatusLogin = true;
 		} else {
 			btnLogin.setText(Constants.TEXT_BUTTON_LOGIN);
+			oldStatusLogin = false;
 		}
 	}
 
