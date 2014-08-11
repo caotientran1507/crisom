@@ -44,7 +44,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	private ImageView ivCart;	
 	private Button btnProceedCheckout,btnContinueShopping,btnClearShopping,btnUpdateShopping,btnProceedMutilAddress
 	,btnApplyCoupon,btnCancelCoupon,btnQuote;
-	private TextView tvTitle,tvSubTotal,tvTax,tvGrandTotal,tvShippingHandling,tvCoupon;
+	private TextView tvTitle,tvSubTotal,tvTax,tvGrandTotal,tvDiscount,tvShippingHandling,tvCoupon;
 	private ExpandableHeightListView listview;	
 	private EditText edtCoupon,edtState;
 	private Spinner spnCountry,spnState;
@@ -60,6 +60,8 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	String sShipping = "";
 	String sTax = "";
 	String sGrandTotal = "";
+	String sDiscount = "";
+	String sCoupon ="";
 
 
 	private ProgressDialog pDialog;
@@ -119,6 +121,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		tvTax = (TextView)findViewById(R.id.checkout_tvTax);
 		tvShippingHandling = (TextView)findViewById(R.id.checkout_tvShippingHandling);
 		tvGrandTotal = (TextView)findViewById(R.id.checkout_tvGrandTotal);		
+		tvDiscount = (TextView)findViewById(R.id.checkout_tvDiscount);		
 		edtCoupon = (EditText)findViewById(R.id.checkout_edtCoupon);
 		spnState = (Spinner)findViewById(R.id.checkout_spnState);
 		edtState = (EditText)findViewById(R.id.checkout_edtState);
@@ -166,7 +169,8 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 	}
 
 	private void initDataWebservice(){
-		new GetCountryAsyncTask().execute();
+		new CheckCouponAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
+		
 	}
 
 	private void handleOtherAction(){
@@ -176,7 +180,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 					new GetStateAsyncTask(FileUtil.listCountry.get(i).getCode()).execute();
 					positionCountry = i;
 				}
-				
+
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -581,12 +585,12 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				Toast.makeText(CheckoutActivity.this, "Apply coupon success!", Toast.LENGTH_SHORT).show();				
 				pDialog.dismiss();	
 				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
-				
+
 			}else{
 				Toast.makeText(CheckoutActivity.this, "Apply coupon fail!", Toast.LENGTH_SHORT).show();
 				pDialog.dismiss();	
 			}
-			
+
 		}
 	}
 
@@ -647,12 +651,12 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				pDialog.dismiss();	
 				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 			}
-			
+
 		}
 	}
 
 	//--------------------GetAQuote----------------------------------------
-	
+
 
 	//--------------------GetCartCode----------------------------------------
 	public class GetCartCodeAsyncTask extends AsyncTask<String, String, String> {
@@ -690,11 +694,12 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 					JSONObject jsonObjectShipping = jsonObject.getJSONObject("shipping");
 					JSONObject jsonObjectTax = jsonObject.getJSONObject("tax");
 					JSONObject jsonObjectGrandTotal = jsonObject.getJSONObject("grandtotal");
-
+					JSONObject jsonObjectDiscount = jsonObject.getJSONObject("discount");
 					sSubtotal = jsonObjectSubtotal.getString("cost");
 					sShipping = jsonObjectShipping.getString("cost");
 					sTax = jsonObjectTax.getString("cost");
 					sGrandTotal = jsonObjectGrandTotal.getString("cost");
+					sDiscount = jsonObjectDiscount.getString("cost");
 
 					runOnUiThread(new Runnable() {
 						@Override
@@ -703,6 +708,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 							tvShippingHandling.setText(sShipping);
 							tvTax.setText(sTax);
 							tvGrandTotal.setText(sGrandTotal);
+							tvDiscount.setText(sDiscount);
 						}
 					});
 
@@ -716,6 +722,73 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 
 		protected void onPostExecute(String file_url) {	      
 			pDialog.dismiss();	
+		}
+	}
+
+	//--------------------CheckCouponAsyncTask----------------------------------------
+	public class CheckCouponAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		int idCustomer;
+		public CheckCouponAsyncTask(int idCustomer){
+			this.idCustomer = idCustomer;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_CHECKCOUPON, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {   
+					JSONObject jsonObject = new JSONObject(json);
+					sCoupon = jsonObject.getString("info");
+					if (!sCoupon.equals("null")) {
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								edtCoupon.setText(sCoupon);
+								tvCoupon.setVisibility(View.VISIBLE);
+								btnCancelCoupon.setVisibility(View.VISIBLE);
+							}
+						});
+						return "true";
+					}else{
+						runOnUiThread(new Runnable() {
+							@Override
+							public void run() {
+								edtCoupon.setText("");
+								tvCoupon.setVisibility(View.GONE);
+								btnCancelCoupon.setVisibility(View.GONE);
+							}
+						});
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return "false";
+		}
+
+		protected void onPostExecute(String result) {	      
+			pDialog.dismiss();	
+			new GetCountryAsyncTask().execute();
 		}
 	}
 
@@ -735,7 +808,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				FileUtil.states.add(FileUtil.listState.get(i).getName());
 			}
 		}
-		
+
 	}
 
 }

@@ -54,7 +54,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	,lnCreditCardOnFileContent, lnCreditCardContent;
 	private ImageView ivCart,ivPaypal;	
 	private Button btnBillingContinue,btnShippingContinue,btnShippingMethodContinue,btnPaymentContinue,btnPlaceOrder;
-	private TextView tvTitle,tvSubtotal,tvShippingHandling,tvTax,tvGrandTotal,tvEditYourCard,tvRedirectedPaypal
+	private TextView tvTitle,tvSubtotal,tvShippingHandling,tvTax,tvGrandTotal,tvDiscount,tvEditYourCard,tvRedirectedPaypal
 	,tvWhatIsThis,tvWhatIsPaypal,tvShipThisAddress,tvShipDifferentAddress,tvCreditCardOnFile,tvCreditCard
 	,tvUseBillingAddress,tvSaveCreditCard;
 
@@ -91,6 +91,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	String sShipping = "";
 	String sTax = "";
 	String sGrandTotal = "";
+	String sDiscount = "";
 
 
 	ReviewCheckoutDetailAdapter reviewCheckoutDetailAdapter;
@@ -164,6 +165,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		tvShippingHandling = (TextView)findViewById(R.id.checkoutdetail_tvShippingHandling);
 		tvTax = (TextView)findViewById(R.id.checkoutdetail_tvTax);
 		tvGrandTotal = (TextView)findViewById(R.id.checkoutdetail_tvGrandTotal);
+		tvDiscount = (TextView)findViewById(R.id.checkoutdetail_tvDiscount);
 		tvEditYourCard = (TextView)findViewById(R.id.checkoutdetail_tvEditYourCart);
 
 		spnBillingAddress = (Spinner)findViewById(R.id.checkoutdetail_spnBillingAddress);
@@ -174,7 +176,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		rbnCreditCardOnFile = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCardOnFile);
 		rbnPaypal = (RadioButton)findViewById(R.id.checkoutdetail_rbnPaypal);
 		rbnCreditCard = (RadioButton)findViewById(R.id.checkoutdetail_rbnCreditCard);
-		
+
 		tvShipThisAddress = (TextView)findViewById(R.id.checkoutdetail_tvShipThisAddress);
 		tvShipDifferentAddress = (TextView)findViewById(R.id.checkoutdetail_tvShipDifferentAddress);
 		tvCreditCardOnFile = (TextView)findViewById(R.id.checkoutdetail_tvCreditCardOnFile);
@@ -183,7 +185,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		lvParcelService = (ExpandableHeightListView)findViewById(R.id.checkoutdetail_lvParcelService);
 		lvReview = (ExpandableHeightListView)findViewById(R.id.checkoutdetail_lvReview);
-		
+
 		lnCreditCardOnFileContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardOnFileContent);
 		lnCreditCardContent = (LinearLayout)findViewById(R.id.checkoutdetail_lnCreditCardContent);
 		tvRedirectedPaypal = (TextView)findViewById(R.id.checkoutdetail_tvRedirectedPaypal);
@@ -199,7 +201,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		tvWhatIsPaypal = (TextView)findViewById(R.id.checkoutdetail_tvWhatIsPaypal);
 
 		cbxUseBillingAddress = (CheckBox)findViewById(R.id.checkoutdetail_cbxUseBillingAddress);
-		
+
 		tvUseBillingAddress  = (TextView)findViewById(R.id.checkoutdetail_tvUseBillingAddress);
 		tvSaveCreditCard  = (TextView)findViewById(R.id.checkoutdetail_tvSaveCreditCard);
 
@@ -235,7 +237,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		tvEditYourCard.setOnClickListener(this);
 		tvWhatIsThis.setOnClickListener(this);
 		tvWhatIsPaypal.setOnClickListener(this);
-		
+
 		tvShipThisAddress.setOnClickListener(this);
 		tvShipDifferentAddress.setOnClickListener(this);
 		tvCreditCardOnFile.setOnClickListener(this);
@@ -243,7 +245,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		ivPaypal.setOnClickListener(this);
 		tvUseBillingAddress.setOnClickListener(this);
 		tvSaveCreditCard.setOnClickListener(this);
-				
+
 	}
 
 	private void initData() {
@@ -265,7 +267,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		reviewCheckoutDetailAdapter = new ReviewCheckoutDetailAdapter(CheckoutDetailActivity.this, FileUtil.listRecent);
 		lvReview.setAdapter(reviewCheckoutDetailAdapter);		
 		lvReview.setExpanded(true);
-		
+
 
 		parcelServiceAdapter = new ParcelServiceAdapter(CheckoutDetailActivity.this, FileUtil.listCarrier);
 		lvParcelService.setAdapter(parcelServiceAdapter);
@@ -327,7 +329,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		spnExpirationMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
-//					current_month = FileUtil.months[i];
+					//					current_month = FileUtil.months[i];
 					positionMonth = i;
 				}
 			} 
@@ -339,7 +341,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		spnExpirationYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
-//					current_year = FileUtil.years[i];
+					//					current_year = FileUtil.years[i];
 					positionYear = i;
 				}
 			} 
@@ -471,8 +473,6 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			}
 			else{
 				if (rbnCreditCard.isChecked()) {
-					Log.d("positionMonth", ""+positionMonth);
-					Log.d("positionYear", ""+positionYear);
 					if (checkInputDataCreditCard()) {
 						new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 						ln1BillingInfomationContent.setVisibility(View.GONE);
@@ -510,9 +510,12 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					String cc_number = edtCreditCardNumber.getText().toString().trim();
 					String cc_exp_month = String.valueOf(positionMonth);
 					String cc_exp_year = String.valueOf(positionYear + 2013);
-					String cc_cid = edtCardVerification.getText().toString().trim();		
-
-					new SubmitOrderAsyncTask(idCustomer,method,cc_type,cc_number,cc_exp_month,cc_exp_year,cc_cid).execute();
+					String cc_cid = edtCardVerification.getText().toString().trim();
+					String sSaveCreditCard = "0";
+					if (cbxSaveCreditCard.isChecked()) {
+						sSaveCreditCard = "1";
+					}
+					new SubmitOrderAsyncTask(idCustomer,method,cc_type,cc_number,cc_exp_month,cc_exp_year,cc_cid,sSaveCreditCard).execute();
 				}
 			}
 			break;
@@ -564,12 +567,12 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			rbnShipThisAddress.setChecked(true);
 			rbnShipDifferentAddress.setChecked(false);	
 			break;
-			
+
 		case R.id.checkoutdetail_tvShipDifferentAddress:
 			rbnShipThisAddress.setChecked(false);
 			rbnShipDifferentAddress.setChecked(true);	
 			break;
-			
+
 		case R.id.checkoutdetail_tvCreditCardOnFile:
 			rbnCreditCardOnFile.setChecked(true);
 			rbnPaypal.setChecked(false);	
@@ -578,7 +581,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			lnCreditCardContent.setVisibility(View.GONE);
 			lnCreditCardOnFileContent.setVisibility(View.VISIBLE);
 			break;
-			
+
 		case R.id.checkoutdetail_tvCreditCard:
 			rbnCreditCardOnFile.setChecked(false);
 			rbnPaypal.setChecked(false);	
@@ -587,7 +590,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			lnCreditCardOnFileContent.setVisibility(View.GONE);
 			lnCreditCardContent.setVisibility(View.VISIBLE);
 			break;
-			
+
 		case R.id.checkoutdetail_ivPaypal:
 			rbnCreditCardOnFile.setChecked(false);
 			rbnPaypal.setChecked(true);	
@@ -596,7 +599,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			lnCreditCardOnFileContent.setVisibility(View.GONE);
 			lnCreditCardContent.setVisibility(View.GONE);
 			break;
-			
+
 		case R.id.checkoutdetail_tvUseBillingAddress:
 			if (cbxUseBillingAddress.isChecked()) {
 				cbxUseBillingAddress.setChecked(false);
@@ -604,7 +607,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				cbxUseBillingAddress.setChecked(true);
 			}
 			break;
-			
+
 		case R.id.checkoutdetail_tvSaveCreditCard:
 			if (cbxSaveCreditCard.isChecked()) {
 				cbxSaveCreditCard.setChecked(false);
@@ -612,7 +615,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				cbxSaveCreditCard.setChecked(true);
 			}
 			break;
-		
+
 		default:
 			break;
 		}
@@ -862,11 +865,13 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					JSONObject jsonObjectShipping = jsonObject.getJSONObject("shipping");
 					JSONObject jsonObjectTax = jsonObject.getJSONObject("tax");
 					JSONObject jsonObjectGrandTotal = jsonObject.getJSONObject("grandtotal");
+					JSONObject jsonObjectDiscount = jsonObject.getJSONObject("discount");
 
 					sSubtotal = jsonObjectSubtotal.getString("cost");
 					sShipping = jsonObjectShipping.getString("cost");
 					sTax = jsonObjectTax.getString("cost");
 					sGrandTotal = jsonObjectGrandTotal.getString("cost");
+					sDiscount = jsonObjectDiscount.getString("cost");
 
 					runOnUiThread(new Runnable() {
 						@Override
@@ -875,6 +880,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 							tvShippingHandling.setText(sShipping);
 							tvTax.setText(sTax);
 							tvGrandTotal.setText(sGrandTotal);
+							tvDiscount.setText(sDiscount);
 						}
 					});
 
@@ -1027,8 +1033,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		String cc_exp_month;
 		String cc_exp_year;
 		String cc_cid;
+		String save_card;
 
-		public SubmitOrderAsyncTask(int idCustomer, String method, String cc_type, String cc_number, String cc_exp_month, String cc_exp_year, String cc_cid){
+		public SubmitOrderAsyncTask(int idCustomer, String method, String cc_type, String cc_number, String cc_exp_month, String cc_exp_year, String cc_cid,String sSaveCreditCard){
 			this.idCustomer = idCustomer;
 			this.method = method;
 			this.cc_type = cc_type;
@@ -1036,6 +1043,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			this.cc_exp_month = cc_exp_month;
 			this.cc_exp_year = cc_exp_year;
 			this.cc_cid = cc_cid;
+			this.save_card = sSaveCreditCard;
 		}
 
 		@Override
@@ -1062,6 +1070,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				paramsUrl.add(new BasicNameValuePair("cc_exp_month", cc_exp_month));
 				paramsUrl.add(new BasicNameValuePair("cc_exp_year", cc_exp_year));
 				paramsUrl.add(new BasicNameValuePair("cc_cid", cc_cid));
+				paramsUrl.add(new BasicNameValuePair("save_card", save_card));
 
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_SAVEPAYMENT, "POST", paramsUrl);
@@ -1095,6 +1104,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			}
 		}
 	}
+
+	
+
 
 	private String getKeyAddress(String address){
 		if (listAddress.size() > 0 ) {
