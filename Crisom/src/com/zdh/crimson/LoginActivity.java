@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zdh.crimson.model.Customer;
+import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
@@ -99,6 +100,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
+		CommonUtil.hideSoftKeyboard(LoginActivity.this);
 		
 		switch (v.getId()) {
 		

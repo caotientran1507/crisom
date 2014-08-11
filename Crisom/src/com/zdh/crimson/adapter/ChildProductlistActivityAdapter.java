@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -33,14 +34,14 @@ import com.zdh.crimson.utility.SharedPreferencesUtil;
 
 public class ChildProductlistActivityAdapter extends BaseAdapter {
 
-	private Context context;
+	private Activity context;
 	private LayoutInflater inflater = null;
 	private ArrayList<OptionObject> listOption = new ArrayList<OptionObject>();
 	private ProgressDialog pDialog;
 	int idProduct;
 
 
-	public ChildProductlistActivityAdapter(Context context,ArrayList<OptionObject> listOption,int idProduct) {
+	public ChildProductlistActivityAdapter(Activity context,ArrayList<OptionObject> listOption,int idProduct) {
 		this.listOption = listOption;	
 		this.idProduct = idProduct;
 		this.context = context;
@@ -90,6 +91,7 @@ public class ChildProductlistActivityAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				String quantity =  holder.edtQuantity.getText().toString().trim();
+				CommonUtil.hideSoftKeyboard(context);
 				if (quantity.equals("")) {
 					Toast.makeText(context, "Please input quantity!", Toast.LENGTH_SHORT).show();
 				}else {
@@ -215,7 +217,6 @@ public class ChildProductlistActivityAdapter extends BaseAdapter {
 				});
 			}
 			pDialog.dismiss();    
-			CommonUtil.hideSoftKeyboard(mContext);
 		}
 
 	}

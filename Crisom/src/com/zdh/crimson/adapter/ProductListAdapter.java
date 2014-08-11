@@ -194,9 +194,9 @@ public class ProductListAdapter extends BaseAdapter {
 		private int cid;
 		private int pid;
 		private String json;
-		private Context mContext;
+		private Activity mContext;
 
-		public GetProductByIdAsyncTask(Context context,int cid, int pid){
+		public GetProductByIdAsyncTask(Activity context,int cid, int pid){
 			this.cid = cid;
 			this.pid = pid;
 			this.mContext = context;

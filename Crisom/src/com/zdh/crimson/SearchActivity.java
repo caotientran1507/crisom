@@ -123,6 +123,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				boolean handled = false;
 				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					CommonUtil.hideSoftKeyboard(SearchActivity.this);
 					keySearch = edtSearch.getText().toString().trim();
 					FileUtil.listSearch.clear();
 					adapter.notifyDataSetChanged();
@@ -165,6 +166,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		switch (v.getId()) {
 
 		case R.id.include_search_lnImage:
+			CommonUtil.hideSoftKeyboard(SearchActivity.this);
 			keySearch = edtSearch.getText().toString().trim();
 			FileUtil.listSearch.clear();
 			adapter.notifyDataSetChanged();
