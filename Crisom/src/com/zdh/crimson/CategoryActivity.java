@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -38,18 +39,18 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 	CategoryAdapter adapter;
 	static int currentCategory = 2;
 	private ProgressDialog pDialog;
+	
+	private int currentLevel = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_category);
 		if (getIntent().getExtras() != null) {
-			currentCategory = getIntent().getExtras().getInt(
-					Constants.KEY_CATEGORYID);
-
+			currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);
 		}
-
 		init();
+		Log.d("currentLevel", String.valueOf(currentLevel));
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 		super.onResume();
 		ChangeTextButtonLogin();
 		initDataWebservice();
-
+		Log.d("currentLevel", String.valueOf(currentLevel));
 	}
 
 	private void init() {
@@ -91,9 +92,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				new GetCategoriesByIdAsyncTask(FileUtil.listCategory.get(0)
-				.getIdParent()).execute();
+				actionBackButton();
 			}
 		});
 
@@ -105,6 +104,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 					if (FileUtil.listCategory.get(position).getSubcat()) {
 						currentCategory = FileUtil.listCategory.get(position).getId();
 						new GetCategoriesByIdAsyncTask(currentCategory).execute();
+						currentLevel++;
 					} else {
 						Intent intent = new Intent(CategoryActivity.this,ProductListActivity.class);
 						intent.putExtra(Constants.KEY_CATEGORYID,FileUtil.listCategory.get(position).getId());
@@ -122,35 +122,31 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 
 	private void initData() {
 
-		adapter = new CategoryAdapter(CategoryActivity.this,
-				FileUtil.listCategory);
+		adapter = new CategoryAdapter(CategoryActivity.this, FileUtil.listCategory);
 		lvCategory.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
 
 	private void initDataWebservice() {
 		new GetCategoriesByIdAsyncTask(currentCategory).execute();
-
+	}
+	
+	
+	@Override
+	public void onBackPressed() {
+		actionBackButton();
 	}
 
-//	@Override
-//	public void onClick(View v) {
-//		super.onClick(v);
-//		
-//		switch (v.getId()) {
-//		// ----------Click Back---------
-//		case R.id.include_header_btnBack:
-////			new GetCategoriesByIdAsyncTask(FileUtil.listCategory.get(0)
-////					.getIdParent()).execute();
-//			break;
-//
-//		default:
-//			break;
-//		}
-//
-//	}
-
-	// ------------------------------------------------------------
+	@Override
+	protected void actionBackButton() {
+		if(currentLevel > 0){
+			new GetCategoriesByIdAsyncTask(FileUtil.listCategory.get(0).getIdParent()).execute();
+			currentLevel--;
+		}else{
+			finish();
+			overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
+		}
+	}
 
 	public class GetCategoriesByIdAsyncTask extends AsyncTask<String, String, String> {
 
@@ -213,7 +209,11 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 					btnBack.setVisibility(View.INVISIBLE);
 				}
 			}
-			pDialog.dismiss();
+			try {
+				pDialog.dismiss();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 }
