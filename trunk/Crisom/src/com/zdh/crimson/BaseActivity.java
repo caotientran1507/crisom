@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
+import com.zdh.crimson.utility.stackActivity;
 
 public class BaseActivity extends Activity implements OnClickListener{
 
@@ -22,6 +23,8 @@ public class BaseActivity extends Activity implements OnClickListener{
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		// Push intent to stack manager
+		stackActivity.getInstance().push(this);
 		super.onCreate(savedInstanceState);
 		
 	}
@@ -37,7 +40,10 @@ public class BaseActivity extends Activity implements OnClickListener{
 					Intent home = new Intent(getApplicationContext(), HomeActivity.class);
 					startActivity(home);
 					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
-					overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);					
+					overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);	
+					
+					// Finish all activity that was opened
+					stackActivity.getInstance().finishAll();
 					break;		
 				//----------Search is clicked----------
 				case R.id.include_footer_lnSearch:
@@ -49,6 +55,9 @@ public class BaseActivity extends Activity implements OnClickListener{
 						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 					}		
 					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
+					
+					// Finish all activity that was opened
+					stackActivity.getInstance().finishAll();
 					break;
 					
 				//----------Category is clicked----------
@@ -61,6 +70,9 @@ public class BaseActivity extends Activity implements OnClickListener{
 						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 					}	
 					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
+					
+					// Finish all activity that was opened
+					stackActivity.getInstance().finishAll();
 					break;
 					
 				//----------Cart is clicked----------
@@ -79,6 +91,9 @@ public class BaseActivity extends Activity implements OnClickListener{
 						}
 						FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CART;
 					}
+					
+					// Finish all activity that was opened
+					stackActivity.getInstance().finishAll();
 					break;
 					
 				//----------Contact is clicked----------
@@ -87,6 +102,9 @@ public class BaseActivity extends Activity implements OnClickListener{
 					startActivity(contact);
 					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CONTACT;
 					overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+					
+					// Finish all activity that was opened
+					stackActivity.getInstance().finishAll();
 					break;	
 				
 					
