@@ -49,6 +49,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_search);
+		if(FileUtil.listSearch.size()>0 )FileUtil.listSearch.clear();
 		init();
 	}
 
