@@ -64,6 +64,8 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	ArrayAdapter<String> manufacturerAdapter;
 	ArrayAdapter<String> modelAdapter;
 	
+	static String keySearch ="";
+	
 	private ProgressDialog pDialog;
 	
 	HomeAdapter adapter;
@@ -84,8 +86,8 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	protected void onResume() {
 		super.onResume();
 		
-		if(!edtSearch.getText().equals(""))
-			edtSearch.setText("");
+		if(!keySearch.equals(""))
+			edtSearch.setText(keySearch);
 		
 		ChangeTextButtonLogin();
 		
@@ -231,6 +233,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 		        	callSearchFeature();
 		            handled = true;
+		            
 		        }
 		        return handled;
 		    }
@@ -383,11 +386,12 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	
 	
 	private void callSearchFeature(){
-		if (edtSearch.getText().toString().trim().equals("")) {
+		keySearch = edtSearch.getText().toString().trim();
+		if (keySearch.equals("")) {
 			Toast.makeText(HomeActivity.this, "Please input keyword!", Toast.LENGTH_SHORT).show();
-		}else{
+		}else{			
 			Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-			intent.putExtra(Constants.KEY_SEARCH_KEYWORD, edtSearch.getText().toString().trim());
+			intent.putExtra(Constants.KEY_SEARCH_KEYWORD, keySearch);
 			startActivity(intent);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;

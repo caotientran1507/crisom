@@ -19,8 +19,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -70,7 +68,7 @@ public class ProductListActivity extends BaseActivity implements
 	ArrayList<Category> listCategoryCheck = new ArrayList<Category>();
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 
-	boolean flagCheckAll = false;
+	boolean flagCheckAll = true;
 	
 	int positionTV = 0;
 	int positionType1 = 0;
@@ -152,22 +150,23 @@ public class ProductListActivity extends BaseActivity implements
 		btnSearch.setOnClickListener(this);
 		btnClearFilter.setOnClickListener(this);
 		lncheckboxAll.setOnClickListener(this);
+		cbxAll.setOnClickListener(this);
 		
-		cbxAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-				if (!arg1) {
-					checkAll();
-					flagCheckAll = true;
-				} else {
-					uncheckAll();
-					flagCheckAll = false;
-				}
-				
-				checkboxProductListAdapter.notifyDataSetChanged();
-			}
-		});
+//		cbxAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+//			
+//			@Override
+//			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
+//				if (!arg1) {
+//					checkAll();
+//					flagCheckAll = true;
+//				} else {
+//					uncheckAll();
+//					flagCheckAll = false;
+//				}
+//				
+//				checkboxProductListAdapter.notifyDataSetChanged();
+//			}
+//		});
 
 		lvProduct.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -223,11 +222,20 @@ public class ProductListActivity extends BaseActivity implements
 				positionType1 = i;
 				if (i != 0) {
 					spnType2.setVisibility(View.VISIBLE);
+					
 					new GetProductTypeChildAsyncTask(String.valueOf(listCategoryProductType.get(i-1).getId())).execute();					
 				}else{
 					clearSpinnerProductType2();
 					productTypeAdapterChild.notifyDataSetChanged();
-				}
+				}				
+				lncheckboxAll.setVisibility(View.GONE);
+				lvCheckbox.setVisibility(View.GONE);
+//				listCategoryCheck.clear();
+//				listCheckbox.clear();
+//				if (checkboxProductListAdapter != null) {
+//					checkboxProductListAdapter.notify();
+//				}
+								
 			}
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -248,6 +256,9 @@ public class ProductListActivity extends BaseActivity implements
 					lvCheckbox.setVisibility(View.GONE);
 					listCategoryCheck.clear();
 					listCheckbox.clear();
+					if (checkboxProductListAdapter != null) {
+						checkboxProductListAdapter.notify();
+					}
 				}
 			}
 
@@ -274,15 +285,23 @@ public class ProductListActivity extends BaseActivity implements
 			}
 
 			break;
+			
+		case R.id.productlist_cbxAll:
+			if (!flagCheckAll) {
+				checkAll();
+				flagCheckAll = true;
+			} else {
+				uncheckAll();
+				flagCheckAll = false;
+			}	
+			checkboxProductListAdapter.notifyDataSetChanged();
 
 		case R.id.productlist_tvAll:
 			if (!flagCheckAll) {
 				checkAll();
-				cbxAll.setChecked(false);
 				flagCheckAll = true;
 			} else {
 				uncheckAll();
-				cbxAll.setChecked(false);
 				flagCheckAll = false;
 			}
 
@@ -681,7 +700,7 @@ public class ProductListActivity extends BaseActivity implements
 						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
 						listCategoryCheck.add(temp);
-						listCheckbox.add(false);
+						listCheckbox.add(true);
 					}
 				}
 			} catch (JSONException e) {
