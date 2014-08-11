@@ -92,6 +92,7 @@ public class ChildAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				String quantity =  holder.edtQuantity.getText().toString().trim();
+				CommonUtil.hideSoftKeyboard(context);
 				if (quantity.equals("")) {
 					Toast.makeText(context, "Please input quantity!", Toast.LENGTH_SHORT).show();
 				}else {

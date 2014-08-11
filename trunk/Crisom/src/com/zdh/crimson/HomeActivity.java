@@ -398,6 +398,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		if (keySearch.equals("")) {
 			Toast.makeText(HomeActivity.this, "Please input keyword!", Toast.LENGTH_SHORT).show();
 		}else{			
+			CommonUtil.hideSoftKeyboard(HomeActivity.this);
 			Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
 			intent.putExtra(Constants.KEY_SEARCH_KEYWORD, keySearch);
 			startActivity(intent);
