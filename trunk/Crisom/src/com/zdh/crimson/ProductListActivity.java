@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zdh.crimson.adapter.CheckboxProductListAdapter;
 import com.zdh.crimson.adapter.ProductListAdapter;
@@ -226,7 +227,9 @@ public class ProductListActivity extends BaseActivity implements
 					new GetProductTypeChildAsyncTask(String.valueOf(listCategoryProductType.get(i-1).getId())).execute();					
 				}else{
 					clearSpinnerProductType2();
-					productTypeAdapterChild.notifyDataSetChanged();
+					if (productTypeAdapterChild != null) {
+						productTypeAdapterChild.notifyDataSetChanged();
+					}					
 				}				
 				lncheckboxAll.setVisibility(View.GONE);
 				lvCheckbox.setVisibility(View.GONE);
@@ -257,7 +260,7 @@ public class ProductListActivity extends BaseActivity implements
 					listCategoryCheck.clear();
 					listCheckbox.clear();
 					if (checkboxProductListAdapter != null) {
-						checkboxProductListAdapter.notify();
+						checkboxProductListAdapter.notifyDataSetChanged();
 					}
 				}
 			}
@@ -310,7 +313,9 @@ public class ProductListActivity extends BaseActivity implements
 		case R.id.productlist_btnSearch:
 			if (positionTV != 0 || positionType1 != 0) {
 				new NarrowSearchAsyncTask().execute();
-			}			
+			}else{
+				Toast.makeText(ProductListActivity.this, "Please select TV Size or Type.", Toast.LENGTH_SHORT).show();
+			}
 			break;
 		case R.id.productlist_btnClearFilter:
 			lncheckboxAll.setVisibility(View.GONE);
@@ -427,15 +432,24 @@ public class ProductListActivity extends BaseActivity implements
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				
+				//-------get checkbox---------
 				if (positionType1 != 0) {
 					String cateids = "";
 					ArrayList<String> listCategoryTemp = new ArrayList<String>();
-					if (positionType2 != 0) {						
-						for (int i = 0; i < listCheckbox.size(); i++) {
-							if (listCheckbox.get(i)) {
-								listCategoryTemp.add(String.valueOf(listCategoryCheck.get(i).getId()));
-							}					
+					if (positionType2 != 0) {
+						if (CommonUtil.checkAllCheckBox(listCheckbox) == 0 || CommonUtil.checkAllCheckBox(listCheckbox) == listCheckbox.size()) {
+							for (int i = 0; i < listCheckbox.size(); i++) {							
+								listCategoryTemp.add(String.valueOf(listCategoryCheck.get(i).getId()));												
+							}
+						}else{
+							for (int i = 0; i < listCheckbox.size(); i++) {
+								if (listCheckbox.get(i)) {
+									listCategoryTemp.add(String.valueOf(listCategoryCheck.get(i).getId()));
+								}					
+							}
 						}
+						
+						
 					} else {
 						for (int i = 0; i < listCategoryProductTypeChild.size(); i++) {
 								listCategoryTemp.add(String.valueOf(listCategoryProductTypeChild.get(i).getId()));										
@@ -454,8 +468,7 @@ public class ProductListActivity extends BaseActivity implements
 					paramsUrl.add(new BasicNameValuePair("size", String.valueOf(listCategoryTvSize.get(positionTV).getId())));
 				}
 				
-				
-
+				//-------------get Json--------------
 				json = JsonParser.makeHttpRequest(Constants.URL_NARROWSEARCH,"GET", paramsUrl);
 
 				if ((json != null) || (!json.equals(""))) {
@@ -473,6 +486,9 @@ public class ProductListActivity extends BaseActivity implements
 					}
 
 				}
+								
+
+				
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -654,8 +670,11 @@ public class ProductListActivity extends BaseActivity implements
 		}
 
 		protected void onPostExecute(String file_url) {
-			productTypeAdapterChild.notifyDataSetChanged();
+			productTypeAdapterChild.notifyDataSetChanged();			
 			pDialog.dismiss();
+//			if (positionType2 > 0) {
+//				new GetCategoryCheckAsyncTask(String.valueOf(listCategoryProductTypeChild.get(positionType2 - 1).getId())).execute();
+//			}			
 		}
 	}
 
@@ -714,12 +733,12 @@ public class ProductListActivity extends BaseActivity implements
 			if (checkboxProductListAdapter == null) {
 				checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, 
 																			listCategoryCheck,
-																			listCheckbox);
+																			listCheckbox,cbxAll,flagCheckAll);
 				lvCheckbox.setAdapter(checkboxProductListAdapter);
-				lvCheckbox.setExpanded(true);
-				cbxAll.setChecked(true);
+				lvCheckbox.setExpanded(true);				
 			} else
 				checkboxProductListAdapter.notifyDataSetChanged();
+			cbxAll.setChecked(true);
 			pDialog.dismiss();
 		}
 	}

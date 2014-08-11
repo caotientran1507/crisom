@@ -1,6 +1,7 @@
 package com.zdh.crimson.utility;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -179,5 +180,15 @@ public class CommonUtil {
 			return false;
 		}
 		return status;
+	}
+	
+	public static int checkAllCheckBox(ArrayList<Boolean> listCheck){
+		int countCheck = 0;
+		for (int i = 0; i < listCheck.size(); i++) {
+			if (listCheck.get(i)) {
+				countCheck++;
+			}
+		}
+		return countCheck;
 	}
 }
