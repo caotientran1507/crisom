@@ -140,7 +140,8 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			String device = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_DEVICE);
 
 			if(dataSearch != null && model == null){
-				edtSearch.setText(dataSearch);
+				keySearch = dataSearch;
+				edtSearch.setText(keySearch);
 				new SearchAsyncTask(dataSearch).execute();
 			}else{
 				new MountFinderAsyncTask(device, manufacturer, model).execute();	

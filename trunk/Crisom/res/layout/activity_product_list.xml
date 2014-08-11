@@ -108,7 +108,7 @@
                             android:gravity="center_horizontal"
                             android:orientation="horizontal"
                             android:paddingBottom="@dimen/padding"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             android:weightSum="100" >
 
                             <LinearLayout
@@ -170,6 +170,7 @@
                                         android:layout_width="@dimen/include_footer_iv"
                                         android:layout_height="@dimen/include_footer_iv"
                                         android:background="@drawable/checkbox_selector"
+                                        android:checked="false"
                                         android:button="@null" />
 
                                     <TextView

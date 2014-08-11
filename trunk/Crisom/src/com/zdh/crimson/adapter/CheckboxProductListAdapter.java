@@ -98,7 +98,7 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 			}
 		});
 		
-		if (!listCheckbox.get(position)) {
+		if (listCheckbox.get(position)) {
 			holder.cbx.setChecked(true);
 		}else{
 			holder.cbx.setChecked(false);
