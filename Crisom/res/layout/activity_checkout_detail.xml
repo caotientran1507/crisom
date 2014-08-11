@@ -1032,6 +1032,29 @@
                                         android:textSize="@dimen/textsize_normal"
                                         android:text="$134.00" />
                                 </LinearLayout>
+                                
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="55"
+                                        android:textSize="@dimen/textsize_normal"
+                                        android:text="Discount: " />
+
+                                    <TextView
+                                        android:id="@+id/checkoutdetail_tvDiscount"
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="45"
+                                        android:gravity="right"
+                                        android:textSize="@dimen/textsize_normal"
+                                        android:text="$0.00" />
+                                </LinearLayout>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"

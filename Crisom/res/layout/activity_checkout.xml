@@ -221,6 +221,24 @@
                                     android:layout_height="wrap_content"
                                     android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
+                            
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Discount: "
+                                    android:textSize="@dimen/textsize_normal"/>
+
+                                <TextView
+                                    android:id="@+id/checkout_tvDiscount"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="@dimen/textsize_normal"/>
+                            </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -231,18 +249,20 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Grand Total: "
-                                    android:textColor="@color/crisom_blue"
                                     android:textSize="@dimen/textsize_normal"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:textColor="@color/crisom_blue"/>
 
                                 <TextView
                                     android:id="@+id/checkout_tvGrandTotal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textColor="@color/crisom_blue"
                                     android:textSize="@dimen/textsize_normal"
-                                    android:textStyle="bold" />
+                                    android:textStyle="bold"
+                                    android:textColor="@color/crisom_blue" />
                             </LinearLayout>
+                            
+                            
 
                             <LinearLayout
                                 android:layout_width="match_parent"

@@ -42,7 +42,8 @@ public class Constants {
 	public static final String URL_SAVEPAYMENT = URL_CUSTOMAPI + "savePayment";	
 	public static final String URL_NARROWSEARCH = URL_CUSTOMAPI + "narrowSearch";	
 	public static final String URL_PAYPAL_CART = URL_CUSTOMAPI + "paypal?cid=";
-
+	public static final String URL_CHECKCOUPON = URL_CUSTOMAPI + "checkCoupon";
+	
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
 	public static final String EXTENSION_FILE_PDF = ".pdf";
