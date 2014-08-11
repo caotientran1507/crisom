@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.zdh.crimson.R;
 import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.Category;
+import com.zdh.crimson.utility.CommonUtil;
 
 public class CheckboxProductListAdapter extends BaseAdapter {
 
@@ -23,14 +24,18 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 	private LayoutInflater inflater = null;
 	private ArrayList<Category> listCheck = new ArrayList<Category>();	
 	public ImageLoader imageLoader; 
+	private CheckBox cbxAll;
+	private boolean flagCheckAll;
 	
 	private ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 
 
-	public CheckboxProductListAdapter(Context context,ArrayList<Category> listCheck,ArrayList<Boolean> listCheckbox) {
+	public CheckboxProductListAdapter(Context context,ArrayList<Category> listCheck,ArrayList<Boolean> listCheckbox, CheckBox cbxAll, boolean flagCheckAll) {
 		this.listCheck = listCheck;		
 		this.context = context;
 		this.listCheckbox = listCheckbox;
+		this.cbxAll = cbxAll;
+		this.flagCheckAll = flagCheckAll;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imageLoader = new ImageLoader(this.context);
 	}
@@ -80,8 +85,14 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 			public void onClick(View v) {		
 				if (listCheckbox.get(position)) {
 					listCheckbox.set(position, false);
+					flagCheckAll = false;
+					cbxAll.setChecked(false);
 				}else{
 					listCheckbox.set(position, true);
+					if (CommonUtil.checkAllCheckBox(listCheckbox) == listCheckbox.size()) {
+						flagCheckAll = true;
+						cbxAll.setChecked(true);
+					}
 				}
 			}
 		});
@@ -92,8 +103,14 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 			public void onClick(View v) {		
 				if (listCheckbox.get(position)) {
 					listCheckbox.set(position, false);
+					flagCheckAll = false;
+					cbxAll.setChecked(false);
 				}else{
 					listCheckbox.set(position, true);
+					if (CommonUtil.checkAllCheckBox(listCheckbox) == listCheckbox.size()) {
+						flagCheckAll = true;
+						cbxAll.setChecked(true);
+					}
 				}
 			}
 		});
@@ -114,4 +131,6 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 		CheckBox cbx;
 		LinearLayout ln;
 	}
+	
+	
 }
