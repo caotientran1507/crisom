@@ -2,12 +2,14 @@ package com.zdh.crimson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -41,6 +43,7 @@ import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
+import com.zdh.crimson.utility.stackActivity;
 
 public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
@@ -76,6 +79,11 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Stack<Activity> stack = stackActivity.getInstance().getStack();
+		if(stack.size() == 2){
+			stack.get(0).finish();
+		}
+		
 		setContentView(R.layout.activity_home);
 		new GetCategoriesHomeAsyncTask().execute();
 		init();

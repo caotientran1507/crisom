@@ -52,7 +52,6 @@ public class stackActivity {
 					activity.finish();
 				}
 			}
-			
 			removeIsFinishingActivity();
 			
 		} catch (Exception e) {
@@ -70,5 +69,9 @@ public class stackActivity {
 			if (act == null || act.isFinishing())
 				itr.remove();
 		}
+	}
+	
+	public Stack<Activity> getStack(){
+		return stack;
 	}
 }

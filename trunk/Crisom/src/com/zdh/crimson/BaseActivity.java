@@ -208,7 +208,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 		actionBackButton();
 	}
 	
-	private void actionBackButton(){
+	protected void actionBackButton(){
 		
 		finish();
 		overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
