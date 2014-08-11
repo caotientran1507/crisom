@@ -27,6 +27,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -357,7 +358,15 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			tvTitle1.setText(product.getName());
 			tvShortDes.setText(product.getShortDes());
 			tvDes.setTag(product.getDes());
+			
+			
+			
 			tvFaqContent.setText(product.getFaq());
+			
+			String des =product.getFaq();
+			tvFaqContent.setText(Html.fromHtml(des));
+			
+			
 			imageLoader.DisplayImage(product.getImage(), ivAvatar);
 			
 			if(product != null && childAdapter != null){
