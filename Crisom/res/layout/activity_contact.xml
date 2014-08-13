@@ -44,21 +44,53 @@
                 android:textSize="@dimen/textsize_title"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding"
-                android:text="Toll Free: 866-668-6888"
-                android:textColor="@color/crisom_text"
-                android:textSize="@dimen/textsize_normal" />
+                android:orientation="horizontal" >
 
-            <TextView
-                android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:text="Toll Free:"
+                    android:textColor="@color/crisom_text"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:id="@+id/toll_free_call"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:text="866-668-6888"
+                    android:textColor="@color/crisom_red"
+                    android:textSize="@dimen/textsize_normal" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding"
-                android:text="Local: 847-730-3139"
-                android:textColor="@color/crisom_text"
-                android:textSize="@dimen/textsize_normal"/>
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:text="Local:"
+                    android:textColor="@color/crisom_text"
+                    android:textSize="@dimen/textsize_normal" />
+
+                <TextView
+                    android:id="@+id/phone_local_call"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:text="847-730-3139"
+                    android:textColor="@color/crisom_red"
+                    android:textSize="@dimen/textsize_normal" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,6 +101,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/customerservice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding"
@@ -89,8 +122,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding"
                 android:text="847-919-3483"
-                android:textColor="@color/crisom_text"
-                android:textSize="@dimen/textsize_normal"/>
+                android:textColor="@color/crisom_red"
+                android:textSize="@dimen/textsize_normal" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +139,7 @@
                 android:layout_marginLeft="@dimen/padding"
                 android:text="Crimson AV \n1854 Elmdale\nGlenview, IL60026\nUSA"
                 android:textColor="@color/crisom_text"
-                android:textSize="@dimen/textsize_normal"/>
+                android:textSize="@dimen/textsize_normal" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -131,6 +164,7 @@
                     android:textSize="@dimen/textsize_normal" />
 
                 <TextView
+                    android:id="@+id/orders_email1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
@@ -154,15 +188,16 @@
                     android:textSize="@dimen/textsize_normal" />
 
                 <TextView
+                    android:id="@+id/info_email"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
                     android:text="info@crimsonav.com"
                     android:textColor="@color/crisom_red"
-                    android:textSize="@dimen/textsize_normal"/>
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
 
-                  <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/padding"
@@ -177,14 +212,14 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:id="@+id/suport_email"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.6"
                     android:text="support@crimsonav.com"
                     android:textColor="@color/crisom_red"
-                    android:textSize="@dimen/textsize_normal"/>
+                    android:textSize="@dimen/textsize_normal" />
             </LinearLayout>
-           
 
             <TextView
                 android:layout_width="wrap_content"
@@ -195,6 +230,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/orders_email2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/padding"

@@ -429,7 +429,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	    	try {
                 // Building Parameters
                 List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-                paramsUrl.add(new BasicNameValuePair("cat_id", String.valueOf(13)));
+                paramsUrl.add(new BasicNameValuePair("cat_id", String.valueOf(2)));
 
                 json = JsonParser.makeHttpRequest(
                 		Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);

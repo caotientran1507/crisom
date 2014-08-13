@@ -42,7 +42,7 @@
                 android:id="@+id/category_ln_lv"                  
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="90"
+                android:layout_weight="95"
                 android:weightSum="70" 
                 android:orientation="vertical">
 
@@ -55,6 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"                    
                     android:layout_weight="64" 
+                    android:scrollbars="none"
                     android:dividerHeight="1dp"
                     android:divider="@color/crisom_gray_divider">
                     

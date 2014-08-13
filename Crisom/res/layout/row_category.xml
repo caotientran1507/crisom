@@ -5,6 +5,8 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:paddingTop="@dimen/padding"
+    android:paddingLeft="@dimen/padding_small"
+    android:paddingRight="@dimen/padding_small"
     android:background="@drawable/change_color_background_item"
     android:paddingBottom="@dimen/padding"
     android:weightSum="100" >
@@ -29,6 +31,8 @@
             android:id="@+id/row_category_img"
             android:layout_width="@dimen/include_search_iv"
             android:layout_height="@dimen/include_search_iv"
+                    android:layout_gravity="center_vertical"
+            
             android:src="@drawable/ico_next_red" />
     </LinearLayout>
 

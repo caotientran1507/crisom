@@ -37,10 +37,9 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 	private TextView tvTitle;
 	private ListView lvCategory;
 	CategoryAdapter adapter;
-	static int currentCategory = 2;
 	private ProgressDialog pDialog;
 	
-	private int currentLevel = 0;
+	private int currentLevel = 0; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +50,14 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 		}
 		init();
 		Log.d("currentLevel", String.valueOf(currentLevel));
+		initDataWebservice();
+		FileUtil.listCategory.clear();
 	}
 
 	@Override
-	protected void onResume() {
+	protected void onResume() { 
 		super.onResume();
 		ChangeTextButtonLogin();
-		initDataWebservice();
 		Log.d("currentLevel", String.valueOf(currentLevel));
 	}
 

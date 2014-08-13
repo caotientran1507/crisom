@@ -3,6 +3,17 @@ package com.zdh.crimson.utility;
 import java.io.File;
 
 public class Constants {
+	
+	public static final String phone_free_call = "+18666686888";
+	public static final String phone_local_call = "+18477303139";
+	
+	public static final String email_order = "orders@crimsonav.com";
+	public static final String email_customer = "customerservice@crimsonav.com";
+	public static final String email_support = "support@crimsonav.com";
+	public static final String email_info = "info@crimsonav.com";
+
+	
+	
 	public static final int BUTTON_HOME = 1;
 	public static final int BUTTON_CATEGORY = 2;
 	public static final int BUTTON_SEARCH = 3;	
@@ -31,7 +42,7 @@ public class Constants {
 	
 	public static final String URL_LOGIN = URL_CUSTOMAPI + "login";
 	public static final String URL_ADDTOCART = URL_CUSTOMAPI + "addCart";
-	public static final String URL_ROOT_PRODUCT_IMAGE = "http://23.21.185.157/media/catalog/product";
+	public static final String URL_ROOT_PRODUCT_IMAGE = URL+ "/media/catalog/product";
 	public static final String URL_CLEARCART = URL_CUSTOMAPI + "clearCart";
 	public static final String URL_UPDATECART = URL_CUSTOMAPI + "updateCart";
 	public static final String URL_APPLYCOUPON = URL_CUSTOMAPI + "applyCoupon";
