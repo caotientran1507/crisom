@@ -59,7 +59,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		ChangeTextButtonLogin();
 		adapter.notifyDataSetChanged();
 		edtSearch.setText(keySearch);
-	}
+	} 
 
 
 	@Override

@@ -20,7 +20,8 @@ public class BaseActivity extends Activity implements OnClickListener{
 	protected Button btnLogin, btnBack;
 	protected int requestCodeLogin = 100;
 	protected boolean oldStatusLogin = false;
-	
+	static int currentCategory = 2;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// Push intent to stack manager
@@ -44,7 +45,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 					
 					// Finish all activity that was opened
 					stackActivity.getInstance().finishAll();
-					break;		
+					break;
 				//----------Search is clicked----------
 				case R.id.include_footer_lnSearch:
 					Intent search = new Intent(getApplicationContext(), SearchActivity.class);
@@ -62,6 +63,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 					
 				//----------Category is clicked----------
 				case R.id.include_footer_lnCategory:
+					FileUtil.listCategory.clear();
 					Intent category = new Intent(getApplicationContext(), CategoryActivity.class);
 					startActivity(category);
 					if (FileUtil.POSITION_ACTIVITY > Constants.POSITION_ACTIVITY_CATEGORY) {
@@ -70,7 +72,7 @@ public class BaseActivity extends Activity implements OnClickListener{
 						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 					}	
 					FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
-					
+					currentCategory = 2;
 					// Finish all activity that was opened
 					stackActivity.getInstance().finishAll();
 					break;

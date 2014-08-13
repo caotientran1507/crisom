@@ -307,8 +307,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
 				if (listCreditCard.size() > 0) {
 					if (i != 0) {
-						savecc_id = listCreditCard.get(i).getId();
-						positionCreditCardOnFile = i;
+						savecc_id = listCreditCard.get(i-1).getId();
+						positionCreditCardOnFile = i-1;
 					}
 				}
 			} 

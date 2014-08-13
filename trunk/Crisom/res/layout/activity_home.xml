@@ -133,6 +133,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:scrollbars="none"
                 android:layout_weight="37" >
 
                 <LinearLayout
@@ -194,16 +195,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#f1f1f1"
-                        android:paddingBottom="@dimen/padding_large" 
-                        android:weightSum="100"
                         android:orientation="horizontal"
                         android:gravity="center_horizontal">
 
                         <com.zdh.crimson.utility.ExpandableHeightListView
                             android:id="@+id/home_lv"
-                            android:layout_width="0dp"
-                            android:layout_weight="90"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:scrollbars="none"
                             android:divider="@color/crisom_gray_divider"
                             android:dividerHeight="1dp" >
                         </com.zdh.crimson.utility.ExpandableHeightListView>
