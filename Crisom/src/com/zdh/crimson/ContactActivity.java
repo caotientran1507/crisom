@@ -1,18 +1,18 @@
 package com.zdh.crimson;
 
-import com.zdh.crimson.utility.Constants;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.zdh.crimson.utility.Constants;
 
 public class ContactActivity extends BaseActivity  implements View.OnClickListener{
 

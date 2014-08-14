@@ -99,8 +99,10 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		setContentView(R.layout.activity_product_detail);
 		currentProduct = getIntent().getExtras().getInt(Constants.KEY_PRODUCTID);
 
+		
 		init();
 		initDataWebservice();
+		
 	}
 
 	@Override
@@ -176,6 +178,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		btnVerify.setOnClickListener(this);
 		tvMainSite.setOnClickListener(this);
 		pDialog = new ProgressDialog(ProductDetailActivity.this);
+		
 		
 		ChangeTextButtonLogin();
 
@@ -322,6 +325,8 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 					product.setShortDes(jsonObject.getString("short_description"));    
 					product.setUrl(jsonObject.getString("url"));    
 					product.setFaq(jsonObject.getString("faq"));
+					product.setVerifyCompatibility(jsonObject.getInt("verify_compatibility"));
+					
 
 
 					JSONObject jsonTemp= (JSONObject) new JSONTokener(json).nextValue();
@@ -350,9 +355,9 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 							
 							if (jsonArraySpecs.getJSONObject(i).getString("content") != null 
 									&& !jsonArraySpecs.getJSONObject(i).getString("content").equals("null")) {
-								specsObject.setContent(jsonArraySpecs.getJSONObject(i).getString("content"));								
+								specsObject.setContent(jsonArraySpecs.getJSONObject(i).getString("content").trim());								
 							}
-							specsObject.setTitle(jsonArraySpecs.getJSONObject(i).getString("title"));
+							specsObject.setTitle(jsonArraySpecs.getJSONObject(i).getString("title").trim());
 							product.getListSpecs().add(specsObject);
 						}
 					}
@@ -360,7 +365,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 					//------get video for product-----
 					JSONArray jsonArrayVideo = jsonTemp.getJSONArray("video");
 					if (jsonArrayVideo != null && jsonArrayVideo.length() != 0) {
-						for (int i = 0; i < jsonArraySpecs.length(); i++) {
+						for (int i = 0; i < jsonArrayVideo.length(); i++) {
 							VideoObject videoObject = new VideoObject();
 							videoObject.setUrl(jsonArrayVideo.getJSONObject(i).getString("url"));
 							videoObject.setThumbnail(jsonArrayVideo.getJSONObject(i).getString("thumbnail"));
@@ -387,6 +392,20 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 							product.getListOption().add(optionObject);
 						}
 					}
+					
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							if (product.getVerifyCompatibility() == 0) {
+								Log.d("product.getVerifyCompatibility()", ""+product.getVerifyCompatibility());
+								btnVerify.setVisibility(View.GONE);
+							}else{
+								Log.d("product.getVerifyCompatibility()", ""+product.getVerifyCompatibility());
+								btnVerify.setVisibility(View.VISIBLE);
+							}
+						}
+					});
+
 
 				}	
 			} catch (JSONException e) {

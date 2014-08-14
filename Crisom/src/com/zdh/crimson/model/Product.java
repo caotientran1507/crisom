@@ -10,6 +10,7 @@ public class Product {
 	private String des;
 	private String url;
 	private String faq; 
+	private int verifyCompatibility; 
 	private ArrayList<OptionObject> listOption;
 	private ArrayList<SpecsObject> listSpecs;
 	private ArrayList<DocumentObject> listDocument;
@@ -92,6 +93,12 @@ public class Product {
 	}
 	public void setListVideo(ArrayList<VideoObject> listVideo) {
 		this.listVideo = listVideo;
+	}
+	public int getVerifyCompatibility() {
+		return verifyCompatibility;
+	}
+	public void setVerifyCompatibility(int verifyCompatibility) {
+		this.verifyCompatibility = verifyCompatibility;
 	}
 	
 	
