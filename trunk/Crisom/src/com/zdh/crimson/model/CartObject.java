@@ -9,6 +9,7 @@ public class CartObject {
 	private String image;
 	private String color;
 	private String desc;
+	private String optionName;
 	
 	public int getIdEntity() {
 		return idEntity;
@@ -57,6 +58,12 @@ public class CartObject {
 	}
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	public String getOptionName() {
+		return optionName;
+	}
+	public void setOptionName(String optionName) {
+		this.optionName = optionName;
 	}
 	
 }

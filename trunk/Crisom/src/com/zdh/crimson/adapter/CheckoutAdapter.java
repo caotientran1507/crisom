@@ -79,7 +79,7 @@ public class CheckoutAdapter extends BaseAdapter {
 
 		// ------load data--------
 
-		holder.tvPartNumber.setText(listCart.get(position).getName());
+		holder.tvPartNumber.setText(listCart.get(position).getOptionName());
 
 		String des = "<strong><font color=\"#2f3a76\">Desciption: </font></strong>"+ listCart.get(position).getDesc();
 		holder.tvDes.setText(Html.fromHtml(des));

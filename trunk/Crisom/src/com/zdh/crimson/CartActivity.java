@@ -56,7 +56,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 		if(!SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
 			this.finish();
 		}else{
-//			updateText();
+			updateText();
 			adapter.notifyDataSetChanged();
 			ChangeTextButtonLogin();
 		}
@@ -197,6 +197,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
         				temp.setQuantity(array.getJSONObject(j).getInt("qty"));   
         				temp.setImage(array.getJSONObject(j).getString("image"));   
         				temp.setColor(array.getJSONObject(j).getString("color"));
+        				temp.setOptionName(array.getJSONObject(j).getString("option_name"));
         				FileUtil.listCart.add(temp);
         			}
         			
@@ -209,22 +210,22 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	    }
 
 	    protected void onPostExecute(String file_url) {
-//	    	updateText();
+	    	updateText();
 	    	adapter.notifyDataSetChanged();
 	    	pDialog.dismiss();	
 	    }
 	}
 	
 	
-//	private void updateText(){
-//		if (FileUtil.listRecent.size() > 0) {
-//			tvCountItem.setText(String.valueOf(getQuantityAll()));
-//		} else {
-//			tvCountItem.setText("0");
-//		}		
-//    	tvTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
-//    	changeTextThereIs();
-//	}
+	private void updateText(){
+		if (FileUtil.listCart.size() > 0) {
+			tvCountItem.setText(String.valueOf(getQuantityAll()));
+		} else {
+			tvCountItem.setText("0");
+		}		
+    	tvTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
+    	changeTextThereIs();
+	}
 	
 	private int getQuantityAll(){
 		int i = 0;

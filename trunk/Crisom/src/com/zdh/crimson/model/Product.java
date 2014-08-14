@@ -13,7 +13,7 @@ public class Product {
 	private ArrayList<OptionObject> listOption;
 	private ArrayList<SpecsObject> listSpecs;
 	private ArrayList<DocumentObject> listDocument;
-	private ArrayList<String> listVideo;
+	private ArrayList<VideoObject> listVideo;
 	
 	public Product(){
 		id = 0 ;
@@ -23,6 +23,8 @@ public class Product {
 		des ="";
 		listOption = new ArrayList<OptionObject>();
 		listDocument = new ArrayList<DocumentObject>();
+		listSpecs = new ArrayList<SpecsObject>();
+		listVideo = new ArrayList<VideoObject>();
 		
 	}
 	public int getId() {
@@ -85,10 +87,10 @@ public class Product {
 	public void setListSpecs(ArrayList<SpecsObject> listSpecs) {
 		this.listSpecs = listSpecs;
 	}
-	public ArrayList<String> getListVideo() {
+	public ArrayList<VideoObject> getListVideo() {
 		return listVideo;
 	}
-	public void setListVideo(ArrayList<String> listVideo) {
+	public void setListVideo(ArrayList<VideoObject> listVideo) {
 		this.listVideo = listVideo;
 	}
 	

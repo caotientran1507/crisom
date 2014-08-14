@@ -53,7 +53,7 @@ public class ReviewCheckoutDetailAdapter extends BaseAdapter {
 		TextView tvQty = (TextView) vi.findViewById(R.id.row_checkoutdetail_tvQuantity); 
 		TextView tvSubtotal = (TextView) vi.findViewById(R.id.row_checkoutdetail_tvSubtotal); 
 		
-		tvPartNumber.setText(listCart.get(position).getName());
+		tvPartNumber.setText(listCart.get(position).getOptionName());
 
 		String des = "<strong><font color=\"#2f3a76\">Desciption: </font></strong>"+ listCart.get(position).getDesc();
 		tvDes.setText(Html.fromHtml(des));		
