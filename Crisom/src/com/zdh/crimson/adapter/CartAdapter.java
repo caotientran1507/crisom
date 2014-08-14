@@ -61,9 +61,9 @@ public class CartAdapter extends BaseAdapter {
 		tvQuantity.setText(String.valueOf(listCart.get(position).getQuantity()));
 		tvDes.setText(listCart.get(position).getDesc());
 		if (listCart.get(position).getColor()!= null || !listCart.get(position).getColor().equals("")) {
-			tvTitle.setText(listCart.get(position).getName()+" - "+listCart.get(position).getColor());
+			tvTitle.setText(listCart.get(position).getOptionName()+" - "+listCart.get(position).getColor());
 		}else{
-			tvTitle.setText(listCart.get(position).getName());
+			tvTitle.setText(listCart.get(position).getOptionName());
 		}
 		
 		imageLoader.DisplayImage(listCart.get(position).getImage(), ivAvatar);

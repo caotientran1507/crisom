@@ -35,9 +35,9 @@
     
     <!-- ***************** row_product ***************** -->
     
-    <dimen name="row_product_height">220dp</dimen>
-    <dimen name="row_product_height_iv">220dp</dimen>
-    <dimen name="row_product_height_width_iv">100dp</dimen>
+    <dimen name="row_product_height">190dp</dimen>
+    <dimen name="row_product_height_iv">140dp</dimen>
+    <dimen name="row_product_height_width_iv">120dp</dimen>
     <dimen name="row_product_height_iv_addtocart">40dp</dimen>
     
     <!-- ***************** row_product ***************** -->    

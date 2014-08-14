@@ -27,7 +27,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +34,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridLayout.Spec;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,11 +44,14 @@ import android.widget.Toast;
 
 import com.zdh.crimson.adapter.ChildAdapter;
 import com.zdh.crimson.adapter.DownloadAdapter;
+import com.zdh.crimson.adapter.SpecsAdapter;
+import com.zdh.crimson.adapter.VideoAdapter;
 import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.DocumentObject;
 import com.zdh.crimson.model.OptionObject;
 import com.zdh.crimson.model.Product;
 import com.zdh.crimson.model.SpecsObject;
+import com.zdh.crimson.model.VideoObject;
 import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.JsonParser;
@@ -59,11 +60,11 @@ import com.zdh.crimson.utility.SharedPreferencesUtil;
 public class ProductDetailActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnTitle, lnPrice,lnDownload,lnFaq,lnVideo;
-	private ListView lvPrice,lvDownload,lvVideo;
+	private LinearLayout lnHome,lnSearch,lnCart,lnContact,lnTitle, lnPrice,lnDownload,lnSpecs,lnVideo;
+	private ListView lvPrice,lvDownload,lvVideo,lvSpecs;
 	private ImageView ivCategory,ivAvatar;	
 	private Button btnVerify;
-	private TextView tvTitle,tvTitle1,tvShortDes,tvDes,tvMainSite,tvPrice,tvDownload,tvFAQ,tvVideo,tvFaqContent;	
+	private TextView tvTitle,tvTitle1,tvShortDes,tvDes,tvMainSite,tvPrice,tvDownload,tvFAQ,tvVideo;	
 	static int currentProduct = 0;
 	private ProgressDialog pDialog;
 	private Product product = new Product();
@@ -71,6 +72,8 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 
 	public static final int progress_bar_type = 0; 
 	DownloadAdapter downloadAdapter;
+	SpecsAdapter specsAdapter;
+	VideoAdapter videoAdapter;
 	ChildAdapter childAdapter;
 	String urlInSDCard ="";
 
@@ -146,13 +149,13 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 
 		lnPrice = (LinearLayout)findViewById(R.id.product_lnPrice);
 		lnDownload = (LinearLayout)findViewById(R.id.product_lnDownload);
-		lnFaq = (LinearLayout)findViewById(R.id.product_lnFaq);
+		lnSpecs = (LinearLayout)findViewById(R.id.product_lnSpecs);
 		lnVideo = (LinearLayout)findViewById(R.id.product_lnVideo);
 
 		lvPrice = (ListView)findViewById(R.id.product_lvPrice);
 		lvDownload = (ListView)findViewById(R.id.product_lvDownload);		
 		lvVideo = (ListView)findViewById(R.id.product_lvVideo);
-		tvFaqContent = (TextView)findViewById(R.id.product_tvFaqContent);
+		lvSpecs = (ListView)findViewById(R.id.product_lvSpecs);
 
 		imageLoader = new ImageLoader(ProductDetailActivity.this);
 
@@ -185,13 +188,24 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				new DownloadFileFromURLAsyncTask().execute(product.getListDocument().get(position).getFile());
 			} 
 		});
+		
+		lvVideo.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {	
+				
+			} 
+		});
 	}
 
 	private void initData() {
 		downloadAdapter = new DownloadAdapter(ProductDetailActivity.this, product.getListDocument());
+		specsAdapter = new SpecsAdapter(ProductDetailActivity.this, product.getListSpecs());
+		videoAdapter = new VideoAdapter(ProductDetailActivity.this, product.getListVideo());
 		childAdapter = new ChildAdapter(ProductDetailActivity.this, product.getListOption(),currentProduct);
 		lvDownload.setAdapter(downloadAdapter);
 		lvPrice.setAdapter(childAdapter);
+		lvVideo.setAdapter(videoAdapter);
+		lvSpecs.setAdapter(specsAdapter);
 	}
 
 	private void initDataWebservice(){
@@ -222,28 +236,28 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			lnTitle.setBackgroundResource(R.drawable.tab_a);
 			lnPrice.setVisibility(View.VISIBLE);
 			lnDownload.setVisibility(View.GONE);
-			lnFaq.setVisibility(View.GONE);
+			lnSpecs.setVisibility(View.GONE);
 			lnVideo.setVisibility(View.GONE);
 			break;	
 		case R.id.product_tvDownload:
 			lnTitle.setBackgroundResource(R.drawable.tab_b);
 			lnPrice.setVisibility(View.GONE);
 			lnDownload.setVisibility(View.VISIBLE);
-			lnFaq.setVisibility(View.GONE);
+			lnSpecs.setVisibility(View.GONE);
 			lnVideo.setVisibility(View.GONE);
 			break;	
 		case R.id.product_tvSPECS:
 			lnTitle.setBackgroundResource(R.drawable.tab_c);
 			lnPrice.setVisibility(View.GONE);
 			lnDownload.setVisibility(View.GONE);
-			lnFaq.setVisibility(View.VISIBLE);
+			lnSpecs.setVisibility(View.VISIBLE);
 			lnVideo.setVisibility(View.GONE);
 			break;	
 		case R.id.product_tvVideo:
 			lnTitle.setBackgroundResource(R.drawable.tab_d);
 			lnPrice.setVisibility(View.GONE);
 			lnDownload.setVisibility(View.GONE);
-			lnFaq.setVisibility(View.GONE);
+			lnSpecs.setVisibility(View.GONE);
 			lnVideo.setVisibility(View.VISIBLE);
 			break;	
 
@@ -333,9 +347,24 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 					if (jsonArraySpecs != null && jsonArraySpecs.length() != 0) {
 						for (int i = 0; i < jsonArraySpecs.length(); i++) {
 							SpecsObject specsObject = new SpecsObject();
-							specsObject.setTitle(jsonArraySpecs.getJSONObject(i).getString("content"));
-							specsObject.setContent(jsonArraySpecs.getJSONObject(i).getString("title"));
+							
+							if (jsonArraySpecs.getJSONObject(i).getString("content") != null 
+									&& !jsonArraySpecs.getJSONObject(i).getString("content").equals("null")) {
+								specsObject.setContent(jsonArraySpecs.getJSONObject(i).getString("content"));								
+							}
+							specsObject.setTitle(jsonArraySpecs.getJSONObject(i).getString("title"));
 							product.getListSpecs().add(specsObject);
+						}
+					}
+					
+					//------get video for product-----
+					JSONArray jsonArrayVideo = jsonTemp.getJSONArray("video");
+					if (jsonArrayVideo != null && jsonArrayVideo.length() != 0) {
+						for (int i = 0; i < jsonArraySpecs.length(); i++) {
+							VideoObject videoObject = new VideoObject();
+							videoObject.setUrl(jsonArrayVideo.getJSONObject(i).getString("url"));
+							videoObject.setThumbnail(jsonArrayVideo.getJSONObject(i).getString("thumbnail"));
+							product.getListVideo().add(videoObject);
 						}
 					}
 
@@ -371,15 +400,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			tvTitle1.setText(product.getName());
 			tvShortDes.setText(product.getShortDes());
 			tvDes.setTag(product.getDes());
-			
-			
-			
-			tvFaqContent.setText(product.getFaq());
-			
-			String des =product.getFaq();
-			tvFaqContent.setText(Html.fromHtml(des));
-			
-			
+
 			imageLoader.DisplayImage(product.getImage(), ivAvatar);
 			
 			if(product != null && childAdapter != null){

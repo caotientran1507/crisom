@@ -1,0 +1,23 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/padding_small"
+    android:paddingTop="@dimen/padding_small" >
+
+    <ImageView
+        android:id="@+id/row_video_iv"
+        android:layout_width="@dimen/row_download_width"
+        android:layout_height="@dimen/row_download_height" />
+
+    <TextView
+        android:id="@+id/row_video_tvUrl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/padding"
+        android:text="Url"
+        android:textSize="@dimen/textsize_normal" />
+
+</LinearLayout>

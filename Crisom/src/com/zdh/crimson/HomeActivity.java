@@ -96,7 +96,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 		if(!keySearch.equals(""))
 			edtSearch.setText(keySearch);
-		CommonUtil.hideSoftKeyboard(HomeActivity.this);
+//		CommonUtil.hideSoftKeyboard(HomeActivity.this);
 
 		ChangeTextButtonLogin();
 		

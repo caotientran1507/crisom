@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:orientation="horizontal"
+    android:weightSum="100" >
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:gravity="center" >
+
+        <ImageView
+            android:layout_width="8dp"
+            android:layout_height="8dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/viewpager_active"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/row_specs_tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="35" 
+        android:text="TV size range"
+        android:gravity="top"
+        android:textColor="@color/crisom_blue"
+        android:textSize="@dimen/textsize_title"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/row_specs_tvContent"
+        android:layout_width="0dp"
+        android:gravity="top"
+        android:layout_height="wrap_content"
+        android:layout_weight="59" 
+        android:text="37 – 65+"
+        android:textSize="@dimen/textsize_title"/>
+
+</LinearLayout>
