@@ -12,7 +12,7 @@ public class Constants {
 	public static final String email_support = "support@crimsonav.com";
 	public static final String email_info = "info@crimsonav.com";
 
-	
+	public static final int CATEGORY_ROOT = 2;
 	
 	public static final int BUTTON_HOME = 1;
 	public static final int BUTTON_CATEGORY = 2;

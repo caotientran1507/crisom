@@ -23,8 +23,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zdh.crimson.adapter.RecentAdapter;
-import com.zdh.crimson.model.RecentObject;
+import com.zdh.crimson.adapter.CartAdapter;
+import com.zdh.crimson.model.CartObject;
 import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.FileUtil;
@@ -40,7 +40,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	private TextView tvTitle,tvCountItem,tvTotal,tvThereis,tvItem;
 	private ListView listview;
 	private ProgressDialog pDialog;
-	RecentAdapter adapter;
+	CartAdapter adapter;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 		if(!SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
 			this.finish();
 		}else{
-			updateText();
+//			updateText();
 			adapter.notifyDataSetChanged();
 			ChangeTextButtonLogin();
 		}
@@ -107,7 +107,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 		   public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {		
 			   
 			   Intent intent = new Intent(CartActivity.this,ProductDetailActivity.class);
-			   intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listRecent.get(position).getIdEntity());
+			   intent.putExtra(Constants.KEY_PRODUCTID, FileUtil.listCart.get(position).getIdEntity());
 			   startActivity(intent);
 			   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			   
@@ -120,12 +120,12 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	}
 	
 	private void initData() {
-		adapter = new RecentAdapter(CartActivity.this, FileUtil.listRecent);
+		adapter = new CartAdapter(CartActivity.this, FileUtil.listCart);
 		listview.setAdapter(adapter);
 	}
 	
 	private void initDataWebservice(){
-		new GetRecentProductAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CartActivity.this)).execute();
+		new GetCartAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CartActivity.this)).execute();
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 		switch (v.getId()) {
 			
 		case R.id.cart_btnCheckout:
-			if (FileUtil.listRecent.size() > 0) {
+			if (FileUtil.listCart.size() > 0) {
 				Intent checkout = new Intent(CartActivity.this, CheckoutActivity.class);
 				startActivity(checkout);
 				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
@@ -154,11 +154,11 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	}
 	
 	//--------------------GetModelAsyncTask----------------------------------------
-	public class GetRecentProductAsyncTask extends AsyncTask<String, String, String> {
+	public class GetCartAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
 		int cid;
-		public GetRecentProductAsyncTask(int cid){
+		public GetCartAsyncTask(int cid){
 			this.cid = cid;
 		}
 	   	    
@@ -186,9 +186,9 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
                 Log.d("json", json);
                 if ((json != null) || (!json.equals(""))) {               
                 	JSONArray array = new JSONArray(json);
-                	FileUtil.listRecent.clear();
+                	FileUtil.listCart.clear();
         			for (int j = 0; j < array.length(); j++) {
-        				RecentObject temp = new RecentObject();
+        				CartObject temp = new CartObject();
         				temp.setIdEntity(array.getJSONObject(j).getInt("entity_id"));
         				temp.setIdItem(array.getJSONObject(j).getInt("item_id"));
         				temp.setName(array.getJSONObject(j).getString("name"));
@@ -197,7 +197,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
         				temp.setQuantity(array.getJSONObject(j).getInt("qty"));   
         				temp.setImage(array.getJSONObject(j).getString("image"));   
         				temp.setColor(array.getJSONObject(j).getString("color"));
-        				FileUtil.listRecent.add(temp);
+        				FileUtil.listCart.add(temp);
         			}
         			
                 }
@@ -209,34 +209,34 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	    }
 
 	    protected void onPostExecute(String file_url) {
-	    	updateText();
+//	    	updateText();
 	    	adapter.notifyDataSetChanged();
 	    	pDialog.dismiss();	
 	    }
 	}
 	
 	
-	private void updateText(){
-		if (FileUtil.listRecent.size() > 0) {
-			tvCountItem.setText(String.valueOf(getQuantityAll()));
-		} else {
-			tvCountItem.setText("0");
-		}		
-    	tvTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
-    	changeTextThereIs();
-	}
+//	private void updateText(){
+//		if (FileUtil.listRecent.size() > 0) {
+//			tvCountItem.setText(String.valueOf(getQuantityAll()));
+//		} else {
+//			tvCountItem.setText("0");
+//		}		
+//    	tvTotal.setText(CommonUtil.formatMoney(CommonUtil.getTotal()));
+//    	changeTextThereIs();
+//	}
 	
 	private int getQuantityAll(){
 		int i = 0;
-		for (int j = 0; j < FileUtil.listRecent.size(); j++) {
-			i = i + FileUtil.listRecent.get(j).getQuantity();
+		for (int j = 0; j < FileUtil.listCart.size(); j++) {
+			i = i + FileUtil.listCart.get(j).getQuantity();
 		}		
 		return i;		
 	}
 	
 	
 	private void changeTextThereIs(){
-		if (FileUtil.listRecent.size() <= 1) {
+		if (FileUtil.listCart.size() <= 1) {
 			tvThereis.setText(Constants.TEXT_THEREIS);
 			tvItem.setText(Constants.TEXT_ITEM);
 		}else{

@@ -17,9 +17,6 @@ import android.widget.Toast;
 
 public class CommonUtil {
 	public static String formatMoney(double money){
-//		NumberFormat fmt = new NumberFormat().
-//		return fmt.format(money);
-		
 		String str = new DecimalFormat("#.00").format(money);
 		return "$"+str;
 	}
@@ -55,8 +52,8 @@ public class CommonUtil {
 	
 	public static double getTotal(){
 		double total = 0;
-		for (int i = 0; i < FileUtil.listRecent.size(); i++) {
-			total += (FileUtil.listRecent.get(i).getPrice() * FileUtil.listRecent.get(i).getQuantity());
+		for (int i = 0; i < FileUtil.listCart.size(); i++) {
+			total += (FileUtil.listCart.get(i).getPrice() * FileUtil.listCart.get(i).getQuantity());
 		}
 		return total;
 	}

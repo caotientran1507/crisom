@@ -35,6 +35,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.GridLayout.Spec;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -49,6 +50,7 @@ import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.DocumentObject;
 import com.zdh.crimson.model.OptionObject;
 import com.zdh.crimson.model.Product;
+import com.zdh.crimson.model.SpecsObject;
 import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.JsonParser;
@@ -91,7 +93,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_product);
+		setContentView(R.layout.activity_product_detail);
 		currentProduct = getIntent().getExtras().getInt(Constants.KEY_PRODUCTID);
 
 		init();
@@ -136,7 +138,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		lnTitle = (LinearLayout)findViewById(R.id.product_lnTitle);
 		tvPrice = (TextView)findViewById(R.id.product_tvPrice);
 		tvDownload = (TextView)findViewById(R.id.product_tvDownload);
-		tvFAQ = (TextView)findViewById(R.id.product_tvFAQ);
+		tvFAQ = (TextView)findViewById(R.id.product_tvSPECS);
 		tvVideo = (TextView)findViewById(R.id.product_tvVideo);
 
 		btnVerify = (Button)findViewById(R.id.product_btnVerify);
@@ -230,7 +232,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			lnFaq.setVisibility(View.GONE);
 			lnVideo.setVisibility(View.GONE);
 			break;	
-		case R.id.product_tvFAQ:
+		case R.id.product_tvSPECS:
 			lnTitle.setBackgroundResource(R.drawable.tab_c);
 			lnPrice.setVisibility(View.GONE);
 			lnDownload.setVisibility(View.GONE);
@@ -323,6 +325,17 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 							documentObject.setDocType(jsonArrayDocument.getJSONObject(i).getString("doc_type"));
 							documentObject.setFile(jsonArrayDocument.getJSONObject(i).getString("file"));
 							product.getListDocument().add(documentObject);
+						}
+					}
+					
+					//------get specs for product-----
+					JSONArray jsonArraySpecs = jsonTemp.getJSONArray("specs");
+					if (jsonArraySpecs != null && jsonArraySpecs.length() != 0) {
+						for (int i = 0; i < jsonArraySpecs.length(); i++) {
+							SpecsObject specsObject = new SpecsObject();
+							specsObject.setTitle(jsonArraySpecs.getJSONObject(i).getString("content"));
+							specsObject.setContent(jsonArraySpecs.getJSONObject(i).getString("title"));
+							product.getListSpecs().add(specsObject);
 						}
 					}
 

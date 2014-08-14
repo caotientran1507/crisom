@@ -264,7 +264,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		spnCreditCardOnFile.setAdapter(cardTypeOnFileAdapter);
 
-		reviewCheckoutDetailAdapter = new ReviewCheckoutDetailAdapter(CheckoutDetailActivity.this, FileUtil.listRecent);
+		reviewCheckoutDetailAdapter = new ReviewCheckoutDetailAdapter(CheckoutDetailActivity.this, FileUtil.listCart);
 		lvReview.setAdapter(reviewCheckoutDetailAdapter);		
 		lvReview.setExpanded(true);
 

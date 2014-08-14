@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -56,6 +57,7 @@ public class ParcelServiceAdapter extends BaseAdapter {
 			view = inflater.inflate(R.layout.row_parcel_service, null);
 			holder = new CategoryHolder();
 			holder.rdb =  (RadioButton) view.findViewById(R.id.row_parcel_service_rbn);
+			holder.ln =  (LinearLayout) view.findViewById(R.id.row_parcel_service_ln);
 			holder.tv = (TextView) view.findViewById(R.id.row_parcel_service_tv);
 
 			view.setTag(holder);
@@ -83,6 +85,12 @@ public class ParcelServiceAdapter extends BaseAdapter {
 				FileUtil.codeRadioButtonShippingMethod = listCarrier.get(position).getCode();
 			}
 		});
+		
+		if (listCarrier.get(position).getTitle().equals("null")) {
+			holder.ln.setVisibility(View.GONE);
+		}else{
+			holder.tv.setText(listCarrier.get(position).getTitle()+" "+listCarrier.get(position).getPrice());
+		}
 
 
 		if (position == selectedIndex) {
@@ -92,13 +100,13 @@ public class ParcelServiceAdapter extends BaseAdapter {
 			holder.rdb.setChecked ( false );
 		}
 
-		holder.tv.setText(listCarrier.get(position).getTitle()+" "+listCarrier.get(position).getPrice());
 		return view;
 	}
 
 	private class CategoryHolder {
 		TextView tv;	
 		RadioButton rdb;
+		LinearLayout ln;
 	}
 
 	public int getcurrentPositionSelect() {

@@ -133,14 +133,14 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:scrollbars="none"
-                android:layout_weight="37" >
+                android:layout_weight="37"
+                android:scrollbars="none" >
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
-                    
+
                     <LinearLayout
                         android:id="@+id/home_lnBrowsercategories"
                         android:layout_width="match_parent"
@@ -195,16 +195,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#f1f1f1"
+                        android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:gravity="center_horizontal">
+                        android:weightSum="100" >
 
                         <com.zdh.crimson.utility.ExpandableHeightListView
                             android:id="@+id/home_lv"
-                            android:layout_width="match_parent"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:scrollbars="none"
+                            android:layout_weight="90"
                             android:divider="@color/crisom_gray_divider"
-                            android:dividerHeight="1dp" >
+                            android:dividerHeight="1dp"
+                            android:scrollbars="none" >
                         </com.zdh.crimson.utility.ExpandableHeightListView>
                     </LinearLayout>
                     <!-- End 4 rows -->

@@ -11,7 +11,9 @@ public class Product {
 	private String url;
 	private String faq; 
 	private ArrayList<OptionObject> listOption;
+	private ArrayList<SpecsObject> listSpecs;
 	private ArrayList<DocumentObject> listDocument;
+	private ArrayList<String> listVideo;
 	
 	public Product(){
 		id = 0 ;
@@ -76,6 +78,18 @@ public class Product {
 	}
 	public void setFaq(String faq) {
 		this.faq = faq;
+	}
+	public ArrayList<SpecsObject> getListSpecs() {
+		return listSpecs;
+	}
+	public void setListSpecs(ArrayList<SpecsObject> listSpecs) {
+		this.listSpecs = listSpecs;
+	}
+	public ArrayList<String> getListVideo() {
+		return listVideo;
+	}
+	public void setListVideo(ArrayList<String> listVideo) {
+		this.listVideo = listVideo;
 	}
 	
 	

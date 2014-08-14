@@ -146,6 +146,8 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				edtSearch.setText(keySearch);
 				new SearchAsyncTask(dataSearch).execute();
 			}else{
+				keySearch = "";
+				edtSearch.setText(keySearch);
 				new MountFinderAsyncTask(device, manufacturer, model).execute();	
 			}
 		}

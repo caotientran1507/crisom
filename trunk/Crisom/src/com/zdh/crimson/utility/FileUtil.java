@@ -8,7 +8,7 @@ import com.zdh.crimson.model.CarrierObject;
 import com.zdh.crimson.model.Category;
 import com.zdh.crimson.model.CountryObject;
 import com.zdh.crimson.model.Product;
-import com.zdh.crimson.model.RecentObject;
+import com.zdh.crimson.model.CartObject;
 import com.zdh.crimson.model.StateObject;
 
 public class FileUtil {
@@ -26,7 +26,7 @@ public class FileUtil {
 	public static ArrayList<Category> listCategory = new ArrayList<Category>();
 	public static ArrayList<Product> listProduct = new ArrayList<Product>();
 	public static ArrayList<Product> listSearch = new ArrayList<Product>();
-	public static ArrayList<RecentObject> listRecent = new ArrayList<RecentObject>();
+	public static ArrayList<CartObject> listCart = new ArrayList<CartObject>();
 	public static ConcurrentMap<Integer, String> listCartChange = new ConcurrentHashMap<Integer, String>();
 	public static ConcurrentMap<Integer, Boolean> listCheckbox = new ConcurrentHashMap<Integer, Boolean>();
 

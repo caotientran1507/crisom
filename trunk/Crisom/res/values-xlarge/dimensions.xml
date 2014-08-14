@@ -5,7 +5,7 @@
     <dimen name="textsize_title">30sp</dimen>
     <dimen name="padding">25dp</dimen>
     <dimen name="padding_large">40dp</dimen>
-    <dimen name="padding_small">15dp</dimen>
+    <dimen name="padding_small">11dp</dimen>
     <dimen name="spinner_height">60dp</dimen>
     
     <!-- ***************** include_header_with_btn_back ***************** -->
@@ -34,8 +34,9 @@
 
     <!-- ***************** row_product ***************** -->
 
-    <dimen name="row_product_height">280dp</dimen>
-    <dimen name="row_product_height_iv">240dp</dimen>
+    <dimen name="row_product_height">260dp</dimen>
+    <dimen name="row_product_height_iv">260dp</dimen>
+    <dimen name="row_product_height_width_iv">150dp</dimen>
     <dimen name="row_product_height_iv_addtocart">60dp</dimen>
     <!-- ***************** row_product ***************** -->
     <dimen name="row_recent_height">220dp</dimen>

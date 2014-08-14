@@ -13,24 +13,24 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.zdh.crimson.R;
-import com.zdh.crimson.model.RecentObject;
+import com.zdh.crimson.model.CartObject;
 import com.zdh.crimson.utility.CommonUtil;
 
 @SuppressLint("InflateParams")
 public class ReviewCheckoutDetailAdapter extends BaseAdapter {
 
 	private Activity activity;
-	private ArrayList<RecentObject> listRecent = new ArrayList<RecentObject>();
+	private ArrayList<CartObject> listCart = new ArrayList<CartObject>();
 	private static LayoutInflater inflater = null;
 
-	public ReviewCheckoutDetailAdapter(Activity a, ArrayList<RecentObject> listRecent) {
+	public ReviewCheckoutDetailAdapter(Activity a, ArrayList<CartObject> listCart) {
 		activity = a;
-		this.listRecent = listRecent;
+		this.listCart = listCart;
 		inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);		
 	}
 
 	public int getCount() {
-		return listRecent.size();
+		return listCart.size();
 	}
 
 	public Object getItem(int position) {
@@ -53,14 +53,14 @@ public class ReviewCheckoutDetailAdapter extends BaseAdapter {
 		TextView tvQty = (TextView) vi.findViewById(R.id.row_checkoutdetail_tvQuantity); 
 		TextView tvSubtotal = (TextView) vi.findViewById(R.id.row_checkoutdetail_tvSubtotal); 
 		
-		tvPartNumber.setText(listRecent.get(position).getName());
+		tvPartNumber.setText(listCart.get(position).getName());
 
-		String des = "<strong><font color=\"#2f3a76\">Desciption: </font></strong>"+ listRecent.get(position).getDesc();
+		String des = "<strong><font color=\"#2f3a76\">Desciption: </font></strong>"+ listCart.get(position).getDesc();
 		tvDes.setText(Html.fromHtml(des));		
-		tvColor.setText(listRecent.get(position).getColor());
-		tvQty.setText(String.valueOf(listRecent.get(position).getQuantity()));		
-		tvPrice.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()));
-		tvSubtotal.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()*listRecent.get(position).getQuantity()));
+		tvColor.setText(listCart.get(position).getColor());
+		tvQty.setText(String.valueOf(listCart.get(position).getQuantity()));		
+		tvPrice.setText(CommonUtil.formatMoney(listCart.get(position).getPrice()));
+		tvSubtotal.setText(CommonUtil.formatMoney(listCart.get(position).getPrice()*listCart.get(position).getQuantity()));
 		
 		return vi;
 	}
