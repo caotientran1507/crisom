@@ -114,17 +114,21 @@ public class ChildAdapter extends BaseAdapter {
 
 		if (SharedPreferencesUtil.getFlagLogin(context)) {
 			holder.lnAddtoCart.setVisibility(View.VISIBLE);
+			holder.tvMSRP.setVisibility(View.VISIBLE);
+			holder.tvPrice.setVisibility(View.VISIBLE);
 			holder.productlist_message_cart_no_login.setVisibility(View.GONE);
 		} else {
 			holder.lnAddtoCart.setVisibility(View.GONE);
+			holder.tvMSRP.setVisibility(View.GONE);
+			holder.tvPrice.setVisibility(View.GONE);
 			holder.productlist_message_cart_no_login.setVisibility(View.VISIBLE);
 		}
 
 		holder.tvModel.setText(listOption.get(position).getSku());
 		holder.tvColor.setText(listOption.get(position).getColor());
 		holder.tvWeight.setText(String.valueOf(listOption.get(position).getWeight()));
-		holder.tvMSRP.setText(String.valueOf(listOption.get(position).getMsrp()));
 		holder.tvIncart.setText(String.valueOf(listOption.get(position).getInCart()));
+		holder.tvMSRP.setText(String.valueOf(listOption.get(position).getMsrp()));		
 		holder.tvPrice.setText(String.valueOf(listOption.get(position).getPrice()));
 
 		if (listOption.get(position).getOtherFieldTitle().equals("") || listOption.get(position).getOtherFieldTitle().equals("null")) {

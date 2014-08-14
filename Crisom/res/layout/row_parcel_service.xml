@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/padding_small"
     android:gravity="center_vertical"
+    android:id="@+id/row_parcel_service_ln"
     android:orientation="horizontal" >
 
     <RadioButton

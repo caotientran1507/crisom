@@ -162,7 +162,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		statesAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, FileUtil.states);
 		spnState.setAdapter(statesAdapter);
 
-		adapter = new CheckoutAdapter(CheckoutActivity.this, FileUtil.listRecent);
+		adapter = new CheckoutAdapter(CheckoutActivity.this, FileUtil.listCart);
 		listview.setAdapter(adapter);
 		listview.setExpanded(true);
 		listview.setFocusable(false);
@@ -322,7 +322,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				Toast.makeText(CheckoutActivity.this, "Can not clear your cart. Please try again!", Toast.LENGTH_SHORT).show();
 			}
 			else{
-				FileUtil.listRecent.clear();
+				FileUtil.listCart.clear();
 				Toast.makeText(CheckoutActivity.this, "Clear your cart success!", Toast.LENGTH_SHORT).show();
 				adapter.notifyDataSetChanged();
 				finish();

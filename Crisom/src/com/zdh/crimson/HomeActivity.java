@@ -319,6 +319,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			
 		case R.id.home_lnBrowsercategories:
 			Intent browsercategories = new Intent(HomeActivity.this, CategoryActivity.class);
+			browsercategories.putExtra(Constants.KEY_CATEGORYID, Constants.CATEGORY_ROOT);
 			startActivity(browsercategories);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;

@@ -120,8 +120,8 @@ public class ChildProductlistActivityAdapter extends BaseAdapter {
 		holder.tvModel.setText(listOption.get(position).getSku());
 		holder.tvColor.setText(listOption.get(position).getColor());
 		holder.tvWeight.setText(String.valueOf(listOption.get(position).getWeight()));
-		holder.tvMSRP.setText(listOption.get(position).getMsrp());
 		holder.tvIncart.setText(String.valueOf(listOption.get(position).getInCart()));
+		holder.tvMSRP.setText(listOption.get(position).getMsrp());		
 		holder.tvPrice.setText(listOption.get(position).getPrice());		
 		
 		if (listOption.get(position).getOtherFieldTitle().equals("") || listOption.get(position).getOtherFieldTitle().equals("null")) {

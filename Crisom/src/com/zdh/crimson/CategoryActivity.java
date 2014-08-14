@@ -40,6 +40,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 	private ProgressDialog pDialog;
 	
 	private int currentLevel = 0; 
+	static private int currentCategory = 0; 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 		if (getIntent().getExtras() != null) {
 			currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);
 		}
+		currentCategory = (currentCategory == 0) ? Constants.CATEGORY_ROOT : currentCategory ;
 		init();
 		Log.d("currentLevel", String.valueOf(currentLevel));
 		initDataWebservice();

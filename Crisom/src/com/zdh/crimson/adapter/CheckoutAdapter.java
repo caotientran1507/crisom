@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.zdh.crimson.R;
 import com.zdh.crimson.lazylist.ImageLoader;
-import com.zdh.crimson.model.RecentObject;
+import com.zdh.crimson.model.CartObject;
 import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.FileUtil;
 
@@ -26,19 +26,19 @@ public class CheckoutAdapter extends BaseAdapter {
 	//	CategoryHolder holder = null;
 	private Context context;
 	private LayoutInflater inflater = null;
-	private ArrayList<RecentObject> listRecent = new ArrayList<RecentObject>();	
+	private ArrayList<CartObject> listCart = new ArrayList<CartObject>();	
 	public ImageLoader imageLoader; 
 
 
-	public CheckoutAdapter(Context context,ArrayList<RecentObject> listRecent) {
-		this.listRecent = listRecent;		
+	public CheckoutAdapter(Context context,ArrayList<CartObject> listCart) {
+		this.listCart = listCart;		
 		this.context = context;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imageLoader = new ImageLoader(this.context);
 	}
 
 	public int getCount() {
-		return listRecent.size();
+		return listCart.size();
 	}
 
 	public Object getItem(int position) {
@@ -66,7 +66,7 @@ public class CheckoutAdapter extends BaseAdapter {
 			holder.ivAvatar = (ImageView) view.findViewById(R.id.row_checkout_ivAvatar);
 			holder.tvSubtotal = (TextView) view.findViewById(R.id.row_checkout_tvSubtotal);		
 			
-			holder.mWatcher = new MutableWatcher(listRecent,holder.tvSubtotal);
+			holder.mWatcher = new MutableWatcher(listCart,holder.tvSubtotal);
 	        holder.edtQuantity.addTextChangedListener(holder.mWatcher);
 
 			view.setTag(holder);
@@ -79,19 +79,19 @@ public class CheckoutAdapter extends BaseAdapter {
 
 		// ------load data--------
 
-		holder.tvPartNumber.setText(listRecent.get(position).getName());
+		holder.tvPartNumber.setText(listCart.get(position).getName());
 
-		String des = "<strong><font color=\"#2f3a76\">Desciption: </font></strong>"+ listRecent.get(position).getDesc();
+		String des = "<strong><font color=\"#2f3a76\">Desciption: </font></strong>"+ listCart.get(position).getDesc();
 		holder.tvDes.setText(Html.fromHtml(des));
 
-		holder.tvColor.setText(listRecent.get(position).getColor());
-		holder.edtQuantity.setText(String.valueOf(listRecent.get(position).getQuantity()));		
-		holder.tvPrice.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()));
-		holder.tvSubtotal.setText(CommonUtil.formatMoney(listRecent.get(position).getPrice()*listRecent.get(position).getQuantity()));
-		imageLoader.DisplayImage(listRecent.get(position).getImage(), holder.ivAvatar);
+		holder.tvColor.setText(listCart.get(position).getColor());
+		holder.edtQuantity.setText(String.valueOf(listCart.get(position).getQuantity()));		
+		holder.tvPrice.setText(CommonUtil.formatMoney(listCart.get(position).getPrice()));
+		holder.tvSubtotal.setText(CommonUtil.formatMoney(listCart.get(position).getPrice()*listCart.get(position).getQuantity()));
+		imageLoader.DisplayImage(listCart.get(position).getImage(), holder.ivAvatar);
 		
-		if (!FileUtil.listCartChange.containsKey(listRecent.get(position).getIdItem())) {
-			FileUtil.listCartChange.put(listRecent.get(position).getIdItem(), String.valueOf(listRecent.get(position).getQuantity()));
+		if (!FileUtil.listCartChange.containsKey(listCart.get(position).getIdItem())) {
+			FileUtil.listCartChange.put(listCart.get(position).getIdItem(), String.valueOf(listCart.get(position).getQuantity()));
 		}		
 		return view;
 	}
@@ -112,12 +112,12 @@ public class CheckoutAdapter extends BaseAdapter {
 
 class MutableWatcher implements TextWatcher {
 
-    private ArrayList<RecentObject> mlistRecent;
+    private ArrayList<CartObject> mlistRecent;
     private int mPosition;
     private boolean mActive;
     private TextView tvSubTotal;
 
-    public MutableWatcher(ArrayList<RecentObject> listRecent,TextView tvSubTotal ) {
+    public MutableWatcher(ArrayList<CartObject> listRecent,TextView tvSubTotal ) {
 		// TODO Auto-generated constructor stub
     	mlistRecent = listRecent;
     	this.tvSubTotal = tvSubTotal;
