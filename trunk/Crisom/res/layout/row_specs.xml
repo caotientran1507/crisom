@@ -10,11 +10,13 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="5"
+        android:paddingTop="@dimen/padding_small"
         android:gravity="center" >
 
         <ImageView
-            android:layout_width="8dp"
-            android:layout_height="8dp"
+            
+            android:layout_width="@dimen/padding"
+            android:layout_height="@dimen/padding"
             android:scaleType="fitXY"
             android:src="@drawable/viewpager_active"/>
     </LinearLayout>
