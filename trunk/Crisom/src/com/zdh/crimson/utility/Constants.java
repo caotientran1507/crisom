@@ -60,6 +60,9 @@ public class Constants {
 	public static final String EXTENSION_FILE_PDF = ".pdf";
 		
 	public static final String KEY_CATEGORYID = "KEY_CATEGORYID";
+	public static final String KEY_CATEGORY_NARROWSEARCH = "KEY_CATEGORY_NARROWSEARCH";
+	public static final int KEY_CATEGORY_TVSIZE= 1;
+	public static final int KEY_CATEGORY_OTHER= 0;
 	public static final String KEY_MOUNTFINDER_MODEL = "KEY_MOUNTFINDER_MODEL";
 	public static final String KEY_SEARCH_KEYWORD = "KEY_SEARCH_KEYWORD";
 	public static final String KEY_MOUNTFINDER_MANUFACTURER = "KEY_MOUNTFINDER_MANUFACTURER";
