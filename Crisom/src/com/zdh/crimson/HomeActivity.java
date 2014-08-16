@@ -48,7 +48,7 @@ import com.zdh.crimson.utility.stackActivity;
 public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
 	//--------define variables---------
-	private LinearLayout lnHome,lnSearch,lnCategory,lnCart,lnContact,lnBrowser,lnSearchImage;
+	private LinearLayout lnSearch,lnCategory,lnCart,lnContact,lnBrowser,lnSearchImage;
 	private ImageView ivHome;	
 	private TextView tvTitle, tvMainSite;
 	private EditText edtSearch;
@@ -151,8 +151,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 	}
 
-	private void initView(){
-		lnHome = (LinearLayout)findViewById(R.id.include_footer_lnHome);
+	private void initView(){		
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
 		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
 		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
@@ -289,8 +288,13 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			   @Override
 			   public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {	
 				   
+				   int narrowSearchID = Constants.KEY_CATEGORY_OTHER;				   
+				   if (FileUtil.listHome.get(position).getName().equalsIgnoreCase("TV SIZE")) {					   
+					   narrowSearchID = Constants.KEY_CATEGORY_TVSIZE;
+				   }
 				   Intent intent = new Intent(HomeActivity.this,CategoryActivity.class);
-				   intent.putExtra(Constants.KEY_CATEGORYID, FileUtil.listHome.get(position).getId());
+				   intent.putExtra(Constants.KEY_CATEGORYID, FileUtil.listHome.get(position).getId());	
+				   intent.putExtra(Constants.KEY_CATEGORY_NARROWSEARCH, narrowSearchID);	
 				   startActivity(intent);
 				   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 				   FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
@@ -442,7 +446,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
         			for (int j = 0; j < array.length(); j++) {
         				Category temp = new Category();
         				temp.setId(array.getJSONObject(j).getInt("id"));
-        				temp.setName(array.getJSONObject(j).getString("name"));
+        				temp.setName(array.getJSONObject(j).getString("name").trim());
         				temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));        						
         				FileUtil.listHome.add(temp);
         			}

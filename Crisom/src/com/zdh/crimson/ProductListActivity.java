@@ -71,6 +71,7 @@ public class ProductListActivity extends BaseActivity implements
 
 	boolean flagCheckAll = true;
 	
+	int narrowSeachID = Constants.KEY_CATEGORY_OTHER;
 	int positionTV = 0;
 	int positionType1 = 0;
 	int positionType2 = 0;
@@ -81,6 +82,7 @@ public class ProductListActivity extends BaseActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_list);
 		currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);
+		narrowSeachID = getIntent().getExtras().getInt(Constants.KEY_CATEGORY_NARROWSEARCH);		
 		init();
 	}
 
@@ -91,8 +93,6 @@ public class ProductListActivity extends BaseActivity implements
 		if (FileUtil.listProduct != null && FileUtil.listProduct.size() > 0 && adapter != null)
 			adapter.notifyDataSetChanged();
 	}
-	
-	
 
 	@Override
 	protected void onResume() {

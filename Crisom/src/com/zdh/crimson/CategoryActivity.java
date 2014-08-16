@@ -39,8 +39,9 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 	CategoryAdapter adapter;
 	private ProgressDialog pDialog;
 	
-	private int currentLevel = 0; 
+	static private int currentLevel = 0; 
 	static private int currentCategory = 0; 
+	private int narrowSearchID = Constants.KEY_CATEGORY_OTHER;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +49,13 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 		setContentView(R.layout.activity_category);
 		if (getIntent().getExtras() != null) {
 			currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);
+			if (narrowSearchID != Constants.CATEGORY_ROOT) {
+				currentLevel ++;
+				narrowSearchID = getIntent().getExtras().getInt(Constants.KEY_CATEGORY_NARROWSEARCH);			
+			}			
 		}
 		currentCategory = (currentCategory == 0) ? Constants.CATEGORY_ROOT : currentCategory ;
 		init();
-		Log.d("currentLevel", String.valueOf(currentLevel));
 		initDataWebservice();
 		FileUtil.listCategory.clear();
 	}
@@ -60,7 +64,6 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 	protected void onResume() { 
 		super.onResume();
 		ChangeTextButtonLogin();
-		Log.d("currentLevel", String.valueOf(currentLevel));
 	}
 
 	private void init() {
@@ -103,6 +106,15 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 			public void onItemClick(AdapterView<?> adapter, View view,int position, long arg) {
 				
 				if (FileUtil.listCategory.size() > 0) {
+					if (currentLevel == 0) {
+						if (FileUtil.listCategory.get(position).getName().equalsIgnoreCase("TV SIZE")) {
+							narrowSearchID = Constants.KEY_CATEGORY_TVSIZE;
+						} else {
+							narrowSearchID = Constants.KEY_CATEGORY_OTHER;
+						}
+						
+					}
+					Log.d("narrowSearchIDabc", ""+narrowSearchID);
 					if (FileUtil.listCategory.get(position).getSubcat()) {
 						currentCategory = FileUtil.listCategory.get(position).getId();
 						new GetCategoriesByIdAsyncTask(currentCategory).execute();
@@ -110,6 +122,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 					} else {
 						Intent intent = new Intent(CategoryActivity.this,ProductListActivity.class);
 						intent.putExtra(Constants.KEY_CATEGORYID,FileUtil.listCategory.get(position).getId());
+						intent.putExtra(Constants.KEY_CATEGORY_NARROWSEARCH,narrowSearchID);
 						startActivity(intent);
 						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 						FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PRODUCTLIST;
@@ -187,7 +200,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 					for (int j = 0; j < array.length(); j++) {
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
-						temp.setName(array.getJSONObject(j).getString("name"));
+						temp.setName(array.getJSONObject(j).getString("name").trim());
 						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
 						FileUtil.listCategory.add(temp);
