@@ -274,6 +274,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/padding"
+                                        android:textSize="@dimen/textsize_normal"
                                         android:text="Flat Panel" />
                                 </LinearLayout>
 
@@ -296,6 +297,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/padding"
+                                        android:textSize="@dimen/textsize_normal"
                                         android:text="Projector" />
                                 </LinearLayout>
                             </RadioGroup>

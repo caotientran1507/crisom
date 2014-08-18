@@ -70,20 +70,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="10" />
 
-                            <LinearLayout
+                            <TextView
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="80"
-                                android:gravity="center" >
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="NARROW YOUR SEARCH"
-                                    android:textColor="@color/crisom_white"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
+                                android:gravity="center"
+                                android:text="NARROW YOUR SEARCH"
+                                android:textColor="@color/crisom_white"
+                                android:textSize="@dimen/textsize_title"
+                                android:textStyle="bold" />
 
                             <LinearLayout
                                 android:layout_width="0dp"
@@ -122,8 +117,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="TV Size"
-                                    android:textSize="@dimen/textsize_normal"
                                     android:textColor="@color/crisom_red"
+                                    android:textSize="@dimen/textsize_normal"
                                     android:textStyle="bold" />
 
                                 <Spinner
@@ -138,8 +133,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/padding"
                                     android:text="Type"
-                                    android:textSize="@dimen/textsize_normal"
                                     android:textColor="@color/crisom_red"
+                                    android:textSize="@dimen/textsize_normal"
                                     android:textStyle="bold" />
 
                                 <Spinner
@@ -170,8 +165,8 @@
                                         android:layout_width="@dimen/include_footer_iv"
                                         android:layout_height="@dimen/include_footer_iv"
                                         android:background="@drawable/checkbox_selector"
-                                        android:checked="false"
-                                        android:button="@null" />
+                                        android:button="@null"
+                                        android:checked="false" />
 
                                     <TextView
                                         android:id="@+id/productlist_tvAll"
@@ -221,8 +216,8 @@
                                         android:paddingBottom="@dimen/padding_small"
                                         android:paddingTop="@dimen/padding_small"
                                         android:text="Search"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:textColor="@color/crisom_white" />
+                                        android:textColor="@color/crisom_white"
+                                        android:textSize="@dimen/textsize_normal" />
 
                                     <TextView
                                         android:layout_width="0dp"
@@ -238,8 +233,8 @@
                                         android:paddingBottom="@dimen/padding_small"
                                         android:paddingTop="@dimen/padding_small"
                                         android:text="Clear all filter"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:textColor="@color/crisom_white" />
+                                        android:textColor="@color/crisom_white"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -252,7 +247,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/padding_large"
                             android:divider="@color/transparent"
-                            android:dividerHeight="@dimen/padding">
+                            android:dividerHeight="@dimen/padding" >
                         </com.zdh.crimson.utility.ExpandableHeightListView>
                     </LinearLayout>
                 </LinearLayout>

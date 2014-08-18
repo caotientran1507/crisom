@@ -91,8 +91,8 @@ public class Constants {
 	public static final String VERIFY_OK = "This mount is compatible.";
 	public static final String VERIFY_NOK = "This mount is not compatible, please choose a different Crimson model or use EZ-Mount Finder to narrow your search";
 	
-	public static final int KEY_DEVIDE_FLATPANEL = 1;
-	public static final int KEY_DEVIDE_PROJECTOR = 2;
+	public static final String KEY_DEVIDE_FLATPANEL = "1";
+	public static final String KEY_DEVIDE_PROJECTOR = "2";
 	
 	public static final int POSITION_ACTIVITY_LOGIN = 0;
 	public static final int POSITION_ACTIVITY_HOME = 1;

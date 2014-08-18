@@ -22,9 +22,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:fillViewport="true"
         android:layout_marginBottom="10dp"
-        android:layout_weight="74" >
+        android:layout_weight="74"
+        android:fillViewport="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,9 +64,9 @@
                             android:layout_weight="95"
                             android:paddingBottom="@dimen/padding_small"
                             android:paddingTop="@dimen/padding_small"
-                            android:textSize="@dimen/textsize_normal"
                             android:text="1 Billing Infomation"
                             android:textColor="@color/crisom_blue"
+                            android:textSize="@dimen/textsize_normal"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -81,9 +81,9 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:orientation="horizontal"
-                        android:visibility="visible"
                         android:paddingBottom="@dimen/padding"
                         android:paddingTop="@dimen/padding"
+                        android:visibility="gone"
                         android:weightSum="100" >
 
                         <LinearLayout
@@ -95,8 +95,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="@dimen/textsize_normal"
                                 android:text="Select a billing address from your address book or enter a new address"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <Spinner
@@ -132,8 +132,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/padding"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="Ship to this address" />
+                                        android:text="Ship to this address"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -155,8 +155,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/padding"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="Ship to different address" />
+                                        android:text="Ship to different address"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
                             </RadioGroup>
 
@@ -170,9 +170,9 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/padding"
                                 android:gravity="center"
-                                android:textSize="@dimen/textsize_normal"
                                 android:text="* Require Fields"
-                                android:textColor="@color/crisom_red" />
+                                android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -187,12 +187,12 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/padding"
                                     android:layout_weight="40"
-                                    android:textSize="@dimen/textsize_normal"
                                     android:background="@drawable/button_red_background"
                                     android:paddingBottom="@dimen/padding_small"
                                     android:paddingTop="@dimen/padding_small"
                                     android:text="Continue"
-                                    android:textColor="@color/crisom_white" />
+                                    android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -227,8 +227,8 @@
                             android:paddingBottom="@dimen/padding_small"
                             android:paddingTop="@dimen/padding_small"
                             android:text="2 Shipping Infomation"
-                            android:textSize="@dimen/textsize_normal"
                             android:textColor="@color/crisom_blue"
+                            android:textSize="@dimen/textsize_normal"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -242,10 +242,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:orientation="horizontal"                        
+                        android:orientation="horizontal"
                         android:paddingBottom="@dimen/padding"
                         android:paddingTop="@dimen/padding"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:weightSum="100" >
 
                         <LinearLayout
@@ -257,8 +257,8 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="@dimen/textsize_normal"
                                 android:text="Select a billing address from your address book or enter a new address"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <Spinner
@@ -272,10 +272,508 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="@dimen/padding"
-                                android:layout_marginTop="@dimen/padding"
+                                android:layout_marginTop="@dimen/padding_small"
                                 android:gravity="center_vertical"
-                                android:orientation="horizontal" >
+                                android:orientation="horizontal"
+                                android:weightSum="100" >
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="45"
+                                    android:orientation="vertical" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="First Name"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtFirstName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="45"
+                                    android:orientation="vertical" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Last Name"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtLastName"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:weightSum="100" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Company"
+                                    android:textSize="@dimen/textsize_normal"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/checkoutdetail_edtCompany"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edittext_background_radius"
+                                    android:lines="1"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/padding_small"
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:weightSum="100" >
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Address"
+                                        android:textSize="@dimen/textsize_normal"
+                                        android:textStyle="bold" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="*"
+                                        android:textColor="@color/crisom_red"
+                                        android:textSize="@dimen/textsize_normal"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+
+                                <EditText
+                                    android:id="@+id/checkoutdetail_edtAddress"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edittext_background_radius"
+                                    android:lines="1"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/padding_small"
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:weightSum="100" >
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="45"
+                                    android:orientation="vertical" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="City"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtCity"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="45"
+                                    android:orientation="vertical" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="State/Province"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtState"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:weightSum="100" >
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="45"
+                                    android:orientation="vertical" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Zip/Postal Code"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtPostalCode"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="45"
+                                    android:orientation="vertical" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Country"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtCountry"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal"
+                                android:weightSum="100" >
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="45"
+                                    android:orientation="vertical" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Telephone"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtTelephone"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="10" />
+
+                                <LinearLayout
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="45"
+                                    android:orientation="vertical" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Fax"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtFax"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/checkoutdetail_lnSaveAddressBook"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/padding" >
+
+                                <CheckBox
+                                    android:id="@+id/checkoutdetail_cbxSaveAddressBook"
+                                    android:layout_width="@dimen/include_footer_iv"
+                                    android:layout_height="@dimen/include_footer_iv"
+                                    android:background="@drawable/checkbox_selector"
+                                    android:button="@null" />
+
+                                <TextView
+                                    android:id="@+id/checkoutdetail_tvSaveAddressBook"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/padding"
+                                    android:text="Save in address book" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:weightSum="100" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="PO"
+                                    android:textSize="@dimen/textsize_normal"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/checkoutdetail_edtPO"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edittext_background_radius"
+                                    android:lines="1"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/padding_small"
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:weightSum="100" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Notes"
+                                    android:textSize="@dimen/textsize_normal"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/checkoutdetail_edtNotes"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edittext_background_radius"
+                                    android:padding="@dimen/padding_small"
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
+                            
+                            
+                            <LinearLayout
+                                android:id="@+id/checkoutdetail_lnUseBillingAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/padding" >
 
                                 <CheckBox
                                     android:id="@+id/checkoutdetail_cbxUseBillingAddress"
@@ -289,7 +787,6 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/padding"
-                                    android:textSize="@dimen/textsize_normal"
                                     android:text="Use Billing Address" />
                             </LinearLayout>
 
@@ -304,8 +801,8 @@
                                 android:layout_marginTop="@dimen/padding"
                                 android:gravity="center"
                                 android:text="* Require Fields"
-                                android:textSize="@dimen/textsize_normal"
-                                android:textColor="@color/crisom_red" />
+                                android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -324,8 +821,8 @@
                                     android:paddingBottom="@dimen/padding_small"
                                     android:paddingTop="@dimen/padding_small"
                                     android:text="Continue"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:textColor="@color/crisom_white" />
+                                    android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -343,8 +840,8 @@
                         android:id="@+id/checkoutdetail_ln3ShippingMethod"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:visibility="visible"
                         android:orientation="horizontal"
+                        android:visibility="visible"
                         android:weightSum="100" >
 
                         <TextView
@@ -359,8 +856,8 @@
                             android:paddingBottom="@dimen/padding_small"
                             android:paddingTop="@dimen/padding_small"
                             android:text="3 Shipping Method"
-                            android:textSize="@dimen/textsize_normal"
                             android:textColor="@color/crisom_blue"
+                            android:textSize="@dimen/textsize_normal"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -389,19 +886,19 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/padding"
                                 android:text="United Parcel Service"
-                                android:textStyle="bold" 
                                 android:textSize="@dimen/textsize_normal"
-                                android:layout_marginBottom="@dimen/padding"/>
+                                android:textStyle="bold" />
 
                             <com.zdh.crimson.utility.ExpandableHeightListView
                                 android:id="@+id/checkoutdetail_lvParcelService"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:dividerHeight="@dimen/padding_small"
-                                android:divider="@color/transparent"
                                 android:layout_marginBottom="@dimen/padding"
-                                android:choiceMode="singleChoice">
+                                android:choiceMode="singleChoice"
+                                android:divider="@color/transparent"
+                                android:dividerHeight="@dimen/padding_small" >
                             </com.zdh.crimson.utility.ExpandableHeightListView>
 
                             <TextView
@@ -415,8 +912,8 @@
                                 android:layout_marginTop="@dimen/padding"
                                 android:gravity="center"
                                 android:text="* Require Fields"
-                                android:textSize="@dimen/textsize_normal"
-                                android:textColor="@color/crisom_red" />
+                                android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -435,8 +932,8 @@
                                     android:paddingBottom="@dimen/padding_small"
                                     android:paddingTop="@dimen/padding_small"
                                     android:text="Continue"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:textColor="@color/crisom_white" />
+                                    android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -523,8 +1020,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/padding"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="Credit Card on File" />
+                                        android:text="Credit Card on File"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
                                 <!-- end radiobutton rbnCreditCardOnFile title -->
 
@@ -533,8 +1030,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/padding"
-                                    android:visibility="gone"
-                                    android:orientation="vertical" >
+                                    android:orientation="vertical"
+                                    android:visibility="gone" >
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -552,8 +1049,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="*"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textColor="@color/crisom_red" />
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
 
                                     <Spinner
@@ -587,8 +1084,8 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="@dimen/padding"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="Credit Card" />
+                                        android:text="Credit Card"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
                                 <!-- end radiobutton rbnCreditCard title -->
 
@@ -597,8 +1094,8 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/padding"
-                                    android:visibility="gone"
-                                    android:orientation="vertical" >
+                                    android:orientation="vertical"
+                                    android:visibility="gone" >
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -616,8 +1113,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="*"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textColor="@color/crisom_red" />
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
 
                                     <Spinner
@@ -644,8 +1141,8 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="*"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textColor="@color/crisom_red" />
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
 
                                     <EditText
@@ -653,10 +1150,12 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginTop="@dimen/padding_small"
-                                        android:inputType="number"
-                                        android:textSize="@dimen/textsize_normal"
                                         android:background="@drawable/edittext_background_radius"
-                                        android:padding="@dimen/padding_small" />
+                                        android:inputType="number"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -675,35 +1174,35 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="*"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textColor="@color/crisom_red" />
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
-                                        android:weightSum="100" 
                                         android:layout_marginTop="@dimen/padding_small"
-                                        android:gravity="center_horizontal">
+                                        android:gravity="center_horizontal"
+                                        android:orientation="horizontal"
+                                        android:weightSum="100" >
 
                                         <Spinner
                                             android:id="@+id/checkoutdetail_spnExpirationMonth"
                                             android:layout_width="0dp"
-                                            android:layout_weight="55"
                                             android:layout_height="@dimen/spinner_height"
+                                            android:layout_weight="55"
                                             android:background="@drawable/spinner_month" />
-                                        
-                                        <TextView 
+
+                                        <TextView
                                             android:layout_width="0dp"
-                                            android:layout_weight="5"
-                                            android:layout_height="wrap_content"/>
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="5" />
 
                                         <Spinner
                                             android:id="@+id/checkoutdetail_spnExpirationYear"
                                             android:layout_width="0dp"
-                                            android:layout_weight="40"
                                             android:layout_height="@dimen/spinner_height"
+                                            android:layout_weight="40"
                                             android:background="@drawable/spinner_year" />
                                     </LinearLayout>
 
@@ -724,42 +1223,43 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:text="*"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textColor="@color/crisom_red" />
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
-                                    
+
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal"
                                         android:layout_marginTop="@dimen/padding_small"
+                                        android:orientation="horizontal"
                                         android:weightSum="100" >
 
                                         <EditText
                                             android:id="@+id/checkoutdetail_edtCardVerification"
                                             android:layout_width="0dp"
-                                            android:layout_weight="60"
                                             android:layout_height="wrap_content"
-                                            android:inputType="number"
-                                            android:textSize="@dimen/textsize_normal"
+                                            android:layout_weight="60"
                                             android:background="@drawable/edittext_background_radius"
-                                            android:padding="@dimen/padding_small" />
-                                        
-                                        <TextView                                            
+                                            android:inputType="number"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+
+                                        <TextView
                                             android:layout_width="0dp"
-                                            android:layout_weight="3"
-                                            android:layout_height="wrap_content"/>
+                                            android:layout_height="wrap_content"
+                                            android:layout_weight="3" />
 
                                         <TextView
                                             android:id="@+id/checkoutdetail_tvWhatIsThis"
                                             android:layout_width="0dp"
-                                            android:layout_weight="35"
                                             android:layout_height="wrap_content"
+                                            android:layout_weight="35"
                                             android:text="What is this?"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textColor="@color/crisom_red" />
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
-
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -780,10 +1280,9 @@
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="@dimen/padding"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:text="Save Credit Card Info" />
+                                            android:text="Save Credit Card Info"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
-                                    
                                 </LinearLayout>
 
                                 <!-- end radiobutton rbnCreditCard content -->
@@ -824,8 +1323,8 @@
                                             android:layout_height="wrap_content"
                                             android:layout_marginLeft="@dimen/padding_small"
                                             android:text="What is PayPal?"
-                                            android:textSize="@dimen/textsize_normal"
                                             android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
                                             android:textStyle="bold" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -834,8 +1333,8 @@
                                     android:id="@+id/checkoutdetail_tvRedirectedPaypal"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:text="You will be redirected to Paypal website when you place an order." />
+                                    android:text="You will be redirected to Paypal website when you place an order."
+                                    android:textSize="@dimen/textsize_normal" />
                             </RadioGroup>
 
                             <TextView
@@ -849,8 +1348,8 @@
                                 android:layout_marginTop="@dimen/padding"
                                 android:gravity="center"
                                 android:text="* Require Fields"
-                                android:textSize="@dimen/textsize_normal"
-                                android:textColor="@color/crisom_red" />
+                                android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -869,8 +1368,8 @@
                                     android:paddingBottom="@dimen/padding_small"
                                     android:paddingTop="@dimen/padding_small"
                                     android:text="Continue"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:textColor="@color/crisom_white" />
+                                    android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -903,8 +1402,8 @@
                             android:paddingBottom="@dimen/padding_small"
                             android:paddingTop="@dimen/padding_small"
                             android:text="5 Order Review"
-                            android:textSize="@dimen/textsize_normal"
                             android:textColor="@color/crisom_blue"
+                            android:textSize="@dimen/textsize_normal"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -936,8 +1435,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="90"
                                 android:divider="@color/crisom_gray_divider"
-                                android:dividerHeight="1dp" 
-                                android:gravity="center_horizontal">
+                                android:dividerHeight="1dp"
+                                android:gravity="center_horizontal" >
                             </com.zdh.crimson.utility.ExpandableHeightListView>
                         </LinearLayout>
                         <!-- end linear title -->
@@ -974,8 +1473,8 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="55"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="Subtotal:" />
+                                        android:text="Subtotal:"
+                                        android:textSize="@dimen/textsize_normal" />
 
                                     <TextView
                                         android:id="@+id/checkoutdetail_tvSubtotal"
@@ -983,8 +1482,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="45"
                                         android:gravity="right"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="$1,600.00" />
+                                        android:text="$1,600.00"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -997,8 +1496,8 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="55"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="Shipping &amp; Handling: " />
+                                        android:text="Shipping &amp; Handling: "
+                                        android:textSize="@dimen/textsize_normal" />
 
                                     <TextView
                                         android:id="@+id/checkoutdetail_tvShippingHandling"
@@ -1006,8 +1505,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="45"
                                         android:gravity="right"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="$0.00" />
+                                        android:text="$0.00"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -1020,8 +1519,8 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="55"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="Tax: " />
+                                        android:text="Tax: "
+                                        android:textSize="@dimen/textsize_normal" />
 
                                     <TextView
                                         android:id="@+id/checkoutdetail_tvTax"
@@ -1029,10 +1528,10 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="45"
                                         android:gravity="right"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="$134.00" />
+                                        android:text="$134.00"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
-                                
+
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
@@ -1043,8 +1542,8 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="55"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="Discount: " />
+                                        android:text="Discount: "
+                                        android:textSize="@dimen/textsize_normal" />
 
                                     <TextView
                                         android:id="@+id/checkoutdetail_tvDiscount"
@@ -1052,8 +1551,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="45"
                                         android:gravity="right"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:text="$0.00" />
+                                        android:text="$0.00"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -1105,16 +1604,16 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:text="Forgot an Item?" />
+                                    android:text="Forgot an Item?"
+                                    android:textSize="@dimen/textsize_normal" />
 
                                 <TextView
                                     android:id="@+id/checkoutdetail_tvEditYourCart"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=" Edit Your Cart"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:textColor="@color/crisom_red" />
+                                    android:textColor="@color/crisom_red"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -1134,8 +1633,8 @@
                                     android:paddingBottom="@dimen/padding_small"
                                     android:paddingTop="@dimen/padding_small"
                                     android:text="Place Order"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:textColor="@color/crisom_white" />
+                                    android:textColor="@color/crisom_white"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>

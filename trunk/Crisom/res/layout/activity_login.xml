@@ -51,9 +51,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="LOG IN"
-                        android:textStyle="bold"
+                        android:textColor="@color/crisom_white"
                         android:textSize="@dimen/textsize_title"
-                        android:textColor="@color/crisom_white" />
+                        android:textStyle="bold" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -74,8 +74,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="5"
-                            android:textSize="@dimen/textsize_normal"
-                            android:text="If you have an account with us, please log in." />
+                            android:text="If you have an account with us, please log in."
+                            android:textSize="@dimen/textsize_normal" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -88,16 +88,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Email Address"
-                                android:textSize="@dimen/textsize_normal"
                                 android:textColor="@color/crisom_text"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" *"
-                                android:textSize="@dimen/textsize_normal"
-                                android:textColor="@color/crisom_red" />
+                                android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal" />
                         </LinearLayout>
 
                         <EditText
@@ -106,8 +106,10 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_background"
                             android:inputType="textEmailAddress"
-                            android:textSize="@dimen/textsize_normal"
-                            android:padding="@dimen/padding_small" />
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:padding="@dimen/padding_small"
+                            android:textSize="@dimen/textsize_normal" />
                         <!-- Email -->
 
                         <LinearLayout
@@ -121,16 +123,16 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="Password"
-                                android:textSize="@dimen/textsize_normal"
                                 android:textColor="@color/crisom_text"
+                                android:textSize="@dimen/textsize_normal"
                                 android:textStyle="bold" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text=" *"
-                                android:textSize="@dimen/textsize_normal"
-                                android:textColor="@color/crisom_red" />
+                                android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal" />
                         </LinearLayout>
 
                         <EditText
@@ -139,8 +141,10 @@
                             android:layout_height="wrap_content"
                             android:background="@drawable/edittext_background"
                             android:inputType="textPassword"
-                            android:textSize="@dimen/textsize_normal"
-                            android:padding="@dimen/padding_small" />
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:padding="@dimen/padding_small"
+                            android:textSize="@dimen/textsize_normal" />
                         <!-- Password -->
 
                         <LinearLayout
