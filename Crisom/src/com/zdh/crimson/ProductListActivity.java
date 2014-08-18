@@ -36,11 +36,11 @@ import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 
 public class ProductListActivity extends BaseActivity implements
-		View.OnClickListener {
+View.OnClickListener {
 
 	// --------define variables---------
 	private LinearLayout lnHome, lnSearch, lnCart, lnContact, lnNarrowTitle,
-			lnNarrowContent, lncheckboxAll;
+	lnNarrowContent, lncheckboxAll;
 	private ExpandableHeightListView lvProduct, lvCheckbox;
 	private ImageView ivCategory, ivNarrowShow;
 	private TextView tvTitle,tvAll;
@@ -70,12 +70,12 @@ public class ProductListActivity extends BaseActivity implements
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 
 	boolean flagCheckAll = true;
-	
+
 	int narrowSeachID = Constants.KEY_CATEGORY_OTHER;
 	int positionTV = 0;
 	int positionType1 = 0;
 	int positionType2 = 0;
-	
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class ProductListActivity extends BaseActivity implements
 	@Override
 	protected void ChangeTextButtonLogin() {
 		super.ChangeTextButtonLogin();
-		
+
 		if (FileUtil.listProduct != null && FileUtil.listProduct.size() > 0 && adapter != null)
 			adapter.notifyDataSetChanged();
 	}
@@ -97,7 +97,7 @@ public class ProductListActivity extends BaseActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
+
 		if (FileUtil.listProduct != null && FileUtil.listProduct.size() > 0 && adapter != null)
 			adapter.notifyDataSetChanged();
 	}
@@ -134,7 +134,7 @@ public class ProductListActivity extends BaseActivity implements
 		btnClearFilter = (Button) findViewById(R.id.productlist_btnClearFilter);
 		cbxAll = (CheckBox) findViewById(R.id.productlist_cbxAll);
 		tvAll = (TextView) findViewById(R.id.productlist_tvAll);
-		
+
 		lncheckboxAll = (LinearLayout) findViewById(R.id.productlist_lncheckboxAll);
 
 		ivCategory.setImageResource(R.drawable.ico_category_active);
@@ -152,22 +152,7 @@ public class ProductListActivity extends BaseActivity implements
 		btnClearFilter.setOnClickListener(this);
 		lncheckboxAll.setOnClickListener(this);
 		cbxAll.setOnClickListener(this);
-		
-//		cbxAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-//			
-//			@Override
-//			public void onCheckedChanged(CompoundButton arg0, boolean arg1) {
-//				if (!arg1) {
-//					checkAll();
-//					flagCheckAll = true;
-//				} else {
-//					uncheckAll();
-//					flagCheckAll = false;
-//				}
-//				
-//				checkboxProductListAdapter.notifyDataSetChanged();
-//			}
-//		});
+
 
 		lvProduct.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -207,23 +192,23 @@ public class ProductListActivity extends BaseActivity implements
 
 	private void handleOtherAction() {
 		spnTvSize
-				.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-					public void onItemSelected(AdapterView<?> adapterView,
-							View view, int i, long l) {
-						positionTV = i;
-					}
+		.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView,
+					View view, int i, long l) {
+				positionTV = i;
+			}
 
-					public void onNothingSelected(AdapterView<?> adapterView) {
-						return;
-					}
-				});
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			}
+		});
 
 		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 				positionType1 = i;
 				if (i != 0) {
 					spnType2.setVisibility(View.VISIBLE);
-					
+
 					new GetProductTypeChildAsyncTask(String.valueOf(listCategoryProductType.get(i-1).getId())).execute();					
 				}else{
 					clearSpinnerProductType2();
@@ -233,12 +218,7 @@ public class ProductListActivity extends BaseActivity implements
 				}				
 				lncheckboxAll.setVisibility(View.GONE);
 				lvCheckbox.setVisibility(View.GONE);
-//				listCategoryCheck.clear();
-//				listCheckbox.clear();
-//				if (checkboxProductListAdapter != null) {
-//					checkboxProductListAdapter.notify();
-//				}
-								
+
 			}
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -288,7 +268,7 @@ public class ProductListActivity extends BaseActivity implements
 			}
 
 			break;
-			
+
 		case R.id.productlist_cbxAll:
 			if (!flagCheckAll) {
 				checkAll();
@@ -327,8 +307,8 @@ public class ProductListActivity extends BaseActivity implements
 			spnType2.setSelection(0);
 			spnTvSize.setSelection(0);
 			break;
-			
-		
+
+
 		default:
 			break;
 		}
@@ -338,7 +318,7 @@ public class ProductListActivity extends BaseActivity implements
 	// ------------------------------------------------------------
 
 	public class GetProductsByCategoryIdAsyncTask extends
-			AsyncTask<String, String, String> {
+	AsyncTask<String, String, String> {
 
 		private int cat_id;
 		private String json;
@@ -391,14 +371,14 @@ public class ProductListActivity extends BaseActivity implements
 		}
 
 		protected void onPostExecute(String file_url) {
-			
+
 			if(adapter == null){
 				adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
 				lvProduct.setAdapter(adapter);
 				lvProduct.setExpanded(true);
 			}else
 				adapter.notifyDataSetChanged();
-			
+
 			pDialog.dismiss();
 		}
 	}
@@ -406,7 +386,7 @@ public class ProductListActivity extends BaseActivity implements
 	// ------------------------------------------------------------
 
 	public class NarrowSearchAsyncTask extends
-			AsyncTask<String, String, String> {
+	AsyncTask<String, String, String> {
 
 		private String json;
 
@@ -431,7 +411,7 @@ public class ProductListActivity extends BaseActivity implements
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				
+
 				//-------get checkbox---------
 				if (positionType1 != 0) {
 					String cateids = "";
@@ -448,11 +428,11 @@ public class ProductListActivity extends BaseActivity implements
 								}					
 							}
 						}
-						
-						
+
+
 					} else {
 						for (int i = 0; i < listCategoryProductTypeChild.size(); i++) {
-								listCategoryTemp.add(String.valueOf(listCategoryProductTypeChild.get(i).getId()));										
+							listCategoryTemp.add(String.valueOf(listCategoryProductTypeChild.get(i).getId()));										
 						}
 					}
 					String[] arrIds = new String[listCategoryTemp.size()];
@@ -467,7 +447,7 @@ public class ProductListActivity extends BaseActivity implements
 				if (positionTV != 0) {
 					paramsUrl.add(new BasicNameValuePair("size", String.valueOf(listCategoryTvSize.get(positionTV).getId())));
 				}
-				
+
 				//-------------get Json--------------
 				json = JsonParser.makeHttpRequest(Constants.URL_NARROWSEARCH,"GET", paramsUrl);
 
@@ -486,9 +466,9 @@ public class ProductListActivity extends BaseActivity implements
 					}
 
 				}
-								
 
-				
+
+
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
@@ -563,7 +543,7 @@ public class ProductListActivity extends BaseActivity implements
 	}
 
 	public class GetProductTypeAsyncTask extends
-			AsyncTask<String, String, String> {
+	AsyncTask<String, String, String> {
 
 		private String json;
 
@@ -619,7 +599,7 @@ public class ProductListActivity extends BaseActivity implements
 	}
 
 	public class GetProductTypeChildAsyncTask extends
-			AsyncTask<String, String, String> {
+	AsyncTask<String, String, String> {
 
 		private String json;
 		String cat_id;
@@ -672,21 +652,21 @@ public class ProductListActivity extends BaseActivity implements
 		protected void onPostExecute(String file_url) {
 			productTypeAdapterChild.notifyDataSetChanged();			
 			pDialog.dismiss();
-//			if (positionType2 > 0) {
-//				new GetCategoryCheckAsyncTask(String.valueOf(listCategoryProductTypeChild.get(positionType2 - 1).getId())).execute();
-//			}			
+			//			if (positionType2 > 0) {
+			//				new GetCategoryCheckAsyncTask(String.valueOf(listCategoryProductTypeChild.get(positionType2 - 1).getId())).execute();
+			//			}			
 		}
 	}
 
 	public class GetCategoryCheckAsyncTask extends
-			AsyncTask<String, String, String> {
+	AsyncTask<String, String, String> {
 
 		private String json;
 		String cat_id;
 		public GetCategoryCheckAsyncTask(String cat_id) {
 			this.cat_id = cat_id;
 		}
-		
+
 
 		@Override
 		protected void onPreExecute() {
@@ -732,8 +712,8 @@ public class ProductListActivity extends BaseActivity implements
 		protected void onPostExecute(String file_url) {
 			if (checkboxProductListAdapter == null) {
 				checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, 
-																			listCategoryCheck,
-																			listCheckbox,cbxAll,flagCheckAll);
+						listCategoryCheck,
+						listCheckbox,cbxAll,flagCheckAll);
 				lvCheckbox.setAdapter(checkboxProductListAdapter);
 				lvCheckbox.setExpanded(true);				
 			} else
@@ -772,13 +752,13 @@ public class ProductListActivity extends BaseActivity implements
 			listCheckbox.set(i, false);
 		}
 	}
-	
+
 	@Override
 	public void logout() {
 		// TODO Auto-generated method stub
 		super.logout();
 		adapter.notifyDataSetChanged();
-		
+
 	}
 
 }

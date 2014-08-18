@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -73,7 +72,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	
 	HomeAdapter adapter;
 	
-	int radioChecked = 1;
+	String radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
 	int positionManufacturerName = 0;
 	
 	@Override
@@ -335,7 +334,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			spnModel.setVisibility(View.GONE);
 			rbnFlatpanel.setChecked(true);
 			rbnProjector.setChecked(false);
-			radioChecked = 1;
+			radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
 			new GetManufacturerAsyncTask(radioChecked).execute();
 			
 			break;	
@@ -343,7 +342,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			spnModel.setVisibility(View.GONE);
 			rbnFlatpanel.setChecked(false);
 			rbnProjector.setChecked(true);
-			radioChecked = 2;
+			radioChecked = Constants.KEY_DEVIDE_PROJECTOR;
 			new GetManufacturerAsyncTask(radioChecked).execute();						
 			break;	
 			
@@ -468,9 +467,9 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	public class GetManufacturerAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
-		int idDevide;
+		String idDevide;
 		
-		public GetManufacturerAsyncTask(int idDevide){
+		public GetManufacturerAsyncTask(String idDevide){
 			this.idDevide = idDevide;
 		}
 	   
@@ -491,7 +490,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	    	try {
                 // Building Parameters
                 List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-                paramsUrl.add(new BasicNameValuePair("devide", String.valueOf(idDevide)));
+                paramsUrl.add(new BasicNameValuePair("devide", idDevide));
 
                 json = JsonParser.makeHttpRequest(
                 		Constants.URL_GETMANUFACTURER, "GET", paramsUrl);
@@ -522,9 +521,9 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	public class GetModelAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
-		int idDevide;
+		String idDevide;
 		String manu;
-		public GetModelAsyncTask(int idDevide, String manu){
+		public GetModelAsyncTask(String idDevide, String manu){
 			this.idDevide = idDevide;
 			this.manu = manu;
 		}
@@ -548,9 +547,8 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	    	try {
                 // Building Parameters
                 List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-                paramsUrl.add(new BasicNameValuePair("devide", String.valueOf(idDevide)));
+                paramsUrl.add(new BasicNameValuePair("devide", idDevide));
                 paramsUrl.add(new BasicNameValuePair("manu", manu));
-                Log.d("idDevide+manu", "idDevide"+idDevide+"manu"+manu);
                 json = JsonParser.makeHttpRequest(
                 		Constants.URL_GETMODEL, "GET", paramsUrl);                
                 if ((json != null) || (!json.equals(""))) {               

@@ -57,10 +57,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	private TextView tvTitle,tvSubtotal,tvShippingHandling,tvTax,tvGrandTotal,tvDiscount,tvEditYourCard,tvRedirectedPaypal
 	,tvWhatIsThis,tvWhatIsPaypal,tvShipThisAddress,tvShipDifferentAddress,tvCreditCardOnFile,tvCreditCard
 	,tvUseBillingAddress,tvSaveCreditCard;
+	
+	private EditText edtFirstName,edtLastName,edtCompany,edtAddress,edtCity,edtPostalCode,edtTelephone,edtFax,edtPo,edtNotes;
+	Spinner spnState, spnCountry;
+	LinearLayout lnSaveAddress, lnUseBillingAddress;
 
 	Spinner spnBillingAddress,spnShippingAddress,spnCreditCardOnFile,spnCreditCardType,spnExpirationMonth,spnExpirationYear;
 	RadioButton rbnShipThisAddress,rbnShipDifferentAddress,rbnCreditCardOnFile,rbnPaypal,rbnCreditCard;
-	CheckBox cbxUseBillingAddress,cbxSaveCreditCard;
+	CheckBox cbxUseBillingAddress,cbxSaveCreditCard,cbxSaveAddress;
 	ExpandableHeightListView lvParcelService;
 	private ExpandableHeightListView lvReview;
 	EditText edtCreditCardNumber,edtCardVerification;
@@ -204,6 +208,19 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		tvUseBillingAddress  = (TextView)findViewById(R.id.checkoutdetail_tvUseBillingAddress);
 		tvSaveCreditCard  = (TextView)findViewById(R.id.checkoutdetail_tvSaveCreditCard);
+		
+		edtFirstName = (EditText)findViewById(R.id.checkoutdetail_edtFirstName);
+		edtLastName = (EditText)findViewById(R.id.checkoutdetail_edtLastName);
+		edtCompany = (EditText)findViewById(R.id.checkoutdetail_edtCompany);
+		edtAddress = (EditText)findViewById(R.id.checkoutdetail_edtAddress);
+		edtCity = (EditText)findViewById(R.id.checkoutdetail_edtCity);
+		edtTelephone = (EditText)findViewById(R.id.checkoutdetail_edtTelephone);
+		edtPostalCode = (EditText)findViewById(R.id.checkoutdetail_edtPostalCode);
+		edtFax = (EditText)findViewById(R.id.checkoutdetail_edtFax);
+		edtPo = (EditText)findViewById(R.id.checkoutdetail_edtPO);
+		edtNotes = (EditText)findViewById(R.id.checkoutdetail_edtNotes);
+		lnSaveAddress = (LinearLayout)findViewById(R.id.checkoutdetail_lnSaveAddressBook);
+		lnUseBillingAddress = (LinearLayout)findViewById(R.id.checkoutdetail_lnUseBillingAddress);
 
 		ivCart.setImageResource(R.drawable.ico_cart_active);
 
@@ -245,6 +262,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		ivPaypal.setOnClickListener(this);
 		tvUseBillingAddress.setOnClickListener(this);
 		tvSaveCreditCard.setOnClickListener(this);
+		
+		lnSaveAddress.setOnClickListener(this);
+		lnUseBillingAddress.setOnClickListener(this);
 
 	}
 
@@ -615,7 +635,12 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				cbxSaveCreditCard.setChecked(true);
 			}
 			break;
-
+		case R.id.checkoutdetail_lnSaveAddressBook:
+			
+			break;
+		case R.id.checkoutdetail_lnUseBillingAddress:
+			
+			break;
 		default:
 			break;
 		}
