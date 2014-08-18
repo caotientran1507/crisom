@@ -53,12 +53,7 @@
             android:name="com.zdh.crimson.CategoryActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait" >
-        </activity>
-        <activity
-            android:name="com.zdh.crimson.CategoryListActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait" >
-        </activity>
+        </activity>       
         <activity
             android:name="com.zdh.crimson.LoginActivity"
             android:configChanges="keyboardHidden|orientation"
