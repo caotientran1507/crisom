@@ -107,11 +107,19 @@ public class CommonUtil {
 	  return out.toString();
 	}
 	
+	public static boolean isSoftKeyboardShowing(Activity activity) {
+	    InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+	    return inputMethodManager.isActive();
+	}
+	
+	
 	public static void hideSoftKeyboard(Activity activity) {
+		if(isSoftKeyboardShowing(activity)){
 		InputMethodManager inputMethodManager = (InputMethodManager) activity
 				.getSystemService(Activity.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus()
 				.getWindowToken(), 0);
+		}
 	}
 	
 	public static void hideSoftKeyboard(Context mContext) {

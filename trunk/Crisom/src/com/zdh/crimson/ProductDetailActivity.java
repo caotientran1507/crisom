@@ -42,6 +42,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.youtube.player.YouTubeIntents;
 import com.zdh.crimson.adapter.ChildAdapter;
 import com.zdh.crimson.adapter.DownloadAdapter;
 import com.zdh.crimson.adapter.SpecsAdapter;
@@ -92,25 +93,24 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	int radioChecked = 1;
 	int positionManufacturerName = 0;
 	int positionModelName = 0;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_detail);
 		currentProduct = getIntent().getExtras().getInt(Constants.KEY_PRODUCTID);
 
-		
+
 		init();
 		initDataWebservice();
-		
+
 	}
 
 	@Override
 	protected void onResume() {
 		super.onResume();
-		
-		if(product != null && childAdapter != null && 
-				oldStatusLogin != SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
+
+		if(oldStatusLogin != SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
 			product = new Product();
 			initDataWebservice();
 		}
@@ -178,8 +178,8 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		btnVerify.setOnClickListener(this);
 		tvMainSite.setOnClickListener(this);
 		pDialog = new ProgressDialog(ProductDetailActivity.this);
-		
-		
+
+
 		ChangeTextButtonLogin();
 
 	}
@@ -191,15 +191,16 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				new DownloadFileFromURLAsyncTask().execute(product.getListDocument().get(position).getFile());
 			} 
 		});
-		
+
 		lvVideo.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {	
-				
+				Intent intent = YouTubeIntents.createPlayVideoIntentWithOptions(ProductDetailActivity.this,  product.getListVideo().get(position).getUrl(), true, false);
+				startActivity(intent);
 			} 
 		});
 	}
-
+ 
 	private void initData() {
 		downloadAdapter = new DownloadAdapter(ProductDetailActivity.this, product.getListDocument());
 		specsAdapter = new SpecsAdapter(ProductDetailActivity.this, product.getListSpecs());
@@ -270,13 +271,13 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 
 	}
 
-	
+
 	//------------------------------------------------------------
 
 	@Override
 	protected void ChangeTextButtonLogin() {
 		super.ChangeTextButtonLogin();
-		
+
 		if(product != null && childAdapter != null){
 			product = new Product();
 			initDataWebservice();
@@ -326,7 +327,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 					product.setUrl(jsonObject.getString("url"));    
 					product.setFaq(jsonObject.getString("faq"));
 					product.setVerifyCompatibility(jsonObject.getInt("verify_compatibility"));
-					
+
 
 
 					JSONObject jsonTemp= (JSONObject) new JSONTokener(json).nextValue();
@@ -346,13 +347,13 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 							product.getListDocument().add(documentObject);
 						}
 					}
-					
+
 					//------get specs for product-----
 					JSONArray jsonArraySpecs = jsonTemp.getJSONArray("specs");
 					if (jsonArraySpecs != null && jsonArraySpecs.length() != 0) {
 						for (int i = 0; i < jsonArraySpecs.length(); i++) {
 							SpecsObject specsObject = new SpecsObject();
-							
+
 							if (jsonArraySpecs.getJSONObject(i).getString("content") != null 
 									&& !jsonArraySpecs.getJSONObject(i).getString("content").equals("null")) {
 								specsObject.setContent(jsonArraySpecs.getJSONObject(i).getString("content").trim());								
@@ -361,7 +362,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 							product.getListSpecs().add(specsObject);
 						}
 					}
-					
+
 					//------get video for product-----
 					JSONArray jsonArrayVideo = jsonTemp.getJSONArray("video");
 					if (jsonArrayVideo != null && jsonArrayVideo.length() != 0) {
@@ -369,6 +370,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 							VideoObject videoObject = new VideoObject();
 							videoObject.setUrl(jsonArrayVideo.getJSONObject(i).getString("url"));
 							videoObject.setThumbnail(jsonArrayVideo.getJSONObject(i).getString("thumbnail"));
+							videoObject.setName(jsonArrayVideo.getJSONObject(i).getString("title"));
 							product.getListVideo().add(videoObject);
 						}
 					}
@@ -392,7 +394,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 							product.getListOption().add(optionObject);
 						}
 					}
-					
+
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -421,12 +423,12 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			tvDes.setTag(product.getDes());
 
 			imageLoader.DisplayImage(product.getImage(), ivAvatar);
-			
+
 			if(product != null && childAdapter != null){
 				childAdapter = new ChildAdapter(ProductDetailActivity.this, product.getListOption(),currentProduct);
 				lvPrice.setAdapter(childAdapter);
 			}
-			
+
 			pDialog.dismiss();	      
 		}
 	}
@@ -435,7 +437,6 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	 * Background Async Task to download file
 	 * */
 	class DownloadFileFromURLAsyncTask extends AsyncTask<String, String, String> {
-
 
 		public DownloadFileFromURLAsyncTask(){
 			CreateFolderData();
@@ -544,7 +545,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			}			
 		}
 	}
-	
+
 	private void resetSpinner(){
 		spnManufacturer.setSelection(0);
 		spnModel.setSelection(0);
@@ -840,13 +841,13 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		listManufacturerName.clear();		
 		listManufacturerName.add(manufacturer);
 	}
-	
+
 	@Override
 	public void logout() {
 		// TODO Auto-generated method stub
 		super.logout();
 		childAdapter.notifyDataSetChanged();
-		
+
 	}
 
 }

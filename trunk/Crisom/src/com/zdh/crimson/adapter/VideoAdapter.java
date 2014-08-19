@@ -50,7 +50,7 @@ public class VideoAdapter extends BaseAdapter {
 
 		TextView name = (TextView) vi.findViewById(R.id.row_video_tvUrl); 	
 		ImageView ivAvatar = (ImageView) vi.findViewById(R.id.row_video_iv); 
-		name.setText(listVideo.get(position).getUrl());
+		name.setText(listVideo.get(position).getName());
 		
 		imageLoader.DisplayImage(listVideo.get(position).getThumbnail(), ivAvatar);
 		
