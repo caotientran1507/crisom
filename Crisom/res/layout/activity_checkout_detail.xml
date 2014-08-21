@@ -83,7 +83,7 @@
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/padding"
                         android:paddingTop="@dimen/padding"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         android:weightSum="100" >
 
                         <LinearLayout
@@ -106,6 +106,511 @@
                                 android:layout_marginTop="@dimen/padding_small"
                                 android:background="@drawable/spinner_background"
                                 android:paddingRight="@dimen/padding_large" />
+
+                            <LinearLayout
+                                android:id="@+id/checkoutdetail_lnNewAddress1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical" >
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="First Name"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtFirstName1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Last Name"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtLastName1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical"
+                                    android:weightSum="100" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="Company"
+                                        android:textSize="@dimen/textsize_normal"
+                                        android:textStyle="bold" />
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtCompany1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical"
+                                    android:weightSum="100" >
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal" >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Address"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="*"
+                                            android:textColor="@color/crisom_red"
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:textStyle="bold" />
+                                    </LinearLayout>
+
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtAddress1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="City"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtCity1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="State/Province"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtState1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Zip/Postal Code"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtPostalCode1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Country"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtCountry1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Telephone"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtTelephone1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Fax"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtFax1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/checkoutdetail_lnSaveAddressBook1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal"
+                                    android:paddingTop="@dimen/padding" >
+
+                                    <CheckBox
+                                        android:id="@+id/checkoutdetail_cbxSaveAddressBook1"
+                                        android:layout_width="@dimen/include_footer_iv"
+                                        android:layout_height="@dimen/include_footer_iv"
+                                        android:background="@drawable/checkbox_selector"
+                                        android:button="@null" />
+
+                                    <TextView
+                                        android:id="@+id/checkoutdetail_tvSaveAddressBook1"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="@dimen/padding"
+                                        android:text="Save in address book" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:weightSum="100" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="PO"
+                                    android:textSize="@dimen/textsize_normal"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/checkoutdetail_edtPO1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edittext_background_radius"
+                                    android:lines="1"
+                                    android:maxLines="1"
+                                    android:padding="@dimen/padding_small"
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/padding_small"
+                                android:gravity="center_vertical"
+                                android:orientation="vertical"
+                                android:weightSum="100" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Notes"
+                                    android:textSize="@dimen/textsize_normal"
+                                    android:textStyle="bold" />
+
+                                <EditText
+                                    android:id="@+id/checkoutdetail_edtNotes1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/edittext_background_radius"
+                                    android:padding="@dimen/padding_small"
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
 
                             <RadioGroup
                                 android:layout_width="match_parent"
@@ -245,7 +750,7 @@
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/padding"
                         android:paddingTop="@dimen/padding"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         android:weightSum="100" >
 
                         <LinearLayout
@@ -270,174 +775,135 @@
                                 android:paddingRight="@dimen/padding_large" />
 
                             <LinearLayout
+                                android:id="@+id/checkoutdetail_lnNewAddress2"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/padding_small"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:weightSum="100" >
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="45"
-                                    android:orientation="vertical" >
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal" >
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="First Name"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/crisom_red"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
-                                    </LinearLayout>
-
-                                    <EditText
-                                        android:id="@+id/checkoutdetail_edtFirstName"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/edittext_background_radius"
-                                        android:lines="1"
-                                        android:maxLines="1"
-                                        android:padding="@dimen/padding_small"
-                                        android:textSize="@dimen/textsize_normal" />
-                                </LinearLayout>
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="10" />
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="45"
-                                    android:orientation="vertical" >
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal" >
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Last Name"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/crisom_red"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
-                                    </LinearLayout>
-
-                                    <EditText
-                                        android:id="@+id/checkoutdetail_edtLastName"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/edittext_background_radius"
-                                        android:lines="1"
-                                        android:maxLines="1"
-                                        android:padding="@dimen/padding_small"
-                                        android:textSize="@dimen/textsize_normal" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/padding_small"
-                                android:gravity="center_vertical"
                                 android:orientation="vertical"
-                                android:weightSum="100" >
+                                android:visibility="gone" >
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Company"
-                                    android:textSize="@dimen/textsize_normal"
-                                    android:textStyle="bold" />
-
-                                <EditText
-                                    android:id="@+id/checkoutdetail_edtCompany"
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/edittext_background_radius"
-                                    android:lines="1"
-                                    android:maxLines="1"
-                                    android:padding="@dimen/padding_small"
-                                    android:textSize="@dimen/textsize_normal" />
-                            </LinearLayout>
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/padding_small"
-                                android:gravity="center_vertical"
-                                android:orientation="vertical"
-                                android:weightSum="100" >
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="First Name"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtFirstName2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+
+                                    <TextView
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="6" />
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Last Name"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtLastName2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+                                </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:orientation="horizontal" >
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical"
+                                    android:weightSum="100" >
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Address"
+                                        android:text="Company"
                                         android:textSize="@dimen/textsize_normal"
                                         android:textStyle="bold" />
 
-                                    <TextView
-                                        android:layout_width="wrap_content"
+                                    <EditText
+                                        android:id="@+id/checkoutdetail_edtCompany2"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="*"
-                                        android:textColor="@color/crisom_red"
-                                        android:textSize="@dimen/textsize_normal"
-                                        android:textStyle="bold" />
+                                        android:background="@drawable/edittext_background_radius"
+                                        android:lines="1"
+                                        android:maxLines="1"
+                                        android:padding="@dimen/padding_small"
+                                        android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
 
-                                <EditText
-                                    android:id="@+id/checkoutdetail_edtAddress"
+                                <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/edittext_background_radius"
-                                    android:lines="1"
-                                    android:maxLines="1"
-                                    android:padding="@dimen/padding_small"
-                                    android:textSize="@dimen/textsize_normal" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/padding_small"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:weightSum="100" >
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="45"
-                                    android:orientation="vertical" >
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="vertical"
+                                    android:weightSum="100" >
 
                                     <LinearLayout
                                         android:layout_width="wrap_content"
@@ -447,7 +913,7 @@
                                         <TextView
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="City"
+                                            android:text="Address"
                                             android:textSize="@dimen/textsize_normal"
                                             android:textStyle="bold" />
 
@@ -461,7 +927,7 @@
                                     </LinearLayout>
 
                                     <EditText
-                                        android:id="@+id/checkoutdetail_edtCity"
+                                        android:id="@+id/checkoutdetail_edtAddress2"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:background="@drawable/edittext_background_radius"
@@ -470,251 +936,298 @@
                                         android:padding="@dimen/padding_small"
                                         android:textSize="@dimen/textsize_normal" />
                                 </LinearLayout>
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="10" />
 
                                 <LinearLayout
-                                    android:layout_width="0dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="45"
-                                    android:orientation="vertical" >
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
 
                                     <LinearLayout
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal" >
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
 
-                                        <TextView
+                                        <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="State/Province"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
+                                            android:orientation="horizontal" >
 
-                                        <TextView
-                                            android:layout_width="wrap_content"
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="City"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtCity2"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/crisom_red"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
 
-                                    <EditText
-                                        android:id="@+id/checkoutdetail_edtState"
-                                        android:layout_width="match_parent"
+                                    <TextView
+                                        android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/edittext_background_radius"
-                                        android:lines="1"
-                                        android:maxLines="1"
-                                        android:padding="@dimen/padding_small"
-                                        android:textSize="@dimen/textsize_normal" />
-                                </LinearLayout>
-                            </LinearLayout>
+                                        android:layout_weight="6" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/padding_small"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:weightSum="100" >
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="State/Province"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtState2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+                                </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_width="0dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="45"
-                                    android:orientation="vertical" >
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
 
                                     <LinearLayout
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal" >
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
 
-                                        <TextView
+                                        <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Zip/Postal Code"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
+                                            android:orientation="horizontal" >
 
-                                        <TextView
-                                            android:layout_width="wrap_content"
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Zip/Postal Code"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtPostalCode2"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/crisom_red"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
 
-                                    <EditText
-                                        android:id="@+id/checkoutdetail_edtPostalCode"
-                                        android:layout_width="match_parent"
+                                    <TextView
+                                        android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/edittext_background_radius"
-                                        android:lines="1"
-                                        android:maxLines="1"
-                                        android:padding="@dimen/padding_small"
-                                        android:textSize="@dimen/textsize_normal" />
-                                </LinearLayout>
+                                        android:layout_weight="6" />
 
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="10" />
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Country"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtCountry2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+                                </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_width="0dp"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="45"
-                                    android:orientation="vertical" >
+                                    android:layout_marginTop="@dimen/padding_small"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:weightSum="100" >
 
                                     <LinearLayout
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal" >
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
 
-                                        <TextView
+                                        <LinearLayout
                                             android:layout_width="wrap_content"
                                             android:layout_height="wrap_content"
-                                            android:text="Country"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
+                                            android:orientation="horizontal" >
 
-                                        <TextView
-                                            android:layout_width="wrap_content"
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Telephone"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtTelephone2"
+                                            android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/crisom_red"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
                                     </LinearLayout>
 
-                                    <EditText
-                                        android:id="@+id/checkoutdetail_edtCountry"
-                                        android:layout_width="match_parent"
+                                    <TextView
+                                        android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:background="@drawable/edittext_background_radius"
-                                        android:lines="1"
-                                        android:maxLines="1"
-                                        android:padding="@dimen/padding_small"
-                                        android:textSize="@dimen/textsize_normal" />
-                                </LinearLayout>
-                            </LinearLayout>
+                                        android:layout_weight="6" />
 
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/padding_small"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal"
-                                android:weightSum="100" >
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="47"
+                                        android:orientation="vertical" >
+
+                                        <LinearLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal" >
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="Fax"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:text="*"
+                                                android:textColor="@color/crisom_red"
+                                                android:textSize="@dimen/textsize_normal"
+                                                android:textStyle="bold" />
+                                        </LinearLayout>
+
+                                        <EditText
+                                            android:id="@+id/checkoutdetail_edtFax2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:background="@drawable/edittext_background_radius"
+                                            android:lines="1"
+                                            android:maxLines="1"
+                                            android:padding="@dimen/padding_small"
+                                            android:textSize="@dimen/textsize_normal" />
+                                    </LinearLayout>
+                                </LinearLayout>
 
                                 <LinearLayout
-                                    android:layout_width="0dp"
+                                    android:id="@+id/checkoutdetail_lnSaveAddressBook2"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_weight="45"
-                                    android:orientation="vertical" >
+                                    android:orientation="horizontal"
+                                    android:paddingTop="@dimen/padding" >
 
-                                    <LinearLayout
+                                    <CheckBox
+                                        android:id="@+id/checkoutdetail_cbxSaveAddressBook2"
+                                        android:layout_width="@dimen/include_footer_iv"
+                                        android:layout_height="@dimen/include_footer_iv"
+                                        android:background="@drawable/checkbox_selector"
+                                        android:button="@null" />
+
+                                    <TextView
+                                        android:id="@+id/checkoutdetail_tvSaveAddressBook"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:orientation="horizontal" >
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Telephone"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/crisom_red"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
-                                    </LinearLayout>
-
-                                    <EditText
-                                        android:id="@+id/checkoutdetail_edtTelephone"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/edittext_background_radius"
-                                        android:lines="1"
-                                        android:maxLines="1"
-                                        android:padding="@dimen/padding_small"
-                                        android:textSize="@dimen/textsize_normal" />
+                                        android:layout_marginLeft="@dimen/padding"
+                                        android:text="Save in address book" />
                                 </LinearLayout>
-
-                                <TextView
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="10" />
-
-                                <LinearLayout
-                                    android:layout_width="0dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="45"
-                                    android:orientation="vertical" >
-
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:orientation="horizontal" >
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="Fax"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
-
-                                        <TextView
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:text="*"
-                                            android:textColor="@color/crisom_red"
-                                            android:textSize="@dimen/textsize_normal"
-                                            android:textStyle="bold" />
-                                    </LinearLayout>
-
-                                    <EditText
-                                        android:id="@+id/checkoutdetail_edtFax"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:background="@drawable/edittext_background_radius"
-                                        android:lines="1"
-                                        android:maxLines="1"
-                                        android:padding="@dimen/padding_small"
-                                        android:textSize="@dimen/textsize_normal" />
-                                </LinearLayout>
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:id="@+id/checkoutdetail_lnSaveAddressBook"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:paddingTop="@dimen/padding" >
-
-                                <CheckBox
-                                    android:id="@+id/checkoutdetail_cbxSaveAddressBook"
-                                    android:layout_width="@dimen/include_footer_iv"
-                                    android:layout_height="@dimen/include_footer_iv"
-                                    android:background="@drawable/checkbox_selector"
-                                    android:button="@null" />
-
-                                <TextView
-                                    android:id="@+id/checkoutdetail_tvSaveAddressBook"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/padding"
-                                    android:text="Save in address book" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -733,7 +1246,7 @@
                                     android:textStyle="bold" />
 
                                 <EditText
-                                    android:id="@+id/checkoutdetail_edtPO"
+                                    android:id="@+id/checkoutdetail_edtPO2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/edittext_background_radius"
@@ -759,15 +1272,14 @@
                                     android:textStyle="bold" />
 
                                 <EditText
-                                    android:id="@+id/checkoutdetail_edtNotes"
+                                    android:id="@+id/checkoutdetail_edtNotes2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/edittext_background_radius"
                                     android:padding="@dimen/padding_small"
                                     android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
-                            
-                            
+
                             <LinearLayout
                                 android:id="@+id/checkoutdetail_lnUseBillingAddress"
                                 android:layout_width="match_parent"
@@ -793,6 +1305,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
+                                android:layout_marginTop="@dimen/padding_small"
                                 android:background="@color/crisom_gray_divider" />
 
                             <TextView

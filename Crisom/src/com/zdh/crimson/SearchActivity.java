@@ -45,7 +45,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	//--------define variables---------
 	private LinearLayout lnHome,lnCategory,lnCart,lnContact,lnSearchImage,lnEzmounter,lnEzmounterContent
 	,lnNarrowTitle,lnNarrowContent, lncheckboxAll;
-	private ImageView ivSearch, ivNarrowShow;	
+	private ImageView ivSearch, ivNarrowShow,ivEzmounter;	
 	private TextView tvTitle,tvAll;
 	private EditText edtSearch;
 	private ExpandableHeightListView lvSearch, lvCheckbox;
@@ -58,10 +58,8 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	int positionManufacturerName = 0;
 
 
-
 	//-----------ezmounter-----------------
-	ArrayList<String> listManufacturerName = new ArrayList<String>();
-	ArrayList<String> listModelName = new ArrayList<String>();
+
 	ArrayAdapter<String> manufacturerAdapter;
 	ArrayAdapter<String> modelAdapter;
 
@@ -84,6 +82,13 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	private CheckBox cbxAll;
 	private Button btnSearch, btnClearFilter;
 	CheckboxSearchAdapter checkboxSearchAdapter;
+	
+	String dataSearch = "";
+	String model = "";
+	String manufacturer = "";
+	String device = "";
+	
+	boolean flagEzMounter = false;
 
 	boolean flagCheckAll = true;
 	int positionTV = 0;
@@ -145,6 +150,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		rbnProjector = (RadioButton)findViewById(R.id.search_rbnProjector);
 		lnEzmounter = (LinearLayout)findViewById(R.id.search_lnEzmounter);
 		lnEzmounterContent = (LinearLayout)findViewById(R.id.search_lnEzmounterContent);
+		ivEzmounter = (ImageView)findViewById(R.id.search_ivEzmounter);
 
 		//------narrow search----------
 		spnTvSize = (Spinner) findViewById(R.id.search_spnTVsize);
@@ -180,7 +186,6 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		lncheckboxAll.setOnClickListener(this);
 		cbxAll.setOnClickListener(this);
 
-
 		pDialog = new ProgressDialog(SearchActivity.this);		
 	}
 
@@ -213,10 +218,10 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
-				if (listManufacturerName.size() > 1 ) {
+				if (FileUtil.listManufacturerName.size() > 1 ) {
 					if (i != 0) {
 						spnModel.setVisibility(View.VISIBLE);
-						new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
+						new GetModelAsyncTask(radioChecked, FileUtil.listManufacturerName.get(i)).execute();
 						positionManufacturerName = i;
 					}
 				}
@@ -230,9 +235,9 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		spnModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
-				if (listModelName.size() > 1) {
+				if (FileUtil.listModelName.size() > 1) {
 					if (i != 0) {
-						new MountFinderAsyncTask(radioChecked, listManufacturerName.get(positionManufacturerName), listModelName.get(i)).execute();	
+						new MountFinderAsyncTask(radioChecked, FileUtil.listManufacturerName.get(positionManufacturerName), FileUtil.listModelName.get(i)).execute();	
 					}
 				}
 			} 
@@ -302,41 +307,16 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		});
 	}
 
-	private void initData() {		
-		if (getIntent().getExtras() != null) {
-			String dataSearch = getIntent().getExtras().getString(Constants.KEY_SEARCH_KEYWORD);
-			String model = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MODEL);
-			String manufacturer = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MANUFACTURER);
-			String device = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_DEVICE);
-
-			if(dataSearch != null && model == null){
-				keySearch = dataSearch;
-				edtSearch.setText(keySearch);
-				new SearchAsyncTask(dataSearch).execute();
-			}else{
-				keySearch = "";
-				edtSearch.setText(keySearch);
-				if (device.equals("1")) {
-					rbnFlatpanel.setChecked(true);
-					rbnProjector.setChecked(false);
-				}else{
-					rbnFlatpanel.setChecked(false);
-					rbnProjector.setChecked(true);
-				}
-				new GetManufacturerAsyncTask(device).execute();
-				new MountFinderAsyncTask(device, manufacturer, model).execute();	
-			}
-		}else{
-			new GetManufacturerAsyncTask(radioChecked).execute();
-		}
-
-		if(adapter == null){
-			adapter = new SearchAdapter(SearchActivity.this, FileUtil.listSearch);
-			lvSearch.setAdapter(adapter);
-			lvSearch.setExpanded(true);
-		}else{
-			adapter.notifyDataSetChanged();
-		}
+	private void initData() {	
+		manufacturerAdapter = new ArrayAdapter<String>(SearchActivity.this,R.layout.spinner_item, FileUtil.listManufacturerName);
+		spnManufacturer.setAdapter(manufacturerAdapter);
+		spnManufacturer.setSelection(FileUtil.positionManufacturerName);
+		modelAdapter = new ArrayAdapter<String>(SearchActivity.this,R.layout.spinner_item, FileUtil.listModelName);
+		spnModel.setAdapter(modelAdapter);
+		spnModel.setSelection(FileUtil.positionModelName);
+		adapter = new SearchAdapter(SearchActivity.this, FileUtil.listSearch);
+		lvSearch.setAdapter(adapter);
+		lvSearch.setExpanded(true);
 		
 		//-----------------narrow search---------------------------
 		clearSpinnerTVSize();
@@ -350,6 +330,36 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		spnTvSize.setAdapter(tvSizeAdapter);
 		spnType1.setAdapter(productTypeAdapter);
 		spnType2.setAdapter(productTypeAdapterChild);
+		
+		if (getIntent().getExtras() != null) {
+			dataSearch = getIntent().getExtras().getString(Constants.KEY_SEARCH_KEYWORD);
+			model = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MODEL);
+			manufacturer = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MANUFACTURER);
+			device = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_DEVICE);
+
+			if(dataSearch != null && model == null){
+				keySearch = dataSearch;
+				edtSearch.setText(keySearch);
+				new SearchAsyncTask(dataSearch).execute();
+			}else{
+				keySearch = "";
+				edtSearch.setText(keySearch);
+				if (device.equals(Constants.KEY_DEVIDE_FLATPANEL)) {
+					rbnFlatpanel.setChecked(true);
+					rbnProjector.setChecked(false);
+				}else{
+					rbnFlatpanel.setChecked(false);
+					rbnProjector.setChecked(true);
+				}
+				lnEzmounterContent.setVisibility(View.VISIBLE);
+				new MountFinderAsyncTask(device, manufacturer, model).execute();	
+			}
+		}else{
+			new GetManufacturerAsyncTask(radioChecked).execute();
+		}
+
+		
+		
 	}
 
 
@@ -384,6 +394,19 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			radioChecked = Constants.KEY_DEVIDE_PROJECTOR;
 			new GetManufacturerAsyncTask(radioChecked).execute();						
 			break;	
+			
+			
+			
+		case R.id.search_lnEzmounter:
+			if (lnEzmounterContent.getVisibility() == View.VISIBLE) {
+				lnEzmounterContent.setVisibility(View.GONE);
+				ivEzmounter.setImageResource(R.drawable.ico_next_white);
+			} else {
+				lnEzmounterContent.setVisibility(View.VISIBLE);
+				ivEzmounter.setImageResource(R.drawable.ico_down_white);				
+			}
+
+			break;
 
 			//------------------narrow search-------------------
 		case R.id.search_Narrow_lnTitle:
@@ -613,7 +636,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 					clearSpinnerManufacturer();
 					for (int j = 0; j < array.length(); j++) {
 						String name = array.getString(j);      						
-						listManufacturerName.add(name);
+						FileUtil.listManufacturerName.add(name);
 					}
 
 				}
@@ -624,10 +647,9 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			return null;
 		}
 
-		protected void onPostExecute(String file_url) {
-			manufacturerAdapter = new ArrayAdapter<String>(SearchActivity.this,R.layout.spinner_item, listManufacturerName);
-			spnManufacturer.setAdapter(manufacturerAdapter);
+		protected void onPostExecute(String file_url) {			
 			pDialog.dismiss();
+			
 		}
 	}
 
@@ -671,7 +693,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 					clearSpinnerModel();
 					for (int j = 0; j < array.length(); j++) {
 						String name = array.getString(j);      						
-						listModelName.add(name);
+						FileUtil.listModelName.add(name);
 					}
 
 				}
@@ -684,21 +706,20 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		protected void onPostExecute(String file_url) {	      
 			pDialog.dismiss();	
-			modelAdapter = new ArrayAdapter<String>(SearchActivity.this,R.layout.spinner_item, listModelName);
-			spnModel.setAdapter(modelAdapter);
+			
 		}
 	}
 
 	private void clearSpinnerManufacturer(){		
 		String manufacturer = "Select Manufacturer";		
-		listManufacturerName.clear();		
-		listManufacturerName.add(manufacturer);
+		FileUtil.listManufacturerName.clear();		
+		FileUtil.listManufacturerName.add(manufacturer);
 	}
 
 	private void clearSpinnerModel(){
 		String model = "Select Model";
-		listModelName.clear();	
-		listModelName.add(model);
+		FileUtil.listModelName.clear();	
+		FileUtil.listModelName.add(model);
 	}
 
 	private void clearSpinnerTVSize() {

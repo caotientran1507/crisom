@@ -61,8 +61,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	private ArrayList<ImageView> listImage = new ArrayList<ImageView>();
 	private ImageView img1, img2, img3, img4;
 	
-	ArrayList<String> listManufacturerName = new ArrayList<String>();
-	ArrayList<String> listModelName = new ArrayList<String>();
+	
 	ArrayAdapter<String> manufacturerAdapter;
 	ArrayAdapter<String> modelAdapter;
 	
@@ -73,7 +72,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	HomeAdapter adapter;
 	
 	String radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
-	int positionManufacturerName = 0;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -220,14 +219,14 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	
 	private void clearSpinnerManufacturer(){		
 		String manufacturer = "Select Manufacturer";		
-		listManufacturerName.clear();		
-		listManufacturerName.add(manufacturer);
+		FileUtil.listManufacturerName.clear();		
+		FileUtil.listManufacturerName.add(manufacturer);
 	}
 	
 	private void clearSpinnerModel(){
 		String model = "Select Model";
-		listModelName.clear();	
-		listModelName.add(model);
+		FileUtil.listModelName.clear();	
+		FileUtil.listModelName.add(model);
 	}
 	
 	private void handleOtherAction(){
@@ -246,11 +245,11 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
-		    	if (listManufacturerName.size() > 1 ) {
+		    	if (FileUtil.listManufacturerName.size() > 1 ) {
 		    		if (i != 0) {
 			    		spnModel.setVisibility(View.VISIBLE);
-			    		new GetModelAsyncTask(radioChecked, listManufacturerName.get(i)).execute();
-			    		positionManufacturerName = i;
+			    		new GetModelAsyncTask(radioChecked, FileUtil.listManufacturerName.get(i)).execute();
+			    		FileUtil.positionManufacturerName = i;
 					}
 				}
 		    	
@@ -263,11 +262,12 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		
 		spnModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
-		    	if (listModelName.size() > 1) {
+		    	if (FileUtil.listModelName.size() > 1) {
 		    		if (i != 0) {
+		    			FileUtil.positionModelName = i;
 			    		Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-						intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, listModelName.get(i));
-						intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, listManufacturerName.get(positionManufacturerName));
+						intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, FileUtil.listModelName.get(i));
+						intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName));
 						intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
 						startActivity(intent);
 						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
@@ -497,7 +497,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
                 	clearSpinnerManufacturer();
         			for (int j = 0; j < array.length(); j++) {
         				String name = array.getString(j);      						
-        				listManufacturerName.add(name);
+        				FileUtil.listManufacturerName.add(name);
         			}
         			
                 }
@@ -509,7 +509,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	    }
 
 	    protected void onPostExecute(String file_url) {
-	    	manufacturerAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, listManufacturerName);
+	    	manufacturerAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, FileUtil.listManufacturerName);
 	    	spnManufacturer.setAdapter(manufacturerAdapter);
 	    	pDialog.dismiss();
 	    }
@@ -554,7 +554,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
                 	clearSpinnerModel();
         			for (int j = 0; j < array.length(); j++) {
         				String name = array.getString(j);      						
-        				listModelName.add(name);
+        				FileUtil.listModelName.add(name);
         			}
         			
                 }
@@ -567,7 +567,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
 	    protected void onPostExecute(String file_url) {	      
 	    	pDialog.dismiss();	
-			modelAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, listModelName);
+			modelAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, FileUtil.listModelName);
 			spnModel.setAdapter(modelAdapter);
 	    }
 	}

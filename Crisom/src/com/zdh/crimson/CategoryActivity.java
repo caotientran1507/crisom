@@ -49,7 +49,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 		setContentView(R.layout.activity_category);
 		if (getIntent().getExtras() != null) {
 			currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);
-			if (narrowSearchID != Constants.CATEGORY_ROOT) {
+			if (currentCategory != Constants.CATEGORY_ROOT) {
 				currentLevel ++;
 				narrowSearchID = getIntent().getExtras().getInt(Constants.KEY_CATEGORY_NARROWSEARCH);			
 			}			
@@ -122,6 +122,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 					} else {
 						Intent intent = new Intent(CategoryActivity.this,ProductListActivity.class);
 						intent.putExtra(Constants.KEY_CATEGORYID,FileUtil.listCategory.get(position).getId());
+						intent.putExtra(Constants.KEY_CATEGORY_SELECTION,position);
 						intent.putExtra(Constants.KEY_CATEGORY_NARROWSEARCH,narrowSearchID);
 						startActivity(intent);
 						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
