@@ -29,6 +29,11 @@ public class FileUtil {
 	public static ArrayList<CartObject> listCart = new ArrayList<CartObject>();
 	public static ConcurrentMap<Integer, String> listCartChange = new ConcurrentHashMap<Integer, String>();
 	public static ConcurrentMap<Integer, Boolean> listCheckbox = new ConcurrentHashMap<Integer, Boolean>();
+	
+	public static ArrayList<String> listManufacturerName = new ArrayList<String>();
+	public static ArrayList<String> listModelName = new ArrayList<String>();
+	public static int positionManufacturerName = 0;
+	public static int positionModelName = 0;
 
 	public static ArrayList<CarrierObject> listCarrier = new ArrayList<CarrierObject>();
 

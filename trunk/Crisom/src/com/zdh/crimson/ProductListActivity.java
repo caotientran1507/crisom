@@ -7,6 +7,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -47,6 +49,7 @@ View.OnClickListener {
 	private ProgressDialog pDialog;
 	ProductListAdapter adapter;
 	static int currentCategory = 0;
+	int currentCategoryParent = 0;
 
 	CheckboxProductListAdapter checkboxProductListAdapter;
 
@@ -69,20 +72,26 @@ View.OnClickListener {
 	ArrayList<Category> listCategoryCheck = new ArrayList<Category>();
 	ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 
-	boolean flagCheckAll = true;
+	public static boolean flagCheckAll = false;
 
 	int narrowSeachID = Constants.KEY_CATEGORY_OTHER;
+	int positionSelection = 0;
 	int positionTV = 0;
 	int positionType1 = 0;
 	int positionType2 = 0;
-
+	
+	int select1 = 0;
+	int loadId1 = 0;
+	int select2 = 0;
+	int loadId2 = 0;
+	
+	boolean flagLoad = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_list);
-		currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);
-		narrowSeachID = getIntent().getExtras().getInt(Constants.KEY_CATEGORY_NARROWSEARCH);		
+			
 		init();
 	}
 
@@ -97,16 +106,21 @@ View.OnClickListener {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
+		ChangeTextButtonLogin();			
 		if (FileUtil.listProduct != null && FileUtil.listProduct.size() > 0 && adapter != null)
 			adapter.notifyDataSetChanged();
 	}
 
 	private void init() {
+		currentCategory = getIntent().getExtras().getInt(Constants.KEY_CATEGORYID);
+		narrowSeachID = getIntent().getExtras().getInt(Constants.KEY_CATEGORY_NARROWSEARCH);	
+		positionSelection = getIntent().getExtras().getInt(Constants.KEY_CATEGORY_SELECTION);
+		flagLoad = true;
+		flagCheckAll = false;
 		initView();
-		initData();
-		initDataWebservice();
+		initData();		
 		handleOtherAction();
+		initDataWebservice();
 	}
 
 	private void initView() {
@@ -178,19 +192,28 @@ View.OnClickListener {
 		tvSizeAdapter = new ArrayAdapter<String>(this, R.layout.spinner_item, listTvSizes);
 		productTypeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypes);
 		productTypeAdapterChild = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypesChild);
-
 		spnTvSize.setAdapter(tvSizeAdapter);
 		spnType1.setAdapter(productTypeAdapter);
 		spnType2.setAdapter(productTypeAdapterChild);
+		
+		adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
+		lvProduct.setAdapter(adapter);
+		lvProduct.setExpanded(true);
+
+		checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, listCategoryCheck,
+				listCheckbox,cbxAll);
+		lvCheckbox.setAdapter(checkboxProductListAdapter);
+		lvCheckbox.setExpanded(true);
 
 	}
 
 	private void initDataWebservice() {
-		new GetProductsByCategoryIdAsyncTask(currentCategory).execute();
-
+		Log.d("currentCategory", ""+currentCategory);
+		new GetParentsCategoryAsyncTask(String.valueOf(currentCategory)).execute();
 	}
 
 	private void handleOtherAction() {
+		
 		spnTvSize
 		.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView,
@@ -205,11 +228,14 @@ View.OnClickListener {
 
 		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+				
 				positionType1 = i;
 				if (i != 0) {
 					spnType2.setVisibility(View.VISIBLE);
-
-					new GetProductTypeChildAsyncTask(String.valueOf(listCategoryProductType.get(i-1).getId())).execute();					
+					if (!flagLoad) {
+						new GetProductTypeChildAsyncTask(String.valueOf(listCategoryProductType.get(i-1).getId())).execute();
+					}
+										
 				}else{
 					clearSpinnerProductType2();
 					if (productTypeAdapterChild != null) {
@@ -233,7 +259,12 @@ View.OnClickListener {
 				if (i != 0) {
 					lncheckboxAll.setVisibility(View.VISIBLE);
 					lvCheckbox.setVisibility(View.VISIBLE);
-					new GetCategoryCheckAsyncTask(String.valueOf(listCategoryProductTypeChild.get(i-1).getId())).execute();
+					
+					if (!flagLoad) {
+						cbxAll.setChecked(true);
+						new GetCategoryCheckAsyncTask(String.valueOf(listCategoryProductTypeChild.get(i-1).getId())).execute();
+					}
+					
 				}else{
 					lncheckboxAll.setVisibility(View.GONE);
 					lvCheckbox.setVisibility(View.GONE);
@@ -264,12 +295,12 @@ View.OnClickListener {
 			} else {
 				lnNarrowContent.setVisibility(View.VISIBLE);
 				ivNarrowShow.setImageResource(R.drawable.ico_down_white);
-				new GetTVSizeAsyncTask().execute();
 			}
 
 			break;
 
 		case R.id.productlist_cbxAll:
+			Log.d("flagCheckAll", ""+flagCheckAll);
 			if (!flagCheckAll) {
 				checkAll();
 				flagCheckAll = true;
@@ -280,14 +311,14 @@ View.OnClickListener {
 			checkboxProductListAdapter.notifyDataSetChanged();
 
 		case R.id.productlist_tvAll:
-			if (!flagCheckAll) {
+			Log.d("flagCheckAll", ""+flagCheckAll);
+			if (flagCheckAll) {
 				checkAll();
 				flagCheckAll = true;
 			} else {
 				uncheckAll();
 				flagCheckAll = false;
 			}
-
 			checkboxProductListAdapter.notifyDataSetChanged();
 			break;
 		case R.id.productlist_btnSearch:
@@ -371,14 +402,10 @@ View.OnClickListener {
 		}
 
 		protected void onPostExecute(String file_url) {
-
-			if(adapter == null){
-				adapter = new ProductListAdapter(ProductListActivity.this, FileUtil.listProduct);
-				lvProduct.setAdapter(adapter);
-				lvProduct.setExpanded(true);
-			}else
+			Log.d("GetProductsByCategoryIdAsyncTask", "GetProductsByCategoryIdAsyncTask");
+			if(adapter != null){
 				adapter.notifyDataSetChanged();
-
+			}
 			pDialog.dismiss();
 		}
 	}
@@ -487,7 +514,6 @@ View.OnClickListener {
 	public class GetTVSizeAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
-
 		public GetTVSizeAsyncTask() {
 		}
 
@@ -509,7 +535,7 @@ View.OnClickListener {
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				paramsUrl.add(new BasicNameValuePair("cat_id", "16"));
+				paramsUrl.add(new BasicNameValuePair("cat_id", Constants.DEFAULT_TVSIZE));
 
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
@@ -537,7 +563,18 @@ View.OnClickListener {
 
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
-			new GetProductTypeAsyncTask().execute();
+			if (narrowSeachID == Constants.KEY_CATEGORY_TVSIZE) {
+				spnTvSize.setSelection(positionSelection + 1);
+			}
+			if (oldStatusLogin) {
+				
+			}
+			if (narrowSeachID == Constants.KEY_CATEGORY_OTHER && flagLoad) {
+				new GetProductTypeAsyncTask(String.valueOf(loadId1)).execute();				
+			}else{
+				new GetProductTypeAsyncTask(Constants.DEFAULT_PRODUCTTYPE).execute();
+			}
+			
 			pDialog.dismiss();
 		}
 	}
@@ -546,8 +583,9 @@ View.OnClickListener {
 	AsyncTask<String, String, String> {
 
 		private String json;
-
-		public GetProductTypeAsyncTask() {
+		private String cat_id;
+		public GetProductTypeAsyncTask(String cat_id) {
+			this.cat_id = cat_id;
 		}
 
 		@Override
@@ -567,7 +605,7 @@ View.OnClickListener {
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				paramsUrl.add(new BasicNameValuePair("cat_id", "13"));
+				paramsUrl.add(new BasicNameValuePair("cat_id", cat_id));
 
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
@@ -575,6 +613,7 @@ View.OnClickListener {
 					JSONArray array = new JSONArray(json);
 					clearSpinnerProductType1();
 					listCategoryProductType.clear();
+					int select = 0;
 					for (int j = 0; j < array.length(); j++) {
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
@@ -583,7 +622,11 @@ View.OnClickListener {
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
 						listCategoryProductType.add(temp);
 						listProductTypes.add(temp.getName());
+						if (temp.getId() == select1) {
+							select = j;
+						}
 					}
+					return String.valueOf(select + 1);
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -592,9 +635,13 @@ View.OnClickListener {
 			return null;
 		}
 
-		protected void onPostExecute(String file_url) {
+		protected void onPostExecute(String select) {
 			productTypeAdapter.notifyDataSetChanged();
 			pDialog.dismiss();
+			if (flagLoad) {
+				spnType1.setSelection(Integer.parseInt(select));
+				new GetProductTypeChildAsyncTask(String.valueOf(loadId2)).execute();
+			}
 		}
 	}
 
@@ -632,6 +679,7 @@ View.OnClickListener {
 					JSONArray array = new JSONArray(json);
 					clearSpinnerProductType2();
 					listCategoryProductTypeChild.clear();
+					int select = 0;
 					for (int j = 0; j < array.length(); j++) {
 						Category temp = new Category();
 						temp.setId(array.getJSONObject(j).getInt("id"));
@@ -640,7 +688,11 @@ View.OnClickListener {
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
 						listCategoryProductTypeChild.add(temp);
 						listProductTypesChild.add(temp.getName());
+						if (temp.getId() == select2) {
+							select = j;
+						}
 					}
+					return String.valueOf(select + 1);
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -649,12 +701,68 @@ View.OnClickListener {
 			return null;
 		}
 
-		protected void onPostExecute(String file_url) {
+		protected void onPostExecute(String select) {
 			productTypeAdapterChild.notifyDataSetChanged();			
 			pDialog.dismiss();
-			//			if (positionType2 > 0) {
-			//				new GetCategoryCheckAsyncTask(String.valueOf(listCategoryProductTypeChild.get(positionType2 - 1).getId())).execute();
-			//			}			
+			if (flagLoad) {
+				Log.d("spnType2", "spnType2SetSelection");
+				spnType2.setSelection(Integer.parseInt(select));
+				new GetCategoryCheckAsyncTask(String.valueOf(select2)).execute();
+			}	
+			
+		}
+	}
+	
+	public class GetParentsCategoryAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		String cat_id;
+		public GetParentsCategoryAsyncTask(String cat_id) {
+			this.cat_id = cat_id;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null) {
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cat_id", cat_id));
+
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETPARENTSCATEGORY, "GET", paramsUrl);
+				Log.d("json", json);
+				if ((json != null) || (!json.equals(""))) {
+					JSONObject jsonTemp= (JSONObject) new JSONTokener(json).nextValue();
+					JSONObject jsonParent2 = jsonTemp.getJSONObject("parent2");
+					JSONObject jsonParent1 = jsonTemp.getJSONObject("parent1");
+					select1 = jsonParent1.getInt("select");
+					loadId1 = jsonParent1.getInt("loadId");
+					select2 = jsonParent2.getInt("select");
+					loadId2 = jsonParent2.getInt("loadId");					
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {		
+			pDialog.dismiss();	
+			new GetTVSizeAsyncTask().execute();
+//			new GetProductsByCategoryIdAsyncTask(currentCategory).execute();
 		}
 	}
 
@@ -688,6 +796,7 @@ View.OnClickListener {
 				paramsUrl.add(new BasicNameValuePair("cat_id", cat_id));
 
 				json = JsonParser.makeHttpRequest(Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
+				Log.d("jsonCheck", json);
 				if ((json != null) || (!json.equals(""))) {
 					JSONArray array = new JSONArray(json);
 					listCategoryCheck.clear();
@@ -699,7 +808,17 @@ View.OnClickListener {
 						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));
 						temp.setIdParent(array.getJSONObject(j).getInt("id_parent"));
 						listCategoryCheck.add(temp);
-						listCheckbox.add(true);
+						if (flagLoad) {
+							if (temp.getId() == currentCategory) {
+								listCheckbox.add(true);
+							}else{
+								listCheckbox.add(false);
+							}
+						}else{
+							listCheckbox.add(true);
+						}
+						
+						
 					}
 				}
 			} catch (JSONException e) {
@@ -710,16 +829,15 @@ View.OnClickListener {
 		}
 
 		protected void onPostExecute(String file_url) {
-			if (checkboxProductListAdapter == null) {
-				checkboxProductListAdapter = new CheckboxProductListAdapter(ProductListActivity.this, 
-						listCategoryCheck,
-						listCheckbox,cbxAll,flagCheckAll);
-				lvCheckbox.setAdapter(checkboxProductListAdapter);
-				lvCheckbox.setExpanded(true);				
-			} else
-				checkboxProductListAdapter.notifyDataSetChanged();
-			cbxAll.setChecked(true);
+			Log.d("GetCategoryCheckAsyncTask", "GetCategoryCheckAsyncTask");
+			checkboxProductListAdapter.notifyDataSetChanged();			
 			pDialog.dismiss();
+			if (flagLoad) {
+				new GetProductsByCategoryIdAsyncTask(currentCategory).execute();
+				flagLoad = false;
+			}
+			
+			
 		}
 	}
 
@@ -755,7 +873,6 @@ View.OnClickListener {
 
 	@Override
 	public void logout() {
-		// TODO Auto-generated method stub
 		super.logout();
 		adapter.notifyDataSetChanged();
 

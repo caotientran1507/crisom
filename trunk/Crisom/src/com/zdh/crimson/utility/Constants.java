@@ -39,6 +39,7 @@ public class Constants {
 	public static final String URL_GETSHIPPINGMETHOD = URL_CUSTOMAPI + "getShippingMethod";
 	public static final String URL_GETCREDITCARD = URL_CUSTOMAPI + "getCCSaved";
 	public static final String URL_GETALLADDRESS = URL_CUSTOMAPI + "getAllAddress";
+	public static final String URL_GETPARENTSCATEGORY = URL_CUSTOMAPI + "getParentsCategory";
 	
 	public static final String URL_LOGIN = URL_CUSTOMAPI + "login";
 	public static final String URL_ADDTOCART = URL_CUSTOMAPI + "addCart";
@@ -54,12 +55,15 @@ public class Constants {
 	public static final String URL_NARROWSEARCH = URL_CUSTOMAPI + "narrowSearch";	
 	public static final String URL_PAYPAL_CART = URL_CUSTOMAPI + "paypal?cid=";
 	public static final String URL_CHECKCOUPON = URL_CUSTOMAPI + "checkCoupon";
-	
+	public static final String URL_SAVEBILLING = URL_CUSTOMAPI + "saveBilling";
+	public static final String URL_SAVESHIPPING = URL_CUSTOMAPI + "saveShipping";
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
 	public static final String EXTENSION_FILE_PDF = ".pdf";
 		
 	public static final String KEY_CATEGORYID = "KEY_CATEGORYID";
+	public static final String KEY_CATEGORYID_PARENT = "KEY_CATEGORYID_PARENT";
+	public static final String KEY_CATEGORY_SELECTION = "KEY_CATEGORY_SELECTION";
 	public static final String KEY_CATEGORY_NARROWSEARCH = "KEY_CATEGORY_NARROWSEARCH";
 	public static final int KEY_CATEGORY_TVSIZE= 1;
 	public static final int KEY_CATEGORY_OTHER= 0;
@@ -93,6 +97,10 @@ public class Constants {
 	
 	public static final String KEY_DEVIDE_FLATPANEL = "1";
 	public static final String KEY_DEVIDE_PROJECTOR = "2";
+	
+	public static final String DEFAULT_TVSIZE = "16";
+	public static final String DEFAULT_PRODUCTTYPE = "13";
+	
 	
 	public static final int POSITION_ACTIVITY_LOGIN = 0;
 	public static final int POSITION_ACTIVITY_HOME = 1;

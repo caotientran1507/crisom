@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zdh.crimson.ProductListActivity;
 import com.zdh.crimson.R;
 import com.zdh.crimson.lazylist.ImageLoader;
 import com.zdh.crimson.model.Category;
@@ -25,17 +27,14 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 	private ArrayList<Category> listCheck = new ArrayList<Category>();	
 	public ImageLoader imageLoader; 
 	private CheckBox cbxAll;
-	private boolean flagCheckAll;
-	
 	private ArrayList<Boolean> listCheckbox = new ArrayList<Boolean>();
 
-
-	public CheckboxProductListAdapter(Context context,ArrayList<Category> listCheck,ArrayList<Boolean> listCheckbox, CheckBox cbxAll, boolean flagCheckAll) {
+	Holder holder = null;
+	public CheckboxProductListAdapter(Context context,ArrayList<Category> listCheck,ArrayList<Boolean> listCheckbox, CheckBox cbxAll) {
 		this.listCheck = listCheck;		
 		this.context = context;
 		this.listCheckbox = listCheckbox;
 		this.cbxAll = cbxAll;
-		this.flagCheckAll = flagCheckAll;
 		inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		imageLoader = new ImageLoader(this.context);
 	}
@@ -54,7 +53,7 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 
 	@SuppressLint("InflateParams")
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		Holder holder = null;
+		
 		View view = convertView;
 		if (convertView == null) {
 			view = inflater.inflate(R.layout.row_checkbox, null);
@@ -82,15 +81,19 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 		holder.cbx.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {		
+			public void onClick(View v) {	
+				Log.d("holder.cbx", "holder.cbx"+position);
 				if (listCheckbox.get(position)) {
 					listCheckbox.set(position, false);
-					flagCheckAll = false;
+					holder.cbx.setChecked(false);
+					ProductListActivity.flagCheckAll = false;
 					cbxAll.setChecked(false);
+					
 				}else{
 					listCheckbox.set(position, true);
+					holder.cbx.setChecked(true);
 					if (CommonUtil.checkAllCheckBox(listCheckbox) == listCheckbox.size()) {
-						flagCheckAll = true;
+						ProductListActivity.flagCheckAll = true;
 						cbxAll.setChecked(true);
 					}
 				}
@@ -100,15 +103,20 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 		holder.tv.setOnClickListener(new OnClickListener() {
 
 			@Override
-			public void onClick(View v) {		
+			public void onClick(View v) {
+				Log.d("holder.tv", "holder.tv"+position);
 				if (listCheckbox.get(position)) {
+					Log.d("holder.tvTRUE", "holder.tv"+position);
 					listCheckbox.set(position, false);
-					flagCheckAll = false;
+					holder.cbx.setChecked(false);
+					ProductListActivity.flagCheckAll = false;
 					cbxAll.setChecked(false);
 				}else{
+					Log.d("holder.tvFALSE", "holder.tv"+position);
 					listCheckbox.set(position, true);
+					holder.cbx.setChecked(true);
 					if (CommonUtil.checkAllCheckBox(listCheckbox) == listCheckbox.size()) {
-						flagCheckAll = true;
+						ProductListActivity.flagCheckAll = true;
 						cbxAll.setChecked(true);
 					}
 				}
@@ -120,6 +128,7 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 		}else{
 			holder.cbx.setChecked(false);
 		}
+		
 		holder.tv.setText(listCheck.get(position).getName());
 
 
