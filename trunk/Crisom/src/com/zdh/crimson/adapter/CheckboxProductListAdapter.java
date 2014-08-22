@@ -97,6 +97,7 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 						cbxAll.setChecked(true);
 					}
 				}
+				notifyDataSetChanged();
 			}
 		});
 		
@@ -120,6 +121,7 @@ public class CheckboxProductListAdapter extends BaseAdapter {
 						cbxAll.setChecked(true);
 					}
 				}
+				notifyDataSetChanged();
 			}
 		});
 		

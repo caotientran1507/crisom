@@ -94,6 +94,7 @@ public class CheckboxSearchAdapter extends BaseAdapter {
 						cbxAll.setChecked(true);
 					}
 				}
+				notifyDataSetChanged();
 			}
 		});
 		
@@ -112,6 +113,7 @@ public class CheckboxSearchAdapter extends BaseAdapter {
 						cbxAll.setChecked(true);
 					}
 				}
+				notifyDataSetChanged();
 			}
 		});
 		

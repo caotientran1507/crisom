@@ -309,7 +309,7 @@ View.OnClickListener {
 				flagCheckAll = false;
 			}	
 			checkboxProductListAdapter.notifyDataSetChanged();
-
+			break;
 		case R.id.productlist_tvAll:
 			Log.d("flagCheckAll", ""+flagCheckAll);
 			if (flagCheckAll) {

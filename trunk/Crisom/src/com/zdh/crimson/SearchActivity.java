@@ -82,12 +82,12 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	private CheckBox cbxAll;
 	private Button btnSearch, btnClearFilter;
 	CheckboxSearchAdapter checkboxSearchAdapter;
-	
+
 	String dataSearch = "";
 	String model = "";
 	String manufacturer = "";
 	String device = "";
-	
+
 	boolean flagEzMounter = false;
 
 	boolean flagCheckAll = true;
@@ -246,7 +246,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				return;
 			} 
 		}); 
-		
+
 		spnTvSize
 		.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView,
@@ -317,7 +317,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		adapter = new SearchAdapter(SearchActivity.this, FileUtil.listSearch);
 		lvSearch.setAdapter(adapter);
 		lvSearch.setExpanded(true);
-		
+
 		//-----------------narrow search---------------------------
 		clearSpinnerTVSize();
 		clearSpinnerProductType1();
@@ -330,7 +330,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		spnTvSize.setAdapter(tvSizeAdapter);
 		spnType1.setAdapter(productTypeAdapter);
 		spnType2.setAdapter(productTypeAdapterChild);
-		
+
 		if (getIntent().getExtras() != null) {
 			dataSearch = getIntent().getExtras().getString(Constants.KEY_SEARCH_KEYWORD);
 			model = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MODEL);
@@ -358,8 +358,8 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			new GetManufacturerAsyncTask(radioChecked).execute();
 		}
 
-		
-		
+
+
 	}
 
 
@@ -394,9 +394,9 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			radioChecked = Constants.KEY_DEVIDE_PROJECTOR;
 			new GetManufacturerAsyncTask(radioChecked).execute();						
 			break;	
-			
-			
-			
+
+
+
 		case R.id.search_lnEzmounter:
 			if (lnEzmounterContent.getVisibility() == View.VISIBLE) {
 				lnEzmounterContent.setVisibility(View.GONE);
@@ -430,7 +430,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				flagCheckAll = false;
 			}	
 			checkboxSearchAdapter.notifyDataSetChanged();
-
+			break;
 		case R.id.search_tvAll:
 			if (!flagCheckAll) {
 				checkAll();
@@ -649,7 +649,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		protected void onPostExecute(String file_url) {			
 			pDialog.dismiss();
-			
+
 		}
 	}
 
@@ -706,7 +706,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		protected void onPostExecute(String file_url) {	      
 			pDialog.dismiss();	
-			
+
 		}
 	}
 
