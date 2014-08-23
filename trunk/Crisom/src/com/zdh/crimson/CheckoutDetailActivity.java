@@ -60,7 +60,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 	private EditText edtFirstName2,edtLastName2,edtCompany2,edtAddress2,edtCity2,edtPostalCode2,edtTelephone2,edtFax2,edtPo2,edtNotes2,edtCountry2,edtState2;	
 	private EditText edtFirstName1,edtLastName1,edtCompany1,edtAddress1,edtCity1,edtPostalCode1,edtTelephone1,edtFax1,edtPo1,edtNotes1,edtCountry1,edtState1;
-	private Spinner spnState, spnCountry;
+//	private Spinner spnState, spnCountry;
 	private LinearLayout lnNewAddress1, lnNewAddress2;
 	LinearLayout lnSaveAddress1,lnSaveAddress2, lnUseBillingAddress;
 

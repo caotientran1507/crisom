@@ -54,26 +54,26 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	private Spinner spnManufacturer,spnModel;
 	private RadioButton rbnFlatpanel,rbnProjector;	
 	private ExpandableHeightListView lvCategory;
-	
+
 	private Uri uriUrl = Uri.parse(Constants.URL);
 	private Animation slideLeftIn, slideLeftOut;
 	private ViewFlipper mViewFlipper;	
 	private ArrayList<ImageView> listImage = new ArrayList<ImageView>();
 	private ImageView img1, img2, img3, img4;
-	
-	
+
+
 	ArrayAdapter<String> manufacturerAdapter;
 	ArrayAdapter<String> modelAdapter;
-	
+
 	static String keySearch ="";
-	
+
 	private ProgressDialog pDialog;
-	
+
 	HomeAdapter adapter;
-	
+
 	String radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
-	
-	
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,22 +81,19 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		if(stack.size() == 2){
 			stack.get(0).finish();
 		}
-		
-		setContentView(R.layout.activity_home);
-		new GetCategoriesHomeAsyncTask().execute();
+
+		setContentView(R.layout.activity_home);		
 		init();
-		
 	}
-	
+
 	@Override
 	protected void onResume() {
 		super.onResume();
 		if(!keySearch.equals(""))
 			edtSearch.setText(keySearch);
-//		CommonUtil.hideSoftKeyboard(HomeActivity.this);
 		ChangeTextButtonLogin();
 	}
-	
+
 
 	private void init(){
 		initView();		
@@ -104,87 +101,60 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		initDataWebservice();
 		handleOtherAction();
 	}
-	
+
 	private void initData() {
-		
-		//-------------------------set Animation--------------------------------
-		slideLeftIn = AnimationUtils.loadAnimation(this, R.anim.left_in);
-		slideLeftOut = AnimationUtils.loadAnimation(this, R.anim.left_out);
-		mViewFlipper.setInAnimation(slideLeftIn);
-		mViewFlipper.setOutAnimation(slideLeftOut);
-		mViewFlipper.startFlipping();
-		
-		slideLeftOut.setAnimationListener(new AnimationListener() {
 
-			@Override
-			public void onAnimationStart(Animation animation) {
-				int currentViewIndex = mViewFlipper.getDisplayedChild();
-				for (int j = 0; j < listImage.size(); j++) {
-					if (j != currentViewIndex) {
-						listImage.get(j).setImageResource(R.drawable.viewpager_nomal);
-					}
-				}
-				listImage.get(currentViewIndex).setImageResource(R.drawable.viewpager_active);
-								
-			}
+		adapter = new HomeAdapter(HomeActivity.this, FileUtil.listHome);
+		lvCategory.setAdapter(adapter);
+		lvCategory.setExpanded(true);
+		modelAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, FileUtil.listModelName);
+		spnModel.setAdapter(modelAdapter);
+		manufacturerAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, FileUtil.listManufacturerName);
+		spnManufacturer.setAdapter(manufacturerAdapter);
+		adapter.notifyDataSetChanged();
 
-			@Override
-			public void onAnimationRepeat(Animation animation) {
-				
-			}
-
-			@Override
-			public void onAnimationEnd(Animation animation) {
-				
-			}
-			
-		});
 		//--------------------------------------------------------------------
-		
-		if (!CommonUtil.TestNetWork(HomeActivity.this)) {
-			CommonUtil.showWifiNetworkAlert(HomeActivity.this);
-		}
-		
-	}
 
+	}
+	
 	private void initView(){		
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
 		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
 		lnCart = (LinearLayout)findViewById(R.id.include_footer_lnCart);
 		lnContact = (LinearLayout)findViewById(R.id.include_footer_lnContact);	
 		lnBrowser =(LinearLayout)findViewById(R.id.home_lnBrowsercategories);	
-		
+
 		edtSearch = (EditText)findViewById(R.id.include_search_edt);
 		lnSearchImage = (LinearLayout)findViewById(R.id.include_search_lnImage);
 		ivHome = (ImageView)findViewById(R.id.include_footer_ivhome);	
-		
+
 		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
 		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
-				
+
 		lvCategory =(ExpandableHeightListView)findViewById(R.id.home_lv);		
 		spnManufacturer = (Spinner)findViewById(R.id.home_spnManufacturer);
 		spnModel = (Spinner)findViewById(R.id.home_spnModel);
 		rbnFlatpanel = (RadioButton)findViewById(R.id.home_rbnFlatpanel);
 		rbnProjector = (RadioButton)findViewById(R.id.home_rbnProjector);		
-		
-		
+
+
 		tvMainSite = (TextView)findViewById(R.id.home_tv_mainsite);
-		
+
 		mViewFlipper = (ViewFlipper)findViewById(R.id.home_vf);		
-		
+
 		ivHome.setImageResource(R.drawable.ico_home_active);
 		tvTitle.setText("HOME");
-				
+
 		img1 = (ImageView) findViewById(R.id.home_ivMark1);
 		img2 = (ImageView) findViewById(R.id.home_ivMark2);
 		img3 = (ImageView) findViewById(R.id.home_ivMark3);
 		img4 = (ImageView) findViewById(R.id.home_ivMark4);
-		
+
 		listImage.add(img1);
 		listImage.add(img2);
 		listImage.add(img3);
 		listImage.add(img4);
-		
+
 		tvMainSite.setOnClickListener(this);
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
@@ -200,110 +170,111 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		rbnProjector.setOnClickListener(this);	
 		lnSearchImage.setOnClickListener(this);	
 		btnLogin.setOnClickListener(this);
-				
+
 		pDialog = new ProgressDialog(HomeActivity.this);		
-		
+
 		ChangeTextButtonLogin();
 	}
-	
+
 	private void initDataWebservice(){
+		
 		clearSpinnerManufacturer();
 		clearSpinnerModel();
-		new GetManufacturerAsyncTask(radioChecked).execute();
-		
-		adapter = new HomeAdapter(HomeActivity.this, FileUtil.listHome);
-		lvCategory.setAdapter(adapter);
-		lvCategory.setExpanded(true);
-		adapter.notifyDataSetChanged();
+		if (!CommonUtil.TestNetWork(HomeActivity.this)) {			
+			CommonUtil.showWifiNetworkAlert(HomeActivity.this);
+		}else{
+			new GetCategoriesHomeAsyncTask().execute();		
+			
+		}
 	}
-	
+
 	private void clearSpinnerManufacturer(){		
 		String manufacturer = "Select Manufacturer";		
 		FileUtil.listManufacturerName.clear();		
 		FileUtil.listManufacturerName.add(manufacturer);
 	}
-	
+
 	private void clearSpinnerModel(){
 		String model = "Select Model";
 		FileUtil.listModelName.clear();	
 		FileUtil.listModelName.add(model);
 	}
-	
+
 	private void handleOtherAction(){
 		edtSearch.setOnEditorActionListener(new OnEditorActionListener() {
-		    @Override
-		    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-		        boolean handled = false;
-		        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-		        	callSearchFeature();
-		            handled = true;
-		            
-		        }
-		        return handled;
-		    }
+			@Override
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+				boolean handled = false;
+				if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+					callSearchFeature();
+					handled = true;
+
+				}
+				return handled;
+			}
 		});
-		
+
 		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
-		    	if (FileUtil.listManufacturerName.size() > 1 ) {
-		    		if (i != 0) {
-			    		spnModel.setVisibility(View.VISIBLE);
-			    		new GetModelAsyncTask(radioChecked, FileUtil.listManufacturerName.get(i)).execute();
-			    		FileUtil.positionManufacturerName = i;
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
+				if (FileUtil.listManufacturerName.size() > 1 ) {
+					if (i != 0) {
+						spnModel.setVisibility(View.VISIBLE);
+						new GetModelAsyncTask(radioChecked, FileUtil.listManufacturerName.get(i)).execute();
+						FileUtil.positionManufacturerName = i;
 					}
 				}
-		    	
-		    } 
 
-		    public void onNothingSelected(AdapterView<?> adapterView) {
-		        return;
-		    } 
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
 		}); 
-		
+
 		spnModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-		    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
-		    	if (FileUtil.listModelName.size() > 1) {
-		    		if (i != 0) {
-		    			FileUtil.positionModelName = i;
-			    		Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
+				if (FileUtil.listModelName.size() > 1) {
+					if (i != 0) {
+						FileUtil.positionModelName = i;
+						Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
 						intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, FileUtil.listModelName.get(i));
 						intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName));
 						intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
 						startActivity(intent);
 						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 						FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
-			    	}
+					}
 				}
-		    } 
+			} 
 
-		    public void onNothingSelected(AdapterView<?> adapterView) {
-		        return;
-		    } 
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
 		}); 
-		
+
 		lvCategory.setOnItemClickListener(new OnItemClickListener() {
-			   @Override
-			   public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {	
-				   
-				   int narrowSearchID = Constants.KEY_CATEGORY_OTHER;				   
-				   if (FileUtil.listHome.get(position).getName().equalsIgnoreCase("TV SIZE")) {					   
-					   narrowSearchID = Constants.KEY_CATEGORY_TVSIZE;
-				   }
-				   Intent intent = new Intent(HomeActivity.this,CategoryActivity.class);
-				   intent.putExtra(Constants.KEY_CATEGORYID, FileUtil.listHome.get(position).getId());	
-				   intent.putExtra(Constants.KEY_CATEGORY_NARROWSEARCH, narrowSearchID);	
-				   startActivity(intent);
-				   overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-				   FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
-			   } 
-			});
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {	
+
+				int narrowSearchID = Constants.KEY_CATEGORY_OTHER;				   
+				if (FileUtil.listHome.get(position).getName().equalsIgnoreCase("TV SIZE")) {					   
+					narrowSearchID = Constants.KEY_CATEGORY_TVSIZE;
+				}
+				Intent intent = new Intent(HomeActivity.this,CategoryActivity.class);
+				intent.putExtra(Constants.KEY_CATEGORYID, FileUtil.listHome.get(position).getId());	
+				intent.putExtra(Constants.KEY_CATEGORY_NARROWSEARCH, narrowSearchID);	
+				startActivity(intent);
+				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
+			} 
+		});
 	}
-	
+
 
 	@Override
 	public void onClick(View v) {
 		super.onClick(v);
-		
+
 		switch (v.getId()) {
 		//----------------Click other--------------------
 		case R.id.home_tv_mainsite:
@@ -311,13 +282,13 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			startActivity(launchBrowser);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			break;
-			
-			
+
+
 		case R.id.include_search_lnImage:
 			callSearchFeature();
 			break;	
-			
-			
+
+
 		case R.id.home_lnBrowsercategories:
 			Intent browsercategories = new Intent(HomeActivity.this, CategoryActivity.class);
 			browsercategories.putExtra(Constants.KEY_CATEGORYID, Constants.CATEGORY_ROOT);
@@ -325,16 +296,16 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_CATEGORY;
 			break;	
-			
-		//--------click radio button----------
-			
+
+			//--------click radio button----------
+
 		case R.id.home_rbnFlatpanel:
 			spnModel.setVisibility(View.GONE);
 			rbnFlatpanel.setChecked(true);
 			rbnProjector.setChecked(false);
 			radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
 			new GetManufacturerAsyncTask(radioChecked).execute();
-			
+
 			break;	
 		case R.id.home_rbnProjector:
 			spnModel.setVisibility(View.GONE);
@@ -343,10 +314,10 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			radioChecked = Constants.KEY_DEVIDE_PROJECTOR;
 			new GetManufacturerAsyncTask(radioChecked).execute();						
 			break;	
-			
-			
-		//-----------------------------------------------------
-		//---------click marker slide image------------
+
+
+			//-----------------------------------------------------
+			//---------click marker slide image------------
 		case R.id.home_ivMark1:
 			for (int j = 0; j < listImage.size(); j++) {
 				if (j != 0) {
@@ -356,7 +327,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			listImage.get(0).setImageResource(R.drawable.viewpager_active);
 			mViewFlipper.setDisplayedChild(0);
 			break;	
-			
+
 		case R.id.home_ivMark2:
 			for (int j = 1; j < listImage.size(); j++) {
 				if (j != 1) {
@@ -366,7 +337,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			listImage.get(1).setImageResource(R.drawable.viewpager_active);
 			mViewFlipper.setDisplayedChild(1);		
 			break;
-			
+
 		case R.id.home_ivMark3:
 			for (int j = 2; j < listImage.size(); j++) {
 				if (j != 2) {
@@ -376,7 +347,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			listImage.get(2).setImageResource(R.drawable.viewpager_active);
 			mViewFlipper.setDisplayedChild(2);
 			break;
-			
+
 		case R.id.home_ivMark4:
 			for (int j = 3; j < listImage.size(); j++) {
 				if (j != 3) {
@@ -386,16 +357,16 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			listImage.get(3).setImageResource(R.drawable.viewpager_active);
 			mViewFlipper.setDisplayedChild(3);
 			break;
-			
-		//---------------------------------------------------------		
+
+			//---------------------------------------------------------		
 
 		default:
 			break;
 		}
-		
+
 	}
-	
-	
+
+
 	private void callSearchFeature(){
 		keySearch = edtSearch.getText().toString().trim();
 		if (keySearch.equals("")) {
@@ -407,114 +378,117 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			startActivity(intent);
 			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
-			
+
 		}
 	}
-	
-	
+
+
 	//--------------------GetCategoriesHomeAsyncTask----------------------------------------
-	
+
 	public class GetCategoriesHomeAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
-		
+
 		public GetCategoriesHomeAsyncTask(){
-			
+
 		}
-	   
-	    @Override
-	    protected void onPreExecute() {
-	        super.onPreExecute();
-	    }
 
-	    protected String doInBackground(String... params) {
-	    	
-	    	try {
-                // Building Parameters
-                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-                paramsUrl.add(new BasicNameValuePair("cat_id", String.valueOf(2)));
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
 
-                json = JsonParser.makeHttpRequest(
-                		Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
-                
-                if ((json != null) || (!json.equals(""))) {               
-                	JSONArray array = new JSONArray(json);
-                	FileUtil.listHome.clear();
-        			for (int j = 0; j < array.length(); j++) {
-        				Category temp = new Category();
-        				temp.setId(array.getJSONObject(j).getInt("id"));
-        				temp.setName(array.getJSONObject(j).getString("name").trim());
-        				temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));        						
-        				FileUtil.listHome.add(temp);
-        			}
-        			
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+		protected String doInBackground(String... params) {
 
-	        return null;
-	    }
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cat_id", String.valueOf(2)));
 
-	    protected void onPostExecute(String file_url) {	
-	    	
-	    }
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETCATEGORIESBYID, "GET", paramsUrl);
+
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					FileUtil.listHome.clear();
+					for (int j = 0; j < array.length(); j++) {
+						Category temp = new Category();
+						temp.setId(array.getJSONObject(j).getInt("id"));
+						temp.setName(array.getJSONObject(j).getString("name").trim());
+						temp.setSubcat(array.getJSONObject(j).getBoolean("subcat"));        						
+						FileUtil.listHome.add(temp);
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {	
+			adapter.notifyDataSetChanged();
+			new GetManufacturerAsyncTask(radioChecked).execute();
+						
+		}
 	}
-	
+
 	//--------------------GetManufacturerAsyncTask----------------------------------------
 	public class GetManufacturerAsyncTask extends AsyncTask<String, String, String> {
 
 		private String json;
 		String idDevide;
-		
+
 		public GetManufacturerAsyncTask(String idDevide){
 			this.idDevide = idDevide;
 		}
-	   
-	    @Override
-	    protected void onPreExecute() {
-	        super.onPreExecute();
-	        if (pDialog != null ) {	        		 	        
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
-	    }
+		}
 
-	    protected String doInBackground(String... params) {
-	    	
-	    	try {
-                // Building Parameters
-                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-                paramsUrl.add(new BasicNameValuePair("devide", idDevide));
+		protected String doInBackground(String... params) {
 
-                json = JsonParser.makeHttpRequest(
-                		Constants.URL_GETMANUFACTURER, "GET", paramsUrl);
-                if ((json != null) || (!json.equals(""))) {               
-                	JSONArray array = new JSONArray(json);
-                	clearSpinnerManufacturer();
-        			for (int j = 0; j < array.length(); j++) {
-        				String name = array.getString(j);      						
-        				FileUtil.listManufacturerName.add(name);
-        			}
-        			
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("devide", idDevide));
 
-	        return null;
-	    }
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETMANUFACTURER, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					clearSpinnerManufacturer();
+					for (int j = 0; j < array.length(); j++) {
+						String name = array.getString(j);      						
+						FileUtil.listManufacturerName.add(name);
+					}
 
-	    protected void onPostExecute(String file_url) {
-	    	manufacturerAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, FileUtil.listManufacturerName);
-	    	spnManufacturer.setAdapter(manufacturerAdapter);
-	    	pDialog.dismiss();
-	    }
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {			
+			manufacturerAdapter.notifyDataSetChanged();
+			initViewFlipper();
+			pDialog.dismiss();
+			
+		}
 	}
-	
+
 	//--------------------GetModelAsyncTask----------------------------------------
 	public class GetModelAsyncTask extends AsyncTask<String, String, String> {
 
@@ -525,50 +499,84 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			this.idDevide = idDevide;
 			this.manu = manu;
 		}
-	   	    
+
 
 		@Override
-	    protected void onPreExecute() {
-	        super.onPreExecute();
-	        if (pDialog != null ) {
-	 	        pDialog.setMessage("Loading...");
-	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
-	 	        pDialog.show();
-	 	        pDialog.setContentView(R.layout.dialog_process);
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
 			}
-	       
-	    }
 
-	    protected String doInBackground(String... params) {
-	    	
-	    	try {
-                // Building Parameters
-                List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-                paramsUrl.add(new BasicNameValuePair("devide", idDevide));
-                paramsUrl.add(new BasicNameValuePair("manu", manu));
-                json = JsonParser.makeHttpRequest(
-                		Constants.URL_GETMODEL, "GET", paramsUrl);                
-                if ((json != null) || (!json.equals(""))) {               
-                	JSONArray array = new JSONArray(json);
-                	clearSpinnerModel();
-        			for (int j = 0; j < array.length(); j++) {
-        				String name = array.getString(j);      						
-        				FileUtil.listModelName.add(name);
-        			}
-        			
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+		}
 
-	        return null;
-	    }
+		protected String doInBackground(String... params) {
 
-	    protected void onPostExecute(String file_url) {	      
-	    	pDialog.dismiss();	
-			modelAdapter = new ArrayAdapter<String>(HomeActivity.this,R.layout.spinner_item, FileUtil.listModelName);
-			spnModel.setAdapter(modelAdapter);
-	    }
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("devide", idDevide));
+				paramsUrl.add(new BasicNameValuePair("manu", manu));
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETMODEL, "GET", paramsUrl);                
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					clearSpinnerModel();
+					for (int j = 0; j < array.length(); j++) {
+						String name = array.getString(j);      						
+						FileUtil.listModelName.add(name);
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {	      
+			modelAdapter.notifyDataSetChanged();
+			pDialog.dismiss();				
+		}
+	}
+	
+	private void initViewFlipper(){
+		//-------------------------set Animation--------------------------------
+		slideLeftIn = AnimationUtils.loadAnimation(this, R.anim.left_in);
+		slideLeftOut = AnimationUtils.loadAnimation(this, R.anim.left_out);
+		mViewFlipper.setInAnimation(slideLeftIn);
+		mViewFlipper.setOutAnimation(slideLeftOut);
+		mViewFlipper.startFlipping();
+
+		slideLeftOut.setAnimationListener(new AnimationListener() {
+
+			@Override
+			public void onAnimationStart(Animation animation) {
+				int currentViewIndex = mViewFlipper.getDisplayedChild();
+				for (int j = 0; j < listImage.size(); j++) {
+					if (j != currentViewIndex) {
+						listImage.get(j).setImageResource(R.drawable.viewpager_nomal);
+					}
+				}
+				listImage.get(currentViewIndex).setImageResource(R.drawable.viewpager_active);
+
+			}
+
+			@Override
+			public void onAnimationRepeat(Animation animation) {
+
+			}
+
+			@Override
+			public void onAnimationEnd(Animation animation) {
+
+			}
+
+		});
 	}
 }
