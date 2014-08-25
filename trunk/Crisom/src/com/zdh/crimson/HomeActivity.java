@@ -42,7 +42,7 @@ import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
-import com.zdh.crimson.utility.stackActivity;
+import com.zdh.crimson.utility.StackActivity;
 
 public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
@@ -77,7 +77,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Stack<Activity> stack = stackActivity.getInstance().getStack();
+		Stack<Activity> stack = StackActivity.getInstance().getStack();
 		if(stack.size() == 2){
 			stack.get(0).finish();
 		}

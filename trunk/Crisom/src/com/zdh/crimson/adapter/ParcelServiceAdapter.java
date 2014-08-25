@@ -86,7 +86,7 @@ public class ParcelServiceAdapter extends BaseAdapter {
 			}
 		});
 		
-		if (listCarrier.get(position).getTitle().equals("null")) {
+		if (listCarrier.get(position).getTitle() == null || listCarrier.get(position).getTitle().equals("null")) {
 			holder.ln.setVisibility(View.GONE);
 		}else{
 			holder.tv.setText(listCarrier.get(position).getTitle()+" "+listCarrier.get(position).getPrice());

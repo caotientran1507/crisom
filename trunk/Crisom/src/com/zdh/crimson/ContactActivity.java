@@ -18,8 +18,7 @@ public class ContactActivity extends BaseActivity  implements View.OnClickListen
 
 	//--------define variables---------
 	private LinearLayout lnHome,lnSearch,lnCategory,lnCart;
-	private ImageView ivContact;	
-	private Button btnBack;
+	private ImageView ivContact;		
 	private TextView tvTitle,toll_free_call,phone_local_call,customerservice,info_email,suport_email,orders_email1,orders_email2;
 
 
@@ -48,7 +47,6 @@ public class ContactActivity extends BaseActivity  implements View.OnClickListen
 		ivContact = (ImageView)findViewById(R.id.include_footer_ivcontact);	
 
 		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
-		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
 		btnBack = (Button)findViewById(R.id.include_header_btnBack);
 		ivContact.setImageResource(R.drawable.ico_category_active);
 
@@ -76,7 +74,6 @@ public class ContactActivity extends BaseActivity  implements View.OnClickListen
 		lnSearch.setOnClickListener(this);
 		lnCategory.setOnClickListener(this);
 		lnCart.setOnClickListener(this);
-		btnLogin.setOnClickListener(this);
 
 	}
 

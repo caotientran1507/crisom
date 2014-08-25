@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:text="HOME"
             android:textColor="@color/crisom_white"
-            android:textSize="@dimen/include_header_with_btn_back_tv"
+            android:textSize="@dimen/textsize_header"
             android:textStyle="bold" />
     </LinearLayout>
 

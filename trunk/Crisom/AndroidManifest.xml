@@ -85,6 +85,18 @@
             android:windowSoftInputMode="stateHidden" >
         </activity>
         <activity
+            android:name="com.zdh.crimson.PaypalActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
+            android:name="com.zdh.crimson.PaypalSuccessActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+        <activity
             android:name="com.zdh.crimson.SearchActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
