@@ -5,9 +5,9 @@ import java.util.Stack;
 
 import android.app.Activity;
 
-public class stackActivity {
+public class StackActivity {
 
-	private static stackActivity sActivity = null;
+	private static StackActivity sActivity = null;
 	private Stack<Activity> stack = null;
 
 	/**
@@ -15,10 +15,10 @@ public class stackActivity {
 	 * 
 	 * @return
 	 */
-	public static stackActivity getInstance() {
+	public static StackActivity getInstance() {
 		if (sActivity == null) {
 			// Init new CommonActivityManager
-			sActivity = new stackActivity();
+			sActivity = new StackActivity();
 		}
 
 		return sActivity;
@@ -27,7 +27,7 @@ public class stackActivity {
 	/**
 	 * Init new
 	 */
-	private stackActivity() {
+	private StackActivity() {
 		stack = new Stack<Activity>();
 	}
 

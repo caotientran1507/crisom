@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/crisom_white"
+    android:orientation="vertical"
+    android:weightSum="100" >
+
+    <!-- Title Activity -->
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        layout="@layout/include_header_with_btn_back" />
+    
+
+    <WebView
+        android:id="@+id/paypal_wv"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="86"/>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        layout="@layout/include_footer" />
+
+</LinearLayout>

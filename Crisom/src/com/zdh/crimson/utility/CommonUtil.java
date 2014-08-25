@@ -196,4 +196,23 @@ public class CommonUtil {
 		}
 		return countCheck;
 	}
+	
+	public static void updateListCountry(){
+		if (FileUtil.listCountry.size() > 0) {
+			FileUtil.countries.clear();
+			for (int i = 0; i < FileUtil.listCountry.size(); i++) {
+				FileUtil.countries.add(FileUtil.listCountry.get(i).getName());
+			}
+		}		
+	}
+
+	public static void updateListState(){
+		if (FileUtil.listState.size() > 0) {
+			FileUtil.states.clear();
+			for (int i = 0; i < FileUtil.listState.size(); i++) {
+				FileUtil.states.add(FileUtil.listState.get(i).getName());
+			}
+		}
+
+	}
 }

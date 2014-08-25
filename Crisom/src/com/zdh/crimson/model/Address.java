@@ -3,6 +3,7 @@ package com.zdh.crimson.model;
 public class Address {
 	String key;
 	String value;
+	
 	public String getKey() {
 		return key;
 	}

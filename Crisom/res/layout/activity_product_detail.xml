@@ -49,7 +49,7 @@
                     android:layout_margin="@dimen/padding"
                     android:layout_weight="30"
                     android:scaleType="fitXY"
-                    android:src="@drawable/row_product_avatar" />
+                    android:src="@drawable/magento_logo" />
 
                 <TextView
                     android:layout_width="1dp"
@@ -83,7 +83,7 @@
                             android:layout_height="0dp"
                             android:layout_weight="20"
                             android:gravity="center_vertical"
-                            android:text="VW4600"
+                            android:text=""
                             android:textSize="@dimen/textsize_title"
                             android:textColor="@color/crisom_red"
                             android:textStyle="bold" />
@@ -95,7 +95,7 @@
                             android:ellipsize="end"
                             android:layout_weight="15"
                             android:singleLine="true"
-                            android:text="Video Wall Mount"
+                            android:text=""
                             android:textSize="@dimen/textsize_normal"
                             android:textColor="@color/crisom_red"
                             android:textStyle="bold" />
@@ -107,7 +107,7 @@
                             android:layout_weight="44"
                             android:maxLines="3"
                             android:textSize="@dimen/textsize_normal"
-                            android:text="Crimson’s best value in class VW4600 Video Wall Mount System features lateral, vertical, horizontal, and plumb adjustments. Includes an integrated"
+                            android:text=""
                             android:textStyle="italic" />
 
                         <TextView

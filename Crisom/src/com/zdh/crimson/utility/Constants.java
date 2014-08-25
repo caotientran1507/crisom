@@ -24,7 +24,7 @@ public class Constants {
 	public static final String URL_STAGING = "http://23.21.185.157";
 	public static final String URL_PAYPAL = "https://www.paypal.com/us/webapps/mpp/paypal-popup";
 	
-	public static final String URL_CUSTOMAPI = URL + "/customapi/result/";
+	public static final String URL_CUSTOMAPI = URL_STAGING + "/customapi/result/";
 	
 	public static final String URL_GETCATEGORIESBYID = URL_CUSTOMAPI + "getCategoriesById";
 	public static final String URL_GETPRODUCTBYCATEGORYID = URL_CUSTOMAPI + "getProductsByCategoryId";
@@ -72,6 +72,8 @@ public class Constants {
 	public static final String KEY_MOUNTFINDER_MANUFACTURER = "KEY_MOUNTFINDER_MANUFACTURER";
 	public static final String KEY_MOUNTFINDER_DEVICE = "KEY_MOUNTFINDER_DEVICE";
 	
+	public static final String KEY_URL_PAYPAL = "KEY_URL_PAYPAL";
+	
 	public static final String KEY_PRODUCTID = "KEY_PRODUCTID";
 	
 	public static final String PathFolderDataRoot = "Crisom";
@@ -111,5 +113,7 @@ public class Constants {
 	public static final int POSITION_ACTIVITY_CART = 6;
 	public static final int POSITION_ACTIVITY_CHECKOUT = 7;
 	public static final int POSITION_ACTIVITY_CHECKOUTDETAIL = 8;
-	public static final int POSITION_ACTIVITY_CONTACT = 9;
+	public static final int POSITION_ACTIVITY_PAYPAL = 9;
+	public static final int POSITION_ACTIVITY_PAYPAL_SUCCESS = 10;
+	public static final int POSITION_ACTIVITY_CONTACT = 11;
 }

@@ -12,7 +12,7 @@
     <!-- ***************** include_header_with_btn_back ***************** -->
     <dimen name="include_header_with_btn_back_button_width">100dp</dimen>
     <dimen name="include_header_with_btn_back_button_height">40dp</dimen>
-    <dimen name="include_header_with_btn_back_tv">30dp</dimen>
+    <dimen name="textsize_header">30dp</dimen>
     
     <!-- ***************** include_search ***************** -->
     <dimen name="include_search_iv">20dp</dimen>

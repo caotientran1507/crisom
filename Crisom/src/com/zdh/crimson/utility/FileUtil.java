@@ -42,8 +42,12 @@ public class FileUtil {
 	
 	public static String codeRadioButtonShippingMethod = "";
 	
+	public static String orderID = ""; 
+	
 	public static int POSITION_ACTIVITY = 1;
 	public static int RE_POSITION_ACTIVITY = 1;
+	
+	public static String validCountry[] = { "AT", "CA", "EE","FI", "FR", "DE", "DE", "LV","LT", "RO", "ES", "CH","US" };	
 
 	public static String months[] = { "Month", "01 - January", "02 - February",
 			"03 - March", "04 - April", "05 - May", "06 - June", "07 - July",

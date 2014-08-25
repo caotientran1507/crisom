@@ -34,16 +34,22 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zdh.crimson.CheckoutActivity.GetCartCodeAsyncTask;
+import com.zdh.crimson.CheckoutActivity.GetStateAsyncTask;
 import com.zdh.crimson.adapter.ParcelServiceAdapter;
 import com.zdh.crimson.adapter.ReviewCheckoutDetailAdapter;
 import com.zdh.crimson.model.Address;
 import com.zdh.crimson.model.CarrierObject;
+import com.zdh.crimson.model.CountryObject;
 import com.zdh.crimson.model.CreditCardObject;
+import com.zdh.crimson.model.StateObject;
+import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
+import com.zdh.crimson.utility.StackActivity;
 
 public class CheckoutDetailActivity extends BaseActivity  implements View.OnClickListener{
 
@@ -58,9 +64,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	,tvWhatIsThis,tvWhatIsPaypal,tvShipThisAddress,tvShipDifferentAddress,tvCreditCardOnFile,tvCreditCard
 	,tvUseBillingAddress,tvSaveCreditCard;
 
-	private EditText edtFirstName2,edtLastName2,edtCompany2,edtAddress2,edtCity2,edtPostalCode2,edtTelephone2,edtFax2,edtPo2,edtNotes2,edtCountry2,edtState2;	
-	private EditText edtFirstName1,edtLastName1,edtCompany1,edtAddress1,edtCity1,edtPostalCode1,edtTelephone1,edtFax1,edtPo1,edtNotes1,edtCountry1,edtState1;
-//	private Spinner spnState, spnCountry;
+	private EditText edtFirstName2,edtLastName2,edtCompany2,edtAddress2,edtCity2,edtPostalCode2,edtTelephone2,edtFax2,edtPo2,edtNotes2,edtState2;	
+	private EditText edtFirstName1,edtLastName1,edtCompany1,edtAddress1,edtCity1,edtPostalCode1,edtTelephone1,edtFax1,edtPo1,edtNotes1,edtState1;
+	private Spinner spnCountry2,spnState2,spnCountry1,spnState1;
 	private LinearLayout lnNewAddress1, lnNewAddress2;
 	LinearLayout lnSaveAddress1,lnSaveAddress2, lnUseBillingAddress;
 
@@ -90,6 +96,16 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	int positionCreditCardOnFile = 0;
 	int positionMonth = 0;
 	int positionYear = 0;
+
+	int positionState1 = 0 ;
+	int positionCountry1 = 0 ;
+	int positionState2 = 0 ;
+	int positionCountry2 = 0 ;
+
+	ArrayAdapter<String> countriesAdapter;
+	ArrayAdapter<String> statesAdapter;
+
+	boolean flagSaveShipping = false;
 
 	String savecc_id = "";
 
@@ -221,13 +237,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		edtFax2 = (EditText)findViewById(R.id.checkoutdetail_edtFax2);
 		edtPo2 = (EditText)findViewById(R.id.checkoutdetail_edtPO2);
 		edtNotes2 = (EditText)findViewById(R.id.checkoutdetail_edtNotes2);
-		edtCountry2 = (EditText)findViewById(R.id.checkoutdetail_edtCountry2);
+		spnCountry2 = (Spinner)findViewById(R.id.checkoutdetail_spnCountry2);
+		spnState2 = (Spinner)findViewById(R.id.checkoutdetail_spnState2);
 		edtState2 = (EditText)findViewById(R.id.checkoutdetail_edtState2);
 		lnSaveAddress2 = (LinearLayout)findViewById(R.id.checkoutdetail_lnSaveAddressBook2);
 		lnNewAddress2 = (LinearLayout)findViewById(R.id.checkoutdetail_lnNewAddress2);		
 		lnUseBillingAddress = (LinearLayout)findViewById(R.id.checkoutdetail_lnUseBillingAddress);
 		cbxSaveAddressBook2 = (CheckBox)findViewById(R.id.checkoutdetail_cbxSaveAddressBook2);
-		
+
 
 		edtFirstName1 = (EditText)findViewById(R.id.checkoutdetail_edtFirstName1);
 		edtLastName1= (EditText)findViewById(R.id.checkoutdetail_edtLastName1);
@@ -239,7 +256,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		edtFax1 = (EditText)findViewById(R.id.checkoutdetail_edtFax1);
 		edtPo1 = (EditText)findViewById(R.id.checkoutdetail_edtPO1);
 		edtNotes1 = (EditText)findViewById(R.id.checkoutdetail_edtNotes1);
-		edtCountry1 = (EditText)findViewById(R.id.checkoutdetail_edtCountry1);
+		spnCountry1 = (Spinner)findViewById(R.id.checkoutdetail_spnCountry1);
+		spnState1 = (Spinner)findViewById(R.id.checkoutdetail_spnState1);
 		edtState1 = (EditText)findViewById(R.id.checkoutdetail_edtState1);
 		lnSaveAddress1 = (LinearLayout)findViewById(R.id.checkoutdetail_lnSaveAddressBook1);		
 		lnNewAddress1 = (LinearLayout)findViewById(R.id.checkoutdetail_lnNewAddress1);
@@ -293,7 +311,16 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	}
 
 	private void initData() {
-		Collections.sort(addresses);         
+		Collections.sort(addresses);   		
+
+		countriesAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, FileUtil.countries);
+		spnCountry1.setAdapter(countriesAdapter);
+		spnCountry2.setAdapter(countriesAdapter);
+
+		statesAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, FileUtil.states);
+		spnState1.setAdapter(statesAdapter);
+		spnState2.setAdapter(statesAdapter);
+		
 		addressesAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, addresses);
 		monthAdapter = new ArrayAdapter<String>(CheckoutDetailActivity.this,R.layout.spinner_item,FileUtil.months);
 		yearAdapter = new ArrayAdapter<String>(CheckoutDetailActivity.this,R.layout.spinner_item,FileUtil.years);
@@ -318,6 +345,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		lvParcelService.setExpanded(true);
 
 		pDialog = new ProgressDialog(CheckoutDetailActivity.this);
+		if (FileUtil.listCountry.size() > 0) {
+			setPositionSpinnerCountry();
+		}		
 	}
 
 	private void initDataWebservice(){
@@ -333,6 +363,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				positionShipping = i;				
 				if (i == addresses.size() - 1) {
 					lnNewAddress2.setVisibility(View.VISIBLE);
+					if (FileUtil.listCountry.size() <= 0) {
+						new GetCountryAsyncTask().execute();
+					}
 				}else{
 					lnNewAddress2.setVisibility(View.GONE);
 				}
@@ -347,6 +380,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				positionBilling = i;
 				if (i == addresses.size() - 1) {
 					lnNewAddress1.setVisibility(View.VISIBLE);
+					if (FileUtil.listCountry.size() <= 0) {
+						new GetCountryAsyncTask().execute();
+					}					
 				}else{
 					lnNewAddress1.setVisibility(View.GONE);
 				}
@@ -383,7 +419,6 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		spnExpirationMonth.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
-					//					current_month = FileUtil.months[i];
 					positionMonth = i;
 				}
 			} 
@@ -395,7 +430,6 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		spnExpirationYear.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
 				if (i != 0) {
-					//					current_year = FileUtil.years[i];
 					positionYear = i;
 				}
 			} 
@@ -404,6 +438,68 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				return;
 			} 
 		});
+
+		spnCountry1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
+				if (checkValid(FileUtil.listCountry.get(i).getCode())) {
+					new GetStateAsyncTask(FileUtil.listCountry.get(i).getCode()).execute();
+					positionCountry1 = i;
+					spnState1.setVisibility(View.VISIBLE);
+					edtState1.setVisibility(View.GONE);
+				}else{
+					spnState1.setVisibility(View.GONE);
+					edtState1.setVisibility(View.VISIBLE);
+				}				
+
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		}); 
+
+		spnState1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				positionState1 = i;
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		}); 
+
+		spnCountry2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
+				if (FileUtil.listCountry.size() > 0) {
+					if (checkValid(FileUtil.listCountry.get(i).getCode())) {
+						new GetStateAsyncTask(FileUtil.listCountry.get(i).getCode()).execute();
+						positionCountry2 = i;
+						spnState2.setVisibility(View.VISIBLE);
+						edtState2.setVisibility(View.GONE);
+					}else{
+						spnState2.setVisibility(View.GONE);
+						edtState2.setVisibility(View.VISIBLE);
+					}
+					
+					
+				}
+
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		}); 
+
+		spnState2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 		    
+				positionState2 = i;
+			} 
+
+			public void onNothingSelected(AdapterView<?> adapterView) {
+				return;
+			} 
+		}); 
 	}
 
 	@Override
@@ -472,47 +568,34 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 			break;
 		case R.id.checkoutdetail_Billing_btnContinue:
+			if (positionBilling == addresses.size() - 1) {
+				flagSaveShipping = true;
+			}
 			if (rbnShipThisAddress.isChecked()) {
 				if (cbxSaveAddressBook1.isChecked()) {
 					if (checkRequireFieldBilling()) {
 						callSaveBilling();
-						ln1BillingInfomationContent.setVisibility(View.GONE);
-						ln2ShippingInfomationContent.setVisibility(View.GONE);
-						ln3ShippingMethodContent.setVisibility(View.VISIBLE);
-						ln4PaymentInfomationContent.setVisibility(View.GONE);
-						ln5OrderReviewContent.setVisibility(View.GONE);
+						clickContinue1();
 						positionShipping = positionBilling;
-						spnShippingAddress.setSelection(positionShipping);
+						spnShippingAddress.setSelection(positionBilling);
 					}
-					
+
 				}else{
-					ln1BillingInfomationContent.setVisibility(View.GONE);
-					ln2ShippingInfomationContent.setVisibility(View.GONE);
-					ln3ShippingMethodContent.setVisibility(View.VISIBLE);
-					ln4PaymentInfomationContent.setVisibility(View.GONE);
-					ln5OrderReviewContent.setVisibility(View.GONE);
+					clickContinue1();
 					positionShipping = positionBilling;
-					spnShippingAddress.setSelection(positionShipping);
+					spnShippingAddress.setSelection(positionBilling);
 					new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 				}
-								
+
 			} else {
 				if (cbxSaveAddressBook1.isChecked()) {
 					if (checkRequireFieldBilling()) {
 						callSaveBilling();
-						ln1BillingInfomationContent.setVisibility(View.GONE);
-						ln2ShippingInfomationContent.setVisibility(View.VISIBLE);
-						ln3ShippingMethodContent.setVisibility(View.GONE);
-						ln4PaymentInfomationContent.setVisibility(View.GONE);
-						ln5OrderReviewContent.setVisibility(View.GONE);
+						clickContinue1();
 					}
-					
+
 				}else{
-					ln1BillingInfomationContent.setVisibility(View.GONE);
-					ln2ShippingInfomationContent.setVisibility(View.VISIBLE);
-					ln3ShippingMethodContent.setVisibility(View.GONE);
-					ln4PaymentInfomationContent.setVisibility(View.GONE);
-					ln5OrderReviewContent.setVisibility(View.GONE);
+					clickContinue1();
 					new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 				}
 
@@ -520,7 +603,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 			break;
 		case R.id.checkoutdetail_Shipping_btnContinue:
-			
+			if (positionShipping == addresses.size() - 1) {
+				flagSaveShipping = true;
+			}
 			if (cbxSaveAddressBook2.isChecked()) {
 				if (checkRequireFieldShipping()) {
 					callSaveShipping();
@@ -528,35 +613,26 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 						positionBilling = positionShipping;
 						spnBillingAddress.setSelection(positionBilling);
 					}
-					ln1BillingInfomationContent.setVisibility(View.GONE);
-					ln2ShippingInfomationContent.setVisibility(View.GONE);
-					ln3ShippingMethodContent.setVisibility(View.VISIBLE);
-					ln4PaymentInfomationContent.setVisibility(View.GONE);
-					ln5OrderReviewContent.setVisibility(View.GONE);
+					clickContinue2();
+
 				}
 			}else{
 				if (cbxUseBillingAddress.isChecked()) {
 					positionBilling = positionShipping;
 					spnBillingAddress.setSelection(positionBilling);
 				}
-				ln1BillingInfomationContent.setVisibility(View.GONE);
-				ln2ShippingInfomationContent.setVisibility(View.GONE);
-				ln3ShippingMethodContent.setVisibility(View.VISIBLE);
-				ln4PaymentInfomationContent.setVisibility(View.GONE);
-				ln5OrderReviewContent.setVisibility(View.GONE);
+				clickContinue2();
+
 				new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 			}
-			
-			
+
+
 			break;
 		case R.id.checkoutdetail_ShippingMethod_btnContinue:
 			new SaveShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this),FileUtil.codeRadioButtonShippingMethod).execute();
 
-			ln1BillingInfomationContent.setVisibility(View.GONE);
-			ln2ShippingInfomationContent.setVisibility(View.GONE);
-			ln3ShippingMethodContent.setVisibility(View.GONE);
-			ln4PaymentInfomationContent.setVisibility(View.VISIBLE);
-			ln5OrderReviewContent.setVisibility(View.GONE);
+			clickContinue3();
+
 
 			break;
 		case R.id.checkoutdetail_Payment_btnContinue:
@@ -565,30 +641,21 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					Toast.makeText(CheckoutDetailActivity.this, "Please select Credit Card Type!", Toast.LENGTH_SHORT).show();
 				}else{
 					new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
-					ln1BillingInfomationContent.setVisibility(View.GONE);
-					ln2ShippingInfomationContent.setVisibility(View.GONE);
-					ln3ShippingMethodContent.setVisibility(View.GONE);
-					ln4PaymentInfomationContent.setVisibility(View.GONE);
-					ln5OrderReviewContent.setVisibility(View.VISIBLE);
+					clickContinue4();
+
 				}
 			}
 			else{
 				if (rbnCreditCard.isChecked()) {
 					if (checkInputDataCreditCard()) {
 						new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
-						ln1BillingInfomationContent.setVisibility(View.GONE);
-						ln2ShippingInfomationContent.setVisibility(View.GONE);
-						ln3ShippingMethodContent.setVisibility(View.GONE);
-						ln4PaymentInfomationContent.setVisibility(View.GONE);
-						ln5OrderReviewContent.setVisibility(View.VISIBLE);
+						clickContinue4();
+
 					}
 				}else{
 					new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
-					ln1BillingInfomationContent.setVisibility(View.GONE);
-					ln2ShippingInfomationContent.setVisibility(View.GONE);
-					ln3ShippingMethodContent.setVisibility(View.GONE);
-					ln4PaymentInfomationContent.setVisibility(View.GONE);
-					ln5OrderReviewContent.setVisibility(View.VISIBLE);
+					clickContinue4();
+
 				}
 			}
 
@@ -598,9 +665,12 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			String method = Constants.METHOD_LINKPOINT;
 			if (rbnPaypal.isChecked()) {
 				method = Constants.METHOD_PAYPAL;
-				Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constants.URL_PAYPAL_CART+SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)));
+				Intent browserIntent = new Intent(CheckoutDetailActivity.this, PaypalActivity.class);
+				browserIntent.putExtra(Constants.KEY_URL_PAYPAL
+				, Constants.URL_PAYPAL_CART + "" +SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this));
 				startActivity(browserIntent);
 				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PAYPAL;
 			}else{
 				if (rbnCreditCardOnFile.isChecked()) {
 					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), savecc_id, method).execute();
@@ -760,10 +830,15 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					listAddress.clear();
 					addresses.clear();
 					JSONArray array = new JSONArray(json);
-					for (int j = 0; j < array.length(); j++) {
+					for (int i = 0; i < array.length(); i++) {
 						Address temp = new Address();
-						temp.setKey(array.getJSONObject(j).getString("key"));   
-						temp.setValue(array.getJSONObject(j).getString("value"));  
+						temp.setKey(array.getJSONObject(i).getString("key"));   
+						temp.setValue(array.getJSONObject(i).getString("value")); 
+						if (array.getJSONObject(i).getInt("default") == 1) {
+							positionBilling = i;
+							positionShipping = i;
+						}
+						
 						addresses.add(temp.getValue());
 						listAddress.add(temp);
 					}  
@@ -777,6 +852,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String file_url) {	 
+			spnBillingAddress.setSelection(positionBilling);
+			spnShippingAddress.setSelection(positionShipping);
 			addNewAddressSpinner();
 			addressesAdapter.notifyDataSetChanged();
 			pDialog.dismiss();	
@@ -814,7 +891,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
-				paramsUrl.add(new BasicNameValuePair("address_id", String.valueOf(address_id)));
+				if (!flagSaveShipping) {
+					paramsUrl.add(new BasicNameValuePair("address_id", String.valueOf(address_id)));
+				}					
 				json = JsonParser.makeHttpRequest(Constants.URL_GETSHIPPINGMETHOD, "GET", paramsUrl);				
 				if ((json != null) || (!json.equals(""))) {  
 					FileUtil.listCarrier.clear();
@@ -1049,7 +1128,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				e.printStackTrace();
 			}
 
-			return null;
+			return "false";
 		}
 
 		protected void onPostExecute(String result) {	      
@@ -1069,7 +1148,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		private String json;
 		int idCustomer;
-		String firstname,lastname,company,street1,street2,city,region,postcode,country_id,telephone,fax,use_for_shipping;
+		String firstname,lastname,company,street1,street2,city,region,postcode,country_id,telephone
+		,fax,use_for_shipping;
 		public SaveShippingAsyncTask(int idCustomer, String firstname, String lastname, String company
 				, String street1, String street2, String city, String region, String postcode, String country_id
 				, String telephone, String fax, String use_for_shipping){
@@ -1118,6 +1198,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				paramsUrl.add(new BasicNameValuePair("telephone", telephone));
 				paramsUrl.add(new BasicNameValuePair("fax", fax));
 				paramsUrl.add(new BasicNameValuePair("use_for_shipping", use_for_shipping));
+				if (cbxSaveAddressBook2.isChecked()) {
+					paramsUrl.add(new BasicNameValuePair("save_in_address_book", "1"));
+				}	
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_SAVESHIPPING, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) {   
@@ -1142,6 +1225,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			}else{
 				Toast.makeText(CheckoutDetailActivity.this, "Save shipping address fail!", Toast.LENGTH_SHORT).show();
 			}
+			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 		}
 	}
 
@@ -1150,7 +1234,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		private String json;
 		int idCustomer;
-		String firstname,lastname,company,street1,street2,city,region,postcode,country_id,telephone,fax,use_for_shipping;
+		String firstname,lastname,company,street1,street2,city,region,postcode,country_id,telephone
+		,fax,use_for_shipping;
 		public SaveBillingAsyncTask(int idCustomer, String firstname, String lastname, String company
 				, String street1, String street2, String city, String region, String postcode, String country_id
 				, String telephone, String fax, String use_for_shipping){
@@ -1199,6 +1284,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				paramsUrl.add(new BasicNameValuePair("telephone", telephone));
 				paramsUrl.add(new BasicNameValuePair("fax", fax));
 				paramsUrl.add(new BasicNameValuePair("use_for_shipping", use_for_shipping));
+				if (cbxSaveAddressBook1.isChecked()) {
+					paramsUrl.add(new BasicNameValuePair("save_in_address_book", "1"));
+				}				
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_SAVESHIPPING, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) {   
@@ -1219,13 +1307,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
 			if (result.equals("true")) {
-				Toast.makeText(CheckoutDetailActivity.this, "Save shipping address success!", Toast.LENGTH_SHORT).show();				
+				Toast.makeText(CheckoutDetailActivity.this, "Save address book success!", Toast.LENGTH_SHORT).show();
+
 			}else{
-				Toast.makeText(CheckoutDetailActivity.this, "Save shipping address fail!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(CheckoutDetailActivity.this, "Save address book fail!", Toast.LENGTH_SHORT).show();
 			}	
-			
-			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
-			
+
+			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionBilling))).execute();
+
 		}
 	}
 
@@ -1284,11 +1373,11 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
 			if (result.equals("")) {
-				Toast.makeText(CheckoutDetailActivity.this, "Your order has been received.\nThank you for your purchase!", Toast.LENGTH_LONG).show();
-				Intent intent = new Intent(CheckoutDetailActivity.this, HomeActivity.class);
+				Intent intent = new Intent(CheckoutDetailActivity.this, PaypalSuccessActivity.class);    				
 				startActivity(intent);
-				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
-				overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);	
+				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PAYPAL_SUCCESS;
+				StackActivity.getInstance().finishAll();	
 			}else{
 				Toast.makeText(CheckoutDetailActivity.this, result, Toast.LENGTH_LONG).show();
 			}
@@ -1367,11 +1456,11 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
 			if (result.equals("")) {
-				Toast.makeText(CheckoutDetailActivity.this, "Your order has been received.\nThank you for your purchase!", Toast.LENGTH_LONG).show();
-				Intent intent = new Intent(CheckoutDetailActivity.this, HomeActivity.class);
+				Intent intent = new Intent(CheckoutDetailActivity.this, PaypalSuccessActivity.class);    				
 				startActivity(intent);
-				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_HOME;
-				overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);	
+				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PAYPAL_SUCCESS;
+				StackActivity.getInstance().finishAll();	
 			}else{
 				Toast.makeText(CheckoutDetailActivity.this, result, Toast.LENGTH_LONG).show();
 			}
@@ -1421,7 +1510,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		addresses.add("New Address");
 	}
 
-	private boolean checkRequireFieldShipping(){
+	private boolean checkRequireFieldBilling(){
 		if (checkEdittextEmpty(edtFirstName1)) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please input first name!", Toast.LENGTH_SHORT).show();
 			return false;
@@ -1438,27 +1527,24 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			Toast.makeText(CheckoutDetailActivity.this, "Please input city!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		if (checkEdittextEmpty(edtState1)) {
-			Toast.makeText(CheckoutDetailActivity.this, "Please input state!", Toast.LENGTH_SHORT).show();
+		if (edtState1.getVisibility() == View.VISIBLE
+				&& checkEdittextEmpty(edtState1)) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please input State!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (checkEdittextEmpty(edtPostalCode1)) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please input postal code!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		if (checkEdittextEmpty(edtCountry1)) {
-			Toast.makeText(CheckoutDetailActivity.this, "Please input country!", Toast.LENGTH_SHORT).show();
-			return false;
-		}
 		if (checkEdittextEmpty(edtTelephone1)) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please input telephone!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		
+
 		return true;
 	}
-	
-	private boolean checkRequireFieldBilling(){
+
+	private boolean checkRequireFieldShipping(){
 		if (checkEdittextEmpty(edtFirstName2)) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please input first name!", Toast.LENGTH_SHORT).show();
 			return false;
@@ -1475,26 +1561,23 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			Toast.makeText(CheckoutDetailActivity.this, "Please input city!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		if (checkEdittextEmpty(edtState2)) {
-			Toast.makeText(CheckoutDetailActivity.this, "Please input state!", Toast.LENGTH_SHORT).show();
+		if (edtState2.getVisibility() == View.VISIBLE
+				&& checkEdittextEmpty(edtState2)) {
+			Toast.makeText(CheckoutDetailActivity.this, "Please input State!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		if (checkEdittextEmpty(edtPostalCode2)) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please input postal code!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		if (checkEdittextEmpty(edtCountry2)) {
-			Toast.makeText(CheckoutDetailActivity.this, "Please input country!", Toast.LENGTH_SHORT).show();
-			return false;
-		}
 		if (checkEdittextEmpty(edtTelephone2)) {
 			Toast.makeText(CheckoutDetailActivity.this, "Please input telephone!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-		
+	
 		return true;
 	}
-	
+
 	private boolean checkEdittextEmpty(EditText editText){
 		if (editText.getText().toString().trim().equals("")) {
 			return true;
@@ -1502,22 +1585,206 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			return false;
 		}
 	}
-	
+
 	private void callSaveBilling(){
+		String countryCode = "";
+		if (edtState1.getVisibility() == View.VISIBLE) {
+			countryCode = edtState1.getText().toString().trim();
+		}else{
+			countryCode = FileUtil.listCountry.get(positionCountry1).getCode();
+		}
 		new SaveBillingAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)
 				, edtFirstName1.getText().toString().trim(), edtLastName1.getText().toString().trim()
 				, edtCompany1.getText().toString().trim(), edtAddress1.getText().toString().trim(), ""
-				, edtCity1.getText().toString().trim(), edtState1.getText().toString().trim()
-				, edtPostalCode1.getText().toString().trim(), edtCountry1.getText().toString().trim()
-				, edtTelephone1.getText().toString().trim(), edtFax1.getText().toString().trim(), "0").execute();
+				, edtCity1.getText().toString().trim(), FileUtil.listState.get(positionState1).getCode()
+				, edtPostalCode1.getText().toString().trim(), countryCode
+				, edtTelephone1.getText().toString().trim(), edtFax1.getText().toString().trim(), getUseForShipping()).execute();
 	}
 	private void callSaveShipping(){
-		new SaveBillingAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)
+		String countryCode = "";
+		if (edtState2.getVisibility() == View.VISIBLE) {
+			countryCode = edtState2.getText().toString().trim();
+		}else{
+			countryCode = FileUtil.listCountry.get(positionCountry2).getCode();
+		}
+		new SaveShippingAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)
 				, edtFirstName2.getText().toString().trim(), edtLastName2.getText().toString().trim()
 				, edtCompany2.getText().toString().trim(), edtAddress2.getText().toString().trim(), ""
-				, edtCity2.getText().toString().trim(), edtState2.getText().toString().trim()
-				, edtPostalCode2.getText().toString().trim(), edtCountry2.getText().toString().trim()
+				, edtCity2.getText().toString().trim(), FileUtil.listState.get(positionState2).getCode()
+				, edtPostalCode2.getText().toString().trim(),countryCode 
 				, edtTelephone2.getText().toString().trim(), edtFax2.getText().toString().trim(), "0").execute();
+	}
+
+	private String getUseForShipping(){
+		if (rbnShipThisAddress.isChecked()) {
+			return "1";
+		}
+		return "0";
+	}
+
+
+	private void clickContinue1(){
+		ln1BillingInfomationContent.setVisibility(View.GONE);
+		ln2ShippingInfomationContent.setVisibility(View.GONE);
+		ln3ShippingMethodContent.setVisibility(View.VISIBLE);
+		ln4PaymentInfomationContent.setVisibility(View.GONE);
+		ln5OrderReviewContent.setVisibility(View.GONE);
+	}
+
+	private void clickContinue2(){
+		ln1BillingInfomationContent.setVisibility(View.GONE);
+		ln2ShippingInfomationContent.setVisibility(View.GONE);
+		ln3ShippingMethodContent.setVisibility(View.VISIBLE);
+		ln4PaymentInfomationContent.setVisibility(View.GONE);
+		ln5OrderReviewContent.setVisibility(View.GONE);
+	}
+
+	private void clickContinue3(){
+		ln1BillingInfomationContent.setVisibility(View.GONE);
+		ln2ShippingInfomationContent.setVisibility(View.GONE);
+		ln3ShippingMethodContent.setVisibility(View.GONE);
+		ln4PaymentInfomationContent.setVisibility(View.VISIBLE);
+		ln5OrderReviewContent.setVisibility(View.GONE);
+	}
+
+	private void clickContinue4(){
+		ln1BillingInfomationContent.setVisibility(View.GONE);
+		ln2ShippingInfomationContent.setVisibility(View.GONE);
+		ln3ShippingMethodContent.setVisibility(View.GONE);
+		ln4PaymentInfomationContent.setVisibility(View.GONE);
+		ln5OrderReviewContent.setVisibility(View.VISIBLE);
+	}
+
+	//--------------------GetState----------------------------------------
+	public class GetStateAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		String idCountry;
+		public GetStateAsyncTask(String idCountry){
+			this.idCountry = idCountry;
+		}
+
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("country_id", String.valueOf(idCountry)));
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETSTATE, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					FileUtil.listState.clear();
+					FileUtil.states.clear();
+					for (int i = 0; i < array.length(); i++) {
+						StateObject temp = new StateObject();
+						temp.setName(array.getJSONObject(i).getString("name"));  
+						temp.setCode(array.getJSONObject(i).getString("code"));   
+						FileUtil.listState.add(temp);
+						FileUtil.states.add(temp.getName());
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {	 
+			statesAdapter.notifyDataSetChanged();
+			pDialog.dismiss();	
+		}
+	}
+
+	//--------------------GetCountry----------------------------------------
+	public class GetCountryAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		public GetCountryAsyncTask(){
+		}
+
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_GETCOUNTRY, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {               
+					JSONArray array = new JSONArray(json);
+					FileUtil.listCountry.clear();
+					FileUtil.countries.clear();
+					for (int j = 0; j < array.length(); j++) {
+						CountryObject temp = new CountryObject();
+						temp.setName(array.getJSONObject(j).getString("name"));  
+						temp.setCode(array.getJSONObject(j).getString("country_id"));   
+						FileUtil.listCountry.add(temp);
+						FileUtil.countries.add(temp.getName());
+					}					
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return null;
+		}
+
+		protected void onPostExecute(String file_url) {	 			
+			countriesAdapter.notifyDataSetChanged();
+			pDialog.dismiss();	
+			setPositionSpinnerCountry();			
+		}
+	}
+	
+	private void setPositionSpinnerCountry(){
+		for (int i = 0; i < FileUtil.listCountry.size(); i++) {
+			if (FileUtil.listCountry.get(i).getCode().equals("US")) {
+				positionCountry1 = i;
+				spnCountry1.setSelection(positionCountry1);
+				positionCountry2 = i;
+				spnCountry2.setSelection(positionCountry2);
+				break;
+			}
+		}
+	}
+	
+	private boolean checkValid(String sCountryCode){
+		for (int i = 0; i < FileUtil.validCountry.length; i++) {
+			if (sCountryCode.equalsIgnoreCase(FileUtil.validCountry[i])) {
+				return true;
+			}
+			
+		}
+		return false;
 	}
 
 }

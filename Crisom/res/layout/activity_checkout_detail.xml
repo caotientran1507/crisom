@@ -111,7 +111,8 @@
                                 android:id="@+id/checkoutdetail_lnNewAddress1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical" >
+                                android:orientation="vertical"
+                                android:visibility="gone" >
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -347,11 +348,17 @@
                                                 android:textStyle="bold" />
                                         </LinearLayout>
 
+                                        <Spinner
+                                            android:id="@+id/checkoutdetail_spnState1"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/spinner_height"
+                                            android:background="@drawable/spinner_background_year" />
                                         <EditText
                                             android:id="@+id/checkoutdetail_edtState1"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
+                                            android:visibility="gone"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
@@ -399,6 +406,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
+                                            android:inputType="number"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
@@ -437,15 +445,11 @@
                                                 android:textStyle="bold" />
                                         </LinearLayout>
 
-                                        <EditText
-                                            android:id="@+id/checkoutdetail_edtCountry1"
+                                        <Spinner
+                                            android:id="@+id/checkoutdetail_spnCountry1"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:background="@drawable/edittext_background_radius"
-                                            android:lines="1"
-                                            android:maxLines="1"
-                                            android:padding="@dimen/padding_small"
-                                            android:textSize="@dimen/textsize_normal" />
+                                            android:layout_height="@dimen/spinner_height"
+                                            android:background="@drawable/spinner_background_year" />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -489,6 +493,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
+                                            android:inputType="phone"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
@@ -517,14 +522,6 @@
                                                 android:text="Fax"
                                                 android:textSize="@dimen/textsize_normal"
                                                 android:textStyle="bold" />
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="*"
-                                                android:textColor="@color/crisom_red"
-                                                android:textSize="@dimen/textsize_normal"
-                                                android:textStyle="bold" />
                                         </LinearLayout>
 
                                         <EditText
@@ -532,6 +529,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
+                                            android:inputType="number"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
@@ -1015,11 +1013,18 @@
                                                 android:textStyle="bold" />
                                         </LinearLayout>
 
+                                        <Spinner
+                                            android:id="@+id/checkoutdetail_spnState2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/spinner_height"
+                                            android:background="@drawable/spinner_background_year" />
+                                        
                                         <EditText
                                             android:id="@+id/checkoutdetail_edtState2"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
+                                            android:visibility="gone"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
@@ -1067,6 +1072,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
+                                            android:inputType="number"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
@@ -1105,15 +1111,11 @@
                                                 android:textStyle="bold" />
                                         </LinearLayout>
 
-                                        <EditText
-                                            android:id="@+id/checkoutdetail_edtCountry2"
+                                        <Spinner
+                                            android:id="@+id/checkoutdetail_spnCountry2"
                                             android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:background="@drawable/edittext_background_radius"
-                                            android:lines="1"
-                                            android:maxLines="1"
-                                            android:padding="@dimen/padding_small"
-                                            android:textSize="@dimen/textsize_normal" />
+                                            android:layout_height="@dimen/spinner_height"                                            
+                                            android:background="@drawable/spinner_background_year" />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -1157,6 +1159,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
+                                            android:inputType="phone"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
@@ -1185,14 +1188,6 @@
                                                 android:text="Fax"
                                                 android:textSize="@dimen/textsize_normal"
                                                 android:textStyle="bold" />
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:text="*"
-                                                android:textColor="@color/crisom_red"
-                                                android:textSize="@dimen/textsize_normal"
-                                                android:textStyle="bold" />
                                         </LinearLayout>
 
                                         <EditText
@@ -1200,6 +1195,7 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
+                                            android:inputType="number"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"

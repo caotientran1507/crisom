@@ -389,7 +389,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				edtState.setVisibility(View.VISIBLE);
 			}
 
-			updateListState();
+			CommonUtil.updateListState();
 			statesAdapter.notifyDataSetChanged();
 			pDialog.dismiss();	
 		}
@@ -441,7 +441,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		}
 
 		protected void onPostExecute(String file_url) {	 
-			updateListCountry();
+			CommonUtil.updateListCountry();
 			countriesAdapter.notifyDataSetChanged();
 			pDialog.dismiss();	
 			new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
@@ -792,23 +792,5 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		}
 	}
 
-	private void updateListCountry(){
-		if (FileUtil.listCountry.size() > 0) {
-			FileUtil.countries.clear();
-			for (int i = 0; i < FileUtil.listCountry.size(); i++) {
-				FileUtil.countries.add(FileUtil.listCountry.get(i).getName());
-			}
-		}		
-	}
-
-	private void updateListState(){
-		if (FileUtil.listState.size() > 0) {
-			FileUtil.states.clear();
-			for (int i = 0; i < FileUtil.listState.size(); i++) {
-				FileUtil.states.add(FileUtil.listState.get(i).getName());
-			}
-		}
-
-	}
 
 }
