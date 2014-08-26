@@ -237,7 +237,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	
 	
 	private void changeTextThereIs(){
-		if (FileUtil.listCart.size() <= 1) {
+		if (getQuantityAll() <= 1) {
 			tvThereis.setText(Constants.TEXT_THEREIS);
 			tvItem.setText(Constants.TEXT_ITEM);
 		}else{

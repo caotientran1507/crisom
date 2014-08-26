@@ -115,6 +115,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 	String sGrandTotal = "";
 	String sDiscount = "";
 
+	String orderID = "";
+
 
 	ReviewCheckoutDetailAdapter reviewCheckoutDetailAdapter;
 
@@ -320,7 +322,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		statesAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, FileUtil.states);
 		spnState1.setAdapter(statesAdapter);
 		spnState2.setAdapter(statesAdapter);
-		
+
 		addressesAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, addresses);
 		monthAdapter = new ArrayAdapter<String>(CheckoutDetailActivity.this,R.layout.spinner_item,FileUtil.months);
 		yearAdapter = new ArrayAdapter<String>(CheckoutDetailActivity.this,R.layout.spinner_item,FileUtil.years);
@@ -398,7 +400,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				if (listCreditCard.size() > 0) {
 					if (i != 0) {
 						savecc_id = listCreditCard.get(i-1).getId();
-						positionCreditCardOnFile = i-1;
+						positionCreditCardOnFile = i;
 					}
 				}
 			} 
@@ -480,8 +482,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 						spnState2.setVisibility(View.GONE);
 						edtState2.setVisibility(View.VISIBLE);
 					}
-					
-					
+
+
 				}
 
 			} 
@@ -584,7 +586,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					clickContinue1();
 					positionShipping = positionBilling;
 					spnShippingAddress.setSelection(positionBilling);
-					new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
+					callSaveBillingExist();
+					//					new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 				}
 
 			} else {
@@ -596,7 +599,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 				}else{
 					clickContinue1();
-					new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
+					callSaveBillingExist();
+					//					new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 				}
 
 			}	
@@ -622,8 +626,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					spnBillingAddress.setSelection(positionBilling);
 				}
 				clickContinue2();
-
-				new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
+				callSaveShippingExist();
+				//				new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 			}
 
 
@@ -636,24 +640,21 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 			break;
 		case R.id.checkoutdetail_Payment_btnContinue:
+			new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 			if (rbnCreditCardOnFile.isChecked()) {
 				if (positionCreditCardOnFile == 0) {
 					Toast.makeText(CheckoutDetailActivity.this, "Please select Credit Card Type!", Toast.LENGTH_SHORT).show();
-				}else{
-					new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
+				}else{					
 					clickContinue4();
 
 				}
 			}
 			else{
 				if (rbnCreditCard.isChecked()) {
-					if (checkInputDataCreditCard()) {
-						new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
+					if (checkInputDataCreditCard()) {						
 						clickContinue4();
-
 					}
-				}else{
-					new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
+				}else{					
 					clickContinue4();
 
 				}
@@ -665,12 +666,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			String method = Constants.METHOD_LINKPOINT;
 			if (rbnPaypal.isChecked()) {
 				method = Constants.METHOD_PAYPAL;
-				Intent browserIntent = new Intent(CheckoutDetailActivity.this, PaypalActivity.class);
-				browserIntent.putExtra(Constants.KEY_URL_PAYPAL
-				, Constants.URL_PAYPAL_CART + "" +SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this));
-				startActivity(browserIntent);
-				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PAYPAL;
+				new ValidatePaypalAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 			}else{
 				if (rbnCreditCardOnFile.isChecked()) {
 					new SubmitOrderOnFileAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), savecc_id, method).execute();
@@ -838,7 +834,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 							positionBilling = i;
 							positionShipping = i;
 						}
-						
+
 						addresses.add(temp.getValue());
 						listAddress.add(temp);
 					}  
@@ -865,11 +861,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		private String json;
 		int idCustomer;
-		String address_id;
 
-		public GetShippingMethodAsyncTask(int idCustomer,String address_id){
+		public GetShippingMethodAsyncTask(int idCustomer){
 			this.idCustomer = idCustomer;
-			this.address_id = address_id;
 		}
 
 
@@ -890,10 +884,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
-				if (!flagSaveShipping) {
-					paramsUrl.add(new BasicNameValuePair("address_id", String.valueOf(address_id)));
-				}					
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));							
 				json = JsonParser.makeHttpRequest(Constants.URL_GETSHIPPINGMETHOD, "GET", paramsUrl);				
 				if ((json != null) || (!json.equals(""))) {  
 					FileUtil.listCarrier.clear();
@@ -919,7 +910,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				FileUtil.codeRadioButtonShippingMethod = FileUtil.listCarrier.get(0).getCode();
 			}			
 			pDialog.dismiss();	
-			new GetCreditCardOnFileAsyncTask(idCustomer).execute();
+			//			new GetCreditCardOnFileAsyncTask(idCustomer).execute();
 		}
 	}
 
@@ -1138,7 +1129,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			}else{
 				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method fail!", Toast.LENGTH_SHORT).show();
 			}
-
+			new GetCreditCardOnFileAsyncTask(idCustomer).execute();
 
 		}
 	}
@@ -1148,8 +1139,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		private String json;
 		int idCustomer;
-		String firstname,lastname,company,street1,street2,city,region,postcode,country_id,telephone
-		,fax,use_for_shipping;
+		String firstname = "",lastname,company,street1,street2,city,region,postcode,country_id,telephone
+				,fax,use_for_shipping,address_id;
 		public SaveShippingAsyncTask(int idCustomer, String firstname, String lastname, String company
 				, String street1, String street2, String city, String region, String postcode, String country_id
 				, String telephone, String fax, String use_for_shipping){
@@ -1168,6 +1159,12 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			this.use_for_shipping = use_for_shipping;
 		}
 
+		public SaveShippingAsyncTask(int idCustomer, String use_for_shipping, String address_id){
+			this.idCustomer = idCustomer;
+			this.use_for_shipping = use_for_shipping;
+			this.address_id = address_id;
+		}
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -1184,23 +1181,28 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 			try {
 				// Building Parameters
-				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
-				paramsUrl.add(new BasicNameValuePair("firstname", firstname));
-				paramsUrl.add(new BasicNameValuePair("lastname", lastname));
-				paramsUrl.add(new BasicNameValuePair("company", company));
-				paramsUrl.add(new BasicNameValuePair("street1", street1));
-				paramsUrl.add(new BasicNameValuePair("street2", street2));
-				paramsUrl.add(new BasicNameValuePair("city", city));
-				paramsUrl.add(new BasicNameValuePair("region", region));
-				paramsUrl.add(new BasicNameValuePair("postcode", postcode));
-				paramsUrl.add(new BasicNameValuePair("country_id", country_id));
-				paramsUrl.add(new BasicNameValuePair("telephone", telephone));
-				paramsUrl.add(new BasicNameValuePair("fax", fax));
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();				
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));				
 				paramsUrl.add(new BasicNameValuePair("use_for_shipping", use_for_shipping));
-				if (cbxSaveAddressBook2.isChecked()) {
-					paramsUrl.add(new BasicNameValuePair("save_in_address_book", "1"));
-				}	
+				if (!firstname.equals("")) {
+					paramsUrl.add(new BasicNameValuePair("firstname", firstname));
+					paramsUrl.add(new BasicNameValuePair("lastname", lastname));
+					paramsUrl.add(new BasicNameValuePair("company", company));
+					paramsUrl.add(new BasicNameValuePair("street1", street1));
+					paramsUrl.add(new BasicNameValuePair("street2", street2));
+					paramsUrl.add(new BasicNameValuePair("city", city));
+					paramsUrl.add(new BasicNameValuePair("region", region));
+					paramsUrl.add(new BasicNameValuePair("postcode", postcode));
+					paramsUrl.add(new BasicNameValuePair("country_id", country_id));
+					paramsUrl.add(new BasicNameValuePair("telephone", telephone));
+					paramsUrl.add(new BasicNameValuePair("fax", fax));
+					if (cbxSaveAddressBook2.isChecked()) {
+						paramsUrl.add(new BasicNameValuePair("save_in_address_book", "1"));
+					}	
+				}else{
+					paramsUrl.add(new BasicNameValuePair("address_id", address_id));
+				}
+
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_SAVESHIPPING, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) {   
@@ -1215,7 +1217,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				e.printStackTrace();
 			}
 
-			return null;
+			return "";
 		}
 
 		protected void onPostExecute(String result) {	      
@@ -1225,7 +1227,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			}else{
 				Toast.makeText(CheckoutDetailActivity.this, "Save shipping address fail!", Toast.LENGTH_SHORT).show();
 			}
-			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
+			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 		}
 	}
 
@@ -1234,8 +1236,8 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		private String json;
 		int idCustomer;
-		String firstname,lastname,company,street1,street2,city,region,postcode,country_id,telephone
-		,fax,use_for_shipping;
+		String firstname = "",lastname,company,street1,street2,city,region,postcode,country_id,telephone
+				,fax,use_for_shipping,address_id;
 		public SaveBillingAsyncTask(int idCustomer, String firstname, String lastname, String company
 				, String street1, String street2, String city, String region, String postcode, String country_id
 				, String telephone, String fax, String use_for_shipping){
@@ -1254,6 +1256,12 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			this.use_for_shipping = use_for_shipping;
 		}
 
+		public SaveBillingAsyncTask(int idCustomer, String use_for_shipping, String address_id){
+			this.idCustomer = idCustomer;
+			this.use_for_shipping = use_for_shipping;
+			this.address_id = address_id;
+		}
+
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -1271,24 +1279,28 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
-				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
-				paramsUrl.add(new BasicNameValuePair("firstname", firstname));
-				paramsUrl.add(new BasicNameValuePair("lastname", lastname));
-				paramsUrl.add(new BasicNameValuePair("company", company));
-				paramsUrl.add(new BasicNameValuePair("street1", street1));
-				paramsUrl.add(new BasicNameValuePair("street2", street2));
-				paramsUrl.add(new BasicNameValuePair("city", city));
-				paramsUrl.add(new BasicNameValuePair("region", region));
-				paramsUrl.add(new BasicNameValuePair("postcode", postcode));
-				paramsUrl.add(new BasicNameValuePair("country_id", country_id));
-				paramsUrl.add(new BasicNameValuePair("telephone", telephone));
-				paramsUrl.add(new BasicNameValuePair("fax", fax));
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));				
 				paramsUrl.add(new BasicNameValuePair("use_for_shipping", use_for_shipping));
-				if (cbxSaveAddressBook1.isChecked()) {
-					paramsUrl.add(new BasicNameValuePair("save_in_address_book", "1"));
+				if (!firstname.equals("")) {
+					paramsUrl.add(new BasicNameValuePair("firstname", firstname));
+					paramsUrl.add(new BasicNameValuePair("lastname", lastname));
+					paramsUrl.add(new BasicNameValuePair("company", company));
+					paramsUrl.add(new BasicNameValuePair("street1", street1));
+					paramsUrl.add(new BasicNameValuePair("street2", street2));
+					paramsUrl.add(new BasicNameValuePair("city", city));
+					paramsUrl.add(new BasicNameValuePair("region", region));
+					paramsUrl.add(new BasicNameValuePair("postcode", postcode));
+					paramsUrl.add(new BasicNameValuePair("country_id", country_id));
+					paramsUrl.add(new BasicNameValuePair("telephone", telephone));
+					paramsUrl.add(new BasicNameValuePair("fax", fax));
+					if (cbxSaveAddressBook1.isChecked()) {
+						paramsUrl.add(new BasicNameValuePair("save_in_address_book", "1"));
+					}	
+				}else{
+					paramsUrl.add(new BasicNameValuePair("address_id", address_id));
 				}				
 				json = JsonParser.makeHttpRequest(
-						Constants.URL_SAVESHIPPING, "GET", paramsUrl);
+						Constants.URL_SAVEBILLING, "GET", paramsUrl);
 				if ((json != null) || (!json.equals(""))) {   
 					JSONObject jsonObject = new JSONObject(json);
 					boolean s = jsonObject.getBoolean("info");
@@ -1301,19 +1313,19 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				e.printStackTrace();
 			}
 
-			return null;
+			return "";
 		}
 
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
 			if (result.equals("true")) {
-				Toast.makeText(CheckoutDetailActivity.this, "Save address book success!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(CheckoutDetailActivity.this, "Save billing infomation success!", Toast.LENGTH_SHORT).show();
 
 			}else{
-				Toast.makeText(CheckoutDetailActivity.this, "Save address book fail!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(CheckoutDetailActivity.this, "Save billing infomation fail!", Toast.LENGTH_SHORT).show();
 			}	
 
-			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionBilling))).execute();
+			new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this)).execute();
 
 		}
 	}
@@ -1359,8 +1371,10 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					JSONObject jsonObject = new JSONObject(json);
 					boolean b = jsonObject.getBoolean("info");
 					if (!b) {
+
 						return jsonObject.getString("message");
 					}
+					orderID = jsonObject.getString("orderId");
 
 				}
 			} catch (JSONException e) {
@@ -1373,12 +1387,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
 			if (result.equals("")) {
-				Intent intent = new Intent(CheckoutDetailActivity.this, PaypalSuccessActivity.class);    				
+				Intent intent = new Intent(CheckoutDetailActivity.this, PaypalSuccessActivity.class); 
+				intent.putExtra(Constants.KEY_ORDERID, orderID);
 				startActivity(intent);
 				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PAYPAL_SUCCESS;
 				StackActivity.getInstance().finishAll();	
 			}else{
+				Log.d("message", ""+result);
 				Toast.makeText(CheckoutDetailActivity.this, result, Toast.LENGTH_LONG).show();
 			}
 		}
@@ -1444,6 +1460,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 					if (!b) {
 						return jsonObject.getString("message");
 					}
+					orderID = jsonObject.getString("orderId");
 
 				}
 			} catch (JSONException e) {
@@ -1456,11 +1473,76 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		protected void onPostExecute(String result) {	      
 			pDialog.dismiss();	
 			if (result.equals("")) {
-				Intent intent = new Intent(CheckoutDetailActivity.this, PaypalSuccessActivity.class);    				
+				Intent intent = new Intent(CheckoutDetailActivity.this, PaypalSuccessActivity.class); 
+				intent.putExtra(Constants.KEY_ORDERID, orderID);
 				startActivity(intent);
 				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
 				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PAYPAL_SUCCESS;
 				StackActivity.getInstance().finishAll();	
+			}else{
+				Toast.makeText(CheckoutDetailActivity.this, result, Toast.LENGTH_LONG).show();
+			}
+		}
+	}
+
+
+	//--------------------SubmitOrderAsyncTask----------------------------------------
+	public class ValidatePaypalAsyncTask extends AsyncTask<String, String, String> {
+
+		private String json;
+		int idCustomer;
+
+		public ValidatePaypalAsyncTask(int idCustomer){
+			this.idCustomer = idCustomer;			
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null ) {	        		 	        
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+
+		protected String doInBackground(String... params) {
+
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cid", String.valueOf(idCustomer)));
+
+				json = JsonParser.makeHttpRequest(
+						Constants.URL_VALIDATEPAYPAL, "POST", paramsUrl);
+				if ((json != null) || (!json.equals(""))) 
+				{   
+					Log.d("json", json);
+					JSONObject jsonObject = new JSONObject(json);
+					boolean b = jsonObject.getBoolean("info");
+					if (!b) {
+						return jsonObject.getString("message");
+					}
+
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+
+			return "";
+		}
+
+		protected void onPostExecute(String result) {	      
+			pDialog.dismiss();	
+			if (result.equals("")) {
+				Intent browserIntent = new Intent(CheckoutDetailActivity.this, PaypalActivity.class);
+				browserIntent.putExtra(Constants.KEY_URL_PAYPAL
+						, Constants.URL_PAYPAL_CART + "" +SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this));
+				startActivity(browserIntent);
+				overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+				FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_PAYPAL;
 			}else{
 				Toast.makeText(CheckoutDetailActivity.this, result, Toast.LENGTH_LONG).show();
 			}
@@ -1574,7 +1656,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			Toast.makeText(CheckoutDetailActivity.this, "Please input telephone!", Toast.LENGTH_SHORT).show();
 			return false;
 		}
-	
+
 		return true;
 	}
 
@@ -1600,6 +1682,12 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				, edtPostalCode1.getText().toString().trim(), countryCode
 				, edtTelephone1.getText().toString().trim(), edtFax1.getText().toString().trim(), getUseForShipping()).execute();
 	}
+
+	private void callSaveBillingExist(){		
+		new SaveBillingAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getUseForShipping(),getKeyAddress(addresses.get(positionBilling))).execute();
+	}
+
+
 	private void callSaveShipping(){
 		String countryCode = "";
 		if (edtState2.getVisibility() == View.VISIBLE) {
@@ -1613,6 +1701,10 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				, edtCity2.getText().toString().trim(), FileUtil.listState.get(positionState2).getCode()
 				, edtPostalCode2.getText().toString().trim(),countryCode 
 				, edtTelephone2.getText().toString().trim(), edtFax2.getText().toString().trim(), "0").execute();
+	}
+
+	private void callSaveShippingExist(){		
+		new SaveShippingAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), "0",getKeyAddress(addresses.get(positionShipping))).execute();
 	}
 
 	private String getUseForShipping(){
@@ -1764,7 +1856,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			setPositionSpinnerCountry();			
 		}
 	}
-	
+
 	private void setPositionSpinnerCountry(){
 		for (int i = 0; i < FileUtil.listCountry.size(); i++) {
 			if (FileUtil.listCountry.get(i).getCode().equals("US")) {
@@ -1776,13 +1868,13 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			}
 		}
 	}
-	
+
 	private boolean checkValid(String sCountryCode){
 		for (int i = 0; i < FileUtil.validCountry.length; i++) {
 			if (sCountryCode.equalsIgnoreCase(FileUtil.validCountry[i])) {
 				return true;
 			}
-			
+
 		}
 		return false;
 	}
