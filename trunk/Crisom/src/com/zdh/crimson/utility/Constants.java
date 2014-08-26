@@ -26,6 +26,8 @@ public class Constants {
 	
 	public static final String URL_CUSTOMAPI = URL_STAGING + "/customapi/result/";
 	
+	public static final String URL_MOBILE = URL_STAGING + "/document/index/changeMode/mode/mobile";	
+	
 	public static final String URL_GETCATEGORIESBYID = URL_CUSTOMAPI + "getCategoriesById";
 	public static final String URL_GETPRODUCTBYCATEGORYID = URL_CUSTOMAPI + "getProductsByCategoryId";
 	public static final String URL_GETMANUFACTURER = URL_CUSTOMAPI + "getManufacturer";
@@ -40,6 +42,8 @@ public class Constants {
 	public static final String URL_GETCREDITCARD = URL_CUSTOMAPI + "getCCSaved";
 	public static final String URL_GETALLADDRESS = URL_CUSTOMAPI + "getAllAddress";
 	public static final String URL_GETPARENTSCATEGORY = URL_CUSTOMAPI + "getParentsCategory";
+	public static final String URL_GETLASTORDERNUMBER = URL_CUSTOMAPI + "getLatestOrderNumber";
+	
 	
 	public static final String URL_LOGIN = URL_CUSTOMAPI + "login";
 	public static final String URL_ADDTOCART = URL_CUSTOMAPI + "addCart";
@@ -56,7 +60,9 @@ public class Constants {
 	public static final String URL_PAYPAL_CART = URL_CUSTOMAPI + "paypal?cid=";
 	public static final String URL_CHECKCOUPON = URL_CUSTOMAPI + "checkCoupon";
 	public static final String URL_SAVEBILLING = URL_CUSTOMAPI + "saveBilling";
-	public static final String URL_SAVESHIPPING = URL_CUSTOMAPI + "saveShipping";
+	public static final String URL_SAVESHIPPING = URL_CUSTOMAPI + "saveShipping";	
+	public static final String URL_VALIDATEPAYPAL = URL_CUSTOMAPI + "validatePaypal";	
+	
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
 	public static final String EXTENSION_FILE_PDF = ".pdf";
@@ -65,6 +71,7 @@ public class Constants {
 	public static final String KEY_CATEGORYID_PARENT = "KEY_CATEGORYID_PARENT";
 	public static final String KEY_CATEGORY_SELECTION = "KEY_CATEGORY_SELECTION";
 	public static final String KEY_CATEGORY_NARROWSEARCH = "KEY_CATEGORY_NARROWSEARCH";
+	public static final String KEY_ORDERID = "KEY_ORDERID";
 	public static final int KEY_CATEGORY_TVSIZE= 1;
 	public static final int KEY_CATEGORY_OTHER= 0;
 	public static final String KEY_MOUNTFINDER_MODEL = "KEY_MOUNTFINDER_MODEL";

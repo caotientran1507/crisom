@@ -19,6 +19,13 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="86"/>
+    
+    <WebView
+        android:id="@+id/paypal_wvInvisible"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone"/>
 
     <include
         android:layout_width="match_parent"

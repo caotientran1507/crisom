@@ -418,11 +418,17 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		}
 
 		protected void onPostExecute(String file_url) {
-			tvTitle1.setText(product.getName());
-			tvShortDes.setText(product.getShortDes());
-			tvDes.setTag(product.getDes());
-
-			imageLoader.DisplayImage(product.getImage(), ivAvatar);
+			runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					tvTitle1.setText(product.getName());
+					tvShortDes.setText(product.getShortDes());
+					tvDes.setTag(product.getDes());
+					imageLoader.DisplayImage(product.getImage(), ivAvatar);
+				}
+			});
+			
+			
 
 			if(product != null && childAdapter != null){
 				childAdapter = new ChildAdapter(ProductDetailActivity.this, product.getListOption(),currentProduct);

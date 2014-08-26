@@ -56,20 +56,21 @@
                 android:orientation="horizontal" >
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Your order # is: "
                     android:textSize="@dimen/textsize_normal" />
 
                 <TextView
                     android:id="@+id/paypal_success_tvOrder"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
+                    android:textColor="@color/crisom_red"
                     android:textSize="@dimen/textsize_normal" />
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="."
                     android:textSize="@dimen/textsize_normal" />
