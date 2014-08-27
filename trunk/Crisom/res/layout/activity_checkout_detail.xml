@@ -353,16 +353,17 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/spinner_background_year" />
+
                                         <EditText
                                             android:id="@+id/checkoutdetail_edtState1"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
-                                            android:visibility="gone"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
-                                            android:textSize="@dimen/textsize_normal" />
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:visibility="gone" />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -1018,17 +1019,17 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/spinner_background_year" />
-                                        
+
                                         <EditText
                                             android:id="@+id/checkoutdetail_edtState2"
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:background="@drawable/edittext_background_radius"
-                                            android:visibility="gone"
                                             android:lines="1"
                                             android:maxLines="1"
                                             android:padding="@dimen/padding_small"
-                                            android:textSize="@dimen/textsize_normal" />
+                                            android:textSize="@dimen/textsize_normal"
+                                            android:visibility="gone" />
                                     </LinearLayout>
                                 </LinearLayout>
 
@@ -1114,7 +1115,7 @@
                                         <Spinner
                                             android:id="@+id/checkoutdetail_spnCountry2"
                                             android:layout_width="match_parent"
-                                            android:layout_height="@dimen/spinner_height"                                            
+                                            android:layout_height="@dimen/spinner_height"
                                             android:background="@drawable/spinner_background_year" />
                                     </LinearLayout>
                                 </LinearLayout>
@@ -1522,7 +1523,8 @@
                                         android:layout_width="@dimen/include_footer_iv"
                                         android:layout_height="@dimen/include_footer_iv"
                                         android:background="@drawable/radio_selector"
-                                        android:button="@null" />
+                                        android:button="@null"
+                                        android:checked="true" />
 
                                     <TextView
                                         android:id="@+id/checkoutdetail_tvCreditCardOnFile"
@@ -1540,7 +1542,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="@dimen/padding"
                                     android:orientation="vertical"
-                                    android:visibility="gone" >
+                                    android:visibility="visible" >
 
                                     <LinearLayout
                                         android:layout_width="match_parent"
@@ -1810,7 +1812,7 @@
                                         android:layout_height="@dimen/include_footer_iv"
                                         android:background="@drawable/radio_selector"
                                         android:button="@null"
-                                        android:checked="true" />
+                                        />
 
                                     <LinearLayout
                                         android:id="@+id/checkoutdetail_lnPaypal"
@@ -1843,7 +1845,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="You will be redirected to Paypal website when you place an order."
-                                    android:textSize="@dimen/textsize_normal" />
+                                    android:textSize="@dimen/textsize_normal"
+                                    android:visibility="gone" />
                             </RadioGroup>
 
                             <TextView
