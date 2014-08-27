@@ -34,8 +34,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.zdh.crimson.CheckoutActivity.GetCartCodeAsyncTask;
-import com.zdh.crimson.CheckoutActivity.GetStateAsyncTask;
 import com.zdh.crimson.adapter.ParcelServiceAdapter;
 import com.zdh.crimson.adapter.ReviewCheckoutDetailAdapter;
 import com.zdh.crimson.model.Address;
@@ -43,7 +41,6 @@ import com.zdh.crimson.model.CarrierObject;
 import com.zdh.crimson.model.CountryObject;
 import com.zdh.crimson.model.CreditCardObject;
 import com.zdh.crimson.model.StateObject;
-import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
@@ -594,11 +591,11 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 				if (cbxSaveAddressBook1.isChecked()) {
 					if (checkRequireFieldBilling()) {
 						callSaveBilling();
-						clickContinue1();
+						clickContinue1DifferntAddress();
 					}
 
 				}else{
-					clickContinue1();
+					clickContinue1DifferntAddress();
 					callSaveBillingExist();
 					//					new GetShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this), getKeyAddress(addresses.get(positionShipping))).execute();
 				}
@@ -1719,6 +1716,14 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		ln1BillingInfomationContent.setVisibility(View.GONE);
 		ln2ShippingInfomationContent.setVisibility(View.GONE);
 		ln3ShippingMethodContent.setVisibility(View.VISIBLE);
+		ln4PaymentInfomationContent.setVisibility(View.GONE);
+		ln5OrderReviewContent.setVisibility(View.GONE);
+	}
+	
+	private void clickContinue1DifferntAddress(){
+		ln1BillingInfomationContent.setVisibility(View.GONE);
+		ln2ShippingInfomationContent.setVisibility(View.VISIBLE);
+		ln3ShippingMethodContent.setVisibility(View.GONE);
 		ln4PaymentInfomationContent.setVisibility(View.GONE);
 		ln5OrderReviewContent.setVisibility(View.GONE);
 	}

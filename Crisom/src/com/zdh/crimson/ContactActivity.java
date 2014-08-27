@@ -48,6 +48,7 @@ public class ContactActivity extends BaseActivity  implements View.OnClickListen
 
 		tvTitle = (TextView)findViewById(R.id.include_header_tvTitle);
 		btnBack = (Button)findViewById(R.id.include_header_btnBack);
+		btnLogin = (Button)findViewById(R.id.include_header_btnLogin);
 		ivContact.setImageResource(R.drawable.ico_category_active);
 
 		tvTitle.setText("CONTACT");
@@ -62,6 +63,7 @@ public class ContactActivity extends BaseActivity  implements View.OnClickListen
 		suport_email = (TextView)findViewById(R.id.suport_email);
 		orders_email2 = (TextView)findViewById(R.id.orders_email2);
 
+		btnLogin.setOnClickListener(this);
 		toll_free_call.setOnClickListener(this);
 		phone_local_call.setOnClickListener(this);
 		customerservice.setOnClickListener(this);
