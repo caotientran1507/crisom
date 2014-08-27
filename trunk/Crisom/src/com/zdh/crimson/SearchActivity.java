@@ -49,6 +49,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	private ImageView ivSearch, ivNarrowShow,ivEzmounter;	
 	private TextView tvTitle,tvAll,tvNrMake,tvNrModel,tvNrTVSize;
 	private EditText edtSearch;
+  private LinearLayout liNrInfo;
 	private ExpandableHeightListView lvSearch, lvCheckbox;
 	private Spinner spnManufacturer, spnModel;
 	private RadioButton rbnFlatpanel,rbnProjector;	
@@ -168,6 +169,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		lnNarrowContent = (LinearLayout) findViewById(R.id.search_Narrow_lnContent);
 		ivNarrowShow = (ImageView) findViewById(R.id.search_ivNarrow);
 		lvCheckbox = (ExpandableHeightListView) findViewById(R.id.search_lvCheckbox);
+    liNrInfo = (LinearLayout) findViewById(R.id.search_info);
 
 		lncheckboxAll = (LinearLayout) findViewById(R.id.search_lncheckboxAll);
 
@@ -334,8 +336,13 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		spnType1.setAdapter(productTypeAdapter);
 		spnType2.setAdapter(productTypeAdapterChild);
 		
-		tvNrMake.setText(FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName));
-		tvNrModel.setText(FileUtil.listModelName.get(FileUtil.positionModelName));
+		if(FileUtil.listManufacturerName.size() > 1 && FileUtil.listModelName.size() > 1){
+			liNrInfo.setVisibility(View.VISIBLE);
+			tvNrMake.setText(FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName));
+			tvNrModel.setText(FileUtil.listModelName.get(FileUtil.positionModelName));
+		}else{
+			liNrInfo.setVisibility(View.GONE);
+		}
 
 		if (getIntent().getExtras() != null) {
 			dataSearch = getIntent().getExtras().getString(Constants.KEY_SEARCH_KEYWORD);
