@@ -7,6 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -46,7 +47,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	private LinearLayout lnHome,lnCategory,lnCart,lnContact,lnSearchImage,lnEzmounter,lnEzmounterContent
 	,lnNarrowTitle,lnNarrowContent, lncheckboxAll;
 	private ImageView ivSearch, ivNarrowShow,ivEzmounter;	
-	private TextView tvTitle,tvAll;
+	private TextView tvTitle,tvAll,tvNrMake,tvNrModel,tvNrTVSize;
 	private EditText edtSearch;
 	private ExpandableHeightListView lvSearch, lvCheckbox;
 	private Spinner spnManufacturer, spnModel;
@@ -153,13 +154,16 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		ivEzmounter = (ImageView)findViewById(R.id.search_ivEzmounter);
 
 		//------narrow search----------
-		spnTvSize = (Spinner) findViewById(R.id.search_spnTVsize);
+//		spnTvSize = (Spinner) findViewById(R.id.search_spnTVsize);
 		spnType1 = (Spinner) findViewById(R.id.search_spnType1);
 		spnType2 = (Spinner) findViewById(R.id.search_spnType2);
 		btnSearch = (Button) findViewById(R.id.search_btnSearch);
 		btnClearFilter = (Button) findViewById(R.id.search_btnClearFilter);
 		cbxAll = (CheckBox) findViewById(R.id.search_cbxAll);
 		tvAll = (TextView) findViewById(R.id.search_tvAll);
+		tvNrMake = (TextView) findViewById(R.id.search_make);
+		tvNrModel = (TextView) findViewById(R.id.search_mode);
+		tvNrTVSize = (TextView) findViewById(R.id.search_size);
 		lnNarrowTitle = (LinearLayout) findViewById(R.id.search_Narrow_lnTitle);
 		lnNarrowContent = (LinearLayout) findViewById(R.id.search_Narrow_lnContent);
 		ivNarrowShow = (ImageView) findViewById(R.id.search_ivNarrow);
@@ -247,17 +251,16 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			} 
 		}); 
 
-		spnTvSize
-		.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			public void onItemSelected(AdapterView<?> adapterView,
-					View view, int i, long l) {
-				positionTV = i;
-			}
-
-			public void onNothingSelected(AdapterView<?> adapterView) {
-				return;
-			}
-		});
+//		spnTvSize.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//			public void onItemSelected(AdapterView<?> adapterView,
+//					View view, int i, long l) {
+//				positionTV = i;
+//			}
+//
+//			public void onNothingSelected(AdapterView<?> adapterView) {
+//				return;
+//			}
+//		});
 
 		spnType1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -327,9 +330,12 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		productTypeAdapter = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypes);
 		productTypeAdapterChild = new ArrayAdapter<String>(this,R.layout.spinner_item, listProductTypesChild);
 
-		spnTvSize.setAdapter(tvSizeAdapter);
+//		spnTvSize.setAdapter(tvSizeAdapter);
 		spnType1.setAdapter(productTypeAdapter);
 		spnType2.setAdapter(productTypeAdapterChild);
+		
+		tvNrMake.setText(FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName));
+		tvNrModel.setText(FileUtil.listModelName.get(FileUtil.positionModelName));
 
 		if (getIntent().getExtras() != null) {
 			dataSearch = getIntent().getExtras().getString(Constants.KEY_SEARCH_KEYWORD);
@@ -344,6 +350,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			}else{
 				keySearch = "";
 				edtSearch.setText(keySearch);
+				
 				if (device.equals(Constants.KEY_DEVIDE_FLATPANEL)) {
 					rbnFlatpanel.setChecked(true);
 					rbnProjector.setChecked(false);
@@ -417,6 +424,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				lnNarrowContent.setVisibility(View.VISIBLE);
 				ivNarrowShow.setImageResource(R.drawable.ico_down_white);
 				new GetTVSizeAsyncTask().execute();
+				new GetSizeAsyncTask().execute();
 			}
 
 			break;
@@ -457,7 +465,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			productTypeAdapterChild.notifyDataSetChanged();
 			spnType1.setSelection(0);
 			spnType2.setSelection(0);
-			spnTvSize.setSelection(0);
+//			spnTvSize.setSelection(0);
 			break;
 
 		default:
@@ -963,10 +971,59 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		protected void onPostExecute(String file_url) {
 			productTypeAdapter.notifyDataSetChanged();
+			try {
+				if(device != null || !device.equals(""))
+					spnType1.setSelection(Integer.parseInt(device));
+			} catch (Exception e) {
+				Log.e("Error", e.getMessage());
+			}
 			pDialog.dismiss();
 		}
 	}
 
+	public class GetSizeAsyncTask extends AsyncTask<String, String, String>{
+
+		String tvSize = "";
+		private String json;
+		
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			if (pDialog != null) {
+				pDialog.setMessage("Loading...");
+				pDialog.setIndeterminate(false);
+				pDialog.setCancelable(true);
+				pDialog.show();
+				pDialog.setContentView(R.layout.dialog_process);
+			}
+		}
+		
+		@Override
+		protected String doInBackground(String... params) {
+			
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("device", device));
+				paramsUrl.add(new BasicNameValuePair("manufacturer", FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName)));
+				paramsUrl.add(new BasicNameValuePair("Network", FileUtil.listModelName.get(FileUtil.positionModelName)));
+				
+				json = JsonParser.makeHttpRequest(Constants.URL_GETSIZETITLE, "GET", paramsUrl);
+				if ((json != null) || (!json.equals(""))) {
+					JSONObject object = new JSONObject();
+					tvSize = object.getString("name");
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			return null;
+		}
+		
+		protected void onPostExecute(String file_url) {
+			tvNrTVSize.setText(tvSize);			
+			pDialog.dismiss();		
+		}
+	}
 	public class GetProductTypeChildAsyncTask extends
 	AsyncTask<String, String, String> {
 
