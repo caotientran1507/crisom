@@ -43,6 +43,7 @@ public class Constants {
 	public static final String URL_GETALLADDRESS = URL_CUSTOMAPI + "getAllAddress";
 	public static final String URL_GETPARENTSCATEGORY = URL_CUSTOMAPI + "getParentsCategory";
 	public static final String URL_GETLASTORDERNUMBER = URL_CUSTOMAPI + "getLatestOrderNumber";
+	public static final String URL_GETSIZETITLE = URL_CUSTOMAPI + "getSizeTitle";
 	
 	
 	public static final String URL_LOGIN = URL_CUSTOMAPI + "login";

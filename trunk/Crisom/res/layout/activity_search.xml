@@ -96,8 +96,8 @@
                     android:gravity="center_horizontal"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/padding_large"
-                    android:weightSum="100"
-                    android:visibility="gone" >
+                    android:visibility="gone"
+                    android:weightSum="100" >
 
                     <LinearLayout
                         android:layout_width="0dp"
@@ -235,9 +235,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_large"
                         android:layout_weight="90"
-                        android:orientation="vertical" >
+                        android:orientation="vertical" 
+                        android:weightSum="100">
 
-                        <TextView
+                        <!--
+                          <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="TV Size"
@@ -251,6 +253,76 @@
                             android:layout_height="@dimen/spinner_height"
                             android:layout_marginTop="@dimen/padding"
                             android:background="@drawable/spinner_background" />
+                        -->
+
+                        <LinearLayout
+                            android:id="@+id/search_info"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="visible" 
+                            android:layout_weight="90">
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:text="You searched for:"
+                                android:textColor="@color/crisom_red"
+	                            android:textSize="@dimen/textsize_normal"
+	                            android:textStyle="bold" 
+	                            android:paddingBottom="3dp"/>
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Make: " />
+
+                                <TextView
+                                    android:id="@+id/search_make"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Accute Network Technologies" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Model: " />
+
+                                <TextView
+                                    android:id="@+id/search_mode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Network Technologies TC-7000" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Size: " />
+
+                                <TextView
+                                    android:id="@+id/search_size"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="12" />
+                            </LinearLayout>
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
