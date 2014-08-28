@@ -179,7 +179,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 			if (pDialog != null) {
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}

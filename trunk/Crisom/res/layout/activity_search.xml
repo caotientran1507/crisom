@@ -235,11 +235,85 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/padding_large"
                         android:layout_weight="90"
-                        android:orientation="vertical" 
-                        android:weightSum="100">
+                        android:orientation="vertical"
+                        android:weightSum="100" >
 
-                        <!--
-                          <TextView
+                        <LinearLayout
+                            android:id="@+id/search_info"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="90"
+                            android:orientation="vertical"
+                            android:visibility="visible" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:paddingBottom="3dp"
+                                android:text="You searched for:"
+                                android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal"
+                                android:textStyle="bold" />
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Make: "
+                                    android:textSize="@dimen/textsize_normal" />
+
+                                <TextView
+                                    android:id="@+id/search_make"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Model: "
+                                    android:textSize="@dimen/textsize_normal" />
+
+                                <TextView
+                                    android:id="@+id/search_mode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Size: "
+                                    android:textSize="@dimen/textsize_normal" />
+
+                                <TextView
+                                    android:id="@+id/search_size"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=""
+                                    android:textSize="@dimen/textsize_normal" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="TV Size"
@@ -247,91 +321,28 @@
                             android:textSize="@dimen/textsize_normal"
                             android:textStyle="bold" />
 
-                        <Spinner
-                            android:id="@+id/search_spnTVsize"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/spinner_height"
-                            android:layout_marginTop="@dimen/padding"
-                            android:background="@drawable/spinner_background" />
-                        -->
-
                         <LinearLayout
-                            android:id="@+id/search_info"
-                            android:layout_width="fill_parent"
+                            android:id="@+id/search_lnTVsize"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:visibility="visible" 
-                            android:layout_weight="90">
+                            android:orientation="vertical" >
+
+                            <Spinner
+                                android:id="@+id/search_spnTVsize"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/spinner_height"
+                                android:layout_marginTop="@dimen/padding"
+                                android:background="@drawable/spinner_background" />
 
                             <TextView
-                                android:layout_width="fill_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="You searched for:"
+                                android:layout_marginTop="@dimen/padding"
+                                android:text="Type"
                                 android:textColor="@color/crisom_red"
-	                            android:textSize="@dimen/textsize_normal"
-	                            android:textStyle="bold" 
-	                            android:paddingBottom="3dp"/>
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal" >
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Make: " />
-
-                                <TextView
-                                    android:id="@+id/search_make"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Accute Network Technologies" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal" >
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Model: " />
-
-                                <TextView
-                                    android:id="@+id/search_mode"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Network Technologies TC-7000" />
-                            </LinearLayout>
-
-                            <LinearLayout
-                                android:layout_width="fill_parent"
-                                android:layout_height="wrap_content"
-                                android:orientation="horizontal" >
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="Size: " />
-
-                                <TextView
-                                    android:id="@+id/search_size"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="12" />
-                            </LinearLayout>
+                                android:textSize="@dimen/textsize_normal"
+                                android:textStyle="bold" />
                         </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/padding"
-                            android:text="Type"
-                            android:textColor="@color/crisom_red"
-                            android:textSize="@dimen/textsize_normal"
-                            android:textStyle="bold" />
 
                         <Spinner
                             android:id="@+id/search_spnType1"
@@ -369,7 +380,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/padding"
-                                android:text="All" />
+                                android:text="All"
+                                android:textSize="@dimen/textsize_normal" />
                         </LinearLayout>
 
                         <!-- Start checkboxes -->
