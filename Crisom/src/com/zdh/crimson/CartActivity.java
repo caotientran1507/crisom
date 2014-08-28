@@ -169,7 +169,7 @@ public class CartActivity extends BaseActivity  implements View.OnClickListener{
 	        if (pDialog != null ) {	        		 	        
 	 	        pDialog.setMessage("Loading...");
 	 	        pDialog.setIndeterminate(false);
-	 	        pDialog.setCancelable(true);
+	 	        pDialog.setCancelable(false);
 	 	        pDialog.show();
 	 	        pDialog.setContentView(R.layout.dialog_process);
 			}	        

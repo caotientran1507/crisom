@@ -289,7 +289,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}
@@ -348,7 +348,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}
@@ -409,7 +409,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}
@@ -464,7 +464,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}
@@ -546,7 +546,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}
@@ -610,7 +610,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}
@@ -674,7 +674,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}
@@ -740,7 +740,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}

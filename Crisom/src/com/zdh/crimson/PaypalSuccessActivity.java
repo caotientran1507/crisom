@@ -108,7 +108,7 @@ public class PaypalSuccessActivity extends BaseActivity implements View.OnClickL
 			if (pDialog != null ) {	        		 	        
 				pDialog.setMessage("Loading...");
 				pDialog.setIndeterminate(false);
-				pDialog.setCancelable(true);
+				pDialog.setCancelable(false);
 				pDialog.show();
 				pDialog.setContentView(R.layout.dialog_process);
 			}

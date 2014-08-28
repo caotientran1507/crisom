@@ -302,7 +302,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			pDialog = new ProgressDialog(ProductDetailActivity.this);
 			pDialog.setMessage("Loading...");
 			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
+			pDialog.setCancelable(false);
 			pDialog.show();
 			pDialog.setContentView(R.layout.dialog_process);
 
@@ -423,7 +423,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				public void run() {
 					tvTitle1.setText(product.getName());
 					tvShortDes.setText(product.getShortDes());
-					tvDes.setTag(product.getDes());
+					tvDes.setText(product.getDes());
 					imageLoader.DisplayImage(product.getImage(), ivAvatar);
 				}
 			});
@@ -460,7 +460,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			pDialog.setIndeterminate(false);
 			pDialog.setMax(100);
 			pDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			pDialog.setCancelable(true);
+			pDialog.setCancelable(false);
 			pDialog.show();
 		}
 
@@ -683,7 +683,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			pDialog = new ProgressDialog(dialogVerifyNumber.getContext());      		 	        
 			pDialog.setMessage("Loading...");
 			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
+			pDialog.setCancelable(false);
 			pDialog.show();
 			pDialog.setContentView(R.layout.dialog_process);
 
@@ -737,7 +737,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			pDialog = new ProgressDialog(dialogVerifyNumber.getContext());     
 			pDialog.setMessage("Loading...");
 			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
+			pDialog.setCancelable(false);
 			pDialog.show();
 			pDialog.setContentView(R.layout.dialog_process);
 
@@ -796,7 +796,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			pDialog = new ProgressDialog(dialogVerifyNumber.getContext());     
 			pDialog.setMessage("Loading...");
 			pDialog.setIndeterminate(false);
-			pDialog.setCancelable(true);
+			pDialog.setCancelable(false);
 			pDialog.show();
 			pDialog.setContentView(R.layout.dialog_process);
 
