@@ -64,6 +64,8 @@ public class Constants {
 	public static final String URL_SAVESHIPPING = URL_CUSTOMAPI + "saveShipping";	
 	public static final String URL_VALIDATEPAYPAL = URL_CUSTOMAPI + "validatePaypal";	
 	
+	public static final String URL_COUNT_ITEM_CART = URL_CUSTOMAPI + "getCartItemCount";	
+	
 	
 	public static final String EXTENSION_FILE_DWG = ".dwg";
 	public static final String EXTENSION_FILE_PDF = ".pdf";
