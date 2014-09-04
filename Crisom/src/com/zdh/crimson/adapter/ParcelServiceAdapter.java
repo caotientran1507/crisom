@@ -21,7 +21,7 @@ import com.zdh.crimson.utility.FileUtil;
 
 public class ParcelServiceAdapter extends BaseAdapter {
 	SparseBooleanArray mCheckStates; 
-	private int selectedIndex = 0;
+	
 
 	private Context context;
 	private LayoutInflater inflater = null;
@@ -69,9 +69,9 @@ public class ParcelServiceAdapter extends BaseAdapter {
 
 			@Override
 			public void onClick(View v) {				
-				selectedIndex = position;
+				FileUtil.selectedIndexUPS = position;
 				ParcelServiceAdapter.this.notifyDataSetChanged();	
-				FileUtil.codeRadioButtonShippingMethod = listCarrier.get(position).getCode();
+//				FileUtil.codeRadioButtonShippingMethod = listCarrier.get(position).getCode();
 			}
 		});
 
@@ -80,9 +80,9 @@ public class ParcelServiceAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				selectedIndex = position;
+				FileUtil.selectedIndexUPS = position;
 				ParcelServiceAdapter.this.notifyDataSetChanged();
-				FileUtil.codeRadioButtonShippingMethod = listCarrier.get(position).getCode();
+//				FileUtil.codeRadioButtonShippingMethod = listCarrier.get(position).getCode();
 			}
 		});
 		
@@ -93,7 +93,7 @@ public class ParcelServiceAdapter extends BaseAdapter {
 		}
 
 
-		if (position == selectedIndex) {
+		if (position == FileUtil.selectedIndexUPS) {
 			holder.rdb.setChecked( true );
 		}
 		else {
@@ -111,6 +111,6 @@ public class ParcelServiceAdapter extends BaseAdapter {
 
 	public int getcurrentPositionSelect() {
 		// TODO Auto-generated method stub
-		return selectedIndex;
+		return FileUtil.selectedIndexUPS;
 	}
 }

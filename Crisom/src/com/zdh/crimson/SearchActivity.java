@@ -49,16 +49,15 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	private ImageView ivSearch, ivNarrowShow,ivEzmounter;	
 	private TextView tvTitle,tvAll,tvNrMake,tvNrModel,tvNrTVSize;
 	private EditText edtSearch;
-	private LinearLayout lnInfo,lnTVSize;
+	private LinearLayout lnInfo,lnTVSize,lnSize;
 	private ExpandableHeightListView lvSearch, lvCheckbox;
 	private Spinner spnManufacturer, spnModel;
 	private RadioButton rbnFlatpanel,rbnProjector;	
 	SearchAdapter adapter;
 	private ProgressDialog pDialog;
-	static String keySearch ="";
-	String radioChecked = "1";
+	static String keySearch ="";	
 	int positionManufacturerName = 0;
-
+	int positionModelName = 0;
 
 	//-----------ezmounter-----------------
 
@@ -83,17 +82,23 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	private Spinner spnTvSize, spnType1, spnType2;
 	private CheckBox cbxAll;
 	private Button btnSearch, btnClearFilter;
+	private Button btnSearchMounter;
 	CheckboxSearchAdapter checkboxSearchAdapter;
+	
+	private ArrayList<String> listManufacturerName = new ArrayList<String>();
+	private ArrayList<String> listModelName = new ArrayList<String>();
 
 	String dataSearch = "";
 	String model = "";
 	String manufacturer = "";
-	String device = "";
-	String tvsizeTitle = "";
+	String device = "1";
+	String tvSizeTitle = "";
+	String keyDevice = Constants.KEY_DEVIDE_FLATPANEL;
+	
 
 	boolean flagEzMounter = false;
-
-	boolean flagCheckAll = true;
+	boolean flagRunWithoutSearch = false;	
+	boolean flagClear = false;
 	int positionTV = 0;
 	int positionType1 = 0;
 	int positionType2 = 0;
@@ -166,14 +171,18 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		tvAll = (TextView) findViewById(R.id.search_tvAll);
 		tvNrMake = (TextView) findViewById(R.id.search_make);
 		tvNrModel = (TextView) findViewById(R.id.search_mode);
-		tvNrTVSize = (TextView) findViewById(R.id.search_size);
+		tvNrTVSize = (TextView) findViewById(R.id.search_tvSize);
 		lnNarrowTitle = (LinearLayout) findViewById(R.id.search_Narrow_lnTitle);
 		lnNarrowContent = (LinearLayout) findViewById(R.id.search_Narrow_lnContent);
 		ivNarrowShow = (ImageView) findViewById(R.id.search_ivNarrow);
 		lvCheckbox = (ExpandableHeightListView) findViewById(R.id.search_lvCheckbox);
 		lnInfo = (LinearLayout) findViewById(R.id.search_info);
+		lnSize = (LinearLayout) findViewById(R.id.search_lnSize);
+		
 
 		lncheckboxAll = (LinearLayout) findViewById(R.id.search_lncheckboxAll);
+		
+		btnSearchMounter = (Button)findViewById(R.id.search_btnSearchMounter);	
 
 		tvTitle.setText("SEARCH");
 		ivSearch.setImageResource(R.drawable.ico_search_active);
@@ -193,6 +202,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		btnClearFilter.setOnClickListener(this);
 		lncheckboxAll.setOnClickListener(this);
 		cbxAll.setOnClickListener(this);
+		btnSearchMounter.setOnClickListener(this);
 
 		pDialog = new ProgressDialog(SearchActivity.this);		
 	}
@@ -226,12 +236,17 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		spnManufacturer.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 	
-				if (FileUtil.listManufacturerName.size() > 1 ) {
+				if (listManufacturerName.size() > 1 ) {
 					if (i != 0) {
 						spnModel.setVisibility(View.VISIBLE);
-						new GetModelAsyncTask(radioChecked, FileUtil.listManufacturerName.get(i)).execute();
-						positionManufacturerName = i;
-						FileUtil.positionManufacturerName = i;
+						if (!flagEzMounter) {
+							new GetModelAsyncTask(device, listManufacturerName.get(i)).execute();
+						}
+						
+						positionManufacturerName = i;						
+					}else{
+						clearSpinnerModel();						
+						modelAdapter.notifyDataSetChanged();
 					}
 				}
 
@@ -244,10 +259,14 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		spnModel.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
-				if (FileUtil.listModelName.size() > 1) {
+				if (listModelName.size() > 1) {
 					if (i != 0) {
-						FileUtil.positionModelName = i;
-						new MountFinderAsyncTask(radioChecked, FileUtil.listManufacturerName.get(positionManufacturerName), FileUtil.listModelName.get(i)).execute();	
+						btnSearchMounter.setVisibility(View.VISIBLE);
+						positionModelName = i;											
+					}
+					else{
+						
+						btnSearchMounter.setVisibility(View.GONE);
 					}
 				}
 			} 
@@ -317,12 +336,12 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 	}
 
 	private void initData() {	
-		manufacturerAdapter = new ArrayAdapter<String>(SearchActivity.this,R.layout.spinner_item, FileUtil.listManufacturerName);
-		spnManufacturer.setAdapter(manufacturerAdapter);
-		spnManufacturer.setSelection(FileUtil.positionManufacturerName);
-		modelAdapter = new ArrayAdapter<String>(SearchActivity.this,R.layout.spinner_item, FileUtil.listModelName);
-		spnModel.setAdapter(modelAdapter);
-		spnModel.setSelection(FileUtil.positionModelName);
+		clearSpinnerManufacturer();
+		clearSpinnerModel();
+		manufacturerAdapter = new ArrayAdapter<String>(SearchActivity.this,R.layout.spinner_item, listManufacturerName);
+		spnManufacturer.setAdapter(manufacturerAdapter);		
+		modelAdapter = new ArrayAdapter<String>(SearchActivity.this,R.layout.spinner_item, listModelName);
+		spnModel.setAdapter(modelAdapter);		
 		adapter = new SearchAdapter(SearchActivity.this, FileUtil.listSearch);
 		lvSearch.setAdapter(adapter);
 		lvSearch.setExpanded(true);
@@ -340,18 +359,12 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		spnType1.setAdapter(productTypeAdapter);
 		spnType2.setAdapter(productTypeAdapterChild);
 
-//		if(FileUtil.listManufacturerName.size() > 1 && FileUtil.listModelName.size() > 1){
-//			callChangeViewWhenMounter();
-//		}else{
-//			lnInfo.setVisibility(View.GONE);
-//		}
-
 		if (getIntent().getExtras() != null) {
 			dataSearch = getIntent().getExtras().getString(Constants.KEY_SEARCH_KEYWORD);
 			model = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MODEL);
 			manufacturer = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_MANUFACTURER);
 			device = getIntent().getExtras().getString(Constants.KEY_MOUNTFINDER_DEVICE);
-			
+
 			ivEzmounter.setImageResource(R.drawable.ico_down_white);
 			lnTVSize.setVisibility(View.GONE);
 
@@ -370,19 +383,36 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 					rbnFlatpanel.setChecked(false);
 					rbnProjector.setChecked(true);
 				}
+				keyDevice = device;
 				lnEzmounterContent.setVisibility(View.VISIBLE);
-				new MountFinderAsyncTask(device, manufacturer, model).execute();	
+
+				flagEzMounter = true;					
+				lnInfo.setVisibility(View.VISIBLE);
+				
+				listManufacturerName.clear();
+				listModelName.clear();
+				listManufacturerName.addAll(FileUtil.listManufacturerName);
+				listModelName.addAll(FileUtil.listModelName);
+				manufacturerAdapter.notifyDataSetChanged();				
+				modelAdapter.notifyDataSetChanged();
+				
+				spnManufacturer.setSelection(FileUtil.positionManufacturerName);
+				spnModel.setSelection(FileUtil.positionModelName);
+				new GetProductTypeAsyncTask().execute();
 			}
 		}else{
-			new GetManufacturerAsyncTask(radioChecked).execute();
+			flagRunWithoutSearch = true;
+			new GetManufacturerAsyncTask(device).execute();
 		}
 	}
 
 
 	private void callChangeViewWhenMounter() {
-		lnInfo.setVisibility(View.VISIBLE);
-		tvNrMake.setText(FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName));
-		tvNrModel.setText(FileUtil.listModelName.get(FileUtil.positionModelName));		
+		if (listManufacturerName.size() > 1 && listModelName.size() > 1) {
+			lnInfo.setVisibility(View.VISIBLE);
+			tvNrMake.setText(listManufacturerName.get(positionManufacturerName));
+			tvNrModel.setText(listModelName.get(positionModelName));
+		}			
 	}
 
 	@Override
@@ -402,19 +432,31 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			//--------click radio button----------
 
 		case R.id.search_rbnFlatpanel:
-			spnModel.setVisibility(View.GONE);
-			rbnFlatpanel.setChecked(true);
-			rbnProjector.setChecked(false);
-			radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
-			new GetManufacturerAsyncTask(radioChecked).execute();
+			if (keyDevice.equals(Constants.KEY_DEVIDE_PROJECTOR)) {
+				keyDevice = Constants.KEY_DEVIDE_FLATPANEL;
+				btnSearchMounter.setVisibility(View.GONE);
+				spnModel.setVisibility(View.GONE);
+				rbnFlatpanel.setChecked(true);
+				rbnProjector.setChecked(false);
+				device = Constants.KEY_DEVIDE_FLATPANEL;
+				new GetManufacturerAsyncTask(device).execute();
+			}
+			
+			
+			
 
 			break;	
 		case R.id.search_rbnProjector:
-			spnModel.setVisibility(View.GONE);
-			rbnFlatpanel.setChecked(false);
-			rbnProjector.setChecked(true);
-			radioChecked = Constants.KEY_DEVIDE_PROJECTOR;
-			new GetManufacturerAsyncTask(radioChecked).execute();						
+			if (keyDevice.equals(Constants.KEY_DEVIDE_FLATPANEL)) {
+				keyDevice = Constants.KEY_DEVIDE_PROJECTOR;
+				btnSearchMounter.setVisibility(View.GONE);
+				spnModel.setVisibility(View.GONE);
+				rbnFlatpanel.setChecked(false);
+				rbnProjector.setChecked(true);
+				device = Constants.KEY_DEVIDE_PROJECTOR;
+				new GetManufacturerAsyncTask(device).execute();	
+			}
+								
 			break;	
 
 
@@ -438,29 +480,28 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			}
 			else {
 				lnNarrowContent.setVisibility(View.VISIBLE);
-				ivNarrowShow.setImageResource(R.drawable.ico_down_white);
-//				new GetTVSizeAsyncTask().execute();				
+				ivNarrowShow.setImageResource(R.drawable.ico_down_white);							
 			}
 
 			break;
 
 		case R.id.search_cbxAll:
-			if (!flagCheckAll) {
+			if (!FileUtil.flagCheckAll) {
 				checkAll();
-				flagCheckAll = true;
+				FileUtil.flagCheckAll = true;
 			} else {
 				uncheckAll();
-				flagCheckAll = false;
+				FileUtil.flagCheckAll = false;
 			}	
 			checkboxSearchAdapter.notifyDataSetChanged();
 			break;
 		case R.id.search_tvAll:
-			if (!flagCheckAll) {
+			if (!FileUtil.flagCheckAll) {
 				checkAll();
-				flagCheckAll = true;
+				FileUtil.flagCheckAll = true;
 			} else {
 				uncheckAll();
-				flagCheckAll = false;
+				FileUtil.flagCheckAll = false;
 			}
 
 			checkboxSearchAdapter.notifyDataSetChanged();
@@ -473,22 +514,54 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			}
 			break;
 		case R.id.search_btnClearFilter:
-			lnInfo.setVisibility(View.GONE);
-			lnTVSize.setVisibility(View.VISIBLE);
-			lncheckboxAll.setVisibility(View.GONE);
-			lvCheckbox.setVisibility(View.GONE);
-			spnType2.setVisibility(View.GONE);
-			clearSpinnerProductType2();
-			productTypeAdapterChild.notifyDataSetChanged();
-			spnType1.setSelection(0);
-			spnType2.setSelection(0);
-			spnTvSize.setSelection(0);
+			clearAll();
 			break;
+			
+		case R.id.search_btnSearchMounter:
+			if (positionManufacturerName > 0 && positionModelName > 0) {
+				if (listProductTypes.size() > 1) {
+					flagRunWithoutSearch = false;
+					flagEzMounter = true;
+					flagClear = false;
+					lnTVSize.setVisibility(View.GONE);
+					if (rbnFlatpanel.isChecked()) {
+						spnType1.setSelection(1);
+					}else{
+						spnType1.setSelection(2);
+					}
+					
+					new MountFinderAsyncTask(device, listManufacturerName.get(positionManufacturerName), listModelName.get(positionModelName)).execute();
+				}
+			}else{
+				Toast.makeText(SearchActivity.this, "Please select Manufacturer and Model!", Toast.LENGTH_SHORT).show();
+			}
+			
+			break;
+			
+			
 
 		default:
 			break;
 		}
 
+	}
+
+	private void clearAll() {
+		lnInfo.setVisibility(View.GONE);
+		lnTVSize.setVisibility(View.VISIBLE);
+		lncheckboxAll.setVisibility(View.GONE);
+		lvCheckbox.setVisibility(View.GONE);
+		spnType2.setVisibility(View.GONE);
+		clearSpinnerProductType2();
+		productTypeAdapterChild.notifyDataSetChanged();
+		spnType1.setSelection(0);
+		spnType2.setSelection(0);
+		spnTvSize.setSelection(0);
+		flagClear = true;
+		flagRunWithoutSearch = true;
+		flagEzMounter = false;
+		btnSearchMounter.setVisibility(View.GONE);
+		new GetTVSizeAsyncTask().execute();			
 	}
 
 	//----------------------Search--------------------------------------
@@ -546,7 +619,9 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 			CommonUtil.hideSoftKeyboard(SearchActivity.this);
 		}
 	}
@@ -611,13 +686,10 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			return null;
 		}
 
-		protected void onPostExecute(String file_url) {
-			if (rbnFlatpanel.isChecked()) {
-				spnType1.setSelection(1);
-			}else{
-				spnType1.setSelection(2);
+		protected void onPostExecute(String file_url) {	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
 			}
-			
 			callChangeViewWhenMounter();
 			adapter.notifyDataSetChanged();
 			new GetSizeTitleAsyncTask().execute();			 
@@ -668,7 +740,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 					clearSpinnerManufacturer();
 					for (int j = 0; j < array.length(); j++) {
 						String name = array.getString(j);      						
-						FileUtil.listManufacturerName.add(name);
+						listManufacturerName.add(name);
 					}
 
 				}
@@ -679,8 +751,17 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			return null;
 		}
 
-		protected void onPostExecute(String file_url) {			
-			pDialog.dismiss();
+		protected void onPostExecute(String file_url) {		
+			spnManufacturer.setSelection(0);
+			if (flagRunWithoutSearch) {
+				
+				new GetTVSizeAsyncTask().execute();					
+			}else{
+				if ((pDialog != null) && pDialog.isShowing()) { 
+					pDialog.dismiss();
+				}
+			}
+			
 
 		}
 	}
@@ -716,8 +797,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				paramsUrl.add(new BasicNameValuePair("devide", idDevide));
-				paramsUrl.add(new BasicNameValuePair("manu", manu));
-				Log.d("idDevide+manu", "idDevide"+idDevide+"manu"+manu);
+				paramsUrl.add(new BasicNameValuePair("manu", manu));				
 				json = JsonParser.makeHttpRequest(
 						Constants.URL_GETMODEL, "GET", paramsUrl);                
 				if ((json != null) || (!json.equals(""))) {               
@@ -725,7 +805,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 					clearSpinnerModel();
 					for (int j = 0; j < array.length(); j++) {
 						String name = array.getString(j);      						
-						FileUtil.listModelName.add(name);
+						listModelName.add(name);
 					}
 
 				}
@@ -736,22 +816,25 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			return null;
 		}
 
-		protected void onPostExecute(String file_url) {	      
-			pDialog.dismiss();	
+		protected void onPostExecute(String file_url) {	  
+			modelAdapter.notifyDataSetChanged();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 
 		}
 	}
 
 	private void clearSpinnerManufacturer(){		
 		String manufacturer = "Select Manufacturer";		
-		FileUtil.listManufacturerName.clear();		
-		FileUtil.listManufacturerName.add(manufacturer);
+		listManufacturerName.clear();		
+		listManufacturerName.add(manufacturer);
 	}
 
 	private void clearSpinnerModel(){
 		String model = "Select Model";
-		FileUtil.listModelName.clear();	
-		FileUtil.listModelName.add(model);
+		listModelName.clear();	
+		listModelName.add(model);
 	}
 
 	private void clearSpinnerTVSize() {
@@ -812,6 +895,12 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 			try {
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				
+				if (lnInfo.getVisibility() == View.VISIBLE) {
+					paramsUrl.add(new BasicNameValuePair("device", device));
+					paramsUrl.add(new BasicNameValuePair("manufacturer", listManufacturerName.get(positionManufacturerName)));
+					paramsUrl.add(new BasicNameValuePair("model", listModelName.get(positionModelName)));
+				}
 
 				//-------get checkbox---------
 				if (positionType1 != 0) {
@@ -850,7 +939,12 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				}
 
 				//-------------get Json--------------
-				json = JsonParser.makeHttpRequest(Constants.URL_NARROWSEARCH,"GET", paramsUrl);
+				if (lnInfo.getVisibility() == View.VISIBLE) {					
+					json = JsonParser.makeHttpRequest(Constants.URL_MOUNTFINDER,"GET", paramsUrl);
+				}else{
+					json = JsonParser.makeHttpRequest(Constants.URL_NARROWSEARCH,"GET", paramsUrl);
+				}
+				
 
 				if ((json != null) || (!json.equals(""))) {
 					Log.d("json", json);
@@ -879,7 +973,9 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -938,7 +1034,7 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
-			new GetProductTypeAsyncTask().execute();			
+			new GetProductTypeAsyncTask().execute();		
 		}
 	}
 
@@ -989,24 +1085,41 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				e.printStackTrace();
 			}
 
-			return null;
+			return "";
 		}
 
 		protected void onPostExecute(String file_url) {
 			productTypeAdapter.notifyDataSetChanged();
 			try {
-				if(device != null || !device.equals(""))
-					spnType1.setSelection(Integer.parseInt(device));
+				if (flagClear) {
+					flagClear = false;
+					spnType1.setSelection(0);
+				}else{
+					if (flagRunWithoutSearch) {
+						spnType1.setSelection(0);
+					}else{
+						if(device != null && !device.equals(""))
+							spnType1.setSelection(Integer.parseInt(device));
+					}
+					
+				}
+				
 			} catch (Exception e) {
-				Log.e("Error", e.getMessage());
+				e.printStackTrace();
 			}
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
+			if (flagEzMounter) {
+				flagEzMounter = false;
+				new MountFinderAsyncTask(device, manufacturer, model).execute();
+			}			
 		}
 	}
 
 	public class GetSizeTitleAsyncTask extends AsyncTask<String, String, String>{
 
-		
+
 		private String json;
 
 		@Override
@@ -1028,30 +1141,38 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 				// Building Parameters
 				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
 				paramsUrl.add(new BasicNameValuePair("device", device));
-				paramsUrl.add(new BasicNameValuePair("manufacturer", FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName)));
-				paramsUrl.add(new BasicNameValuePair("model", FileUtil.listModelName.get(FileUtil.positionModelName)));
+				paramsUrl.add(new BasicNameValuePair("manufacturer", listManufacturerName.get(positionManufacturerName)));
+				paramsUrl.add(new BasicNameValuePair("model", listModelName.get(positionModelName)));
 
 				json = JsonParser.makeHttpRequest(Constants.URL_GETSIZETITLE, "GET", paramsUrl);
 				Log.d("json", json);
 				if ((json != null) || (!json.equals(""))) {
-					JSONObject object = new JSONObject();
-					tvsizeTitle =  object.getString("name");
+					JSONObject object = new JSONObject(json);
+					tvSizeTitle =  object.getString("name");
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							tvNrTVSize.setText(tvsizeTitle+"'");	
+							if (tvSizeTitle == null || tvSizeTitle.equals("0") || tvSizeTitle.equals("null")|| tvSizeTitle.equals("")) {
+								lnSize.setVisibility(View.GONE);	
+							}else{
+								lnSize.setVisibility(View.VISIBLE);	
+								tvNrTVSize.setText(tvSizeTitle);
+							}
+								
 						}
 					});
-					
+
 				}
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 			return "";
 		}
 
 		protected void onPostExecute(String result) {
-			pDialog.dismiss();		
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 		}
 	}
 	public class GetProductTypeChildAsyncTask extends
@@ -1106,8 +1227,11 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		}
 
 		protected void onPostExecute(String file_url) {
+			spnType2.setSelection(0);
 			productTypeAdapterChild.notifyDataSetChanged();			
-			pDialog.dismiss();		
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 		}
 	}
 
@@ -1165,14 +1289,15 @@ public class SearchActivity extends BaseActivity  implements View.OnClickListene
 		protected void onPostExecute(String file_url) {
 			if (checkboxSearchAdapter == null) {
 				checkboxSearchAdapter = new CheckboxSearchAdapter(SearchActivity.this, 
-						listCategoryCheck,
-						listCheckbox,cbxAll,flagCheckAll);
+						listCategoryCheck,listCheckbox,cbxAll);
 				lvCheckbox.setAdapter(checkboxSearchAdapter);
 				lvCheckbox.setExpanded(true);				
 			} else
 				checkboxSearchAdapter.notifyDataSetChanged();
 			cbxAll.setChecked(true);
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 

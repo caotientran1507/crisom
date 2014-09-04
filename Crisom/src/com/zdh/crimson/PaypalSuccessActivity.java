@@ -141,8 +141,8 @@ public class PaypalSuccessActivity extends BaseActivity implements View.OnClickL
 		}
 
 		protected void onPostExecute(String file_url) {	
-			if (pDialog.isShowing()) {
-				pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
 			}			
 		}
 	}

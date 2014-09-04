@@ -13,44 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.zdh.crimson;
-
-import static com.zdh.crimson.CommonUtilities.SENDER_ID;
-import static com.zdh.crimson.CommonUtilities.displayMessage;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+package com.zdh.crimson.utility;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.google.android.gcm.GCMBaseIntentService;
 import com.google.android.gcm.GCMRegistrar;
+import com.zdh.crimson.CartActivity;
+import com.zdh.crimson.HomeActivity;
+import com.zdh.crimson.ProductDetailActivity;
 import com.zdh.crimson.R;
-import com.zdh.crimson.utility.ALog;
-import com.zdh.crimson.utility.Constants;
-import com.zdh.crimson.utility.FileUtil;
-import com.zdh.crimson.utility.JsonParser;
-import com.zdh.crimson.utility.SharedPreferencesUtil;
-import com.zdh.crimson.utility.UserEmailFetcher;
 
 /**
  * IntentService responsible for handling GCM messages.
  */
 public class GCMIntentService extends GCMBaseIntentService {
-
-	@SuppressWarnings("hiding")
+	
 	public static int pid = 0;
 	private static final String TAG = "GCMIntentService";
 	private static final String MESSAGE = "message";
@@ -61,13 +44,13 @@ public class GCMIntentService extends GCMBaseIntentService {
 	private static final int TYPE_COUPON = 1;
 
 	public GCMIntentService() {
-		super(SENDER_ID);
+		super(CommonUtil.SENDER_ID);
 	}
 
 	@Override
 	protected void onRegistered(Context context, String registrationId) {
 		Log.i(TAG, "Device registered: regId = " + registrationId);
-		displayMessage(context, getString(R.string.gcm_registered));
+		CommonUtil.displayMessage(context, getString(R.string.gcm_registered));
 		String email = UserEmailFetcher.getEmail(context);
 		ServerUtilities.register(context, registrationId, "",email);
 	}
@@ -75,7 +58,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	protected void onUnregistered(Context context, String registrationId) {
 		Log.i(TAG, "Device unregistered");
-		displayMessage(context, getString(R.string.gcm_unregistered));
+		CommonUtil.displayMessage(context, getString(R.string.gcm_unregistered));
 		if (GCMRegistrar.isRegisteredOnServer(context)) {
 			ServerUtilities.unregister(context, registrationId);
 		} else {
@@ -96,7 +79,6 @@ public class GCMIntentService extends GCMBaseIntentService {
 		if(type!=null && !type.equals(""))
 			notifyType = Integer.parseInt(type);
 
-
 		ALog.d("TAG", "type:"+type);
 		ALog.d("TAG", "message:"+message);
 		ALog.d("TAG", "product_id:"+product_id);
@@ -111,7 +93,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	protected void onDeletedMessages(Context context, int total) {
 		Log.i(TAG, "Received deleted messages notification");
 		String message = getString(R.string.gcm_deleted, total);
-		displayMessage(context, message);
+		CommonUtil.displayMessage(context, message);
 		// notifies user
 		//        generateNotification(context, message);
 	}
@@ -119,14 +101,14 @@ public class GCMIntentService extends GCMBaseIntentService {
 	@Override
 	public void onError(Context context, String errorId) {
 		Log.i(TAG, "Received error: " + errorId);
-		displayMessage(context, getString(R.string.gcm_error, errorId));
+		CommonUtil.displayMessage(context, getString(R.string.gcm_error, errorId));
 	}
 
 	@Override
 	protected boolean onRecoverableError(Context context, String errorId) {
 		// log message
 		Log.i(TAG, "Received recoverable error: " + errorId);
-		displayMessage(context, getString(R.string.gcm_recoverable_error,errorId));
+		CommonUtil.displayMessage(context, getString(R.string.gcm_recoverable_error,errorId));
 		return super.onRecoverableError(context, errorId);
 	} 
 
@@ -145,11 +127,12 @@ public class GCMIntentService extends GCMBaseIntentService {
 			generateNotificationCoupon(context,  message, coupon);
 			break;
 		default:
-			GCMIntentService.generateNotificationCheckOut(context,"It will notify them that they checked out with thing in their cart");
+			generateNotificationCheckOut(context,"It will notify them that they checked out with thing in their cart");
 			break;
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	private static void generateNotificationNewProduct(Context context, String message, String product_id) {
 		int icon = R.drawable.ic_launcher;
 		long when = System.currentTimeMillis();
@@ -174,6 +157,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	/**
 	 * Issues a notification to inform the user that server has sent a message.
 	 */
+	@SuppressWarnings("deprecation")
 	public static void generateNotificationCoupon(Context context, String message, String coupon_id) {
 		int icon = R.drawable.ic_launcher;
 		long when = System.currentTimeMillis();
@@ -194,6 +178,7 @@ public class GCMIntentService extends GCMBaseIntentService {
 	/**
 	 * Issues a notification to inform the user that server has sent a message.
 	 */
+	@SuppressWarnings("deprecation")
 	public static void generateNotificationCheckOut(Context context, String message) {
 		int icon = R.drawable.ic_launcher;
 		long when = System.currentTimeMillis();
