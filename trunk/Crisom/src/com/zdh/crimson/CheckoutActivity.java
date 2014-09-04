@@ -79,9 +79,7 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		handleOtherAction();
 		initData();
 	}	
-
-
-
+	
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
@@ -328,7 +326,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				finish();
 				overridePendingTransition(R.anim.fly_in_from_left, R.anim.fly_out_to_right);
 			}
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -391,7 +391,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 
 			CommonUtil.updateListState();
 			statesAdapter.notifyDataSetChanged();
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 		}
 	}
 
@@ -443,7 +445,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		protected void onPostExecute(String file_url) {	 
 			CommonUtil.updateListCountry();
 			countriesAdapter.notifyDataSetChanged();
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 			new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 		}
 	}
@@ -517,7 +521,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		}
 
 		protected void onPostExecute(String s) {	  	    	
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 			if (s == null) {				
 				Toast.makeText(CheckoutActivity.this, "Update shopping cart failed!", Toast.LENGTH_SHORT).show();
 			}else{
@@ -583,7 +589,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				tvCoupon.setVisibility(View.VISIBLE);
 				btnCancelCoupon.setVisibility(View.VISIBLE);
 				Toast.makeText(CheckoutActivity.this, "Apply coupon success!", Toast.LENGTH_SHORT).show();				
-				pDialog.dismiss();	
+				if ((pDialog != null) && pDialog.isShowing()) { 
+					pDialog.dismiss();
+				}	
 				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 
 			}else{
@@ -644,7 +652,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 				tvCoupon.setVisibility(View.GONE);
 				btnCancelCoupon.setVisibility(View.GONE);
 				edtCoupon.setText("");
-				pDialog.dismiss();	
+				if ((pDialog != null) && pDialog.isShowing()) { 
+					pDialog.dismiss();
+				}
 				new GetCartCodeAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutActivity.this)).execute();
 			}else{
 				Toast.makeText(CheckoutActivity.this, "Cancel coupon fail!", Toast.LENGTH_SHORT).show();
@@ -721,7 +731,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		}
 
 		protected void onPostExecute(String file_url) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 		}
 	}
 
@@ -787,7 +799,9 @@ public class CheckoutActivity extends BaseActivity  implements View.OnClickListe
 		}
 
 		protected void onPostExecute(String result) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 			new GetCountryAsyncTask().execute();
 		}
 	}

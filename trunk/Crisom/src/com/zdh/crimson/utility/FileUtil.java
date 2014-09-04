@@ -34,16 +34,26 @@ public class FileUtil {
 	public static ArrayList<String> listModelName = new ArrayList<String>();
 	public static int positionManufacturerName = 0;
 	public static int positionModelName = 0;
+	public static boolean flagCheckAll = true;
 
 	public static ArrayList<CarrierObject> listCarrier = new ArrayList<CarrierObject>();
 
 	public static ArrayList<StateObject> listState = new ArrayList<StateObject>();
 	public static ArrayList<CountryObject> listCountry = new ArrayList<CountryObject>();
 	
-	public static String codeRadioButtonShippingMethod = "";		
+//	public static String codeRadioButtonShippingMethod = "";	
+	public static int selectedIndexUPS = 0;
 	
 	public static int POSITION_ACTIVITY = 1;
 	public static int RE_POSITION_ACTIVITY = 1;
+	
+	/**
+	 * define Log bebug
+	 * 
+	 */
+	public static final boolean ENABLE_LOG = true;
+	
+	public static String count = "0";
 	
 	public static String validCountry[] = { "AT", "CA", "EE","FI", "FR", "DE", "DE", "LV","LT", "RO", "ES", "CH","US" };	
 

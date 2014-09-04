@@ -630,7 +630,7 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 			break;
 		case R.id.checkoutdetail_ShippingMethod_btnContinue:
-			new SaveShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this),FileUtil.codeRadioButtonShippingMethod).execute();
+			new SaveShippingMethodAsyncTask(SharedPreferencesUtil.getIdCustomerLogin(CheckoutDetailActivity.this),FileUtil.listCarrier.get(FileUtil.selectedIndexUPS).getCode()).execute();
 
 			clickContinue3();
 
@@ -849,7 +849,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 			spnShippingAddress.setSelection(positionShipping);
 			addNewAddressSpinner();
 			addressesAdapter.notifyDataSetChanged();
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -904,9 +906,11 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		protected void onPostExecute(String file_url) {	 
 			parcelServiceAdapter.notifyDataSetChanged();
 			if (FileUtil.listCarrier.size() > 0) {
-				FileUtil.codeRadioButtonShippingMethod = FileUtil.listCarrier.get(0).getCode();
+//				FileUtil.codeRadioButtonShippingMethod = FileUtil.listCarrier.get(0).getCode();
 			}			
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 			//			new GetCreditCardOnFileAsyncTask(idCustomer).execute();
 		}
 	}
@@ -963,7 +967,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		protected void onPostExecute(String file_url) {	 
 			cardTypeOnFileAdapter.notifyDataSetChanged();				
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -1068,7 +1074,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String file_url) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -1120,7 +1128,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String result) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 			if (result.equals("true")) {
 				Toast.makeText(CheckoutDetailActivity.this, "Save shipping method success!", Toast.LENGTH_SHORT).show();				
 			}else{
@@ -1218,7 +1228,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String result) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 			if (result.equals("true")) {
 				Toast.makeText(CheckoutDetailActivity.this, "Save shipping address success!", Toast.LENGTH_SHORT).show();				
 			}else{
@@ -1314,7 +1326,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String result) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 			if (result.equals("true")) {
 				Toast.makeText(CheckoutDetailActivity.this, "Save billing infomation success!", Toast.LENGTH_SHORT).show();
 
@@ -1382,7 +1396,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String result) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 			if (result.equals("")) {
 				Intent intent = new Intent(CheckoutDetailActivity.this, PaypalSuccessActivity.class); 
 				intent.putExtra(Constants.KEY_ORDERID, orderID);
@@ -1468,7 +1484,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String result) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 			if (result.equals("")) {
 				Intent intent = new Intent(CheckoutDetailActivity.this, PaypalSuccessActivity.class); 
 				intent.putExtra(Constants.KEY_ORDERID, orderID);
@@ -1532,7 +1550,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 		}
 
 		protected void onPostExecute(String result) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 			if (result.equals("")) {
 				Intent browserIntent = new Intent(CheckoutDetailActivity.this, PaypalActivity.class);
 				browserIntent.putExtra(Constants.KEY_URL_PAYPAL
@@ -1804,7 +1824,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		protected void onPostExecute(String file_url) {	 
 			statesAdapter.notifyDataSetChanged();
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 		}
 	}
 
@@ -1857,7 +1879,9 @@ public class CheckoutDetailActivity extends BaseActivity  implements View.OnClic
 
 		protected void onPostExecute(String file_url) {	 			
 			countriesAdapter.notifyDataSetChanged();
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 			setPositionSpinnerCountry();			
 		}
 	}

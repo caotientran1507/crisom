@@ -173,6 +173,27 @@
                             android:layout_marginTop="@dimen/padding_small"
                             android:background="@drawable/spinner_background"
                             android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/padding"
+                            android:gravity="center" >
+
+                            <Button
+                                android:id="@+id/search_btnSearchMounter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/button_red_background"
+                                android:paddingBottom="@dimen/padding_small"
+                                android:paddingLeft="@dimen/padding_large"
+                                android:paddingRight="@dimen/padding_large"
+                                android:paddingTop="@dimen/padding_small"
+                                android:text="Search"
+                                android:textColor="@color/white"
+                                android:textSize="@dimen/textsize_normal"
+                                android:visibility="gone" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
@@ -240,14 +261,14 @@
 
                         <LinearLayout
                             android:id="@+id/search_info"
-                            android:layout_width="fill_parent"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_weight="90"
                             android:orientation="vertical"
-                            android:visibility="visible" >
+                            android:visibility="gone" >
 
                             <TextView
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:paddingBottom="3dp"
                                 android:text="You searched for:"
@@ -256,7 +277,7 @@
                                 android:textStyle="bold" />
 
                             <LinearLayout
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal" >
 
@@ -275,7 +296,7 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal" >
 
@@ -294,7 +315,8 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="fill_parent"
+                                android:id="@+id/search_lnSize"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal" >
 
@@ -305,21 +327,19 @@
                                     android:textSize="@dimen/textsize_normal" />
 
                                 <TextView
-                                    android:id="@+id/search_size"
+                                    android:id="@+id/search_tvSize"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text=""
                                     android:textSize="@dimen/textsize_normal" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="&apos;"
+                                    android:textSize="@dimen/textsize_normal" />
                             </LinearLayout>
                         </LinearLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="TV Size"
-                            android:textColor="@color/crisom_red"
-                            android:textSize="@dimen/textsize_normal"
-                            android:textStyle="bold" />
 
                         <LinearLayout
                             android:id="@+id/search_lnTVsize"
@@ -327,22 +347,30 @@
                             android:layout_height="wrap_content"
                             android:orientation="vertical" >
 
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="TV Size"
+                                android:textColor="@color/crisom_red"
+                                android:textSize="@dimen/textsize_normal"
+                                android:textStyle="bold" />
+
                             <Spinner
                                 android:id="@+id/search_spnTVsize"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/spinner_height"
                                 android:layout_marginTop="@dimen/padding"
                                 android:background="@drawable/spinner_background" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/padding"
-                                android:text="Type"
-                                android:textColor="@color/crisom_red"
-                                android:textSize="@dimen/textsize_normal"
-                                android:textStyle="bold" />
                         </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/padding"
+                            android:text="Type"
+                            android:textColor="@color/crisom_red"
+                            android:textSize="@dimen/textsize_normal"
+                            android:textStyle="bold" />
 
                         <Spinner
                             android:id="@+id/search_spnType1"

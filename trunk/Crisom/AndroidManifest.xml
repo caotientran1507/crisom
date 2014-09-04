@@ -16,6 +16,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <!-- GCM requires a Google account. -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
@@ -129,7 +130,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.zdh.crimson.GCMIntentService" />
+        <service android:name="com.zdh.crimson.utility.GCMIntentService" />
         <!--
           BroadcastReceiver that will receive intents from GCM
           services and handle them to the custom IntentService.

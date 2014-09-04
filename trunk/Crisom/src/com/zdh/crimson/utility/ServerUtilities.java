@@ -13,17 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.zdh.crimson;
+package com.zdh.crimson.utility;
 
-import static com.zdh.crimson.CommonUtilities.SERVER_URL;
-import static com.zdh.crimson.CommonUtilities.TAG;
-import static com.zdh.crimson.CommonUtilities.displayMessage;
-
-import com.google.android.gcm.GCMRegistrar;
-import com.zdh.crimson.R;
-
-import android.content.Context;
-import android.util.Log;
+import static com.zdh.crimson.utility.CommonUtil.SERVER_URL;
+import static com.zdh.crimson.utility.CommonUtil.TAG;
+import static com.zdh.crimson.utility.CommonUtil.displayMessage;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -35,6 +29,12 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
+
+import android.content.Context;
+import android.util.Log;
+
+import com.google.android.gcm.GCMRegistrar;
+import com.zdh.crimson.R;
 
 /**
  * Helper class used to communicate with the demo server.
@@ -70,7 +70,7 @@ public final class ServerUtilities {
                 post(serverUrl, params);
                 GCMRegistrar.setRegisteredOnServer(context, true);
                 String message = context.getString(R.string.server_registered);
-                CommonUtilities.displayMessage(context, message);
+                displayMessage(context, message);
                 return true;
             } catch (IOException e) {
                 // Here we are simplifying and retrying on any error; in a real
@@ -94,7 +94,7 @@ public final class ServerUtilities {
             }
         }
         String message = context.getString(R.string.server_register_error,MAX_ATTEMPTS);
-        CommonUtilities.displayMessage(context, message);
+        displayMessage(context, message);
         return false;
     }
 
@@ -110,7 +110,7 @@ public final class ServerUtilities {
             post(serverUrl, params);
             GCMRegistrar.setRegisteredOnServer(context, false);
             String message = context.getString(R.string.server_unregistered);
-            CommonUtilities.displayMessage(context, message);
+            displayMessage(context, message);
         } catch (IOException e) {
             // At this point the device is unregistered from GCM, but still
             // registered in the server.
@@ -119,7 +119,7 @@ public final class ServerUtilities {
             // a "NotRegistered" error message and should unregister the device.
             String message = context.getString(R.string.server_unregister_error,
                     e.getMessage());
-            CommonUtilities.displayMessage(context, message);
+            displayMessage(context, message);
         }
     }
 

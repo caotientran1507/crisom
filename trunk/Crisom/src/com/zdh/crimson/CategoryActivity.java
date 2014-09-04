@@ -65,6 +65,7 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 		super.onResume();
 		ChangeTextButtonLogin();
 	}
+	
 
 	private void init() {
 		initView();
@@ -226,7 +227,9 @@ public class CategoryActivity extends BaseActivity implements View.OnClickListen
 				}
 			}
 			try {
-				pDialog.dismiss();
+				if ((pDialog != null) && pDialog.isShowing()) { 
+					pDialog.dismiss();
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

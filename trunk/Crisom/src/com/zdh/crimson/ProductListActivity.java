@@ -401,12 +401,13 @@ View.OnClickListener {
 			return null;
 		}
 
-		protected void onPostExecute(String file_url) {
-			Log.d("GetProductsByCategoryIdAsyncTask", "GetProductsByCategoryIdAsyncTask");
+		protected void onPostExecute(String file_url) {			
 			if(adapter != null){
 				adapter.notifyDataSetChanged();
 			}
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -505,7 +506,9 @@ View.OnClickListener {
 
 		protected void onPostExecute(String file_url) {
 			adapter.notifyDataSetChanged();
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -575,7 +578,9 @@ View.OnClickListener {
 				new GetProductTypeAsyncTask(Constants.DEFAULT_PRODUCTTYPE).execute();
 			}
 			
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -637,7 +642,9 @@ View.OnClickListener {
 
 		protected void onPostExecute(String select) {
 			productTypeAdapter.notifyDataSetChanged();
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 			if (flagLoad) {
 				spnType1.setSelection(Integer.parseInt(select));
 				new GetProductTypeChildAsyncTask(String.valueOf(loadId2)).execute();
@@ -703,9 +710,10 @@ View.OnClickListener {
 
 		protected void onPostExecute(String select) {
 			productTypeAdapterChild.notifyDataSetChanged();			
-			pDialog.dismiss();
-			if (flagLoad) {
-				Log.d("spnType2", "spnType2SetSelection");
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
+			if (flagLoad) {				
 				spnType2.setSelection(Integer.parseInt(select));
 				new GetCategoryCheckAsyncTask(String.valueOf(select2)).execute();
 			}	
@@ -760,9 +768,10 @@ View.OnClickListener {
 		}
 
 		protected void onPostExecute(String file_url) {		
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 			new GetTVSizeAsyncTask().execute();
-//			new GetProductsByCategoryIdAsyncTask(currentCategory).execute();
 		}
 	}
 
@@ -829,9 +838,11 @@ View.OnClickListener {
 		}
 
 		protected void onPostExecute(String file_url) {
-			Log.d("GetCategoryCheckAsyncTask", "GetCategoryCheckAsyncTask");
+			
 			checkboxProductListAdapter.notifyDataSetChanged();			
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 			if (flagLoad) {
 				new GetProductsByCategoryIdAsyncTask(currentCategory).execute();
 				flagLoad = false;

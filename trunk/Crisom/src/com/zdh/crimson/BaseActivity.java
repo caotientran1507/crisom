@@ -2,6 +2,7 @@ package com.zdh.crimson;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,8 @@ public class BaseActivity extends Activity implements OnClickListener{
 	protected Button btnLogin, btnBack;
 	protected int requestCodeLogin = 100;
 	protected boolean oldStatusLogin = false;
+	
+	protected ProgressDialog pDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +30,14 @@ public class BaseActivity extends Activity implements OnClickListener{
 		StackActivity.getInstance().push(this);
 		super.onCreate(savedInstanceState);
 		
+	}
+	
+	@Override
+	public void onPause() {
+	    super.onPause();
+	    if ((pDialog != null) && pDialog.isShowing())
+	    	pDialog.dismiss();
+	    pDialog = null;
 	}
 	
 

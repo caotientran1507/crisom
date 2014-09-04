@@ -55,6 +55,7 @@ import com.zdh.crimson.model.SpecsObject;
 import com.zdh.crimson.model.VideoObject;
 import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
+import com.zdh.crimson.utility.GCMIntentService;
 import com.zdh.crimson.utility.JsonParser;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 
@@ -442,7 +443,9 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 				lvPrice.setAdapter(childAdapter);
 			}
 
-			pDialog.dismiss();	      
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}      
 		}
 	}
 
@@ -534,8 +537,9 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		 * **/
 		@Override
 		protected void onPostExecute(String param) {
-			// dismiss the dialog after the file was downloaded
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 			if (param.equals("false")) {
 				Toast.makeText(ProductDetailActivity.this, "Can not download file!", Toast.LENGTH_SHORT).show();
 			} else {
@@ -722,7 +726,9 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		}
 
 		protected void onPostExecute(String file_url) {	      
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 		}
 	}
 
@@ -775,7 +781,9 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 		}
 
 		protected void onPostExecute(String file_url) {	      
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 		}
 	}
 
@@ -839,7 +847,9 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			}else{
 				tvResult.setText(Constants.VERIFY_NOK);
 			}
-			pDialog.dismiss();	
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 		}
 	}
 

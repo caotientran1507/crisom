@@ -126,4 +126,9 @@ public class Constants {
 	public static final int POSITION_ACTIVITY_PAYPAL = 9;
 	public static final int POSITION_ACTIVITY_PAYPAL_SUCCESS = 10;
 	public static final int POSITION_ACTIVITY_CONTACT = 11;
+	
+	
+	public static final int ON = 1;
+	public static final int OFF = 0;
+	
 }

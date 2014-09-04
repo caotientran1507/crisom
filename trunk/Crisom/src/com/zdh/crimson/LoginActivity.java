@@ -195,7 +195,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener{
 	    }
 
 	    protected void onPostExecute(String file_url) {		  	    	
-	        pDialog.dismiss();	
+	    	if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}	
 	        if(status){
 	        	setResult(RESULT_OK);
 	        	Toast.makeText(LoginActivity.this, "Login success", Toast.LENGTH_SHORT).show();

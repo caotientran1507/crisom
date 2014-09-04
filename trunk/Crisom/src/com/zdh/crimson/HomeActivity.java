@@ -1,9 +1,5 @@
 package com.zdh.crimson;
 
-import static com.zdh.crimson.CommonUtilities.DISPLAY_MESSAGE_ACTION;
-import static com.zdh.crimson.CommonUtilities.EXTRA_MESSAGE;
-import static com.zdh.crimson.CommonUtilities.SENDER_ID;
-import static com.zdh.crimson.CommonUtilities.SERVER_URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +13,8 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,7 +47,9 @@ import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
+import com.zdh.crimson.utility.GCMIntentService;
 import com.zdh.crimson.utility.JsonParser;
+import com.zdh.crimson.utility.ServerUtilities;
 import com.zdh.crimson.utility.SharedPreferencesUtil;
 import com.zdh.crimson.utility.StackActivity;
 import com.zdh.crimson.utility.UserEmailFetcher;
@@ -68,6 +64,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	private Spinner spnManufacturer,spnModel;
 	private RadioButton rbnFlatpanel,rbnProjector;	
 	private ExpandableHeightListView lvCategory;
+	private Button btnSearchMounter;
 
 	private Uri uriUrl = Uri.parse(Constants.URL);
 	private Animation slideLeftIn, slideLeftOut;
@@ -86,6 +83,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	HomeAdapter adapter;
 
 	String radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
+	String keyDevice = Constants.KEY_DEVIDE_FLATPANEL;
 
 	AsyncTask<Void, Void, Void> mRegisterTask;
 
@@ -97,8 +95,8 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		if(stack.size() == 2){
 			stack.get(0).finish();  
 		}
-		checkNotNull(CommonUtilities.SERVER_URL, "SERVER_URL");
-		checkNotNull(CommonUtilities.SENDER_ID, "SENDER_ID");
+		checkNotNull(CommonUtil.SERVER_URL, "SERVER_URL");
+		checkNotNull(CommonUtil.SENDER_ID, "SENDER_ID");
 		// Make sure the device has the proper dependencies.
 		GCMRegistrar.checkDevice(this);
 		// Make sure the manifest was properly set - comment out this line
@@ -112,7 +110,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
 		if (regId.equals("")) {
 			// Automatically registers application on startup.
-			GCMRegistrar.register(this, SENDER_ID);
+			GCMRegistrar.register(this, CommonUtil.SENDER_ID);
 		} else {
 			// Device is already registered on GCM, check server.
 			if (GCMRegistrar.isRegisteredOnServer(this)) {
@@ -156,7 +154,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	@Override
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
-		if(!CommonUtil.count.equals("")&&!CommonUtil.count.equals("null")&&!CommonUtil.count.equals("0"))
+		if(!FileUtil.count.equals("") && !FileUtil.count.equals("null") && !FileUtil.count.equals("0"))
 		GCMIntentService.generateNotificationCheckOut(this,"It will notify them that they checked out with thing in their cart");
 		super.onBackPressed();
 	}
@@ -166,9 +164,11 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		if(!keySearch.equals(""))
 			edtSearch.setText(keySearch);
 		ChangeTextButtonLogin();
-		new GetCountItem(HomeActivity.this, SharedPreferencesUtil.getIdCustomerLogin(HomeActivity.this)+"").execute();
-
+		if (SharedPreferencesUtil.getFlagLogin(HomeActivity.this)) {
+			new GetCountItem(HomeActivity.this, SharedPreferencesUtil.getIdCustomerLogin(HomeActivity.this)+"").execute();
+		}
 	}
+	
 
 	@Override
 	protected void onDestroy() {
@@ -227,6 +227,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		rbnFlatpanel = (RadioButton)findViewById(R.id.home_rbnFlatpanel);
 		rbnProjector = (RadioButton)findViewById(R.id.home_rbnProjector);		
 
+		btnSearchMounter = (Button)findViewById(R.id.home_btnSearchMounter);
 
 		tvMainSite = (TextView)findViewById(R.id.home_tv_mainsite);
 
@@ -260,6 +261,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		rbnProjector.setOnClickListener(this);	
 		lnSearchImage.setOnClickListener(this);	
 		btnLogin.setOnClickListener(this);
+		btnSearchMounter.setOnClickListener(this);
 
 		pDialog = new ProgressDialog(HomeActivity.this);		
 
@@ -309,11 +311,16 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 				if (FileUtil.listManufacturerName.size() > 1 ) {
 					if (i != 0) {
 						spnModel.setVisibility(View.VISIBLE);
-						new GetModelAsyncTask(radioChecked, FileUtil.listManufacturerName.get(i)).execute();
 						FileUtil.positionManufacturerName = i;
+						new GetModelAsyncTask(radioChecked, FileUtil.listManufacturerName.get(i)).execute();
+						
+					}
+					else{
+						clearSpinnerModel();						
+						modelAdapter.notifyDataSetChanged();
+						btnSearchMounter.setVisibility(View.GONE);
 					}
 				}
-
 			} 
 
 			public void onNothingSelected(AdapterView<?> adapterView) {
@@ -325,14 +332,11 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) { 
 				if (FileUtil.listModelName.size() > 1) {
 					if (i != 0) {
-						FileUtil.positionModelName = i;
-						Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
-						intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, FileUtil.listModelName.get(i));
-						intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName));
-						intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
-						startActivity(intent);
-						overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
-						FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
+						FileUtil.positionModelName = i;	
+						btnSearchMounter.setVisibility(View.VISIBLE);
+					}else{
+						
+						btnSearchMounter.setVisibility(View.GONE);
 					}
 				}
 			} 
@@ -390,19 +394,29 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			//--------click radio button----------
 
 		case R.id.home_rbnFlatpanel:
-			spnModel.setVisibility(View.GONE);
-			rbnFlatpanel.setChecked(true);
-			rbnProjector.setChecked(false);
-			radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
-			new GetManufacturerAsyncTask(radioChecked).execute();
+			if (keyDevice.equals(Constants.KEY_DEVIDE_PROJECTOR)) {
+				keyDevice = Constants.KEY_DEVIDE_FLATPANEL;
+				spnModel.setVisibility(View.GONE);
+				btnSearchMounter.setVisibility(View.GONE);
+				rbnFlatpanel.setChecked(true);
+				rbnProjector.setChecked(false);
+				radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
+				new GetManufacturerAsyncTask(radioChecked).execute();
+			}
+			
 
 			break;	
 		case R.id.home_rbnProjector:
-			spnModel.setVisibility(View.GONE);
-			rbnFlatpanel.setChecked(false);
-			rbnProjector.setChecked(true);
-			radioChecked = Constants.KEY_DEVIDE_PROJECTOR;
-			new GetManufacturerAsyncTask(radioChecked).execute();						
+			if (keyDevice.equals(Constants.KEY_DEVIDE_FLATPANEL)) {
+				keyDevice = Constants.KEY_DEVIDE_PROJECTOR;
+				spnModel.setVisibility(View.GONE);
+				btnSearchMounter.setVisibility(View.GONE);
+				rbnFlatpanel.setChecked(false);
+				rbnProjector.setChecked(true);
+				radioChecked = Constants.KEY_DEVIDE_PROJECTOR;
+				new GetManufacturerAsyncTask(radioChecked).execute();
+			}
+									
 			break;	
 
 
@@ -448,7 +462,17 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			mViewFlipper.setDisplayedChild(3);
 			break;
 
-			//---------------------------------------------------------		
+			//---------------------------------------------------------	
+			
+		case R.id.home_btnSearchMounter:			
+			Intent intent = new Intent(HomeActivity.this, SearchActivity.class);
+			intent.putExtra(Constants.KEY_MOUNTFINDER_MODEL, FileUtil.listModelName.get(FileUtil.positionModelName));
+			intent.putExtra(Constants.KEY_MOUNTFINDER_MANUFACTURER, FileUtil.listManufacturerName.get(FileUtil.positionManufacturerName));
+			intent.putExtra(Constants.KEY_MOUNTFINDER_DEVICE, String.valueOf(radioChecked));
+			startActivity(intent);
+			overridePendingTransition(R.anim.fly_in_from_right, R.anim.fly_out_to_left);
+			FileUtil.POSITION_ACTIVITY = Constants.POSITION_ACTIVITY_SEARCH;
+			break;
 
 		default:
 			break;
@@ -486,6 +510,11 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
+			pDialog.setMessage("Loading...");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(false);
+			pDialog.show();
+			pDialog.setContentView(R.layout.dialog_process);
 		}
 
 		protected String doInBackground(String... params) {
@@ -573,8 +602,11 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
 		protected void onPostExecute(String file_url) {			
 			manufacturerAdapter.notifyDataSetChanged();
+			spnManufacturer.setSelection(0);
 			initViewFlipper();
-			pDialog.dismiss();
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}
 
 		}
 	}
@@ -631,7 +663,9 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
 		protected void onPostExecute(String file_url) {	      
 			modelAdapter.notifyDataSetChanged();
-			pDialog.dismiss();				
+			if ((pDialog != null) && pDialog.isShowing()) { 
+				pDialog.dismiss();
+			}			
 		}
 	}
 
@@ -684,7 +718,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
 		@Override
 		protected void onPreExecute() {
-			super.onPreExecute();
+			super.onPreExecute();		
 		}
 
 		protected String doInBackground(String... params) {
@@ -702,8 +736,8 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			}
 			return count;
 		}
-		protected void onPostExecute(String count1) {	      
-			CommonUtil.count = count1;
+		protected void onPostExecute(String count) {	      
+			FileUtil.count = count;
 			ALog.d("TAG_COUNT","Count:"+count);
 		}
 	}
