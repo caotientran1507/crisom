@@ -337,7 +337,7 @@
                                     android:text="Search"
                                     android:textColor="@color/white"
                                     android:textSize="@dimen/textsize_normal"
-                                    android:visibility="gone" />
+                                    android:visibility="visible" />
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
