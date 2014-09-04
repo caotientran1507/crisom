@@ -66,7 +66,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	private ImageView ivCategory,ivAvatar;	
 	private Button btnVerify;
 	private TextView tvTitle,tvTitle1,tvShortDes,tvDes,tvMainSite,tvPrice,tvDownload,tvFAQ,tvVideo;	
-	static int currentProduct = 0;
+	int currentProduct = 0;
 	private ProgressDialog pDialog;
 	private Product product = new Product();
 	public ImageLoader imageLoader; 
@@ -98,8 +98,15 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_product_detail);
-		currentProduct = getIntent().getExtras().getInt(Constants.KEY_PRODUCTID);
 
+		// Get user Id for viewing profile
+		if (getIntent().getExtras() != null) {
+			Bundle extras = getIntent().getExtras();
+			currentProduct = extras.getInt(Constants.KEY_PRODUCTID);
+			
+			if(currentProduct==0)
+				currentProduct = GCMIntentService.pid;
+		}
 
 		init();
 		initDataWebservice();
@@ -107,12 +114,12 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 	}
 
 	@Override
-	protected void onResume() {
+	protected void onResume() { 
 		super.onResume();
 
 		if(oldStatusLogin != SharedPreferencesUtil.getFlagLogin(getApplicationContext())){
-			product = new Product();
-			initDataWebservice();
+			//			product = new Product();
+			//			initDataWebservice();
 		}
 	}
 
@@ -200,7 +207,7 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 			} 
 		});
 	}
- 
+
 	private void initData() {
 		downloadAdapter = new DownloadAdapter(ProductDetailActivity.this, product.getListDocument());
 		specsAdapter = new SpecsAdapter(ProductDetailActivity.this, product.getListSpecs());
@@ -427,8 +434,8 @@ public class ProductDetailActivity extends BaseActivity  implements View.OnClick
 					imageLoader.DisplayImage(product.getImage(), ivAvatar);
 				}
 			});
-			
-			
+
+
 
 			if(product != null && childAdapter != null){
 				childAdapter = new ChildAdapter(ProductDetailActivity.this, product.getListOption(),currentProduct);

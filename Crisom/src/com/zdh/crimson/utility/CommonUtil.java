@@ -16,11 +16,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 public class CommonUtil {
+	
+	public static String count = "0";
 	public static String formatMoney(double money){
 		String str = new DecimalFormat("#.00").format(money);
 		return "$"+str;
 	}
 	 
+	
 	public static String getExtensionFile(String url){
 		return url.substring(url.length() - 4);
 	}

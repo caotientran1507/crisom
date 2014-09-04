@@ -1,5 +1,10 @@
 package com.zdh.crimson;
 
+import static com.zdh.crimson.CommonUtilities.DISPLAY_MESSAGE_ACTION;
+import static com.zdh.crimson.CommonUtilities.EXTRA_MESSAGE;
+import static com.zdh.crimson.CommonUtilities.SENDER_ID;
+import static com.zdh.crimson.CommonUtilities.SERVER_URL;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -8,13 +13,18 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -35,14 +45,18 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.google.android.gcm.GCMRegistrar;
 import com.zdh.crimson.adapter.HomeAdapter;
 import com.zdh.crimson.model.Category;
+import com.zdh.crimson.utility.ALog;
 import com.zdh.crimson.utility.CommonUtil;
 import com.zdh.crimson.utility.Constants;
 import com.zdh.crimson.utility.ExpandableHeightListView;
 import com.zdh.crimson.utility.FileUtil;
 import com.zdh.crimson.utility.JsonParser;
+import com.zdh.crimson.utility.SharedPreferencesUtil;
 import com.zdh.crimson.utility.StackActivity;
+import com.zdh.crimson.utility.UserEmailFetcher;
 
 public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
@@ -73,33 +87,109 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 
 	String radioChecked = Constants.KEY_DEVIDE_FLATPANEL;
 
+	AsyncTask<Void, Void, Void> mRegisterTask;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Stack<Activity> stack = StackActivity.getInstance().getStack();
 		if(stack.size() == 2){
-			stack.get(0).finish();
+			stack.get(0).finish();  
 		}
-
+		checkNotNull(CommonUtilities.SERVER_URL, "SERVER_URL");
+		checkNotNull(CommonUtilities.SENDER_ID, "SENDER_ID");
+		// Make sure the device has the proper dependencies.
+		GCMRegistrar.checkDevice(this);
+		// Make sure the manifest was properly set - comment out this line
+		// while developing the app, then uncomment it when it's ready.
+		GCMRegistrar.checkManifest(this);
 		setContentView(R.layout.activity_home);		
 		init();
+
+		final String regId = GCMRegistrar.getRegistrationId(this);
+		Log.d("tag", "regID:"+regId);
+
+		if (regId.equals("")) {
+			// Automatically registers application on startup.
+			GCMRegistrar.register(this, SENDER_ID);
+		} else {
+			// Device is already registered on GCM, check server.
+			if (GCMRegistrar.isRegisteredOnServer(this)) {
+				// Skips registration.
+			} else {
+				// Try to register again, but not in the UI thread.
+				// It's also necessary to cancel the thread onDestroy(),
+				// hence the use of AsyncTask instead of a raw thread.
+				final Context context = this;
+				mRegisterTask = new AsyncTask<Void, Void, Void>() {
+
+					@Override
+					protected Void doInBackground(Void... params) {
+
+						String email = UserEmailFetcher.getEmail(context);
+
+						boolean registered = ServerUtilities.register(context, regId, "",email);
+						// At this point all attempts to register with the app
+						// server failed, so we need to unregister the device
+						// from GCM - the app will try to register again when
+						// it is restarted. Note that GCM will send an
+						// unregistered callback upon completion, but
+						// GCMIntentService.onUnregistered() will ignore it.
+						if (!registered) {
+							GCMRegistrar.unregister(context);
+						}
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Void result) {
+						mRegisterTask = null;
+					}
+
+				};
+				mRegisterTask.execute(null, null, null);
+			}
+		}
 	}
 
+	@Override
+	public void onBackPressed() {
+		// TODO Auto-generated method stub
+		if(!CommonUtil.count.equals("")&&!CommonUtil.count.equals("null")&&!CommonUtil.count.equals("0"))
+		GCMIntentService.generateNotificationCheckOut(this,"It will notify them that they checked out with thing in their cart");
+		super.onBackPressed();
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
 		if(!keySearch.equals(""))
 			edtSearch.setText(keySearch);
 		ChangeTextButtonLogin();
+		new GetCountItem(HomeActivity.this, SharedPreferencesUtil.getIdCustomerLogin(HomeActivity.this)+"").execute();
+
 	}
 
+	@Override
+	protected void onDestroy() {
+		if (mRegisterTask != null) {
+			mRegisterTask.cancel(true);
+		}
+		super.onDestroy();
+	}
 
 	private void init(){
 		initView();		
 		initData();
 		initDataWebservice();
 		handleOtherAction();
+	}
+
+	private void checkNotNull(Object reference, String name) {
+		if (reference == null) {
+			throw new NullPointerException(
+					getString(R.string.error_config, name));
+		}
 	}
 
 	private void initData() {
@@ -116,7 +206,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		//--------------------------------------------------------------------
 
 	}
-	
+
 	private void initView(){		
 		lnSearch = (LinearLayout)findViewById(R.id.include_footer_lnSearch);
 		lnCategory = (LinearLayout)findViewById(R.id.include_footer_lnCategory);
@@ -177,14 +267,14 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 	}
 
 	private void initDataWebservice(){
-		
+
 		clearSpinnerManufacturer();
 		clearSpinnerModel();
 		if (!CommonUtil.TestNetWork(HomeActivity.this)) {			
 			CommonUtil.showWifiNetworkAlert(HomeActivity.this);
 		}else{
 			new GetCategoriesHomeAsyncTask().execute();		
-			
+
 		}
 	}
 
@@ -430,7 +520,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		protected void onPostExecute(String file_url) {	
 			adapter.notifyDataSetChanged();
 			new GetManufacturerAsyncTask(radioChecked).execute();
-						
+
 		}
 	}
 
@@ -485,7 +575,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			manufacturerAdapter.notifyDataSetChanged();
 			initViewFlipper();
 			pDialog.dismiss();
-			
+
 		}
 	}
 
@@ -544,7 +634,7 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			pDialog.dismiss();				
 		}
 	}
-	
+
 	private void initViewFlipper(){
 		//-------------------------set Animation--------------------------------
 		slideLeftIn = AnimationUtils.loadAnimation(this, R.anim.left_in);
@@ -578,5 +668,43 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 			}
 
 		});
+	}
+
+	//--------------------GetModelAsyncTask----------------------------------------
+	public class GetCountItem extends AsyncTask<String, String, String> {
+
+		private String json;
+		Context mContext;
+		String mCid="0";
+		String count = "0";
+		public GetCountItem(Context context,String cid){
+			this.mContext = context;
+			this.mCid = cid;
+		}
+
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+		}
+
+		protected String doInBackground(String... params) {
+			try {
+				// Building Parameters
+				List<NameValuePair> paramsUrl = new ArrayList<NameValuePair>();
+				paramsUrl.add(new BasicNameValuePair("cid", mCid));
+				json = JsonParser.makeHttpRequest(Constants.URL_COUNT_ITEM_CART, "GET", paramsUrl);                
+				if ((json != null) || (!json.equals(""))) {               
+					JSONObject obj = new JSONObject(json);
+					count = obj.getString("count");
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return count;
+		}
+		protected void onPostExecute(String count1) {	      
+			CommonUtil.count = count1;
+			ALog.d("TAG_COUNT","Count:"+count);
+		}
 	}
 }
