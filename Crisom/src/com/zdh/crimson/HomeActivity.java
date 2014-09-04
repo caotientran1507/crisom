@@ -167,6 +167,9 @@ public class HomeActivity extends BaseActivity  implements View.OnClickListener{
 		if (SharedPreferencesUtil.getFlagLogin(HomeActivity.this)) {
 			new GetCountItem(HomeActivity.this, SharedPreferencesUtil.getIdCustomerLogin(HomeActivity.this)+"").execute();
 		}
+		if (btnSearchMounter!=null) {
+			btnSearchMounter.setVisibility(View.GONE);
+		}
 	}
 	
 
